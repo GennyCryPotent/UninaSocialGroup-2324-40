@@ -20,5 +20,7 @@ git push -u origin master | manda i file committati al server github
 
 git pull origin | prende i file presenti sul server github
 
+sium
+
 
 
