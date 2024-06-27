@@ -102,6 +102,6 @@ FOR EACH ROW
 BEGIN
   SELECT IdGruppi_seq.NEXTVAL
   INTO   :new.IdGruppi
-  FROM   Gruppi;
+  FROM   dual;
 END;
 /
