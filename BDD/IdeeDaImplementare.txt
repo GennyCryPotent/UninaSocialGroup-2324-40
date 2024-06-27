@@ -1,0 +1,4 @@
+In questo file scriviamo le varee idee che possiamo fare per migliorare il DB.
+
+1) Avevo pensato di aggiungere i controlli ai vari attributi attraverso i "check" (es. possiamo verificare se l'utente scrive in maniera corretta l'attributo genere)
+
