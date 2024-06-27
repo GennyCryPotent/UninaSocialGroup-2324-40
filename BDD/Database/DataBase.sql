@@ -17,7 +17,7 @@
  DataCreazione Date NOT NULL,
  Descrizione VARCHAR(100) NOT NULL,
  FK_NomeUtente Varchar(30) NOT NULL,
- OnlineC NUMBER(1) NOT NULL Default 0 --0 offline, 1 online
+ OnlineC NUMBER(1) NOT NULL Default 0, --0 offline, 1 online
  Primary key (IdGruppi),
  FOREIGN KEY (FK_NomeUtente) REFERENCES Profili(NomeUtente)
 );
