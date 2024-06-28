@@ -97,7 +97,7 @@ FOREIGN KEY (FK_IdGruppi) REFERENCES Gruppi(IdGruppi)
 --POPOLAZIONE DB
 
 --Meccanismi AUTOINCREMENT
-CREATE SEQUENCE IdGruppi_seq START WITH 1; -- Utile per fare l'autoIncrement
+CREATE SEQUENCE IdGruppi_seq START WITH 1; -- Utile per fare l'autoIncrement 
 
 --Popolamento Profili
 Insert into Profili Values ('Genny03cry', 'Database03', 'Gennaro', 'De Luca', 'M', TO_DATE('04-11-2003', 'dd-MM-yyyy'));
