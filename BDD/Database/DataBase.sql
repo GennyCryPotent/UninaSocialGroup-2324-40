@@ -74,7 +74,7 @@ create table Partecipano (
  FOREIGN KEY (FK_IdGruppi) REFERENCES Gruppi(IdGruppi) 
 );
 
- --CREAZIONE TABELLA REGOLANO (Tabella per gli amministartori)
+--CREAZIONE TABELLA REGOLANO (Tabella per gli amministartori)
 create table Regolano (
  FK_NomeUtente VARCHAR2(30),
  FK_IdGruppi NUMBER,
