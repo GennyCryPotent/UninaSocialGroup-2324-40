@@ -13,7 +13,7 @@
 
 --CREAZIONE TABELLA GRUPPI
  CREATE TABLE Gruppi(
- IdGruppi NUMBER,
+ IdGruppi  NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1), --da testare 
  Nome VARCHAR2(30) NOT NULL,
  DataCreazione Date DEFAULT SYSDATE,
  Descrizione VARCHAR2(100) NOT NULL,
@@ -97,7 +97,7 @@ FOREIGN KEY (FK_IdGruppi) REFERENCES Gruppi(IdGruppi)
 --POPOLAZIONE DB
 
 --Meccanismi AUTOINCREMENT
-CREATE SEQUENCE IdGruppi_seq START WITH 1; -- Utile per fare l'autoIncrement 
+ -- CREATE SEQUENCE IdGruppi_seq START WITH 1; -- Utile per fare l'autoIncrement 
 
 --Popolamento Profili
 Insert into Profili Values ('Genny03cry', 'Database03', 'Gennaro', 'De Luca', 'M', TO_DATE('04-11-2003', 'dd-MM-yyyy'));
@@ -110,7 +110,8 @@ Insert into Gruppi (Nome, Descrizione, fk_nomeutente) Values ('SSC_Napoli_Ultras
 
 -- TRIGGER 
 
--- AUTOINCREMENT PK GRUPPI
+-- AUTOINCREMENT PK GRUPPI 
+/*
 CREATE OR REPLACE TRIGGER Inc_IdGruppi 
 BEFORE INSERT ON Gruppi 
 FOR EACH ROW
@@ -121,3 +122,4 @@ BEGIN
   FROM   dual;
 END;
 /
+*/
