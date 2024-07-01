@@ -8,4 +8,6 @@ In questo file scriviamo le varee idee che possiamo fare per migliorare il DB.
 
 4) Aggiungere le Date di creazione a Commenti e Contenuti
 
-5) fare il trigger per la Data di Nascita. 
+5) fare il trigger per la Data di Nascita.  V
+
+6) Mettere l'ora nella tabella notifiche
