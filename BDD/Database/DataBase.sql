@@ -96,7 +96,6 @@ FOREIGN KEY (FK_IdGruppi) REFERENCES Gruppi(IdGruppi) ON DELETE CASCADE
 );
 
 
-
 --POPOLAZIONE DB
 
 --Popolamento Profili
@@ -141,7 +140,6 @@ LOOP
     FETCH Rec_Utente INTO TMP_Utente;
     EXIT WHEN Rec_Utente%NOTFOUND;
 
-
     INSERT INTO Notifiche (Testo, FK_IdGruppi, FK_NomeUtente) VALUES ('Il Creatore del gruppo '|| :NEW.Nome || ' è Online!', :NEW.IdGruppi, TMP_Utente); 
 
 END LOOP;
@@ -158,24 +156,24 @@ FOR EACH ROW
 
 DECLARE 
 
-CURSOR Rec_User IS (SELECT FK_NomeUtente FROM partecipano Where fk_idgruppi= :NEW.fk_idgruppi);
-TMP_User Partecipano.FK_NomeUtente%TYPE;
+CURSOR Rec_Utenti IS (SELECT FK_NomeUtente FROM partecipano Where fk_idgruppi= :NEW.fk_idgruppi);
+TMP_Utente Partecipano.FK_NomeUtente%TYPE;
 
 BEGIN
 
-OPEN Rec_User;
+OPEN Rec_Utenti;
 
 LOOP 
 
-    FETCH Rec_User INTO TMP_User;
-    EXIT WHEN Rec_User%NOTFOUND;
+    FETCH Rec_Utenti INTO TMP_Utente;
+    EXIT WHEN Rec_Utenti%NOTFOUND;
 
-    INSERT INTO Notifiche (Testo, fk_idgruppi, fk_nomeutente) VALUES ('inserito un nuovo contenuto', :NEW.FK_IdGruppi, TMP_User);
-    
+    INSERT INTO Notifiche (Testo, fk_idgruppi, fk_nomeutente) VALUES ('Utente '|| :NEW.FK_NomeUtente || ' ha inserito un nuovo contenuto!', :NEW.FK_IdGruppi, TMP_Utente);
 END LOOP;
 
-CLOSE Rec_User;
+CLOSE Rec_Utenti;
 
 END;
+
 
 
