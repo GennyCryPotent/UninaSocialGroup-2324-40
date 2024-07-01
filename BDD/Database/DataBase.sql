@@ -109,3 +109,73 @@ Insert into Gruppi (Nome, Descrizione, fk_nomeutente) Values ('SSC_Napoli_Ultras
 
 
 -- TRIGGER 
+
+--Trigger per verificare la Data di nascita degli utenti
+create or replace TRIGGER Check_DataNascita
+BEFORE INSERT ON Profili
+FOR EACH ROW
+WHEN (NEW.DataNascita>SYSDATE)
+
+BEGIN
+    RAISE_APPLICATION_ERROR(-20001, 'La data di nascita deve essere minore o uguale alla data attuale'); -- Eccezione che ci permette di avere un messaggio personalizzato
+END;
+
+
+--Trigger che avvisa gli utenti di un gruppo quando il creatore è online
+create or replace TRIGGER Invia_Notifica_OnlineC
+AFTER UPDATE ON Gruppi
+FOR EACH ROW
+WHEN (NEW.OnlineC = 1 AND OLD.OnlineC = 0)
+
+DECLARE
+
+CURSOR Rec_Utente IS (SELECT FK_NomeUtente FROM partecipano Where FK_idgruppi= :NEW.IdGruppi);
+TMP_Utente Partecipano.FK_NomeUtente%TYPE;
+
+BEGIN
+
+OPEN Rec_Utente;
+
+LOOP
+
+    FETCH Rec_Utente INTO TMP_Utente;
+    EXIT WHEN Rec_Utente%NOTFOUND;
+
+
+    INSERT INTO Notifiche (Testo, FK_IdGruppi, FK_NomeUtente) VALUES ('Il Creatore del gruppo '|| :NEW.Nome || ' è Online!', :NEW.IdGruppi, TMP_Utente); 
+
+END LOOP;
+
+CLOSE Rec_Utente;
+
+END;
+
+
+--Trigger che avvisa gli utenti iscritti ad un gruppo che un utente ha messo un contenuto
+create or replace TRIGGER Invia_Notifica_G
+AFTER INSERT ON Contenuti
+FOR EACH ROW
+
+DECLARE 
+
+CURSOR Rec_User IS (SELECT FK_NomeUtente FROM partecipano Where fk_idgruppi= :NEW.fk_idgruppi);
+TMP_User Partecipano.FK_NomeUtente%TYPE;
+
+BEGIN
+
+OPEN Rec_User;
+
+LOOP 
+
+    FETCH Rec_User INTO TMP_User;
+    EXIT WHEN Rec_User%NOTFOUND;
+
+    INSERT INTO Notifiche (Testo, fk_idgruppi, fk_nomeutente) VALUES ('inserito un nuovo contenuto', :NEW.FK_IdGruppi, TMP_User);
+    
+END LOOP;
+
+CLOSE Rec_User;
+
+END;
+
+
