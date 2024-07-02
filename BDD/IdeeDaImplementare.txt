@@ -6,9 +6,9 @@ In questo file scriviamo le varee idee che possiamo fare per migliorare il DB.
 
 3) Analizzare gli update, insert, delete sulle varie chiavi esterne che uniscono le tabelle. (es. un commento deve essere eliminato se il post connesso al quel commento viene eliminato)
 
-4) Aggiungere le Date di creazione a Commenti e Contenuti
+4) Aggiungere le Date di creazione a Commenti e Contenuti              V
 
-5) fare il trigger per la Data di Nascita. 
+5) fare il trigger per la Data di Nascita.                       
 
 6) Mettere l'ora nella tabella notifiche
 
