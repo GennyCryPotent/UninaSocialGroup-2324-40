@@ -6,6 +6,6 @@ Triggers:
 
 - Un utente ha creato un nuovo contenuto ad un gruppo di cui si è amministratori -> tutti gli amministratori di un gruppo ricevono una notifica quando un utente aggiunge un contenuto a quel gruppo
 
-- Un utente ha interagito ad un contenuto di cui si è autori. -> quando un utente interagisce (mi piace o altro) il creatore del post riceve una notifica
+- Un utente ha interagito ad un contenuto di cui si è autori. -> quando un utente interagisce (mi piace o altro) il creatore del post riceve una notifica V
 
 - 

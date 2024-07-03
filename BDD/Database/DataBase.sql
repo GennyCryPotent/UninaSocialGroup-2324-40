@@ -35,7 +35,6 @@
  DataCreazione Date DEFAULT SYSDATE,
  Foto VARCHAR2(2000),
  Testo VARCHAR2(1000),
- Likes NUMBER DEFAULT 0,
  FK_IdGruppi NUMBER NOT NULL,
  FK_NomeUtente VARCHAR2(30) NOT NULL,
  Primary key (IdContenuti),
@@ -45,9 +44,9 @@
 );
 
 --CREAZIONE TABELLA COMMENTI
- CREATE TABLE Commenti (
+ CREATE TABLE Commenti(
  IdCommenti NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
- DataCreazione Date DEFAULT SYSDATE,
+ DataCreazione TIMESTAMP DEFAULT SYSTIMESTAMP,
  Testo VARCHAR2(1000) NOT NULL,
  FK_IdContenuti NUMBER NOT NULL,
  FK_NomeUtente VARCHAR2(30) NOT NULL,
@@ -56,16 +55,29 @@
  FOREIGN KEY (FK_IdContenuti) REFERENCES Contenuti(IdContenuti) ON DELETE CASCADE
  );
 
---CREAZIONE TABELLA NOTIFICHE
- CREATE TABLE Notifiche(
- IdNotifiche NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
+
+--CREAZIONE TABELLA NOTIFICHE GRUPPI
+ CREATE TABLE Notifiche_Gruppi(
+ IdNotifiche_G NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
  Testo VARCHAR2(1000) NOT NULL,
- DataNotifica Date DEFAULT SYSDATE,
+ Data_Notifica TIMESTAMP DEFAULT SYSTIMESTAMP,
  FK_IdGruppi NUMBER NOT NULL,
  FK_NomeUtente VARCHAR2(30) NOT NULL,
- Primary key (IdNotifiche),
+ Primary key (IdNotifiche_G),
  FOREIGN KEY (FK_NomeUtente) REFERENCES Profili(NomeUtente) ON DELETE CASCADE,
  FOREIGN KEY (FK_IdGruppi) REFERENCES Gruppi(IdGruppi) ON DELETE CASCADE
+ );
+
+ --CREAZIONE TABELLA NOTIFICHE CONTENUTI
+ CREATE TABLE Notifiche_Contenuti(
+ IdNotifiche_C NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
+ Testo VARCHAR2(1000) NOT NULL,
+ DataNotifica TIMESTAMP DEFAULT SYSTIMESTAMP,
+ FK_IdContenuti NUMBER NOT NULL,
+ FK_NomeUtente VARCHAR2(30) NOT NULL,
+ Primary key (IdNotifiche_C),
+ FOREIGN KEY (FK_NomeUtente) REFERENCES Profili(NomeUtente) ON DELETE CASCADE,
+ FOREIGN KEY (FK_IdContenuti) REFERENCES Contenuti(IdContenuti) ON DELETE CASCADE
  );
 
  --CREAZIONE TABELLA PARTECIPANO
@@ -95,15 +107,30 @@ FOREIGN KEY (FK_Parola) REFERENCES TAGS(Parola) ON DELETE CASCADE,
 FOREIGN KEY (FK_IdGruppi) REFERENCES Gruppi(IdGruppi) ON DELETE CASCADE
 );
 
+--CREAZIONE TABELLA LIKES
+CREATE TABLE LIKES(
+FK_NomeUtente VARCHAR2(30),
+FK_IdContenuti NUMBER,
+Primary key (FK_NomeUtente, FK_IdContenuti),
+FOREIGN KEY (FK_NomeUtente) REFERENCES Profili(NomeUtente) ON DELETE CASCADE,
+FOREIGN KEY (FK_IdContenuti) REFERENCES Contenuti(IdContenuti) ON DELETE CASCADE
+);
+
 
 --POPOLAZIONE DB
 
 --Popolamento Profili
-Insert into Profili Values ('Genny03cry', 'Database03', 'Gennaro', 'De Luca', 'M', TO_DATE('04-11-2003', 'dd-MM-yyyy'));
+Insert into Profili Values ('Genny03cry', 'Database03', 'Gennaro', 'De Luca', 'M', TO_DATE('04-11-2003', 'DD-MM-YYYY'));
 
 --Popolamento Gruppi
 Insert into Gruppi (Nome, Descrizione, fk_nomeutente) Values ('Fantacalcio', 'Ciao', 'Genny03cry');
 Insert into Gruppi (Nome, Descrizione, fk_nomeutente) Values ('SSC_Napoli_Ultras', 'Solo fan del napoli', 'Genny03cry');
+
+
+--Viste 
+CREATE View Contenuti_con_Likes AS (
+    SELECT Contenuti.*, (SELECT COUNT(*) FROM Likes WHERE likes.fk_idcontenuti=Contenuti.IdContenuti) AS N_LIKES FROM Contenuti
+);
 
 
 -- TRIGGER 
@@ -139,7 +166,7 @@ LOOP
     FETCH Rec_Utente INTO TMP_Utente;
     EXIT WHEN Rec_Utente%NOTFOUND;
 
-    INSERT INTO Notifiche (Testo, FK_IdGruppi, FK_NomeUtente) VALUES ('Il Creatore del gruppo '|| :NEW.Nome || ' è Online!', :NEW.IdGruppi, TMP_Utente); 
+    INSERT INTO Notifiche_Gruppi (Testo, FK_IdGruppi, FK_NomeUtente) VALUES ('Il Creatore del gruppo '|| :NEW.Nome || ' è Online!', :NEW.IdGruppi, TMP_Utente); 
 
 END LOOP;
 
@@ -167,12 +194,51 @@ LOOP
     FETCH Rec_Utenti INTO TMP_Utente;
     EXIT WHEN Rec_Utenti%NOTFOUND;
 
-    INSERT INTO Notifiche (Testo, fk_idgruppi, fk_nomeutente) VALUES ('Utente '|| :NEW.FK_NomeUtente || ' ha inserito un nuovo contenuto!', :NEW.FK_IdGruppi, TMP_Utente);
+    INSERT INTO Notifiche_Gruppi (Testo, fk_idgruppi, fk_nomeutente) VALUES ('Utente '|| :NEW.FK_NomeUtente || ' ha inserito un nuovo contenuto!', :NEW.FK_IdGruppi, TMP_Utente);
 END LOOP;
 
 CLOSE Rec_Utenti;
 
 END;
 
+--Trigger che avvisa l'utente che un altro utente ha interagito con un like al suo post
+create or replace TRIGGER Notifica_Likes
+AFTER INSERT ON Likes
+FOR EACH ROW
+
+DECLARE
+TMP_Utente Profili.NomeUtente%TYPE;
+TMP_Testo Contenuti.Testo%TYPE;
+
+BEGIN
+
+    SELECT FK_NomeUtente INTO TMP_Utente FROM Contenuti WHERE IdContenuti=:NEW.FK_IdContenuti;
+    SELECT Testo INTO TMP_Testo FROM Contenuti WHERE idcontenuti=:NEW.FK_IdContenuti;
+
+    IF(TMP_Utente<>:NEW.FK_NomeUtente) THEN
+        IF(TMP_Testo=NULL) THEN
+            INSERT INTO notifiche_contenuti (Testo, fk_idcontenuti, fk_nomeutente) VALUES (:NEW.FK_NomeUtente || ' ha messo mi piace alla tua foto', :NEW.FK_IdContenuti, TMP_Utente);
+        ElSE
+            INSERT INTO notifiche_contenuti (Testo, fk_idcontenuti, fk_nomeutente) VALUES (:NEW.FK_NomeUtente || ' ha messo mi piace al tuo contenuto: '|| TMP_Testo, :NEW.FK_IdContenuti, TMP_Utente);
+        END IF;
+    END IF;
+END;
+
+--Trigger che avvisa l'utente che un altro utente ha interagito con un commento al suo post
+create or replace TRIGGER Notifica_Commenti
+AFTER INSERT ON Commenti
+FOR EACH ROW
+
+DECLARE
+TMP_Utente Profili.NomeUtente%TYPE;
+
+BEGIN
+
+    SELECT FK_NomeUtente INTO TMP_Utente FROM Contenuti WHERE IdContenuti=:NEW.FK_IdContenuti;
+
+    IF(TMP_Utente<>:NEW.FK_NomeUtente) THEN
+        INSERT INTO notifiche_contenuti (Testo, fk_idcontenuti, fk_nomeutente) VALUES (:NEW.FK_NomeUtente || ' ha commentato il tuo contenuto: '|| :NEW.Testo, :NEW.FK_IdContenuti, TMP_Utente);
+    END IF;
+END;
 
 
