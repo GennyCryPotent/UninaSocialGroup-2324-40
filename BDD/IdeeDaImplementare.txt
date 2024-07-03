@@ -1,16 +1,31 @@
 In questo file scriviamo le varee idee che possiamo fare per migliorare il DB.
 
 
-1) Avevo pensato di aggiungere i controlli ai vari attributi attraverso i "check" (es. possiamo verificare se l'utente scrive in maniera corretta l'attributo genere)  V
+[✅] 1) Avevo pensato di aggiungere i controlli ai vari attributi attraverso i "check" (es. possiamo verificare se l'utente scrive in maniera corretta l'attributo genere)
 
-2) Implementare qualche funzione/Procedure direttamente dal DB. (es. funzione aggiunta del contenuto oppure funzione di aggiunta dei commenti)
+[ ] 2) Implementare qualche funzione/Procedure direttamente dal DB. (es. funzione aggiunta del contenuto oppure funzione di aggiunta dei commenti)
 
-3) Analizzare gli update, insert, delete sulle varie chiavi esterne che uniscono le tabelle. (es. un commento deve essere eliminato se il post connesso al quel commento viene eliminato)   V
+[✅] 3) Analizzare gli update, insert, delete sulle varie chiavi esterne che uniscono le tabelle. (es. un commento deve essere eliminato se il post connesso al quel commento viene eliminato)  
 
-4) Aggiungere le Date di creazione a Commenti e Contenuti  V
+[✅] 4) Aggiungere le Date di creazione a Commenti e Contenuti  
 
-5) fare il trigger per la Data di Nascita.  V
+[✅] 5) fare il trigger per la Data di Nascita.  
   
-6) Mettere l'ora nella tabella notifiche
+[✅] 6) Mettere l'ora nella tabella notifiche
 
-7) cambiare il nome delle chiavi esterne delle varie tabelle con nomi sensati (Es. nella tabella gruppi invece di avere "FK_NomeUtente" possiamo mettere "Creatore")
+[ ] 7) Aggiungere una tabella Notifiche_Richieste_Esiti_Partecipazioni dove sono salvate tutte le richieste e i relativi esiti di una richiesta ad un gruppo
+
+
+
+
+
+
+
+
+COSE DA SISTEMARE:
+
+[ ] 1) Vedere tutti i nomi O SINGOLARE O PLURALE
+
+[ ] 2) Vedere tutti i nomi con lo stesso standard Se Chiamo IdNotifiche non posso fare dopo FK_IdContenuti (O USO IL _ O USO I NOMI ATTACCATI)
+
+[ ] 3) cambiare il nome delle chiavi esterne delle varie tabelle con nomi sensati (Es. nella tabella gruppi invece di avere "FK_NomeUtente" possiamo mettere "Creatore")
