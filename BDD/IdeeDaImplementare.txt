@@ -11,7 +11,7 @@ In questo file scriviamo le varee idee che possiamo fare per migliorare il DB.
 
 [V] 5) fare il trigger per la Data di Nascita.  
   
-[ ] 6) Mettere l'ora nella tabella notifiche
+[V] 6) Mettere l'ora nella tabella notifiche
 
 [ ] 7) cambiare il nome delle chiavi esterne delle varie tabelle con nomi sensati (Es. nella tabella gruppi invece di avere "FK_NomeUtente" possiamo mettere "Creatore")
 
