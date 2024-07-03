@@ -201,6 +201,7 @@ CLOSE Rec_Utenti;
 
 END;
 
+
 --Trigger che avvisa l'utente che un altro utente ha interagito con un like al suo post
 create or replace TRIGGER Notifica_Likes
 AFTER INSERT ON Likes
