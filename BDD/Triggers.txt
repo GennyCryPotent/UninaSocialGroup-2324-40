@@ -1,0 +1,11 @@
+Triggers:
+
+- All'inserimento di un nuovo contenuto tutti gli iscritti al gruppo ricevono una notifica V
+
+- Un utente accede ad un gruppo il cui si è il creatore -> tutti gli utenti ricevono una notifica quando il creatore del gruppo è online // cambia lo status del gruppo (IDCreatore) da online ad offline  V
+
+- Un utente ha creato un nuovo contenuto ad un gruppo di cui si è amministratori -> tutti gli amministratori di un gruppo ricevono una notifica quando un utente aggiunge un contenuto a quel gruppo
+
+- Un utente ha interagito ad un contenuto di cui si è autori. -> quando un utente interagisce (mi piace o altro) il creatore del post riceve una notifica
+
+- 
