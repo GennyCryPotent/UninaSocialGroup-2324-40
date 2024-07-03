@@ -1,0 +1,6 @@
+1) chiedere il trigger degli amministratori (ci sta differenza tra il primo trigger e questo?)
+
+
+2) chiedere se tutti i partecipanti (persone normali, amministratori, creatori) possono far parte della tabella partecipano
+
+3) Le FK devono avere nomi creativi oppure nomi uguali al PK
