@@ -13,6 +13,7 @@ In questo file scriviamo le varee idee che possiamo fare per migliorare il DB.
   
 [V] 6) Mettere l'ora nella tabella notifiche
 
+[ ] 7) Aggiungere una tabella Notifiche_Richieste_Esiti_Partecipazioni dove sono salvate tutte le richieste e i relativi esiti di una richiesta ad un gruppo
 
 
 
