@@ -1,5 +1,6 @@
 In questo file scriviamo le varee idee che possiamo fare per migliorare il DB.
 
+
 1) Avevo pensato di aggiungere i controlli ai vari attributi attraverso i "check" (es. possiamo verificare se l'utente scrive in maniera corretta l'attributo genere)  V
 
 2) Implementare qualche funzione/Procedure direttamente dal DB. (es. funzione aggiunta del contenuto oppure funzione di aggiunta dei commenti)
@@ -9,7 +10,7 @@ In questo file scriviamo le varee idee che possiamo fare per migliorare il DB.
 4) Aggiungere le Date di creazione a Commenti e Contenuti  V
 
 5) fare il trigger per la Data di Nascita.  V
-
+  
 6) Mettere l'ora nella tabella notifiche
 
 7) cambiare il nome delle chiavi esterne delle varie tabelle con nomi sensati (Es. nella tabella gruppi invece di avere "FK_NomeUtente" possiamo mettere "Creatore")
