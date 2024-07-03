@@ -36,12 +36,12 @@
  Foto VARCHAR2(2000),
  Testo VARCHAR2(1000),
  Likes NUMBER DEFAULT 0,
- CONSTRAINT Check_Contenuto Check(Foto<>NULL OR Testo<>NULL),
  FK_IdGruppi NUMBER NOT NULL,
  FK_NomeUtente VARCHAR2(30) NOT NULL,
  Primary key (IdContenuti),
  FOREIGN KEY (FK_NomeUtente) REFERENCES Profili(NomeUtente) ON DELETE CASCADE,
- FOREIGN KEY (FK_IdGruppi) REFERENCES Gruppi(IdGruppi) ON DELETE CASCADE
+ FOREIGN KEY (FK_IdGruppi) REFERENCES Gruppi(IdGruppi) ON DELETE CASCADE,
+ CONSTRAINT Check_Contenuto Check(Foto<>NULL OR Testo<>NULL)
 );
 
 --CREAZIONE TABELLA COMMENTI
@@ -104,7 +104,6 @@ Insert into Profili Values ('Genny03cry', 'Database03', 'Gennaro', 'De Luca', 'M
 --Popolamento Gruppi
 Insert into Gruppi (Nome, Descrizione, fk_nomeutente) Values ('Fantacalcio', 'Ciao', 'Genny03cry');
 Insert into Gruppi (Nome, Descrizione, fk_nomeutente) Values ('SSC_Napoli_Ultras', 'Solo fan del napoli', 'Genny03cry');
-
 
 
 -- TRIGGER 
