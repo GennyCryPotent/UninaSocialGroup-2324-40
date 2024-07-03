@@ -1,14 +1,14 @@
 In questo file scriviamo le varee idee che possiamo fare per migliorare il DB.
 
-1) Avevo pensato di aggiungere i controlli ai vari attributi attraverso i "check" (es. possiamo verificare se l'utente scrive in maniera corretta l'attributo genere)
+1) Avevo pensato di aggiungere i controlli ai vari attributi attraverso i "check" (es. possiamo verificare se l'utente scrive in maniera corretta l'attributo genere)  V
 
 2) Implementare qualche funzione/Procedure direttamente dal DB. (es. funzione aggiunta del contenuto oppure funzione di aggiunta dei commenti)
 
-3) Analizzare gli update, insert, delete sulle varie chiavi esterne che uniscono le tabelle. (es. un commento deve essere eliminato se il post connesso al quel commento viene eliminato)
+3) Analizzare gli update, insert, delete sulle varie chiavi esterne che uniscono le tabelle. (es. un commento deve essere eliminato se il post connesso al quel commento viene eliminato)   V
 
-4) Aggiungere le Date di creazione a Commenti e Contenuti
+4) Aggiungere le Date di creazione a Commenti e Contenuti  V
 
-5) fare il trigger per la Data di Nascita. 
+5) fare il trigger per la Data di Nascita.  V
 
 6) Mettere l'ora nella tabella notifiche
 
