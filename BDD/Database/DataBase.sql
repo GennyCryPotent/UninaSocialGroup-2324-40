@@ -1,26 +1,26 @@
 -- CREAZIONI DELLE TABELLE
 
---CREAZIONE TABELLA PROFILO
+--CREAZIONE TABELLA PROFILI
  CREATE TABLE Profili(
- NomeUtente VARCHAR2(30),
+ Nome_Utente VARCHAR2(30),
  Password VARCHAR2(30) NOT NULL CHECK(length(Password)>=8),
  Nome VARCHAR2(30) NOT NULL,
  Cognome VARCHAR2(30) NOT NULL,
  Genere CHAR(1) NOT NULL CHECK(Genere='M' OR Genere='F' OR Genere='N'),
- DataNascita Date NOT NULL,
- Primary key (NomeUtente)
+ Data_Nascita Date NOT NULL,
+ Primary key (Nome_Utente)
  );
 
 --CREAZIONE TABELLA GRUPPI
  CREATE TABLE Gruppi(
- IdGruppi NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1), 
+ Id_Gruppo NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1), 
  Nome VARCHAR2(30) NOT NULL,
- DataCreazione Date DEFAULT SYSDATE,
+ Data_Creazione Date DEFAULT SYSDATE,
  Descrizione VARCHAR2(100) NOT NULL,
  OnlineC NUMBER(1) DEFAULT 0, --0 offline, 1 online
- FK_NomeUtente VARCHAR2(30) NOT NULL,
- Primary key (IdGruppi),
- FOREIGN KEY (FK_NomeUtente) REFERENCES Profili(NomeUtente) ON DELETE CASCADE
+ FK_Nome_Utente VARCHAR2(30) NOT NULL,
+ Primary key (Id_Gruppo),
+ FOREIGN KEY (FK_Nome_Utente) REFERENCES Profili(Nome_Utente) ON DELETE CASCADE
 );
 
 --CREAZIONE TABELLA TAGS
@@ -31,89 +31,89 @@
 
 --CREAZIONE TABELLA CONTENUTI
  CREATE TABLE Contenuti(
- IdContenuti NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
- DataCreazione Date DEFAULT SYSDATE,
+ Id_Contenuto NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
+ Data_Creazione Date DEFAULT SYSDATE,
  Foto VARCHAR2(2000),
  Testo VARCHAR2(1000),
- FK_IdGruppi NUMBER NOT NULL,
- FK_NomeUtente VARCHAR2(30) NOT NULL,
- Primary key (IdContenuti),
- FOREIGN KEY (FK_NomeUtente) REFERENCES Profili(NomeUtente) ON DELETE CASCADE,
- FOREIGN KEY (FK_IdGruppi) REFERENCES Gruppi(IdGruppi) ON DELETE CASCADE,
+ FK_Id_Gruppo NUMBER NOT NULL,
+ FK_Nome_Utente VARCHAR2(30) NOT NULL,
+ Primary key (Id_Contenuto),
+ FOREIGN KEY (FK_Nome_Utente) REFERENCES Profili(Nome_Utente) ON DELETE CASCADE,
+ FOREIGN KEY (FK_Id_Gruppo) REFERENCES Gruppi(Id_Gruppo) ON DELETE CASCADE,
  CONSTRAINT Check_Contenuto Check(Foto<>NULL OR Testo<>NULL)
 );
 
 --CREAZIONE TABELLA COMMENTI
  CREATE TABLE Commenti(
- IdCommenti NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
- DataCreazione TIMESTAMP DEFAULT SYSTIMESTAMP,
+ Id_Commento NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
+ Data_Creazione TIMESTAMP DEFAULT SYSTIMESTAMP,
  Testo VARCHAR2(1000) NOT NULL,
- FK_IdContenuti NUMBER NOT NULL,
- FK_NomeUtente VARCHAR2(30) NOT NULL,
- Primary key (IdCommenti),
- FOREIGN KEY (FK_NomeUtente) REFERENCES Profili(NomeUtente) ON DELETE CASCADE,
- FOREIGN KEY (FK_IdContenuti) REFERENCES Contenuti(IdContenuti) ON DELETE CASCADE
+ FK_Id_Contenuto NUMBER NOT NULL,
+ FK_Nome_Utente VARCHAR2(30) NOT NULL,
+ Primary key (Id_Commento),
+ FOREIGN KEY (FK_Nome_Utente) REFERENCES Profili(Nome_Utente) ON DELETE CASCADE,
+ FOREIGN KEY (FK_Id_Contenuto) REFERENCES Contenuti(Id_Contenuto) ON DELETE CASCADE
  );
 
 
 --CREAZIONE TABELLA NOTIFICHE GRUPPI
  CREATE TABLE Notifiche_Gruppi(
- IdNotifiche_G NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
+ Id_Notifica_G NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
  Testo VARCHAR2(1000) NOT NULL,
  Data_Notifica TIMESTAMP DEFAULT SYSTIMESTAMP,
- FK_IdGruppi NUMBER NOT NULL,
- FK_NomeUtente VARCHAR2(30) NOT NULL,
- Primary key (IdNotifiche_G),
- FOREIGN KEY (FK_NomeUtente) REFERENCES Profili(NomeUtente) ON DELETE CASCADE,
- FOREIGN KEY (FK_IdGruppi) REFERENCES Gruppi(IdGruppi) ON DELETE CASCADE
+ FK_Id_Gruppo NUMBER NOT NULL,
+ FK_Nome_Utente VARCHAR2(30) NOT NULL,
+ Primary key (Id_Notifica_G),
+ FOREIGN KEY (FK_Nome_Utente) REFERENCES Profili(Nome_Utente) ON DELETE CASCADE,
+ FOREIGN KEY (FK_Id_Gruppo) REFERENCES Gruppi(Id_Gruppo) ON DELETE CASCADE
  );
 
  --CREAZIONE TABELLA NOTIFICHE CONTENUTI
  CREATE TABLE Notifiche_Contenuti(
- IdNotifiche_C NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
+ Id_Notifica_C NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
  Testo VARCHAR2(1000) NOT NULL,
- DataNotifica TIMESTAMP DEFAULT SYSTIMESTAMP,
- FK_IdContenuti NUMBER NOT NULL,
- FK_NomeUtente VARCHAR2(30) NOT NULL,
- Primary key (IdNotifiche_C),
- FOREIGN KEY (FK_NomeUtente) REFERENCES Profili(NomeUtente) ON DELETE CASCADE,
- FOREIGN KEY (FK_IdContenuti) REFERENCES Contenuti(IdContenuti) ON DELETE CASCADE
+ Data_Notifica TIMESTAMP DEFAULT SYSTIMESTAMP,
+ FK_Id_Contenuto NUMBER NOT NULL,
+ FK_Nome_Utente VARCHAR2(30) NOT NULL,
+ Primary key (Id_Notifica_C),
+ FOREIGN KEY (FK_Nome_Utente) REFERENCES Profili(Nome_Utente) ON DELETE CASCADE,
+ FOREIGN KEY (FK_Id_Contenuto) REFERENCES Contenuti(Id_Contenuto) ON DELETE CASCADE
  );
 
  --CREAZIONE TABELLA PARTECIPANO
 create table Partecipano (
- FK_NomeUtente VARCHAR2(30),
- FK_IdGruppi NUMBER,
- Primary key(FK_NomeUtente, FK_IdGruppi),
- FOREIGN KEY (FK_NomeUtente) REFERENCES Profili(NomeUtente) ON DELETE CASCADE,
- FOREIGN KEY (FK_IdGruppi) REFERENCES Gruppi(IdGruppi) ON DELETE CASCADE
+ FK_Nome_Utente VARCHAR2(30),
+ FK_Id_Gruppo NUMBER,
+ Primary key(FK_Nome_Utente, FK_Id_Gruppo),
+ FOREIGN KEY (FK_Nome_Utente) REFERENCES Profili(Nome_Utente) ON DELETE CASCADE,
+ FOREIGN KEY (FK_Id_Gruppo) REFERENCES Gruppi(Id_Gruppo) ON DELETE CASCADE
 );
 
 --CREAZIONE TABELLA REGOLANO (Tabella per gli amministartori)
 create table Regolano (
- FK_NomeUtente VARCHAR2(30),
- FK_IdGruppi NUMBER,
- Primary key(FK_NomeUtente, FK_IdGruppi),
- FOREIGN KEY (FK_NomeUtente) REFERENCES Profili(NomeUtente) ON DELETE CASCADE,
- FOREIGN KEY (FK_IdGruppi) REFERENCES Gruppi(IdGruppi) ON DELETE CASCADE
+ FK_Nome_Utente VARCHAR2(30),
+ FK_Id_Gruppo NUMBER,
+ Primary key(FK_Nome_Utente, FK_Id_Gruppo),
+ FOREIGN KEY (FK_Nome_Utente) REFERENCES Profili(Nome_Utente) ON DELETE CASCADE,
+ FOREIGN KEY (FK_Id_Gruppo) REFERENCES Gruppi(Id_Gruppo) ON DELETE CASCADE
 );
 
 --CREAZIONE TABELLA POSSIEDE 
 create table Possiede(
-FK_IdGruppi NUMBER,
+FK_Id_Gruppo NUMBER,
 FK_Parola VARCHAR2(20),
-Primary key (FK_IdGruppi, FK_Parola),
+Primary key (FK_Id_Gruppo, FK_Parola),
 FOREIGN KEY (FK_Parola) REFERENCES TAGS(Parola) ON DELETE CASCADE,
-FOREIGN KEY (FK_IdGruppi) REFERENCES Gruppi(IdGruppi) ON DELETE CASCADE
+FOREIGN KEY (FK_Id_Gruppo) REFERENCES Gruppi(Id_Gruppo) ON DELETE CASCADE
 );
 
 --CREAZIONE TABELLA LIKES
 CREATE TABLE LIKES(
-FK_NomeUtente VARCHAR2(30),
-FK_IdContenuti NUMBER,
-Primary key (FK_NomeUtente, FK_IdContenuti),
-FOREIGN KEY (FK_NomeUtente) REFERENCES Profili(NomeUtente) ON DELETE CASCADE,
-FOREIGN KEY (FK_IdContenuti) REFERENCES Contenuti(IdContenuti) ON DELETE CASCADE
+FK_Nome_Utente VARCHAR2(30),
+FK_Id_Contenuto NUMBER,
+Primary key (FK_Nome_Utente, FK_Id_Contenuto),
+FOREIGN KEY (FK_Nome_Utente) REFERENCES Profili(Nome_Utente) ON DELETE CASCADE,
+FOREIGN KEY (FK_Id_Contenuto) REFERENCES Contenuti(Id_Contenuto) ON DELETE CASCADE
 );
 
 
@@ -123,13 +123,13 @@ FOREIGN KEY (FK_IdContenuti) REFERENCES Contenuti(IdContenuti) ON DELETE CASCADE
 Insert into Profili Values ('Genny03cry', 'Database03', 'Gennaro', 'De Luca', 'M', TO_DATE('04-11-2003', 'DD-MM-YYYY'));
 
 --Popolamento Gruppi
-Insert into Gruppi (Nome, Descrizione, fk_nomeutente) Values ('Fantacalcio', 'Ciao', 'Genny03cry');
-Insert into Gruppi (Nome, Descrizione, fk_nomeutente) Values ('SSC_Napoli_Ultras', 'Solo fan del napoli', 'Genny03cry');
+Insert into Gruppi (Nome, Descrizione, fk_Nome_Utente) Values ('Fantacalcio', 'Ciao', 'Genny03cry');
+Insert into Gruppi (Nome, Descrizione, fk_Nome_Utente) Values ('SSC_Napoli_Ultras', 'Solo fan del napoli', 'Genny03cry');
 
 
 --Viste 
 CREATE View Contenuti_con_Likes AS (
-    SELECT Contenuti.*, (SELECT COUNT(*) FROM Likes WHERE likes.fk_idcontenuti=Contenuti.IdContenuti) AS N_LIKES FROM Contenuti
+    SELECT Contenuti.*, (SELECT COUNT(*) FROM Likes WHERE likes.fk_Id_Contenuto=Contenuti.Id_Contenuto) AS N_LIKES FROM Contenuti
 );
 
 
@@ -154,8 +154,8 @@ WHEN (NEW.OnlineC = 1 AND OLD.OnlineC = 0)
 
 DECLARE
 
-CURSOR Rec_Utente IS (SELECT FK_NomeUtente FROM partecipano Where FK_idgruppi= :NEW.IdGruppi);
-TMP_Utente Partecipano.FK_NomeUtente%TYPE;
+CURSOR Rec_Utente IS (SELECT FK_Nome_Utente FROM partecipano Where FK_Id_Gruppo= :NEW.Id_Gruppo);
+TMP_Utente Partecipano.FK_Nome_Utente%TYPE;
 
 BEGIN
 
@@ -166,7 +166,7 @@ LOOP
     FETCH Rec_Utente INTO TMP_Utente;
     EXIT WHEN Rec_Utente%NOTFOUND;
 
-    INSERT INTO Notifiche_Gruppi (Testo, FK_IdGruppi, FK_NomeUtente) VALUES ('Il Creatore del gruppo '|| :NEW.Nome || ' è Online!', :NEW.IdGruppi, TMP_Utente); 
+    INSERT INTO Notifiche_Gruppi (Testo, FK_Id_Gruppo, FK_Nome_Utente) VALUES ('Il Creatore del gruppo '|| :NEW.Nome || ' è Online!', :NEW.Id_Gruppo, TMP_Utente); 
 
 END LOOP;
 
@@ -182,22 +182,22 @@ FOR EACH ROW
 
 DECLARE 
 
-CURSOR Rec_Utenti IS (SELECT FK_NomeUtente FROM partecipano Where fk_idgruppi= :NEW.fk_idgruppi);
-TMP_Utente Partecipano.FK_NomeUtente%TYPE;
+CURSOR Rec_Utente IS (SELECT FK_Nome_Utente FROM partecipano Where fk_Id_Gruppo= :NEW.fk_Id_Gruppo);
+TMP_Utente Partecipano.FK_Nome_Utente%TYPE;
 
 BEGIN
 
-OPEN Rec_Utenti;
+OPEN Rec_Utente;
 
 LOOP 
 
-    FETCH Rec_Utenti INTO TMP_Utente;
-    EXIT WHEN Rec_Utenti%NOTFOUND;
+    FETCH Rec_Utente INTO TMP_Utente;
+    EXIT WHEN Rec_Utente%NOTFOUND;
 
-    INSERT INTO Notifiche_Gruppi (Testo, fk_idgruppi, fk_nomeutente) VALUES ('Utente '|| :NEW.FK_NomeUtente || ' ha inserito un nuovo contenuto!', :NEW.FK_IdGruppi, TMP_Utente);
+    INSERT INTO Notifiche_Gruppi (Testo, fk_Id_Gruppo, fk_Nome_Utente) VALUES ('Utente '|| :NEW.FK_Nome_Utente || ' ha inserito un nuovo contenuto!', :NEW.FK_Id_Gruppo, TMP_Utente);
 END LOOP;
 
-CLOSE Rec_Utenti;
+CLOSE Rec_Utente;
 
 END;
 
@@ -208,19 +208,19 @@ AFTER INSERT ON Likes
 FOR EACH ROW
 
 DECLARE
-TMP_Utente Profili.NomeUtente%TYPE;
+TMP_Utente Profili.Nome_Utente%TYPE;
 TMP_Testo Contenuti.Testo%TYPE;
 
 BEGIN
 
-    SELECT FK_NomeUtente INTO TMP_Utente FROM Contenuti WHERE IdContenuti=:NEW.FK_IdContenuti;
-    SELECT Testo INTO TMP_Testo FROM Contenuti WHERE idcontenuti=:NEW.FK_IdContenuti;
+    SELECT FK_Nome_Utente INTO TMP_Utente FROM Contenuti WHERE Id_Contenuto=:NEW.FK_Id_Contenuto;
+    SELECT Testo INTO TMP_Testo FROM Contenuti WHERE Id_Contenuto=:NEW.FK_Id_Contenuto;
 
-    IF(TMP_Utente<>:NEW.FK_NomeUtente) THEN
+    IF(TMP_Utente<>:NEW.FK_Nome_Utente) THEN
         IF(TMP_Testo=NULL) THEN
-            INSERT INTO notifiche_contenuti (Testo, fk_idcontenuti, fk_nomeutente) VALUES (:NEW.FK_NomeUtente || ' ha messo mi piace alla tua foto', :NEW.FK_IdContenuti, TMP_Utente);
+            INSERT INTO notifiche_contenuti (Testo, fk_Id_Contenuto, fk_Nome_Utente) VALUES (:NEW.FK_Nome_Utente || ' ha messo mi piace alla tua foto', :NEW.FK_Id_Contenuto, TMP_Utente);
         ElSE
-            INSERT INTO notifiche_contenuti (Testo, fk_idcontenuti, fk_nomeutente) VALUES (:NEW.FK_NomeUtente || ' ha messo mi piace al tuo contenuto: '|| TMP_Testo, :NEW.FK_IdContenuti, TMP_Utente);
+            INSERT INTO notifiche_contenuti (Testo, fk_Id_Contenuto, fk_Nome_Utente) VALUES (:NEW.FK_Nome_Utente || ' ha messo mi piace al tuo contenuto: '|| TMP_Testo, :NEW.FK_Id_Contenuto, TMP_Utente);
         END IF;
     END IF;
 END;
@@ -231,14 +231,14 @@ AFTER INSERT ON Commenti
 FOR EACH ROW
 
 DECLARE
-TMP_Utente Profili.NomeUtente%TYPE;
+TMP_Utente Profili.Nome_Utente%TYPE;
 
 BEGIN
 
-    SELECT FK_NomeUtente INTO TMP_Utente FROM Contenuti WHERE IdContenuti=:NEW.FK_IdContenuti;
+    SELECT FK_Nome_Utente INTO TMP_Utente FROM Contenuti WHERE Id_Contenuto=:NEW.FK_Id_Contenuto;
 
-    IF(TMP_Utente<>:NEW.FK_NomeUtente) THEN
-        INSERT INTO notifiche_contenuti (Testo, fk_idcontenuti, fk_nomeutente) VALUES (:NEW.FK_NomeUtente || ' ha commentato il tuo contenuto: '|| :NEW.Testo, :NEW.FK_IdContenuti, TMP_Utente);
+    IF(TMP_Utente<>:NEW.FK_Nome_Utente) THEN
+        INSERT INTO notifiche_contenuti (Testo, fk_Id_Contenuto, fk_Nome_Utente) VALUES (:NEW.FK_Nome_Utente || ' ha commentato il tuo contenuto: '|| :NEW.Testo, :NEW.FK_Id_Contenuto, TMP_Utente);
     END IF;
 END;
 
