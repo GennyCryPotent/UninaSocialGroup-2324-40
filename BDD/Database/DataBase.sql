@@ -284,13 +284,4 @@ END;
 /
 
 
--- FUNZIONI/PROCEDURE
-
--- CREAZIONE PROCEDURE PER L'AGGIUNTA DI UN UTENTE NELLA TABALLA PROFILI
-create or replace PROCEDURE Crea_Utente (Nome_Ut IN VARCHAR2, PSW IN VARCHAR2, Nome_P IN VARCHAR2, Cognome_P IN VARCHAR2, Gen IN Char, Data_Di_Nascita IN Date)
-AS
-
-BEGIN
-    INSERT INTO Profili VALUES (Nome_Ut, PSW, Nome_P, Cognome_P, Gen, Data_Di_Nascita);
-END Crea_Utente;
 
