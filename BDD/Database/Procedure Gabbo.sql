@@ -6,7 +6,7 @@ BEGIN
    
    INSERT INTO Commenti (Testo, Id_Contenuto, FK_NOME_UTENTE) VALUES (Testo_C, Id_Cont_C, N_Utente_C); 
 
-END;
+END Crea_Commenti;
 /
 
 --Procedure per la creazione delle Notifiche dei gruppi
@@ -18,7 +18,7 @@ BEGIN
 
    INSERT INTO Notifiche_Gruppi(Testo,FK_Id_Gruppo, FK_Nome_Utente) VALUES (Testo_NG, Id_Gruppo_NG, N_Utente_NG);
 
-END;
+END Crea_Notifiche_Gruppi;
 /
 
 --Procedure per la creazione delle Notifiche dei contenuti 
@@ -29,7 +29,7 @@ BEGIN
 
     INSERT INTO Notifiche_Contenuti(Testo, FK_Id_Contenuto, FK_Nome_Utente) VALUES (Testo_NC, ID_Cont_NC, N_Utente_NC);
 
-END;
+END Crea_Notifiche_Contenuti;
 /
 
 --Procedure per 
@@ -40,7 +40,7 @@ BEGIN
 
    INSERT INTO Notifiche_Richieste_Esiti(Testo, FK_Id_Contenuto, FK_Nome_Utente) VALUES (Testo_NR, ID_Cont_NR, N_Utente_NR);
 
-END;
+END Crea_Notifiche_Richieste_Esiti;
 /
 
 
