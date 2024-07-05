@@ -261,20 +261,21 @@ BEGIN
     END IF;
 END;
 
---Trigger per gestire l'esito
-
-create or replace TRIGGER Cambio_di_Esitato
-AFTER UPDATE ON Notifiche_Richieste_Esiti
+--Trigger che avvisa l'utente che è stato eliminato da un gruppo
+create or replace NONEDITIONABLE TRIGGER Notifica_Eliminazione
+AFTER DELETE ON Partecipano
 FOR EACH ROW
-WHEN (NEW.Esitato <> OLD.Esitato)  
+
+DECLARE
+TMP_Nome_Gruppo Gruppi.Nome%TYPE;
+
 BEGIN
-   
-    IF(:NEW.Esitato = '1') THEN
-        INSERT INTO Notifiche_Richieste_Esiti (Testo, Esitato, FK_Id_Gruppo, FK_Nome_Utente) VALUES (:NEW.FK_Id_Gruppo || ' ha accettato la tua richiesta!', '3', :NEW.FK_Id_Gruppo, :NEW.FK_Nome_Utente);
-        INSERT INTO Partecipano(FK_Nome_Utente, FK_Id_Gruppo) VALUES (:NEW.FK_Nome_Utente, :NEW.KF_Id_Gruppo);
-    ELSE IF (:NEW.Esitato = '2') THEN
-        INSERT INTO Notifiche_Richieste_Esiti (Testo, Esitato, FK_Id_Gruppo, FK_Nome_Utente) VALUES (:NEW.FK_Id_Gruppo || ' ha rifiutato la tua richiesta!', '3', :NEW.FK_Id_Gruppo, :NEW.FK_Nome_Utente);
-    END IF;    
+
+    SELECT Nome INTO TMP_Nome_Gruppo
+    FROM Gruppi
+    WHERE Id_Gruppo=:OLD.FK_Id_Gruppo;
+
+    INSERT INTO Notifiche_Gruppi (Testo, FK_Id_Gruppo, FK_Nome_Utente) VALUES ('Sei stato rimosso dal gruppo ' || TMP_Nome_Gruppo, :OLD.FK_Id_Gruppo, :OLD.FK_Nome_Utente); 
 END;
 
 
@@ -287,23 +288,5 @@ AS
 BEGIN
     INSERT INTO Profili VALUES (Nome_Ut, PSW, Nome_P, Cognome_P, Gen, Data_Di_Nascita);
 END Crea_Utente;
-
--- CREAZIONE PROCEDURE PER L'AGGIUNTA DI UNA NOTIFICA NELLA TABALLA Notifiche_Richieste_Esiti (NON CI SERVE PER IL MOMENTO)
-CREATE OR REPLACE PROCEDURE Inserimento_Notifiche_RE (P_Testo IN Notifiche_Richieste_Esiti.Testo%TYPE, P_Esitato Notifiche_Richieste_Esiti.Esitato%TYPE,
-                                                      P_FK_ID_Gruppo Notifiche_Richieste_Esiti.FK_ID_Gruppo%TYPE, P_FK_Nome_Utente Notifiche_Richieste_Esiti.FK_Nome_Utente%TYPE)
-
-AS
-
-BEGIN
-
-    INSERT INTO Notifiche_Richieste_Esiti (Testo, Esitato, FK_Id_Gruppo, FK_Nome_Utente) VALUES (P_FK_ID_Gruppo || ' ha accettato la tua richiesta!', P_Esitato, P_FK_ID_Gruppo, P_FK_Nome_Utente);
-
-END Inserimento_Notifiche_RE;
-
-
-
-
-
-
 
 
