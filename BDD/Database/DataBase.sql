@@ -14,7 +14,7 @@
 --CREAZIONE TABELLA GRUPPI
  CREATE TABLE Gruppi(
  Id_Gruppo NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1), 
- Nome VARCHAR2(30) NOT NULL,
+ Nome VARCHAR2(30) NOT NULL UNIQUE,
  Data_Creazione Date DEFAULT SYSDATE,
  Descrizione VARCHAR2(100) NOT NULL,
  OnlineC NUMBER(1) DEFAULT 0, --0 offline, 1 online
@@ -61,6 +61,7 @@
  Id_Notifica_G NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
  Testo VARCHAR2(1000) NOT NULL,
  Data_Notifica TIMESTAMP DEFAULT SYSTIMESTAMP,
+ Visualizzato CHAR(1) DEFAULT '0' CHECK(Visualizzato='0' OR Visualizzato='1'), --0 non visualizzato, 1 visualizzato
  FK_Id_Gruppo NUMBER NOT NULL,
  FK_Nome_Utente VARCHAR2(30) NOT NULL,
  Primary key (Id_Notifica_G),
@@ -73,12 +74,26 @@
  Id_Notifica_C NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
  Testo VARCHAR2(1000) NOT NULL,
  Data_Notifica TIMESTAMP DEFAULT SYSTIMESTAMP,
+ Visualizzato CHAR(1) DEFAULT '0' CHECK(Visualizzato='0' OR Visualizzato='1'), --0 non visualizzato, 1 visualizzato
  FK_Id_Contenuto NUMBER NOT NULL,
  FK_Nome_Utente VARCHAR2(30) NOT NULL,
  Primary key (Id_Notifica_C),
  FOREIGN KEY (FK_Nome_Utente) REFERENCES Profili(Nome_Utente) ON DELETE CASCADE,
  FOREIGN KEY (FK_Id_Contenuto) REFERENCES Contenuti(Id_Contenuto) ON DELETE CASCADE
  );
+
+--CREAZIONE TABELLA NOTIFICHE_RICHIESTE_ESITI
+ CREATE TABLE Notifiche_Richieste_Esiti(
+ Id_Notifica_RE NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
+ Testo VARCHAR2(1000) NOT NULL,
+ Data_Notifica TIMESTAMP DEFAULT SYSTIMESTAMP,
+ Esitato CHAR(1) DEFAULT '0' CHECK(Esitato='0' OR Esitato='1' OR Esitato='2' OR Esitato='3'), --0 non risposto, 1 accettato, 2 rifutato , 3 notifica di esito
+ FK_Id_Gruppo NUMBER NOT NULL,
+ FK_Nome_Utente VARCHAR2(30) NOT NULL,
+ Primary key (Id_Notifica_RE),
+ FOREIGN KEY (FK_Nome_Utente) REFERENCES Profili(Nome_Utente) ON DELETE CASCADE,
+ FOREIGN KEY (FK_Id_Gruppo) REFERENCES Gruppi(Id_Gruppo) ON DELETE CASCADE
+);
 
  --CREAZIONE TABELLA PARTECIPANO
 create table Partecipano (
@@ -121,10 +136,14 @@ FOREIGN KEY (FK_Id_Contenuto) REFERENCES Contenuti(Id_Contenuto) ON DELETE CASCA
 
 --Popolamento Profili
 Insert into Profili Values ('Genny03cry', 'Database03', 'Gennaro', 'De Luca', 'M', TO_DATE('04-11-2003', 'DD-MM-YYYY'));
+Insert into Profili Values ('Gabbo', 'SonoIo', 'Gabriele', 'Cifuni', 'F', TO_DATE('21-4-2002', 'DD-MM-YYYY'))
 
 --Popolamento Gruppi
 Insert into Gruppi (Nome, Descrizione, fk_Nome_Utente) Values ('Fantacalcio', 'Ciao', 'Genny03cry');
 Insert into Gruppi (Nome, Descrizione, fk_Nome_Utente) Values ('SSC_Napoli_Ultras', 'Solo fan del napoli', 'Genny03cry');
+
+--Popolamneto NOTIFICHE_RICHIESTE_ESITI
+INSERT INTO Notifiche_Richieste_Esiti (Testo, FK_Id_Gruppo, FK_Nome_Utente) VALUES ('Ha inviato richiesta', 1, 'Gabbo');
 
 
 --Viste 
@@ -166,7 +185,7 @@ LOOP
     FETCH Rec_Utente INTO TMP_Utente;
     EXIT WHEN Rec_Utente%NOTFOUND;
 
-    INSERT INTO Notifiche_Gruppi (Testo, FK_Id_Gruppo, FK_Nome_Utente) VALUES ('Il Creatore del gruppo '|| :NEW.Nome || ' è Online!', :NEW.Id_Gruppo, TMP_Utente); 
+    INSERT INTO Notifiche_Gruppi (Testo, FK_Id_Gruppo, FK_Nome_Utente) VALUES ('Il creatore del gruppo '|| :NEW.Nome || ' è Online!', :NEW.Id_Gruppo, TMP_Utente); 
 
 END LOOP;
 
@@ -241,5 +260,50 @@ BEGIN
         INSERT INTO notifiche_contenuti (Testo, fk_Id_Contenuto, fk_Nome_Utente) VALUES (:NEW.FK_Nome_Utente || ' ha commentato il tuo contenuto: '|| :NEW.Testo, :NEW.FK_Id_Contenuto, TMP_Utente);
     END IF;
 END;
+
+--Trigger per gestire l'esito
+
+create or replace TRIGGER Cambio_di_Esitato
+AFTER UPDATE ON Notifiche_Richieste_Esiti
+FOR EACH ROW
+WHEN (NEW.Esitato <> OLD.Esitato)  
+BEGIN
+   
+    IF(:NEW.Esitato = '1') THEN
+        INSERT INTO Notifiche_Richieste_Esiti (Testo, Esitato, FK_Id_Gruppo, FK_Nome_Utente) VALUES (:NEW.FK_Id_Gruppo || ' ha accettato la tua richiesta!', '3', :NEW.FK_Id_Gruppo, :NEW.FK_Nome_Utente);
+        INSERT INTO Partecipano(FK_Nome_Utente, FK_Id_Gruppo) VALUES (:NEW.FK_Nome_Utente, :NEW.KF_Id_Gruppo);
+    ELSE IF (:NEW.Esitato = '2') THEN
+        INSERT INTO Notifiche_Richieste_Esiti (Testo, Esitato, FK_Id_Gruppo, FK_Nome_Utente) VALUES (:NEW.FK_Id_Gruppo || ' ha rifiutato la tua richiesta!', '3', :NEW.FK_Id_Gruppo, :NEW.FK_Nome_Utente);
+    END IF;    
+END;
+
+
+-- FUNZIONI/PROCEDURE
+
+-- CREAZIONE PROCEDURE PER L'AGGIUNTA DI UN UTENTE NELLA TABALLA PROFILI
+create or replace PROCEDURE Crea_Utente (Nome_Ut IN VARCHAR2, PSW IN VARCHAR2, Nome_P IN VARCHAR2, Cognome_P IN VARCHAR2, Gen IN Char, Data_Di_Nascita IN Date)
+AS
+
+BEGIN
+    INSERT INTO Profili VALUES (Nome_Ut, PSW, Nome_P, Cognome_P, Gen, Data_Di_Nascita);
+END Crea_Utente;
+
+--
+CREATE OR REPLACE PROCEDURE Inserimento_Notifiche_RE (P_Testo IN Notifiche_Richieste_Esiti.Testo%TYPE, P_Esitato Notifiche_Richieste_Esiti.Esitato%TYPE,
+                                                      P_FK_ID_Gruppo Notifiche_Richieste_Esiti.FK_ID_Gruppo%TYPE, P_FK_Nome_Utente Notifiche_Richieste_Esiti.FK_Nome_Utente%TYPE)
+
+AS
+
+BEGIN
+
+    INSERT INTO Notifiche_Richieste_Esiti (Testo, Esitato, FK_Id_Gruppo, FK_Nome_Utente) VALUES (P_FK_ID_Gruppo || ' ha accettato la tua richiesta!', P_Esitato, P_FK_ID_Gruppo, P_FK_Nome_Utente);
+
+END Inserimento_Notifiche_RE;
+/
+
+
+
+
+
 
 

@@ -13,7 +13,7 @@ In questo file scriviamo le varee idee che possiamo fare per migliorare il DB.
   
 [✅] 6) Mettere l'ora nella tabella notifiche
 
-[ ] 7) Aggiungere una tabella Notifiche_Richieste_Esiti_Partecipazioni dove sono salvate tutte le richieste e i relativi esiti di una richiesta ad un gruppo
+[✅] 7) Aggiungere una tabella Notifiche_Richieste_Esiti_Partecipazioni dove sono salvate tutte le richieste e i relativi esiti di una richiesta ad un gruppo
 
 
 
@@ -24,8 +24,8 @@ In questo file scriviamo le varee idee che possiamo fare per migliorare il DB.
 
 COSE DA SISTEMARE:
 
-[ ] 1) Vedere tutti i nomi O SINGOLARE O PLURALE
+[✅] 1) Vedere tutti i nomi O SINGOLARE O PLURALE
 
-[ ] 2) Vedere tutti i nomi con lo stesso standard Se Chiamo IdNotifiche non posso fare dopo FK_IdContenuti (O USO IL _ O USO I NOMI ATTACCATI)
+[✅] 2) Vedere tutti i nomi con lo stesso standard Se Chiamo IdNotifiche non posso fare dopo FK_IdContenuti (O USO IL _ O USO I NOMI ATTACCATI)
 
-[ ] 3) cambiare il nome delle chiavi esterne delle varie tabelle con nomi sensati (Es. nella tabella gruppi invece di avere "FK_NomeUtente" possiamo mettere "Creatore")
+[✅] 3) cambiare il nome delle chiavi esterne delle varie tabelle con nomi sensati (Es. nella tabella gruppi invece di avere "FK_NomeUtente" possiamo mettere "Creatore")

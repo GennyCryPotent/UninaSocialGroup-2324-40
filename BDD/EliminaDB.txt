@@ -1,0 +1,13 @@
+drop table "SYSTEM"."REGOLANO" cascade constraints PURGE;
+drop table "SYSTEM"."PROFILI" cascade constraints PURGE;
+drop table "SYSTEM"."GRUPPI" cascade constraints PURGE;
+drop table "SYSTEM"."TAGS" cascade constraints PURGE;
+drop table "SYSTEM"."CONTENUTI" cascade constraints PURGE;
+drop table "SYSTEM"."COMMENTI" cascade constraints PURGE;
+drop table "SYSTEM"."NOTIFICHE_GRUPPI" cascade constraints PURGE;
+drop table "SYSTEM"."NOTIFICHE_CONTENUTI" cascade constraints PURGE;
+drop table "SYSTEM"."NOTIFICHE_RICHIESTE_ESITI" cascade constraints PURGE;
+drop table "SYSTEM"."PARTECIPANO" cascade constraints PURGE;
+drop table "SYSTEM"."REGOLANO" cascade constraints PURGE;
+drop table "SYSTEM"."POSSIEDE" cascade constraints PURGE;
+drop table "SYSTEM"."LIKES" cascade constraints PURGE;

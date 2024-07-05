@@ -8,4 +8,6 @@ Triggers:
 
 - Un utente ha interagito ad un contenuto di cui si è autori. -> quando un utente interagisce (mi piace o altro) il creatore del post riceve una notifica V
 
-- 
+- quando si rimuove l'utente si invia la notifica
+
+[] 6) Verificare che prima dell'inserimento in Notifica_richieste_esiti non ci sia già presente un record uguale ancora da esitare (con esito = 0) 
