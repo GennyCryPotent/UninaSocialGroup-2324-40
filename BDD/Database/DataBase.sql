@@ -288,7 +288,7 @@ BEGIN
     INSERT INTO Profili VALUES (Nome_Ut, PSW, Nome_P, Cognome_P, Gen, Data_Di_Nascita);
 END Crea_Utente;
 
---
+-- CREAZIONE PROCEDURE PER L'AGGIUNTA DI UNA NOTIFICA NELLA TABALLA Notifiche_Richieste_Esiti (NON CI SERVE PER IL MOMENTO)
 CREATE OR REPLACE PROCEDURE Inserimento_Notifiche_RE (P_Testo IN Notifiche_Richieste_Esiti.Testo%TYPE, P_Esitato Notifiche_Richieste_Esiti.Esitato%TYPE,
                                                       P_FK_ID_Gruppo Notifiche_Richieste_Esiti.FK_ID_Gruppo%TYPE, P_FK_Nome_Utente Notifiche_Richieste_Esiti.FK_Nome_Utente%TYPE)
 
