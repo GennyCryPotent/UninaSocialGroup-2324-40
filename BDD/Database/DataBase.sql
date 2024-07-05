@@ -299,7 +299,7 @@ BEGIN
     INSERT INTO Notifiche_Richieste_Esiti (Testo, Esitato, FK_Id_Gruppo, FK_Nome_Utente) VALUES (P_FK_ID_Gruppo || ' ha accettato la tua richiesta!', P_Esitato, P_FK_ID_Gruppo, P_FK_Nome_Utente);
 
 END Inserimento_Notifiche_RE;
-/
+
 
 
 
