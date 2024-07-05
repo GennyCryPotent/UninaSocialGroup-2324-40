@@ -9,5 +9,6 @@ drop table "SYSTEM"."NOTIFICHE_CONTENUTI" cascade constraints PURGE;
 drop table "SYSTEM"."NOTIFICHE_RICHIESTE_ESITI" cascade constraints PURGE;
 drop table "SYSTEM"."PARTECIPANO" cascade constraints PURGE;
 drop table "SYSTEM"."REGOLANO" cascade constraints PURGE;
-drop table "SYSTEM"."POSSIEDE" cascade constraints PURGE;
+drop table "SYSTEM"."POSSIEDONO" cascade constraints PURGE;
 drop table "SYSTEM"."LIKES" cascade constraints PURGE;
+drop view "SYSTEM"."CONTENUTI_CON_LIKES";

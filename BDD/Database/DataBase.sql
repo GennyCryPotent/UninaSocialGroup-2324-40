@@ -113,8 +113,8 @@ create table Regolano (
  FOREIGN KEY (FK_Id_Gruppo) REFERENCES Gruppi(Id_Gruppo) ON DELETE CASCADE
 );
 
---CREAZIONE TABELLA POSSIEDE 
-create table Possiede(
+--CREAZIONE TABELLA POSSIEDONO 
+create table Possiedono(
 FK_Id_Gruppo NUMBER,
 FK_Parola VARCHAR2(20),
 Primary key (FK_Id_Gruppo, FK_Parola),
@@ -135,8 +135,8 @@ FOREIGN KEY (FK_Id_Contenuto) REFERENCES Contenuti(Id_Contenuto) ON DELETE CASCA
 --POPOLAZIONE DB
 
 --Popolamento Profili
-Insert into Profili Values ('Genny03cry', 'Database03', 'Gennaro', 'De Luca', 'M', TO_DATE('04-11-2003', 'DD-MM-YYYY'));
-Insert into Profili Values ('Gabbo', 'SonoIo', 'Gabriele', 'Cifuni', 'F', TO_DATE('21-4-2002', 'DD-MM-YYYY'))
+Insert into Profili (Nome_Utente, Password, Nome, Cognome, Genere, Data_Nascita)Values ('Genny03cry', 'Database03', 'Gennaro', 'De Luca', 'M', TO_DATE('04-11-2003', 'DD-MM-YYYY'));
+Insert into Profili (Nome_Utente, Password, Nome, Cognome, Genere, Data_Nascita) Values ('Gabbo', 'SonoIo02', 'Gabriele', 'Cifuni', 'F', TO_DATE('21-4-2002', 'DD-MM-YYYY'));
 
 --Popolamento Gruppi
 Insert into Gruppi (Nome, Descrizione, fk_Nome_Utente) Values ('Fantacalcio', 'Ciao', 'Genny03cry');
@@ -158,11 +158,12 @@ CREATE View Contenuti_con_Likes AS (
 create or replace TRIGGER Check_DataNascita
 BEFORE INSERT ON Profili
 FOR EACH ROW
-WHEN (NEW.DataNascita>SYSDATE)
+WHEN (NEW.Data_Nascita>SYSDATE)
 
 BEGIN
     RAISE_APPLICATION_ERROR(-20001, 'La data di nascita deve essere minore o uguale alla data attuale'); -- Eccezione che ci permette di avere un messaggio personalizzato
 END;
+/
 
 
 --Trigger che avvisa gli utenti di un gruppo quando il creatore è online
@@ -192,7 +193,7 @@ END LOOP;
 CLOSE Rec_Utente;
 
 END;
-
+/
 
 --Trigger che avvisa gli utenti iscritti ad un gruppo che un utente ha messo un contenuto
 create or replace TRIGGER Invia_Notifica_G
@@ -219,6 +220,7 @@ END LOOP;
 CLOSE Rec_Utente;
 
 END;
+/
 
 
 --Trigger che avvisa l'utente che un altro utente ha interagito con un like al suo post
@@ -243,6 +245,7 @@ BEGIN
         END IF;
     END IF;
 END;
+/
 
 --Trigger che avvisa l'utente che un altro utente ha interagito con un commento al suo post
 create or replace TRIGGER Notifica_Commenti
@@ -260,6 +263,7 @@ BEGIN
         INSERT INTO notifiche_contenuti (Testo, fk_Id_Contenuto, fk_Nome_Utente) VALUES (:NEW.FK_Nome_Utente || ' ha commentato il tuo contenuto: '|| :NEW.Testo, :NEW.FK_Id_Contenuto, TMP_Utente);
     END IF;
 END;
+/
 
 --Trigger che avvisa l'utente che è stato eliminato da un gruppo
 create or replace NONEDITIONABLE TRIGGER Notifica_Eliminazione
@@ -277,6 +281,7 @@ BEGIN
 
     INSERT INTO Notifiche_Gruppi (Testo, FK_Id_Gruppo, FK_Nome_Utente) VALUES ('Sei stato rimosso dal gruppo ' || TMP_Nome_Gruppo, :OLD.FK_Id_Gruppo, :OLD.FK_Nome_Utente); 
 END;
+/
 
 
 -- FUNZIONI/PROCEDURE
@@ -288,5 +293,4 @@ AS
 BEGIN
     INSERT INTO Profili VALUES (Nome_Ut, PSW, Nome_P, Cognome_P, Gen, Data_Di_Nascita);
 END Crea_Utente;
-
 
