@@ -1,1 +1,4 @@
 [] 1) Funzione di aggiunta Commenti, Gruppi, 
+
+[] 2) Funzione che ritorna i vari tipi di notifiche
+
