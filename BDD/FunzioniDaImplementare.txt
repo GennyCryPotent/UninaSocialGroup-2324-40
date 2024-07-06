@@ -1,4 +1,7 @@
 [] 1) Funzione di aggiunta Commenti, Gruppi, 
 
-[] 2) Funzione che ritorna i vari tipi di notifiche
+[] 2) Funzione che ritorna i vari tipi di notifiche, gruppi, contenuti
 
+[] 3) Funzione di eliminazione di Profili, Contenuti, Commenti, Utenti dai gruppi ecc..
+
+[] 4) Funzione di modifica (solo attributi essenziali)
