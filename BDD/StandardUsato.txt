@@ -3,6 +3,6 @@
 - Nomi attributi : singolare
 - Trigger : singolare
 - viste : plurale
-- funzioni : 
+- funzioni : singolare
 - variabili : singolare
 
