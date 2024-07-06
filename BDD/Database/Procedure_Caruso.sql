@@ -27,10 +27,10 @@ END Crea_Likes;
 
 -- CREA POSSIEDONO
 
-create or replace NONEDITIONABLE PROCEDURE Crea_Possiedono (P_Id_Gruppo IN Possiedono.FK_Id_Gruppo%TYPE, P_FK_Parola IN Possiedono.FK_Parola%TYPE )
+create or replace PROCEDURE Crea_Possiedono (P_Id_Gruppo IN Possiedono.FK_Id_Gruppo%TYPE, P_FK_Parola IN Possiedono.FK_Parola%TYPE )
 AS
 
 BEGIN
-    INSERT INTO Possiedono VALUES (P_Id_Gruppo, P_Parola);
+    INSERT INTO Possiedono VALUES (P_Id_Gruppo, P_FK_Parola);
 END Crea_Possiedono;
 /

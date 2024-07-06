@@ -4,3 +4,5 @@
 2) chiedere se tutti i partecipanti (persone normali, amministratori, creatori) possono far parte della tabella partecipano
 
 3) Le FK devono avere nomi creativi oppure nomi uguali al PK
+
+4) La classe DAO deve implementare le funzioni specifiche per il collegamento e esecuzione della query oppure può usare altre classi
