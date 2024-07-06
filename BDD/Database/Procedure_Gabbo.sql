@@ -1,44 +1,43 @@
 --Procedure per la creazione dei commenti
-CREATE OR REPLACE PROCEDURE Crea_Commenti(Testo_C Commento.Testo%TYPE, Id_Cont_C Commento.FK_Id_Contenuto%TYPE, N_Utente_C Commento.FK_Nome_Utente%TYPE)
+CREATE OR REPLACE PROCEDURE Crea_Commenti(P_Testo IN Commento.Testo%TYPE, P_Id_Contenuto IN Commento.FK_Id_Contenuto%TYPE, P_FK_Nome_Utente IN Commento.FK_Nome_Utente%TYPE)
 AS 
   
 BEGIN 
    
-   INSERT INTO Commenti (Testo, Id_Contenuto, FK_NOME_UTENTE) VALUES (Testo_C, Id_Cont_C, N_Utente_C); 
+   INSERT INTO Commenti (Testo, Id_Contenuto, FK_NOME_UTENTE) VALUES (P_Testo, P_Id_Contenuto, P_FK_Nome_Utente); 
 
 END Crea_Commenti;
 /
 
 --Procedure per la creazione delle Notifiche dei gruppi
-CREATE OR REPLACE PROCEDURE Crea_Notifiche_Gruppi(Testo_NG Notifiche_Gruppi.Testo%TYPE, 
- Id_Gruppo_NG Notifiche_Gruppi.FK_Id_Gruppo%TYPE, N_Utente_NG Notifiche_Gruppi.FK_Nome_Utente%TYPE)
+CREATE OR REPLACE PROCEDURE Crea_Notifiche_Gruppi(P_Testo IN Notifiche_Gruppi.Testo%TYPE, P_FK_Id_Gruppo IN Notifiche_Gruppi.FK_Id_Gruppo%TYPE, P_FK_Nome_Utente IN Notifiche_Gruppi.FK_Nome_Utente%TYPE)
 AS
 
 BEGIN
 
-   INSERT INTO Notifiche_Gruppi(Testo,FK_Id_Gruppo, FK_Nome_Utente) VALUES (Testo_NG, Id_Gruppo_NG, N_Utente_NG);
+   INSERT INTO Notifiche_Gruppi(Testo,FK_Id_Gruppo, FK_Nome_Utente) VALUES (P_Testo,P_FK_Id_Gruppo, P_FK_Nome_Utente);
 
 END Crea_Notifiche_Gruppi;
 /
 
 --Procedure per la creazione delle Notifiche dei contenuti 
-CREATE OR REPLACE PROCEDURE Crea_Notifiche_Contenuti(Testo_NC Notifiche_Contenuti.Testo%TYPE,  ID_Cont_NC Notifiche_Contenuti.FK_Id_Contenuto%TYPE , N_Utente_NC Notifiche_Contenuti.FK_Nome_Utente%TYPE)
-AS
-
-BEGIN
-
-    INSERT INTO Notifiche_Contenuti(Testo, FK_Id_Contenuto, FK_Nome_Utente) VALUES (Testo_NC, ID_Cont_NC, N_Utente_NC);
+CREATE OR REPLACE PROCEDURE Crea_Notifiche_Contenuti(P_Testo IN Notifiche_Contenuti.Testo%TYPE, P_Id_Contenuto IN Notifiche_Contenuti.FK_Id_Contenuto%TYPE, P_FK_Nome_Utente IN Notifiche_Contenuti.FK_Nome_Utente%TYPE)
+AS 
+  
+BEGIN 
+   
+   INSERT INTO Notifiche_Contenuti (Testo, Id_Contenuto, FK_NOME_UTENTE) VALUES (P_Testo, P_Id_Contenuto, P_FK_Nome_Utente); 
 
 END Crea_Notifiche_Contenuti;
 /
 
 --Procedure per 
-CREATE OR REPLACE PROCEDURE Crea_Notifiche_Richieste_Esiti(Testo_NR Notifiche_Richieste_Esiti.Testo%TYPE,  ID_Cont_NR Notifiche_Richieste_Esiti.FK_Id_Contenuto%TYPE , N_Utente_NR Notifiche_Richieste_Esiti.FK_Nome_Utente%TYPE)
+CREATE OR REPLACE PROCEDURE Crea_Notifiche_Richieste_Esiti(P_Testo IN Notifiche_Richieste_Esiti.Testo%TYPE,  P_FK_Id_Gruppo IN Notifiche_Richieste_Esiti.FK_Id_Gruppo%TYPE , P_FK_Nome_Utente IN Notifiche_Richieste_Esiti.FK_Nome_Utente%TYPE)
 AS 
 
 BEGIN 
 
-   INSERT INTO Notifiche_Richieste_Esiti(Testo, FK_Id_Contenuto, FK_Nome_Utente) VALUES (Testo_NR, ID_Cont_NR, N_Utente_NR);
+   INSERT INTO Notifiche_Richieste_Esiti(Testo, FK_Id_Gruppo, FK_Nome_Utente) VALUES (P_Testo, P_FK_Id_Gruppo, P_FK_Nome_Utente);
 
 END Crea_Notifiche_Richieste_Esiti;
 /
