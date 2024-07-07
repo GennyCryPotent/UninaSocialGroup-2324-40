@@ -31,7 +31,7 @@ BEGIN
 END Crea_Notifiche_Contenuti;
 /
 
---Procedure per 
+--Procedure per la creazione delle Notifiche dei contenuti
 CREATE OR REPLACE PROCEDURE Crea_Notifiche_Richieste_Esiti(P_Testo IN Notifiche_Richieste_Esiti.Testo%TYPE,  P_FK_Id_Gruppo IN Notifiche_Richieste_Esiti.FK_Id_Gruppo%TYPE , P_FK_Nome_Utente IN Notifiche_Richieste_Esiti.FK_Nome_Utente%TYPE)
 AS 
 
