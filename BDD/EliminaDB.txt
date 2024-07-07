@@ -12,3 +12,16 @@ drop table "SYSTEM"."REGOLANO" cascade constraints PURGE;
 drop table "SYSTEM"."POSSIEDONO" cascade constraints PURGE;
 drop table "SYSTEM"."LIKES" cascade constraints PURGE;
 drop view "SYSTEM"."CONTENUTI_CON_LIKES";
+
+drop procedure "SYSTEM"."CREA_COMMENTO";
+drop procedure "SYSTEM"."CREA_CONTENUTO";
+drop procedure "SYSTEM"."CREA_GRUPPO";
+drop procedure "SYSTEM"."CREA_LIKE";
+drop procedure "SYSTEM"."CREA_NOTIFICA_CONTENUTO";
+drop procedure "SYSTEM"."CREA_NOTIFICA_GRUPPO";
+drop procedure "SYSTEM"."CREA_NOTIFICA_RICHIESTA_ESITO";
+drop procedure "SYSTEM"."CREA_PARTECIPANO";
+drop procedure "SYSTEM"."CREA_POSSIEDONO";
+drop procedure "SYSTEM"."CREA_REGOLANO";
+drop procedure "SYSTEM"."CREA_TAG";
+drop procedure "SYSTEM"."CREA_UTENTE";

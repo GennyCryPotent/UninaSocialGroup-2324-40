@@ -1,12 +1,12 @@
 --Procedure per la creazione dei commenti
-CREATE OR REPLACE PROCEDURE Crea_Commenti(P_Testo IN Commento.Testo%TYPE, P_Id_Contenuto IN Commento.FK_Id_Contenuto%TYPE, P_FK_Nome_Utente IN Commento.FK_Nome_Utente%TYPE)
+CREATE OR REPLACE PROCEDURE Crea_Commento(P_Testo IN Commenti.Testo%TYPE, P_FK_Id_Contenuto IN Commenti.FK_Id_Contenuto%TYPE, P_FK_Nome_Utente IN Commenti.FK_Nome_Utente%TYPE)
 AS 
   
 BEGIN 
    
-   INSERT INTO Commenti (Testo, Id_Contenuto, FK_NOME_UTENTE) VALUES (P_Testo, P_Id_Contenuto, P_FK_Nome_Utente); 
+   INSERT INTO Commenti (Testo, FK_Id_Contenuto, FK_NOME_UTENTE) VALUES (P_Testo, P_FK_Id_Contenuto, P_FK_Nome_Utente); 
 
-END Crea_Commenti;
+END Crea_Commento;
 /
 
 --Procedure per la creazione delle Notifiche dei gruppi
@@ -21,12 +21,12 @@ END Crea_Notifiche_Gruppi;
 /
 
 --Procedure per la creazione delle Notifiche dei contenuti 
-CREATE OR REPLACE PROCEDURE Crea_Notifiche_Contenuti(P_Testo IN Notifiche_Contenuti.Testo%TYPE, P_Id_Contenuto IN Notifiche_Contenuti.FK_Id_Contenuto%TYPE, P_FK_Nome_Utente IN Notifiche_Contenuti.FK_Nome_Utente%TYPE)
+CREATE OR REPLACE PROCEDURE Crea_Notifiche_Contenuti(P_Testo IN Notifiche_Contenuti.Testo%TYPE, P_FK_Id_Contenuto IN Notifiche_Contenuti.FK_Id_Contenuto%TYPE, P_FK_Nome_Utente IN Notifiche_Contenuti.FK_Nome_Utente%TYPE)
 AS 
   
 BEGIN 
    
-   INSERT INTO Notifiche_Contenuti (Testo, Id_Contenuto, FK_NOME_UTENTE) VALUES (P_Testo, P_Id_Contenuto, P_FK_Nome_Utente); 
+   INSERT INTO Notifiche_Contenuti (Testo, FK_Id_Contenuto, FK_NOME_UTENTE) VALUES (P_Testo, P_FK_Id_Contenuto, P_FK_Nome_Utente); 
 
 END Crea_Notifiche_Contenuti;
 /
