@@ -224,28 +224,6 @@ BEGIN
 END Crea_Commento;
 /
 
---Procedure per la creazione delle Notifiche dei gruppi
-CREATE OR REPLACE PROCEDURE Crea_Notifica_Gruppo(P_Testo IN Notifiche_Gruppi.Testo%TYPE, P_FK_Id_Gruppo IN Notifiche_Gruppi.FK_Id_Gruppo%TYPE, P_FK_Nome_Utente IN Notifiche_Gruppi.FK_Nome_Utente%TYPE)
-AS
-
-BEGIN
-
-   INSERT INTO Notifiche_Gruppi(Testo,FK_Id_Gruppo, FK_Nome_Utente) VALUES (P_Testo,P_FK_Id_Gruppo, P_FK_Nome_Utente);
-
-END Crea_Notifica_Gruppo;
-/
-
---Procedure per la creazione delle Notifiche dei contenuti 
-CREATE OR REPLACE PROCEDURE Crea_Notifica_Contenuto(P_Testo IN Notifiche_Contenuti.Testo%TYPE, P_FK_Id_Contenuto IN Notifiche_Contenuti.FK_Id_Contenuto%TYPE, P_FK_Nome_Utente IN Notifiche_Contenuti.FK_Nome_Utente%TYPE)
-AS 
-  
-BEGIN 
-   
-   INSERT INTO Notifiche_Contenuti (Testo, FK_Id_Contenuto, FK_NOME_UTENTE) VALUES (P_Testo, P_FK_Id_Contenuto, P_FK_Nome_Utente); 
-
-END Crea_Notifica_Contenuto;
-/
-
 --Procedure per la creazione delle Notifiche delle richieste
 CREATE OR REPLACE PROCEDURE Crea_Notifica_Richiesta_Esito(P_Testo IN Notifiche_Richieste_Esiti.Testo%TYPE,  P_FK_Id_Gruppo IN Notifiche_Richieste_Esiti.FK_Id_Gruppo%TYPE , P_FK_Nome_Utente IN Notifiche_Richieste_Esiti.FK_Nome_Utente%TYPE)
 AS 
