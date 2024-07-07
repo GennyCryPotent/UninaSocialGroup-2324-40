@@ -10,4 +10,4 @@ Triggers:
 
 - quando si rimuove l'utente si invia la notifica V
 
-- un utente può mettere solo un like ad un post
+- un utente può mettere solo un like ad un post V 

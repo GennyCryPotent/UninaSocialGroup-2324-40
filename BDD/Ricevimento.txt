@@ -6,5 +6,3 @@
 3) Le FK devono avere nomi creativi oppure nomi uguali al PK
 
 4) La classe DAO deve implementare le funzioni specifiche per il collegamento e esecuzione della query oppure può usare altre classi
-
-5) Per la modifica, dobbiamo fare un procedura che modifica ogni singolo attributo

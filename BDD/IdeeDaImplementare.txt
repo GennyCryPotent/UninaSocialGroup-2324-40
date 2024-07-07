@@ -28,4 +28,8 @@ COSE DA SISTEMARE:
 
 [✅] 2) Vedere tutti i nomi con lo stesso standard Se Chiamo IdNotifiche non posso fare dopo FK_IdContenuti (O USO IL _ O USO I NOMI ATTACCATI)
 
-[✅] 3) cambiare il nome delle chiavi esterne delle varie tabelle con nomi sensati (Es. nella tabella gruppi invece di avere "FK_NomeUtente" possiamo mettere "Creatore")
+[] 3) cambiare il nome delle chiavi esterne delle varie tabelle con nomi sensati (Es. nella tabella gruppi invece di avere "FK_NomeUtente" possiamo mettere "Creatore")
+
+[] 4) Trovare un modo per inserire la notifica al creatore del gruppo in NOTIFICHE_RICHIESTE_ESITI quando un utente fa una richiesta per partecipare al gruppo
+
+

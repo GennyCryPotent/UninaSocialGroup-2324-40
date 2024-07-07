@@ -129,11 +129,42 @@ BEGIN
 END;
 /
 
+--Trigger che verifica se un utente ha già messo like ad un contenuto
+CREATE OR REPLACE TRIGGER Verifica_Like
+BEFORE INSERT ON Likes
+FOR EACH ROW
+
+DECLARE
+Check_Like NUMBER;
+
+BEGIN
+
+    SELECT Count(*) INTO Check_Like
+    FROM Likes
+    WHERE fk_id_contenuto = :NEW.fk_id_contenuto AND fk_nome_utente = :NEW.fk_nome_utente;
+    
+    IF(Check_Like = 1) THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Hai già messo like a questo contenuto'); -- Eccezione che ci permette di avere un messaggio personalizzato
+    END IF;
+
+END;
+/
+
+
 
 --PROCEDURE IMPORTANTI
 
+--MODIFICA UN SINGOLO ATTRIBUTO DELLA TABELLA PROFILI
+create or replace NONEDITIONABLE PROCEDURE Modifica_Utente(Campo IN VARCHAR2, Val_NEW IN VARCHAR2, P_Nome_Utente IN Profili.Nome_Utente%TYPE)
+
+AS
+Comando VARCHAR(1000);
 
 
+BEGIN
+    Comando:='UPDATE Profili SET '||Campo||' =  '''||Val_New||''' WHERE Nome_Utente = '''||P_Nome_Utente||''''; -- Si usano le virgole (") prima e dopo gli || per ogni variabile che ha bisogno degli apici ('') nel comando
+    EXECUTE IMMEDIATE Comando;
+END Modifica_Utente;
 
 
 
