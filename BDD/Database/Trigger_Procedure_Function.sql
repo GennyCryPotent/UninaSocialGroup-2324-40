@@ -125,7 +125,8 @@ BEGIN
     FROM Gruppi
     WHERE Id_Gruppo=:OLD.FK_Id_Gruppo;
 
-    INSERT INTO Notifiche_Gruppi (Testo, FK_Id_Gruppo, FK_Nome_Utente) VALUES ('Sei stato rimosso dal gruppo ' || TMP_Nome_Gruppo, :OLD.FK_Id_Gruppo, :OLD.FK_Nome_Utente); 
+    INSERT INTO Notifiche_Gruppi (Testo, FK_Id_Gruppo, FK_Nome_Utente) VALUES (:OLD.FK_Nome_Utente||' non fa più parte del gruppo ' || TMP_Nome_Gruppo, :OLD.FK_Id_Gruppo, :OLD.FK_Nome_Utente);
+
 END;
 /
 
@@ -438,13 +439,21 @@ create or replace NONEDITIONABLE PROCEDURE Crea_Notifica_Richiesta_Esito(P_FK_Id
 AS 
 
 TMP_Nome Gruppi.Nome%TYPE;
-
+Verifica_Richiesta NUMBER;
 
 BEGIN 
     SELECT Nome INTO TMP_Nome FROM Gruppi WHERE P_FK_Id_Gruppo = Id_Gruppo;
-
-    INSERT INTO Notifiche_Richieste_Esiti(Testo, FK_Id_Gruppo, FK_Nome_Utente) VALUES (P_FK_Nome_Utente || ' Ha inviato una richiesta al gruppo: ' || TMP_Nome, P_FK_Id_Gruppo, P_FK_Nome_Utente);
-
+    
+    SELECT Count(*) INTO Verifica_Richiesta
+    FROM notifiche_richieste_esiti
+    WHERE fk_nome_utente = p_fk_nome_utente AND fk_id_gruppo = p_fk_id_gruppo;
+    
+    IF(Verifica_Richiesta = 0) THEN
+        INSERT INTO Notifiche_Richieste_Esiti(Testo, FK_Id_Gruppo, FK_Nome_Utente) VALUES (P_FK_Nome_Utente || ' Ha inviato una richiesta al gruppo: ' || TMP_Nome, P_FK_Id_Gruppo, P_FK_Nome_Utente);
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Hai già inviato una richiesta al gruppo'); 
+    END IF;
+    
 END Crea_Notifica_Richiesta_Esito;
 /
 
@@ -509,4 +518,108 @@ BEGIN
 END Mostra_Notifica;
 /
 
+--MODIFICA IL GRUPPO SOLO SE SEI IL CREATORE
+create or replace NONEDITIONABLE PROCEDURE Modifica_Gruppo(Campo IN VARCHAR2, Val_NEW IN VARCHAR2, P_FK_Nome_Utente IN Gruppi.FK_Nome_Utente%TYPE, P_Id_Gruppo IN Gruppi.Id_Gruppo%TYPE)
+AS
 
+Comando VARCHAR(1000);
+TMP_Creatore Gruppi.FK_Nome_Utente%TYPE;
+
+BEGIN
+
+    SELECT FK_Nome_Utente INTO TMP_Creatore
+    FROM Gruppi
+    WHERE Id_Gruppo = P_Id_Gruppo;
+
+
+    IF (TMP_Creatore LIKE P_FK_Nome_Utente) THEN
+        Comando:='UPDATE Gruppi SET '||Campo||' =  '''||Val_New||''' WHERE Id_Gruppo = '''||P_Id_Gruppo||''''; -- Si usano le virgole (") prima e dopo gli || per ogni variabile che ha bisogno degli apici ('') nel comando
+        EXECUTE IMMEDIATE Comando;
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Non sei il creatore del gruppo gruppo');
+    END IF;
+
+END Modifica_Gruppo;
+/
+
+
+--MODIFICA IL CONTENUTO SOLO SE SEI IL CREATORE
+create or replace NONEDITIONABLE PROCEDURE Modifica_Contenuto(Campo IN VARCHAR2, Val_NEW IN VARCHAR2, P_FK_Nome_Utente IN Contenuti.FK_Nome_Utente%TYPE, P_Id_Contenuto IN Contenuti.Id_Contenuto%TYPE)
+AS
+
+Comando VARCHAR(1000);
+TMP_Creatore Contenuti.FK_Nome_Utente%TYPE;
+
+BEGIN
+
+    SELECT FK_Nome_Utente INTO TMP_Creatore
+    FROM Contenuti
+    WHERE Id_Contenuto = P_Id_Contenuto;
+
+
+    IF (TMP_Creatore LIKE P_FK_Nome_Utente) THEN
+        Comando:='UPDATE Contenuti SET '||Campo||' =  '''||Val_New||''' WHERE Id_Contenuto = '''||P_Id_Contenuto||''''; -- Si usano le virgole (") prima e dopo gli || per ogni variabile che ha bisogno degli apici ('') nel comando
+        EXECUTE IMMEDIATE Comando;
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Non sei il creatore del contenuto');
+    END IF;
+
+END Modifica_Contenuto;
+/
+
+--MODIFICA IL COMMENTO SOLO SE SEI IL CREATORE
+create or replace NONEDITIONABLE PROCEDURE Modifica_Commento(Val_NEW IN VARCHAR2, P_FK_Nome_Utente IN Commenti.FK_Nome_Utente%TYPE, P_Id_Commento IN Commenti.Id_Commento%TYPE)
+AS
+
+Comando VARCHAR(1000);
+TMP_Creatore Contenuti.FK_Nome_Utente%TYPE;
+
+BEGIN
+
+    SELECT FK_Nome_Utente INTO TMP_Creatore
+    FROM Commenti
+    WHERE Id_Commento = P_Id_Commento;
+
+
+    IF (TMP_Creatore LIKE P_FK_Nome_Utente) THEN
+        Comando:='UPDATE Commenti SET Testo =  '''||Val_New||''' WHERE Id_Commento = '''||P_Id_Commento||''''; -- Si usano le virgole (") prima e dopo gli || per ogni variabile che ha bisogno degli apici ('') nel comando
+        EXECUTE IMMEDIATE Comando;
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Non sei il creatore del commento');
+    END IF;
+
+END Modifica_Commento;
+/
+
+--ACCETTA LA RICHIESTA DI PARTECIPAZIONE AD UN GRUPPO DA PARTE DELL'UTENTE 
+create or replace NONEDITIONABLE PROCEDURE Accetta_Profilo(P_FK_Nome_Utente IN Notifiche_Richieste_Esiti.FK_Nome_Utente%TYPE, P_FK_Id_Gruppo IN Notifiche_Richieste_Esiti.FK_Id_Gruppo%TYPE)
+AS
+
+Comando VARCHAR(1000);
+Tmp_Notifica Notifiche_Richieste_Esiti.id_notifica_re%TYPE;
+
+
+BEGIN
+
+    SELECT id_notifica_re INTO TMP_Notifica
+    FROM notifiche_richieste_esiti
+    WHERE FK_Id_Gruppo=P_FK_Id_Gruppo AND fk_nome_utente=P_FK_Nome_Utente;
+    
+    Comando:='UPDATE Notifiche_Richieste_Esiti SET Esitato = ''1'' WHERE id_notifica_re = '''||TMP_Notifica||''''; -- Si usano le virgole (") prima e dopo gli || per ogni variabile che ha bisogno degli apici ('') nel comando
+    EXECUTE IMMEDIATE Comando;
+
+END Accetta_Profilo;
+/
+
+--L'ABBANDONA O VIENE RIMOSSO DAL GRUPPO
+create or replace NONEDITIONABLE PROCEDURE Abbandona_Gruppo(P_FK_Nome_Utente IN Gruppi.FK_Nome_Utente%TYPE, P_Id_Gruppo IN Gruppi.Id_Gruppo%TYPE)
+AS
+
+Comando VARCHAR(1000);
+
+BEGIN
+        Comando:='DELETE FROM Partecipano WHERE FK_Id_Gruppo = '''||P_Id_Gruppo||'''AND fk_nome_utente ='''|| P_FK_Nome_Utente||''''; -- Si usano le virgole ('') prima e dopo gli || per ogni variabile che ha bisogno degli apici ('') nel comando
+        EXECUTE IMMEDIATE Comando;
+
+END Abbandona_Gruppo;
+/
