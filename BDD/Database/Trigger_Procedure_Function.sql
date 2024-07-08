@@ -392,3 +392,35 @@ END Crea_Notifica_Richiesta_Esito;
 
 
 
+
+
+
+-- TMP
+CREATE OR REPLACE NONEDITIONABLE PROCEDURE Mostra_Notifica(P_Nome_Utente IN Notifiche_Contenuti.FK_Nome_Utente%TYPE)
+AS 
+
+CURSOR Rec_Notifica IS (SELECT Testo, Data_Notifica FROM Notifiche_Contenuti WHERE fk_nome_utente LIKE P_Nome_Utente
+                         UNION ALL
+                         SELECT Testo, Data_Notifica FROM Notifiche_Gruppi WHERE FK_NOME_UTENTE LIKE P_Nome_Utente
+                         ORDER BY Data_Notifica DESC);
+
+
+TMP_Testo Notifiche_Contenuti.Testo%TYPE;
+TMP_Data Notifiche_Contenuti.Data_Notifica%TYPE;
+
+
+BEGIN 
+    OPEN Rec_Notifica;
+    
+    LOOP
+        FETCH Rec_Notifica INTO TMP_Testo, TMP_Data;
+        EXIT WHEN Rec_Notifica%NOTFOUND;
+
+        DBMS_OUTPUT.PUT_LINE(TMP_Testo,TMP_Data);
+    
+    END LOOP;
+    CLOSE Rec_Notifica;
+
+
+END Mostra_Notifica;
+/

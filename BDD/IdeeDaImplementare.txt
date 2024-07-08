@@ -27,4 +27,7 @@ COSE DA SISTEMARE:
 
 [✅] 4) Trovare un modo per inserire la notifica al creatore del gruppo in NOTIFICHE_RICHIESTE_ESITI quando un utente fa una richiesta per partecipare al gruppo
 		Lo vediamo in object
+
+[ ] 5) sistemare il sistema di visualizzazione di una notifica (di gruppi)
+
 	
