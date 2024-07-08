@@ -25,3 +25,10 @@ drop procedure "SYSTEM"."CREA_POSSIEDONO";
 drop procedure "SYSTEM"."CREA_REGOLANO";
 drop procedure "SYSTEM"."CREA_TAG";
 drop procedure "SYSTEM"."CREA_UTENTE";
+drop procedure "SYSTEM"."MODIFICA_UTENTE";
+drop procedure "SYSTEM"."MOSTRA_ARCHIVIATA";
+drop procedure "SYSTEM"."MOSTRA_NOTIFICA";
+drop procedure "SYSTEM"."MOSTRA_RICHIESTA";
+drop procedure "SYSTEM"."VISUALIZZATO_NOTIFICA_CONTENUTO";
+drop procedure "SYSTEM"."VISUALIZZATO_NOTIFICA_GRUPPO"";
+
