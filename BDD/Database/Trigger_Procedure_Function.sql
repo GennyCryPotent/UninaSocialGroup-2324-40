@@ -1,7 +1,7 @@
 -- TRIGGER 
 
 --Trigger per verificare la Data di nascita degli utenti
-create or replace TRIGGER Check_DataNascita
+create or replace TRIGGER Verifica_DataNascita
 BEFORE INSERT ON Profili
 FOR EACH ROW
 WHEN (NEW.Data_Nascita>SYSDATE)
