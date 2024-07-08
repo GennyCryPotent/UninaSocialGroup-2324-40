@@ -163,6 +163,17 @@ BEGIN
 END;
 /
 
+--TRIGGER CHE MANDA UNA NOTIFICA A TUTTI GLI UTENTI DEL GRUPPO QUANDO UN UTENTE ELIMINA UN CONTENUTO
+create or replace NONEDITIONABLE TRIGGER Notifca_Contenuto_Eliminato
+AFTER DELETE ON Contenuti
+FOR EACH ROW
+
+BEGIN
+
+    crea_notifica_gruppo(:OLD.FK_Nome_Utente || ' Ha eliminato un contenuto', :OLD.FK_Id_Gruppo, :OLD.FK_Nome_Utente);
+
+END;
+
 --PROCEDURE IMPORTANTI
 
 --MODIFICA UN SINGOLO ATTRIBUTO DELLA TABELLA PROFILI
@@ -180,7 +191,7 @@ END Modifica_Utente;
 
 
 --MOSTRA TUTTE LE NOTIFICHE DELLE RICHIESTE DI PARTECIPAZIONE AL CREATORE DEL GRUPPO
-create or replace PROCEDURE Mostra_Richieste (P_Nome_Utente IN Profili.Nome_Utente%TYPE)
+create or replace PROCEDURE Mostra_Richiesta (P_Nome_Utente IN Profili.Nome_Utente%TYPE)
 AS
 
 CURSOR Rec_Gruppo_C IS (SELECT Id_Gruppo From Gruppi Where FK_Nome_Utente = P_Nome_Utente);
@@ -208,11 +219,12 @@ EXCEPTION
 WHEN OTHERS THEN
 NULL;
 
-END Mostra_Richieste;
+    
+END Mostra_Richiesta;
 /
 
 --MOSTRA TUTTE LE RICHIESTE SUI GRUPPI DOVE L'UTENTE E' STATO ACCETTATO O HA ACCETATTO UN ALTRO UTENTE 
-create or replace PROCEDURE Mostra_Archiviate (P_Nome_Utente IN Profili.Nome_Utente%TYPE)
+create or replace PROCEDURE Mostra_Archiviata (P_Nome_Utente IN Profili.Nome_Utente%TYPE)
 AS
 
 CURSOR Rec_Gruppo_C IS (SELECT Id_Gruppo From Gruppi Where FK_Nome_Utente = P_Nome_Utente);
@@ -271,7 +283,7 @@ BEGIN
 
 
     EXECUTE IMMEDIATE 'DROP TABLE "SYSTEM"."TMP_NOTIF_GRUP_U"';
-    DBMS_OUTPUT.PUT_LINE('Ho finito');
+    
     
 EXCEPTION
 WHEN OTHERS THEN
@@ -280,9 +292,10 @@ CLOSE Rec_Testo;
 END IF;
 
 EXECUTE IMMEDIATE  'DROP TABLE "SYSTEM"."TMP_NOTIF_GRUP_U"';
-DBMS_OUTPUT.PUT_LINE('Ho finito male');
+DBMS_OUTPUT.PUT_LINE('So morto');
 
-END Mostra_Archiviate;
+
+END Mostra_Archiviata;
 /
 
 
@@ -354,11 +367,23 @@ END Crea_Tag;
 /
 
 -- PROCEDURE PER L'AGGIUNTA DI UN CONTENUTO NELLA TABALLA CONTENUTI
-create or replace PROCEDURE Crea_Contenuto (P_Foto IN Contenuti.Foto%TYPE, P_Testo IN Contenuti.Testo%TYPE, P_FK_Id_Gruppo IN Contenuti.FK_Id_Gruppo%TYPE, P_FK_Nome_Utente IN Contenuti.FK_Nome_Utente%TYPE)
+create or replace NONEDITIONABLE PROCEDURE Crea_Contenuto (P_Foto IN Contenuti.Foto%TYPE, P_Testo IN Contenuti.Testo%TYPE, P_FK_Id_Gruppo IN Contenuti.FK_Id_Gruppo%TYPE, P_FK_Nome_Utente IN Contenuti.FK_Nome_Utente%TYPE)
 AS
 
+Check_Partecipano NUMBER;
+
 BEGIN
-    INSERT INTO Contenuti (Foto, Testo, FK_Id_Gruppo, FK_Nome_Utente) VALUES (P_Foto, P_Testo, P_FK_Id_Gruppo, P_FK_Nome_Utente);
+
+    SELECT COUNT(*) INTO Check_Partecipano 
+    FROM Partecipano 
+    WHERE FK_Id_Gruppo = P_FK_Id_Gruppo AND FK_Nome_Utente = P_FK_Nome_Utente;
+    
+    IF (check_partecipano = 1) THEN
+        INSERT INTO Contenuti (Foto, Testo, FK_Id_Gruppo, FK_Nome_Utente) VALUES (P_Foto, P_Testo, P_FK_Id_Gruppo, P_FK_Nome_Utente);
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Non partecipi al gruppo');
+    END IF;
+    
 END Crea_Contenuto;
 /
 
