@@ -17,11 +17,6 @@ In questo file scriviamo le varee idee che possiamo fare per migliorare il DB.
 
 
 
-
-
-
-
-
 COSE DA SISTEMARE:
 
 [✅] 1) Vedere tutti i nomi O SINGOLARE O PLURALE
@@ -30,6 +25,6 @@ COSE DA SISTEMARE:
 
 [] 3) cambiare il nome delle chiavi esterne delle varie tabelle con nomi sensati (Es. nella tabella gruppi invece di avere "FK_NomeUtente" possiamo mettere "Creatore")
 
-[] 4) Trovare un modo per inserire la notifica al creatore del gruppo in NOTIFICHE_RICHIESTE_ESITI quando un utente fa una richiesta per partecipare al gruppo
-
-
+[✅] 4) Trovare un modo per inserire la notifica al creatore del gruppo in NOTIFICHE_RICHIESTE_ESITI quando un utente fa una richiesta per partecipare al gruppo
+		Lo vediamo in object
+	
