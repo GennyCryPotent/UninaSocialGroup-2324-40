@@ -358,7 +358,7 @@ BEGIN
     INSERT INTO Notifiche_Richieste_Esiti(Testo, FK_Id_Gruppo, FK_Nome_Utente) VALUES (P_FK_Nome_Utente || ' Ha inviato una richiesta al gruppo: ' || TMP_Nome, P_FK_Id_Gruppo, P_FK_Nome_Utente);
 
 END Crea_Notifica_Richiesta_Esito;
-
+/
 
 
 
