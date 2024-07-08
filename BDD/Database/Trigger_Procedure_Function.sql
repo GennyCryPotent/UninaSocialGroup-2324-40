@@ -167,6 +167,96 @@ BEGIN
 END Modifica_Utente;
 
 
+--MOSTRA TUTTE LE NOTIFICHE DELLE RICHIESTE DI PARTECIPAZIONE AL CREATORE DEL GRUPPO
+create or replace NONEDITIONABLE PROCEDURE Mostra_Richieste (P_Nome_Utente IN Profili.Nome_Utente%TYPE)
+AS
+
+CURSOR Rec_Gruppo_C IS (SELECT Id_Gruppo From Gruppi Where FK_Nome_Utente = P_Nome_Utente);
+TMP_Id_Gruppo Gruppi.Id_Gruppo%TYPE;
+TMP_Testo notifiche_richieste_esiti.Testo%TYPE;
+
+BEGIN
+
+    OPEN Rec_Gruppo_C;
+
+    LOOP
+
+        FETCH Rec_Gruppo_C INTO TMP_Id_Gruppo;
+        EXIT WHEN Rec_Gruppo_C%NOTFOUND;
+
+        SELECT Testo INTO TMP_Testo FROM notifiche_richieste_esiti WHERE TMP_Id_Gruppo = notifiche_richieste_esiti.fk_id_gruppo AND notifiche_richieste_esiti.Esitato = '0';
+        DBMS_OUTPUT.PUT_LINE(TMP_Testo);
+
+
+    END LOOP;
+
+    CLOSE Rec_Gruppo_C;
+    
+EXCEPTION
+WHEN OTHERS THEN
+NULL;
+
+END Mostra_Richieste;
+
+--Procedure della morte
+
+create or replace NONEDITIONABLE PROCEDURE Mostra_Archiviate (P_Nome_Utente IN Profili.Nome_Utente%TYPE)
+AS
+
+CURSOR Rec_Gruppo_C IS (SELECT Id_Gruppo From Gruppi Where FK_Nome_Utente = P_Nome_Utente);
+TMP_Id_Gruppo Gruppi.Id_Gruppo%TYPE;
+TMP_Testo SYS_REFCURSOR;
+
+Comando VARCHAR(1000);
+
+
+BEGIN
+
+    EXECUTE IMMEDIATE 'CREATE TABLE TMP_NOTIF_GRUP_U (ID_Notifica_RE NUMBER)';
+
+    OPEN Rec_Gruppo_C;
+
+    LOOP
+
+        FETCH Rec_Gruppo_C INTO TMP_Id_Gruppo;
+        EXIT WHEN Rec_Gruppo_C%NOTFOUND;
+
+       EXECUTE IMMEDIATE '
+            INSERT INTO TMP_NOTIF_GRUP_U (id_notifica_re) 
+            SELECT Id_Notifica_RE 
+            FROM notifiche_richieste_esiti 
+            WHERE fk_id_gruppo = :1 -- parametro di bind (1 viene sostituito con TMP_Id_Gruppo
+            AND Esitato != ''0'' 
+            AND Esitato != ''3''
+        ' USING TMP_Id_Gruppo;
+
+    END LOOP;
+    CLOSE Rec_Gruppo_C;
+
+    Comando:='SELECT Testo 
+                FROM notifiche_richieste_esiti 
+                WHERE notifiche_richieste_esiti.Id_Notifica_RE IN (
+                    SELECT Id_Notifica_RE 
+                    FROM TMP_NOTIF_GRUP_U)
+                OR notifiche_richieste_esiti.Id_Notifica_RE IN (
+                    SELECT Id_Notifica_RE 
+                    FROM notifiche_richieste_esiti 
+                    WHERE FK_Nome_Utente = P_Nome_Utente
+                    AND Esitato = ''3'')';
+
+      FOR TMP_Testo IN Comando
+    LOOP
+        DBMS_OUTPUT.PUT_LINE('Ciao');
+    END LOOP;
+    
+
+    EXECUTE IMMEDIATE 'DROP TABLE "SYSTEM"."TMP_NOTIF_GRUP_U"';
+     DBMS_OUTPUT.PUT_LINE('Ho finito');
+
+
+
+END Mostra_Archiviate;
+
 
 --PROCEDURE INSERMINETO
 
@@ -255,16 +345,19 @@ BEGIN
 END Crea_Commento;
 /
 
---Procedure per la creazione delle Notifiche delle richieste
-CREATE OR REPLACE PROCEDURE Crea_Notifica_Richiesta_Esito(P_Testo IN Notifiche_Richieste_Esiti.Testo%TYPE,  P_FK_Id_Gruppo IN Notifiche_Richieste_Esiti.FK_Id_Gruppo%TYPE , P_FK_Nome_Utente IN Notifiche_Richieste_Esiti.FK_Nome_Utente%TYPE)
+--Procedure per creare la notifica della richiesta
+create or replace NONEDITIONABLE PROCEDURE Crea_Notifica_Richiesta_Esito(P_FK_Id_Gruppo IN Notifiche_Richieste_Esiti.FK_Id_Gruppo%TYPE , P_FK_Nome_Utente IN Notifiche_Richieste_Esiti.FK_Nome_Utente%TYPE)
 AS 
 
-BEGIN 
+TMP_Nome Gruppi.Nome%TYPE;
 
-   INSERT INTO Notifiche_Richieste_Esiti(Testo, FK_Id_Gruppo, FK_Nome_Utente) VALUES (P_Testo, P_FK_Id_Gruppo, P_FK_Nome_Utente);
+
+BEGIN 
+    SELECT Nome INTO TMP_Nome FROM Gruppi WHERE P_FK_Id_Gruppo = Id_Gruppo;
+
+    INSERT INTO Notifiche_Richieste_Esiti(Testo, FK_Id_Gruppo, FK_Nome_Utente) VALUES (P_FK_Nome_Utente || ' Ha inviato una richiesta al gruppo: ' || TMP_Nome, P_FK_Id_Gruppo, P_FK_Nome_Utente);
 
 END Crea_Notifica_Richiesta_Esito;
-/
 
 
 

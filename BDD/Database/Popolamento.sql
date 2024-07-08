@@ -10,7 +10,7 @@ Insert into Gruppi (Nome, Descrizione, fk_Nome_Utente) Values ('Fantacalcio', 'C
 Insert into Gruppi (Nome, Descrizione, fk_Nome_Utente) Values ('SSC_Napoli_Ultras', 'Solo fan del napoli', 'Genny03cry');
 
 --Popolamneto NOTIFICHE_RICHIESTE_ESITI
-INSERT INTO Notifiche_Richieste_Esiti (Testo, FK_Id_Gruppo, FK_Nome_Utente) VALUES ('Ha inviato richiesta', 1, 'Gabbo');
+INSERT INTO Notifiche_Richieste_Esiti (Testo, FK_Id_Gruppo, FK_Nome_Utente) VALUES (FK_Nome_Utente ||' Ha inviato richiesta al gruppo: ' || (SELECT Nome FROM Gruppi WHERE FK_Id_Gruppo = Id_Gruppo), 1, 'Gabbo');
 
 --Popolamento Contenuti
 INSERT INTO Contenuti (Testo, fk_id_gruppo, fk_nome_utente) VALUES ('Pako ha vinto il fanta', 1, 'Gabbo');
