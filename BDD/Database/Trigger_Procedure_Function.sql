@@ -48,7 +48,7 @@ FOR EACH ROW
 
 DECLARE 
 
-CURSOR Rec_Utente IS (SELECT FK_Nome_Utente FROM partecipano Where fk_Id_Gruppo= :NEW.fk_Id_Gruppo);
+CURSOR Rec_Utente IS (SELECT FK_Nome_Utente FROM partecipano Where fk_Id_Gruppo= :NEW.fk_Id_Gruppo AND FK_Nome_Utente<>:NEW.FK_Nome_Utente);
 TMP_Utente Partecipano.FK_Nome_Utente%TYPE;
 
 BEGIN
@@ -173,7 +173,7 @@ BEGIN
     crea_notifica_gruppo(:OLD.FK_Nome_Utente || ' Ha eliminato un contenuto', :OLD.FK_Id_Gruppo, :OLD.FK_Nome_Utente);
 
 END;
-
+/
 --PROCEDURE IMPORTANTI
 
 --MODIFICA UN SINGOLO ATTRIBUTO DELLA TABELLA PROFILI
@@ -191,35 +191,48 @@ END Modifica_Utente;
 
 
 --MOSTRA TUTTE LE NOTIFICHE DELLE RICHIESTE DI PARTECIPAZIONE AL CREATORE DEL GRUPPO
-create or replace PROCEDURE Mostra_Richiesta (P_Nome_Utente IN Profili.Nome_Utente%TYPE)
+create or replace NONEDITIONABLE PROCEDURE Mostra_Richiesta (P_Nome_Utente IN Profili.Nome_Utente%TYPE)
 AS
 
 CURSOR Rec_Gruppo_C IS (SELECT Id_Gruppo From Gruppi Where FK_Nome_Utente = P_Nome_Utente);
+
 TMP_Id_Gruppo Gruppi.Id_Gruppo%TYPE;
 TMP_Testo notifiche_richieste_esiti.Testo%TYPE;
+
+CURSOR Rec_Testo IS (SELECT Testo FROM notifiche_richieste_esiti WHERE TMP_Id_Gruppo = notifiche_richieste_esiti.fk_id_gruppo AND notifiche_richieste_esiti.Esitato = '0');
 
 BEGIN
 
     OPEN Rec_Gruppo_C;
-
+    
     LOOP
 
         FETCH Rec_Gruppo_C INTO TMP_Id_Gruppo;
         EXIT WHEN Rec_Gruppo_C%NOTFOUND;
+       
+        
+        OPEN Rec_Testo;
+        
+        LOOP
+            FETCH Rec_Testo INTO TMP_Testo;
+            EXIT WHEN Rec_Testo%NOTFOUND;
+            
+            DBMS_OUTPUT.PUT_LINE(TMP_Testo);
 
-        SELECT Testo INTO TMP_Testo FROM notifiche_richieste_esiti WHERE TMP_Id_Gruppo = notifiche_richieste_esiti.fk_id_gruppo AND notifiche_richieste_esiti.Esitato = '0';
-        DBMS_OUTPUT.PUT_LINE(TMP_Testo);
+        END LOOP;
+        CLOSE Rec_Testo;
+
 
 
     END LOOP;
 
     CLOSE Rec_Gruppo_C;
-    
+
 EXCEPTION
 WHEN OTHERS THEN
 NULL;
 
-    
+
 END Mostra_Richiesta;
 /
 
@@ -398,6 +411,28 @@ BEGIN
 END Crea_Commento;
 /
 
+--Procedure per la creazione delle notifiche gruppo
+create or replace NONEDITIONABLE PROCEDURE Crea_Notifica_Gruppo(P_Testo IN Notifiche_Gruppi.Testo%TYPE, P_FK_Id_Gruppo IN Notifiche_Gruppi.FK_Id_Gruppo%TYPE, P_FK_Nome_Utente IN Notifiche_Gruppi.FK_Nome_Utente%TYPE)
+AS
+
+BEGIN
+
+   INSERT INTO Notifiche_Gruppi(Testo,FK_Id_Gruppo, FK_Nome_Utente) VALUES (P_Testo,P_FK_Id_Gruppo, P_FK_Nome_Utente);
+
+END Crea_Notifica_Gruppo;
+/
+
+--Procedure per la creazione delle notifiche contenuto
+create or replace NONEDITIONABLE PROCEDURE Crea_Notifica_Contenuto(P_Testo IN Notifiche_Contenuti.Testo%TYPE, P_FK_Id_Contenuto IN Notifiche_Contenuti.FK_Id_Contenuto%TYPE, P_FK_Nome_Utente IN Notifiche_Contenuti.FK_Nome_Utente%TYPE)
+AS 
+  
+BEGIN 
+
+   INSERT INTO Notifiche_Contenuti (Testo, FK_Id_Contenuto, FK_NOME_UTENTE) VALUES (P_Testo, P_FK_Id_Contenuto, P_FK_Nome_Utente); 
+
+END Crea_Notifica_Contenuto;
+/
+
 --Procedure per creare la notifica della richiesta
 create or replace NONEDITIONABLE PROCEDURE Crea_Notifica_Richiesta_Esito(P_FK_Id_Gruppo IN Notifiche_Richieste_Esiti.FK_Id_Gruppo%TYPE , P_FK_Nome_Utente IN Notifiche_Richieste_Esiti.FK_Nome_Utente%TYPE)
 AS 
@@ -413,39 +448,65 @@ BEGIN
 END Crea_Notifica_Richiesta_Esito;
 /
 
-
-
-
-
-
-
-
--- TMP
-CREATE OR REPLACE NONEDITIONABLE PROCEDURE Mostra_Notifica(P_Nome_Utente IN Notifiche_Contenuti.FK_Nome_Utente%TYPE)
+-- Procedure per Visualizzare le notifiche dei contenuti di un utente
+create or replace NONEDITIONABLE PROCEDURE Visualizzato_Notifica_Contenuto(P_Id_Notifica IN Notifiche_Contenuti.Id_Notifica_C%TYPE)
 AS 
 
-CURSOR Rec_Notifica IS (SELECT Testo, Data_Notifica FROM Notifiche_Contenuti WHERE fk_nome_utente LIKE P_Nome_Utente
+BEGIN
+    UPDATE Notifiche_Contenuti SET Visualizzato = '1' WHERE Id_Notifica_C = P_Id_Notifica;
+END Visualizzato_Notifica_Contenuto;
+/
+
+-- Procedure per Visualizzare le notifiche dei gruppi di un utente
+create or replace NONEDITIONABLE PROCEDURE Visualizzato_Notifica_Gruppo(P_Id_Notifica IN Notifiche_Gruppi.Id_Notifica_G%TYPE)
+AS 
+
+BEGIN
+    UPDATE Notifiche_Gruppi SET Visualizzato = '1' WHERE Id_Notifica_G = P_Id_Notifica;
+END Visualizzato_Notifica_Gruppo;
+/
+
+
+
+-- Procedure per Mostrare le notifiche dei gruppi e dei contenuti di un utente
+create or replace NONEDITIONABLE PROCEDURE Mostra_Notifica(P_Nome_Utente IN Notifiche_Contenuti.FK_Nome_Utente%TYPE)
+AS 
+
+CURSOR Rec_Notifica IS SELECT  NULL AS Id_Notifica_G, Id_Notifica_C ,Visualizzato, Testo, Data_Notifica FROM Notifiche_Contenuti WHERE fk_nome_utente LIKE P_Nome_Utente
                          UNION ALL
-                         SELECT Testo, Data_Notifica FROM Notifiche_Gruppi WHERE FK_NOME_UTENTE LIKE P_Nome_Utente
-                         ORDER BY Data_Notifica DESC);
+                         SELECT Id_Notifica_G, NULL AS Id_Notifica_C,Visualizzato, Testo, Data_Notifica FROM Notifiche_Gruppi WHERE FK_NOME_UTENTE LIKE P_Nome_Utente
+                         ORDER BY Data_Notifica DESC;
 
 
 TMP_Testo Notifiche_Contenuti.Testo%TYPE;
 TMP_Data Notifiche_Contenuti.Data_Notifica%TYPE;
+TMP_Visualizzato Notifiche_Contenuti.Visualizzato%TYPE;
+TMP_Id_Notifica_C Notifiche_Contenuti.Id_Notifica_C%TYPE;
+TMP_Id_Notifica_G Notifiche_Gruppi.Id_Notifica_G%TYPE;
 
 
 BEGIN 
     OPEN Rec_Notifica;
-    
+
     LOOP
-        FETCH Rec_Notifica INTO TMP_Testo, TMP_Data;
+        FETCH Rec_Notifica INTO TMP_Id_Notifica_G,TMP_Id_Notifica_C,TMP_Visualizzato,TMP_Testo, TMP_Data;
         EXIT WHEN Rec_Notifica%NOTFOUND;
 
-        DBMS_OUTPUT.PUT_LINE(TMP_Testo,TMP_Data);
-    
+        DBMS_OUTPUT.PUT_LINE(TMP_Visualizzato || ' - ' || TMP_Testo || ' - ' ||TMP_Data);
+        
+        IF TMP_Id_Notifica_C IS NOT NULL AND TMP_Id_Notifica_C <> 0 THEN
+            Visualizzato_Notifica_Contenuto(TMP_Id_Notifica_C);
+        ELSIF TMP_Id_Notifica_G IS NOT NULL AND TMP_Id_Notifica_G <> 0 THEN
+            Visualizzato_Notifica_Gruppo(TMP_Id_Notifica_G);
+        END IF;
+
+        
     END LOOP;
     CLOSE Rec_Notifica;
-
+    
+  COMMIT;
 
 END Mostra_Notifica;
 /
+
+
