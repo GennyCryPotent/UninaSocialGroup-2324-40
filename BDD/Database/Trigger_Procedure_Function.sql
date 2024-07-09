@@ -375,11 +375,29 @@ END Crea_Regolano;
 /
 
 -- CREA LIKES
-create or replace NONEDITIONABLE PROCEDURE Crea_Like (P_Nome_Utente IN Likes.FK_NOME_UTENTE%TYPE, P_Id_Contenuto IN Likes.FK_Id_Contenuto%TYPE)
+create or replace NONEDITIONABLE PROCEDURE Crea_Like (P_FK_Nome_Utente IN Likes.FK_NOME_UTENTE%TYPE, P_FK_Id_Contenuto IN Likes.FK_Id_Contenuto%TYPE)
 AS
 
+Verifica_Partecipano NUMBER;
+Trova_Gruppo Gruppi.Id_Gruppo%TYPE;
+
 BEGIN
-    INSERT INTO Likes VALUES (P_Nome_Utente, P_Id_Contenuto);
+    
+    SELECT FK_Id_Gruppo INTO Trova_Gruppo
+    FROM Contenuti 
+    WHERE Id_Contenuto = P_FK_Id_Contenuto AND FK_Nome_Utente = P_FK_Nome_Utente;
+
+
+    SELECT COUNT(*) INTO Verifica_Partecipano 
+    FROM Partecipano 
+    WHERE FK_Id_Gruppo = Trova_Gruppo AND FK_Nome_Utente = P_FK_Nome_Utente;
+
+   IF (Verifica_Partecipano = 1) THEN 
+     INSERT INTO Likes VALUES (P_FK_Nome_Utente, P_FK_Id_Contenuto);
+   ELSE
+     DBMS_OUTPUT.PUT_LINE('Non partecipi al gruppo');
+   END IF;
+    
 END Crea_Like;
 /
 
@@ -424,21 +442,22 @@ END Crea_Tag;
 create or replace NONEDITIONABLE PROCEDURE Crea_Contenuto (P_Foto IN Contenuti.Foto%TYPE, P_Testo IN Contenuti.Testo%TYPE, P_FK_Id_Gruppo IN Contenuti.FK_Id_Gruppo%TYPE, P_FK_Nome_Utente IN Contenuti.FK_Nome_Utente%TYPE)
 AS
 
-Check_Partecipano NUMBER;
+Verifica_Partecipano NUMBER;
 
 BEGIN
 
-    SELECT COUNT(*) INTO Check_Partecipano 
+    SELECT COUNT(*) INTO Verifica_Partecipano 
     FROM Partecipano 
     WHERE FK_Id_Gruppo = P_FK_Id_Gruppo AND FK_Nome_Utente = P_FK_Nome_Utente;
-    
-    IF (check_partecipano = 1) THEN
+
+    IF (Verifica_Partecipano = 1) THEN
         INSERT INTO Contenuti (Foto, Testo, FK_Id_Gruppo, FK_Nome_Utente) VALUES (P_Foto, P_Testo, P_FK_Id_Gruppo, P_FK_Nome_Utente);
     ELSE
         DBMS_OUTPUT.PUT_LINE('Non partecipi al gruppo');
     END IF;
-    
+
 END Crea_Contenuto;
+
 /
 
 --Procedure per la creazione dei commenti
@@ -670,14 +689,24 @@ END Accetta_Profilo;
 /
 
 --L'ABBANDONA O VIENE RIMOSSO DAL GRUPPO
-create or replace NONEDITIONABLE PROCEDURE Abbandona_Gruppo(P_FK_Nome_Utente IN Gruppi.FK_Nome_Utente%TYPE, P_Id_Gruppo IN Gruppi.Id_Gruppo%TYPE)
+create or replace NONEDITIONABLE PROCEDURE Abbandona_Gruppo(P_FK_Nome_Utente IN Partecipano.FK_Nome_Utente%TYPE, P_FK_Id_Gruppo IN Partecipano.FK_Id_Gruppo%TYPE)
 AS
 
 Comando VARCHAR(1000);
+TMP_Creatore Partecipano.FK_Nome_Utente%TYPE;
 
 BEGIN
-        Comando:='DELETE FROM Partecipano WHERE FK_Id_Gruppo = '''||P_Id_Gruppo||'''AND fk_nome_utente ='''|| P_FK_Nome_Utente||''''; -- Si usano le virgole ('') prima e dopo gli || per ogni variabile che ha bisogno degli apici ('') nel comando
-        EXECUTE IMMEDIATE Comando;
 
+    SELECT FK_Nome_Utente INTO TMP_Creatore
+    FROM Gruppi
+    WHERE Id_Gruppo = P_FK_Id_Gruppo;
+
+        IF(TMP_Creatore LIKE P_FK_Nome_Utente) THEN
+            Comando:='DELETE FROM Gruppi WHERE Id_Gruppo = '''||P_FK_Id_Gruppo||'''AND fk_nome_utente ='''|| P_FK_Nome_Utente||''''; -- Si usano le virgole ('') prima e dopo gli || per ogni variabile che ha bisogno degli apici ('') nel comando
+            EXECUTE IMMEDIATE Comando;
+        ELSE
+            Comando:='DELETE FROM Partecipano WHERE FK_Id_Gruppo = '''||P_FK_Id_Gruppo||'''AND fk_nome_utente ='''|| P_FK_Nome_Utente||''''; -- Si usano le virgole ('') prima e dopo gli || per ogni variabile che ha bisogno degli apici ('') nel comando
+            EXECUTE IMMEDIATE Comando;
+        END IF;
+        
 END Abbandona_Gruppo;
-/
