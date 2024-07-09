@@ -6,3 +6,5 @@
 3) Le FK devono avere nomi creativi oppure nomi uguali al PK (Esempio FK_Nome_Utente della tabella gruppi la cambiamo in creatore_Gruppo)
 
 4) La classe DAO deve implementare le funzioni specifiche per il collegamento e esecuzione della query oppure può usare altre classi (Es. collegamento al DB tramite l'oggetto collegamento DB oppure dobbiamo implementare il collegamento al DB all'interno della classe DAO?)
+
+5) Per quanto riguarda Notifiche_Richieste_Esiti come fare a fare l'insert? devo dividere le tabelle? serve proprio??
