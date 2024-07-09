@@ -19,9 +19,9 @@ CALL CREA_NOTIFICA_RICHIESTA_ESITO (1, 'DarkNine');
 CALL CREA_NOTIFICA_RICHIESTA_ESITO (1, 'errore31');
 
 
---Popolamneto NOTIFICHE_RICHIESTE_ESITI (ACCETTAZIONI)
-INSERT INTO Notifiche_Richieste_Esiti(Testo, Esitato,FK_Id_Gruppo, FK_Nome_Utente) VALUES ('Gabbo è stato aggiunto al gruppo: Fantacalcio', '3', 1, 'Gabbo');      
-INSERT INTO Notifiche_Richieste_Esiti(Testo, Esitato,FK_Id_Gruppo, FK_Nome_Utente) VALUES ('errore31 è stato aggiunto al gruppo: Fantacalcio', '3', 1, 'errore31');      
+-- --Popolamneto NOTIFICHE_RICHIESTE_ESITI (ACCETTAZIONI)
+-- INSERT INTO Notifiche_Richieste_Esiti(Testo, Esitato,FK_Id_Gruppo, FK_Nome_Utente) VALUES ('Gabbo è stato aggiunto al gruppo: Fantacalcio', '3', 1, 'Gabbo');      
+-- INSERT INTO Notifiche_Richieste_Esiti(Testo, Esitato,FK_Id_Gruppo, FK_Nome_Utente) VALUES ('errore31 è stato aggiunto al gruppo: Fantacalcio', '3', 1, 'errore31');      
 
 
 --Popolamento Contenuti

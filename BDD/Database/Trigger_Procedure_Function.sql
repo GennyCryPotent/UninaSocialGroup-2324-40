@@ -442,14 +442,30 @@ END Crea_Contenuto;
 /
 
 --Procedure per la creazione dei commenti
-CREATE OR REPLACE PROCEDURE Crea_Commento(P_Testo IN Commenti.Testo%TYPE, P_FK_Id_Contenuto IN Commenti.FK_Id_Contenuto%TYPE, P_FK_Nome_Utente IN Commenti.FK_Nome_Utente%TYPE)
+create or replace NONEDITIONABLE PROCEDURE Crea_Commento(P_Testo IN Commenti.Testo%TYPE, P_FK_Id_Contenuto IN Commenti.FK_Id_Contenuto%TYPE, P_FK_Nome_Utente IN Commenti.FK_Nome_Utente%TYPE)
 AS 
   
-BEGIN 
-   
-   INSERT INTO Commenti (Testo, FK_Id_Contenuto, FK_NOME_UTENTE) VALUES (P_Testo, P_FK_Id_Contenuto, P_FK_Nome_Utente); 
+Verifica_Partecipano NUMBER;
+Trova_Gruppo Gruppi.Id_Gruppo%TYPE;
 
+BEGIN
+    
+    SELECT FK_Id_Gruppo INTO Trova_Gruppo
+    FROM Contenuti 
+    WHERE Id_Contenuto = P_FK_Id_Contenuto AND FK_Nome_Utente = P_FK_Nome_Utente;
+
+    SELECT COUNT(*) INTO Verifica_Partecipano 
+    FROM Partecipano 
+    WHERE FK_Id_Gruppo = Trova_Gruppo AND FK_Nome_Utente = P_FK_Nome_Utente;
+
+   IF (Verifica_Partecipano = 1) THEN 
+    INSERT INTO Commenti (Testo, FK_Id_Contenuto, FK_NOME_UTENTE) VALUES (P_Testo, P_FK_Id_Contenuto, P_FK_Nome_Utente); 
+   ELSE
+    DBMS_OUTPUT.PUT_LINE('Non partecipi al gruppo');
+   END IF;
+   
 END Crea_Commento;
+
 /
 
 --Procedure per la creazione delle notifiche gruppo
