@@ -82,12 +82,12 @@
  FOREIGN KEY (FK_Id_Contenuto) REFERENCES Contenuti(Id_Contenuto) ON DELETE CASCADE
  );
 
---CREAZIONE TABELLA NOTIFICHE_RICHIESTE_ESITI
- CREATE TABLE Notifiche_Richieste_Esiti(
+--CREAZIONE TABELLA NOTIFICHE_RICHIESTE
+ CREATE TABLE Notifiche_Richieste(
  Id_Notifica_RE NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
  Testo VARCHAR2(1000) NOT NULL,
  Data_Notifica TIMESTAMP DEFAULT SYSTIMESTAMP,
- Esitato CHAR(1) DEFAULT '0' CHECK(Esitato='0' OR Esitato='1' OR Esitato='2' OR Esitato='3'), --0 non risposto, 1 accettato, 2 rifutato , 3 notifica di esito
+ Esitato CHAR(1) DEFAULT '0' CHECK(Esitato='0' OR Esitato='1' OR Esitato='2'), --0 non risposto, 1 accettato, 2 rifutato
  FK_Id_Gruppo NUMBER NOT NULL,
  FK_Nome_Utente VARCHAR2(30) NOT NULL,
  Primary key (Id_Notifica_RE),
