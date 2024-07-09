@@ -31,4 +31,5 @@ drop procedure "SYSTEM"."MOSTRA_NOTIFICA";
 drop procedure "SYSTEM"."MOSTRA_RICHIESTA";
 drop procedure "SYSTEM"."VISUALIZZATO_NOTIFICA_CONTENUTO";
 drop procedure "SYSTEM"."VISUALIZZATO_NOTIFICA_GRUPPO"";
+drop procedure "SYSTEM"."MOSTRA_LIKE_COMMENTI"";
 

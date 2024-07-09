@@ -238,7 +238,7 @@ END Mostra_Richiesta;
 /
 
 --MOSTRA TUTTI I LIKE E I COMMENTI DI UN ID_COMMNETO 
-create or replace NONEDITIONABLE PROCEDURE Mostra_Like_Commenti (P_Id_Contenuto IN CONTENUTI_CON_LIKES.ID_CONTENUTO%TYPE)
+create or replace NONEDITIONABLE PROCEDURE Mostra_Like_Commento (P_Id_Contenuto IN CONTENUTI_CON_LIKES.ID_CONTENUTO%TYPE)
 AS
 
 
@@ -265,7 +265,7 @@ BEGIN
     END LOOP;
     CLOSE Rec_Commento;
     
-END Mostra_Like_Commenti;
+END Mostra_Like_Commento;
 /
 
 
