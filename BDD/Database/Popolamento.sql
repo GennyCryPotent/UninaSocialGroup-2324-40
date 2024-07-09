@@ -43,14 +43,17 @@ CALL Crea_Like ('Gabbo', 2);
 CALL Crea_Like ('DarkNine', 1);
 CALL Crea_Like ('Gabbo', 1); 
 
-
+--Popolamento Commenti
+CALL Crea_Commento('Non è vero che è troppo forte!!',2,'Gabbo'); 
+CALL Crea_Commento('Invece si, ha rovinato il gioco!!',2,'errore31'); 
+CALL Crea_Commento('🔥🔥🔥',2,'DarkNine'); 
 
 
 
 
 -- COSE NON POPOLAMENTO TMP
 
-
+CALL MOSTRA_LIKE_COMMENTI(5);
 
 
 

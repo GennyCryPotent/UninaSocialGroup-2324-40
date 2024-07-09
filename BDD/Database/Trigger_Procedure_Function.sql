@@ -237,6 +237,39 @@ NULL;
 END Mostra_Richiesta;
 /
 
+--MOSTRA TUTTI I LIKE E I COMMENTI DI UN ID_COMMNETO 
+create or replace NONEDITIONABLE PROCEDURE Mostra_Like_Commenti (P_Id_Contenuto IN CONTENUTI_CON_LIKES.ID_CONTENUTO%TYPE)
+AS
+
+
+CURSOR Rec_Commento IS SELECT Testo, FK_Nome_Utente FROM COMMENTI WHERE FK_ID_CONTENUTO = P_Id_Contenuto;
+
+
+
+TMP_N_LIKE CONTENUTI_CON_LIKES.N_LIKE%TYPE;
+TMP_Testo CONTENUTI_CON_LIKES.Testo%TYPE;
+TMP_Nome_Utente CONTENUTI_CON_LIKES.FK_Nome_Utente%TYPE;
+
+BEGIN
+    SELECT N_LIKE INTO TMP_N_LIKE FROM CONTENUTI_CON_LIKES WHERE ID_CONTENUTO = P_Id_Contenuto;
+
+    DBMS_OUTPUT.PUT_LINE('LIKES : ' || TMP_N_LIKE);
+    
+    OPEN Rec_Commento;
+    LOOP
+        FETCH Rec_Commento INTO TMP_Testo, TMP_Nome_Utente;
+        EXIT WHEN Rec_Commento%NOTFOUND;
+    
+        DBMS_OUTPUT.PUT_LINE( TMP_Nome_Utente || ' : '|| TMP_Testo);
+    
+    END LOOP;
+    CLOSE Rec_Commento;
+    
+END Mostra_Like_Commenti;
+/
+
+
+
 --MOSTRA TUTTE LE RICHIESTE SUI GRUPPI DOVE L'UTENTE E' STATO ACCETTATO O HA ACCETATTO UN ALTRO UTENTE 
 create or replace PROCEDURE Mostra_Archiviata (P_Nome_Utente IN Profili.Nome_Utente%TYPE)
 AS
