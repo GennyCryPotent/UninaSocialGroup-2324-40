@@ -14,14 +14,16 @@ CALL CREA_GRUPPO ('SSC_Napoli_Ultras', 'Solo fan del napoli', 'Genny03cry');
 
 --Popolamneto NOTIFICHE_RICHIESTE_ESITI
 -- INSERT INTO Notifiche_Richieste_Esiti (Testo, FK_Id_Gruppo, FK_Nome_Utente) VALUES (FK_Nome_Utente ||' Ha inviato richiesta al gruppo: ' || (SELECT Nome FROM Gruppi WHERE FK_Id_Gruppo = Id_Gruppo), 1, 'Gabbo');
-CALL CREA_NOTIFICA_RICHIESTA_ESITO (1, 'Gabbo');
-CALL CREA_NOTIFICA_RICHIESTA_ESITO (1, 'DarkNine');
-CALL CREA_NOTIFICA_RICHIESTA_ESITO (1, 'errore31');
+CALL CREA_RICHIESTA (1, 'Gabbo');
+CALL CREA_RICHIESTA (1, 'DarkNine');
+CALL CREA_RICHIESTA (1, 'errore31');
 
 
 -- --Popolamneto NOTIFICHE_RICHIESTE_ESITI (ACCETTAZIONI)
 -- INSERT INTO Notifiche_Richieste_Esiti(Testo, Esitato,FK_Id_Gruppo, FK_Nome_Utente) VALUES ('Gabbo è stato aggiunto al gruppo: Fantacalcio', '3', 1, 'Gabbo');      
 -- INSERT INTO Notifiche_Richieste_Esiti(Testo, Esitato,FK_Id_Gruppo, FK_Nome_Utente) VALUES ('errore31 è stato aggiunto al gruppo: Fantacalcio', '3', 1, 'errore31');      
+CALL ACCETTA_PROFILO('Gabbo', 1);
+CALL ACCETTA_PROFILO('DarkNine', 1);
 
 
 --Popolamento Contenuti
@@ -53,7 +55,7 @@ CALL Crea_Commento('🔥🔥🔥',2,'DarkNine');
 
 -- COSE NON POPOLAMENTO TMP
 
-CALL MOSTRA_LIKE_COMMENTI(5);
+CALL MOSTRA_LIKE_COMMENTI(1);
 
 
 

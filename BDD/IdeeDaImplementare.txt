@@ -28,19 +28,24 @@ COSE DA SISTEMARE:
 
 [✅] 5) sistemare il sistema di visualizzazione di una notifica (di gruppi)
 
-[] 6) Anche i creatori devono stare nella tabella partecipanti 
+[✅] 6) Anche i creatori devono stare nella tabella partecipanti 
 
-[] 7) Quando un utente è stato accettato si invia la notifica al gruppo (Notifiche gruppi), di conseguenza si elimina esitato 3 
+[✅] 7) Quando un utente è stato accettato si invia la notifica al gruppo (Notifiche gruppi), di conseguenza si elimina esitato 3 
 
-[] 8) Aggiungere una funzione che ricerca i gruppi in base al nome o ai tag
+[✅] 8) Aggiungere una funzione che ricerca i gruppi in base al nome
 
-[] 9) Se un utente partecipa ad un gruppo non puoi mandare la richiesta
+[✅] 9) Se un utente partecipa ad un gruppo non puoi mandare la richiesta
 
-[] 10) Creare la procedure Rifiuta_Profilo
+[✅] 10) Creare la procedure Rifiuta_Profilo
 
-[] 11) Procedure rimozione (commenti like) e contenuti (singolo) - creatore, amministratore e utente craetore
+[✅] 11) Procedure rimozione commenti, like e contenuti (singolo) - creatore, amministratore e utente creatore
 
-[] 12) Procedure rimozione (commenti like) e contenuti (multipli) di un utente - creatore, amministratore 
+[✅] 12) Procedure rimozione commenti, like e contenuti (multipli) di un utente - creatore, amministratore 
 
-[] 13) Trigger non devono creare le notifiche di commenti e like se quell'utente non partecipa più al gfruppo
+[✅] 13) Trigger non devono creare le notifiche di commenti e like se quell'utente non partecipa più al gruppo
+
+[❌] 14) Aggiungere una funzione che ricerca i gruppi in base ai tag
+
+
+
 	
