@@ -1,11 +1,10 @@
 --POPOLAZIONE DB
 
 --Popolamento Profili
-CALL CREA_UTENTE('Genny03cry', 'Database03', 'Gennaro', 'De Luca', 'M', TO_DATE('04-11-2003', 'DD-MM-YYYY'));
-CALL CREA_UTENTE('Gabbo', 'SonoIo02', 'Gabriele', 'Cifuni', 'F', TO_DATE('21-4-2002', 'DD-MM-YYYY'));
-CALL CREA_UTENTE('DarkNine', 'Pagliaccio', 'Simone', 'Francesco', 'F', TO_DATE('21-11-2003', 'DD-MM-YYYY'));
-CALL CREA_UTENTE('errore31', 'Sbagliato03', 'Antonio', 'Caruso', 'M', TO_DATE('27-05-2003', 'DD-MM-YYYY'));
-
+CALL CREA_PROFILO('Genny03cry', 'Database03', 'Gennaro', 'De Luca', 'M', TO_DATE('04-11-2003', 'DD-MM-YYYY'));
+CALL CREA_PROFILO('Gabbo', 'SonoIo02', 'Gabriele', 'Cifuni', 'F', TO_DATE('21-4-2002', 'DD-MM-YYYY'));
+CALL CREA_PROFILO('DarkNine', 'Pagliaccio', 'Simone', 'Francesco', 'F', TO_DATE('21-11-2003', 'DD-MM-YYYY'));
+CALL CREA_PROFILO('errore31', 'Sbagliato03', 'Antonio', 'Caruso', 'M', TO_DATE('27-05-2003', 'DD-MM-YYYY'));
 
 
 --Popolamento Gruppi
@@ -47,7 +46,6 @@ CALL Crea_Like ('Gabbo', 1);
 
 --Popolamento Commenti
 CALL Crea_Commento('Non è vero che è troppo forte!!',2,'Gabbo'); 
-CALL Crea_Commento('Invece si, ha rovinato il gioco!!',2,'errore31'); 
 CALL Crea_Commento('🔥🔥🔥',2,'DarkNine'); 
 
 
