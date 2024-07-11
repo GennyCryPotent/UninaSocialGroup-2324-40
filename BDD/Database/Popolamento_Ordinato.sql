@@ -34,6 +34,7 @@ CALL CREA_TAG('Sport');
 CALL CREA_TAG('Cinema');
 CALL CREA_TAG('Animali');
 CALL CREA_TAG('Musica');
+CALL CREA_TAG('Educazione');
 
 
 
