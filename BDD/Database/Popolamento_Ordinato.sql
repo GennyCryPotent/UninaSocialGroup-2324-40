@@ -5,9 +5,9 @@ CALL CREA_PROFILO('Genny03cry', 'Database03', 'Gennaro', 'De Luca', 'M', TO_DATE
 CALL CREA_PROFILO('Gabbo', 'SonoIo02', 'Gabriele', 'Cifuni', 'F', TO_DATE('21-4-2002', 'DD-MM-YYYY'));
 CALL CREA_PROFILO('DarkNine', 'Pagl1accio', 'Simone', 'Francesco', 'F', TO_DATE('21-11-2003', 'DD-MM-YYYY'));
 CALL CREA_PROFILO('errore31', 'Sbagliato03', 'Antonio', 'Caruso', 'M', TO_DATE('27-05-2003', 'DD-MM-YYYY'));
-CALL CREA_PROFILO('Lauriel', 'R0ri', 'Laura', 'Miele', 'F', TO_DATE('24-02-2003', 'DD-MM-YYYY'));
+CALL CREA_PROFILO('Lauriel', 'R0rioneDiRiccione', 'Laura', 'Miele', 'F', TO_DATE('24-02-2003', 'DD-MM-YYYY'));
 CALL CREA_PROFILO('OgniRiccioUnCapriccio', 'Ricci0ne', 'Mario Flavio', 'Di Blasio', 'M', TO_DATE('22-02-2003', 'DD-MM-YYYY'));
-CALL CREA_PROFILO('Mondindo', 'MONDONE', 'Francesco', 'Barra', 'M', TO_DATE('20-02-2003', 'DD-MM-YYYY'));
+CALL CREA_PROFILO('Mondindo', 'MONDONEEEE', 'Francesco', 'Barra', 'M', TO_DATE('20-02-2003', 'DD-MM-YYYY'));
 
 --Popolamneto TAG
 CALL CREA_TAG('Fotografia');
