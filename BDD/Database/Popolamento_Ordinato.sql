@@ -36,6 +36,29 @@ CALL CREA_PROFILO('evergreen55', 'Ev3rg@r33n55^', 'Eleonora', 'Riva', 'F', TO_DA
 CALL CREA_PROFILO('lavenderdream11', 'Lav3nd3r@Dr3am11!', 'Alberto', 'Colombo', 'M', TO_DATE('15-05-1990', 'DD-MM-YYYY'));
 
 
+--Popolamneto TAG
+CALL CREA_TAG('Fotografia');
+CALL CREA_TAG('Gaming');
+CALL CREA_TAG('Moda');
+CALL CREA_TAG('Educazione');
+CALL CREA_TAG('Ambiente');
+CALL CREA_TAG('Politica');
+CALL CREA_TAG('Economia');
+CALL CREA_TAG('Storia');
+CALL CREA_TAG('Astronomia');
+CALL CREA_TAG('Psicologia');
+CALL CREA_TAG('Fitness');
+CALL CREA_TAG('Gastronomia');
+CALL CREA_TAG('Architettura');
+CALL CREA_TAG('Filosofia');
+CALL CREA_TAG('Matematica');
+CALL CREA_TAG('Fisica');
+CALL CREA_TAG('Chimica');
+CALL CREA_TAG('Biologia');
+CALL CREA_TAG('Geografia');
+CALL CREA_TAG('Linguistica');
+
+
 
 --Popolamento Gruppi
 CALL CREA_GRUPPO ('Fantacalcio', 'Ciao', 'Genny03cry');
@@ -71,10 +94,43 @@ CALL CREA_GRUPPO('Appassionati di Pesca', 'Consigli e condivisioni sulla pesca',
 CALL CREA_GRUPPO('Viaggiatori in Camper', 'Esperienze e consigli di viaggio in camper', 'evergreen55');
 CALL CREA_GRUPPO('Club della Risata', 'Condividi le tue barzellette e battute preferite', 'lavenderdream11');
 
+--Popolamneto POSSIEDONO
+CALL CREA_POSSIEDONO(1, 'Sport');
+CALL CREA_POSSIEDONO(2, 'Sport');
+CALL CREA_POSSIEDONO(3, 'Gaming');
+CALL CREA_POSSIEDONO(4, 'Cinema');
+CALL CREA_POSSIEDONO(5, 'Fotografia');
+CALL CREA_POSSIEDONO(6, 'Viaggi');
+CALL CREA_POSSIEDONO(7, 'Cucina');
+CALL CREA_POSSIEDONO(8, 'Tecnologia');
+CALL CREA_POSSIEDONO(9, 'Letteratura');
+CALL CREA_POSSIEDONO(10, 'Animali');
+CALL CREA_POSSIEDONO(11, 'Fitness');
+CALL CREA_POSSIEDONO(12, 'Musica');
+CALL CREA_POSSIEDONO(13, 'Arte');
+CALL CREA_POSSIEDONO(14, 'Gaming');
+CALL CREA_POSSIEDONO(15, 'Moto');
+CALL CREA_POSSIEDONO(16, 'Cinema');
+CALL CREA_POSSIEDONO(17, 'Bricolage');
+CALL CREA_POSSIEDONO(18, 'Vino');
+CALL CREA_POSSIEDONO(19, 'Cultura Giapponese');
+CALL CREA_POSSIEDONO(20, 'Fotografia');
+CALL CREA_POSSIEDONO(21, 'Scrittura');
+CALL CREA_POSSIEDONO(22, 'Cinema');
+CALL CREA_POSSIEDONO(23, 'Astronomia');
+CALL CREA_POSSIEDONO(24, 'Yoga');
+CALL CREA_POSSIEDONO(25, 'Fotografia');
+CALL CREA_POSSIEDONO(26, 'Giochi da Tavolo');
+CALL CREA_POSSIEDONO(27, 'Escursioni');
+CALL CREA_POSSIEDONO(28, 'Ciclismo');
+CALL CREA_POSSIEDONO(29, 'Letteratura');
+CALL CREA_POSSIEDONO(30, 'Pesca');
+CALL CREA_POSSIEDONO(31, 'Viaggi');
+CALL CREA_POSSIEDONO(32, 'Risata');
 
 
 
---Popolamneto NOTIFICHE_RICHIESTE_ESITI
+--Popolamento NOTIFICHE_RICHIESTE_ESITI
 CALL CREA_RICHIESTA (1, 'Gabbo');
 CALL CREA_RICHIESTA (1, 'DarkNine');
 CALL CREA_RICHIESTA (1, 'errore31');
@@ -136,7 +192,7 @@ CALL CREA_RICHIESTA(30, 'evergreen55');
 CALL CREA_RICHIESTA(31, 'lavenderdream11');
 CALL CREA_RICHIESTA(4, 'errore31');
 
--- --Popolamneto NOTIFICHE_RICHIESTE_ESITI (ACCETTAZIONI)   
+--Popolamneto NOTIFICHE_RICHIESTE_ESITI (ACCETTAZIONI)   
 CALL ACCETTA_PROFILO('Gabbo', 1);
 CALL ACCETTA_PROFILO('DarkNine', 1);
 CALL RIFIUTA_PROFILO('moonlight99', 4);
@@ -192,11 +248,36 @@ CALL ACCETTA_PROFILO('midnightmagic77', 31);
 CALL ACCETTA_PROFILO('evergreen55', 32);
 CALL ACCETTA_PROFILO('errore31', 4);
 
+--Popolamneto REGOLANO   
+CALL CREA_REGOLANO('sunshine88', 5);
+CALL CREA_REGOLANO('starfire77', 5);
+CALL CREA_REGOLANO('oceanblue55', 8);
+CALL CREA_REGOLANO('forestgreen22', 8);
+CALL CREA_REGOLANO('thunderstorm44', 11);
+CALL CREA_REGOLANO('crystalwave66', 11);
+CALL CREA_REGOLANO('whisperingwind88', 14);
+CALL CREA_REGOLANO('goldensun44', 14);
+CALL CREA_REGOLANO('stardust77', 17);
+CALL CREA_REGOLANO('twilightzone22', 17);
+CALL CREA_REGOLANO('eveningsky99', 20);
+CALL CREA_REGOLANO('serenityblue11', 20);
+CALL CREA_REGOLANO('whitelily44', 23);
+CALL CREA_REGOLANO('darkshadow66', 23);
+CALL CREA_REGOLANO('darkshadow66', 25);
+CALL CREA_REGOLANO('brightstar33', 26);
+CALL CREA_REGOLANO('summerbreeze22', 28);
+CALL CREA_REGOLANO('autumnglow99', 27);
+CALL CREA_REGOLANO('autumnglow99', 29);
+CALL CREA_REGOLANO('midnightmagic77', 29);
+CALL CREA_REGOLANO('midnightmagic77', 31);
+CALL CREA_REGOLANO('evergreen55', 32);
+CALL CREA_REGOLANO('errore31', 32);
+
+
 --Popolamento Contenuti
 CALL CREA_CONTENUTO(NULL,'Pako ha vinto il Fanta!!1!1!',1,'Gabbo');
 CALL CREA_CONTENUTO(NULL, 'Thuram è troppo forte',1,'DarkNine');
 CALL CREA_CONTENUTO(NULL, 'Buongiorno è troppo forte',1,'DarkNine');
-
 CALL CREA_CONTENUTO(NULL, 'Discussione sul Signore Oscuro in DND', 3, 'sunshine88');
 CALL CREA_CONTENUTO(NULL, 'Recensione di un film recente', 5, 'starfire77');
 CALL CREA_CONTENUTO(NULL, 'Foto di un tramonto spettacolare', 6, 'oceanblue55');
