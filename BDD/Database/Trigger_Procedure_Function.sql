@@ -462,7 +462,7 @@ END Mostra_Archiviata;
 
 
 
--- RIFIUTA PROFILO
+-- PROCEDURE PER RIFIUTARE UN PROFILO
 create or replace NONEDITIONABLE PROCEDURE Rifiuta_Profilo(P_FK_Nome_Utente IN NOTIFICHE_RICHIESTE.FK_Nome_Utente%TYPE, P_FK_Id_Gruppo IN NOTIFICHE_RICHIESTE.FK_Id_Gruppo%TYPE)
 AS
 
@@ -490,7 +490,7 @@ END Rifiuta_Profilo;
 
 
 -- CREA PARTECIPANO
-create or replace NONEDITIONABLE PROCEDURE Crea_Partecipano (P_Nome_Utente IN PARTECIPANO.FK_NOME_UTENTE%TYPE, P_Id_Gruppo IN PARTECIPANO.FK_Id_Gruppo%TYPE)
+create or replace PROCEDURE Crea_Partecipano (P_Nome_Utente IN PARTECIPANO.FK_NOME_UTENTE%TYPE, P_Id_Gruppo IN PARTECIPANO.FK_Id_Gruppo%TYPE)
 AS
 
 BEGIN
@@ -499,7 +499,7 @@ END Crea_Partecipano;
 /
 
 -- CREA REGOLANO
-create or replace NONEDITIONABLE PROCEDURE Crea_Regolano (P_Nome_Utente IN Regolano.FK_NOME_UTENTE%TYPE, P_Id_Gruppo IN Regolano.FK_Id_Gruppo%TYPE)
+create or replace PROCEDURE Crea_Regolano (P_Nome_Utente IN Regolano.FK_NOME_UTENTE%TYPE, P_Id_Gruppo IN Regolano.FK_Id_Gruppo%TYPE)
 AS
 
 BEGIN
@@ -508,7 +508,7 @@ END Crea_Regolano;
 /
 
 -- CREA LIKES
-create or replace NONEDITIONABLE PROCEDURE Crea_Like (P_FK_Nome_Utente IN Likes.FK_NOME_UTENTE%TYPE, P_FK_Id_Contenuto IN Likes.FK_Id_Contenuto%TYPE)
+create or replace PROCEDURE Crea_Like (P_FK_Nome_Utente IN Likes.FK_NOME_UTENTE%TYPE, P_FK_Id_Contenuto IN Likes.FK_Id_Contenuto%TYPE)
 AS
 
 Verifica_Partecipano NUMBER;
@@ -572,7 +572,7 @@ END Rimozione_Commento_Profilo;
 
 
 -- RIMOZIONE DI TUTTI I LIKE DI UN PROFILO IN UN GRUPPO
-create or replace NONEDITIONABLE PROCEDURE Rimozione_Like_Profilo(P_Nome_Utente COMMENTI.FK_Nome_Utente%TYPE, P_ID_GRUPPO GRUPPI.ID_GRUPPO%TYPE)
+create or replace PROCEDURE Rimozione_Like_Profilo(P_Nome_Utente COMMENTI.FK_Nome_Utente%TYPE, P_ID_GRUPPO GRUPPI.ID_GRUPPO%TYPE)
 AS
 
 
@@ -597,7 +597,7 @@ END Rimozione_Like_Profilo;
 /
 
 -- RIMOZIONE DI TUTTI I CONTENUTI DI UN PROFILO IN UN GRUPPO
-create or replace NONEDITIONABLE PROCEDURE Rimozione_Contenuto_Profilo(P_Nome_Utente CONTENUTI.FK_Nome_Utente%TYPE, P_ID_GRUPPO GRUPPI.ID_GRUPPO%TYPE)
+create or replace PROCEDURE Rimozione_Contenuto_Profilo(P_Nome_Utente CONTENUTI.FK_Nome_Utente%TYPE, P_ID_GRUPPO GRUPPI.ID_GRUPPO%TYPE)
 AS
 
 BEGIN
@@ -637,7 +637,7 @@ END Crea_Tag;
 /
 
 -- PROCEDURE PER L'AGGIUNTA DI UN CONTENUTO NELLA TABALLA CONTENUTI
-create or replace NONEDITIONABLE PROCEDURE Crea_Contenuto (P_Foto IN Contenuti.Foto%TYPE, P_Testo IN Contenuti.Testo%TYPE, P_FK_Id_Gruppo IN Contenuti.FK_Id_Gruppo%TYPE, P_FK_Nome_Utente IN Contenuti.FK_Nome_Utente%TYPE)
+create or replace PROCEDURE Crea_Contenuto (P_Foto IN Contenuti.Foto%TYPE, P_Testo IN Contenuti.Testo%TYPE, P_FK_Id_Gruppo IN Contenuti.FK_Id_Gruppo%TYPE, P_FK_Nome_Utente IN Contenuti.FK_Nome_Utente%TYPE)
 AS
 
 Verifica_Partecipano NUMBER;
@@ -661,7 +661,7 @@ END Crea_Contenuto;
 /
 
 --Procedure per la creazione dei commenti
-create or replace NONEDITIONABLE PROCEDURE Crea_Commento(P_Testo IN Commenti.Testo%TYPE, P_FK_Id_Contenuto IN Commenti.FK_Id_Contenuto%TYPE, P_FK_Nome_Utente IN Commenti.FK_Nome_Utente%TYPE)
+create or replace PROCEDURE Crea_Commento(P_Testo IN Commenti.Testo%TYPE, P_FK_Id_Contenuto IN Commenti.FK_Id_Contenuto%TYPE, P_FK_Nome_Utente IN Commenti.FK_Nome_Utente%TYPE)
 AS 
   
 Verifica_Partecipano NUMBER;
@@ -689,7 +689,7 @@ END Crea_Commento;
 /
 
 --Procedure per la creazione delle notifiche gruppo
-create or replace NONEDITIONABLE PROCEDURE Crea_Notifica_Gruppo(P_Testo IN Notifiche_Gruppi.Testo%TYPE, P_FK_Id_Gruppo IN Notifiche_Gruppi.FK_Id_Gruppo%TYPE, P_FK_Nome_Utente IN Notifiche_Gruppi.FK_Nome_Utente%TYPE)
+create or replace PROCEDURE Crea_Notifica_Gruppo(P_Testo IN Notifiche_Gruppi.Testo%TYPE, P_FK_Id_Gruppo IN Notifiche_Gruppi.FK_Id_Gruppo%TYPE, P_FK_Nome_Utente IN Notifiche_Gruppi.FK_Nome_Utente%TYPE)
 AS
 
 BEGIN
@@ -700,7 +700,7 @@ END Crea_Notifica_Gruppo;
 /
 
 --Procedure per la creazione delle notifiche contenuto
-create or replace NONEDITIONABLE PROCEDURE Crea_Notifica_Contenuto(P_Testo IN Notifiche_Contenuti.Testo%TYPE, P_FK_Id_Contenuto IN Notifiche_Contenuti.FK_Id_Contenuto%TYPE, P_FK_Nome_Utente IN Notifiche_Contenuti.FK_Nome_Utente%TYPE)
+create or replace PROCEDURE Crea_Notifica_Contenuto(P_Testo IN Notifiche_Contenuti.Testo%TYPE, P_FK_Id_Contenuto IN Notifiche_Contenuti.FK_Id_Contenuto%TYPE, P_FK_Nome_Utente IN Notifiche_Contenuti.FK_Nome_Utente%TYPE)
 AS 
   
 BEGIN 
@@ -711,7 +711,7 @@ END Crea_Notifica_Contenuto;
 /
 
 --Procedure per creare la notifica della richiesta
-create or replace NONEDITIONABLE PROCEDURE Crea_Richiesta(P_FK_Id_Gruppo IN Notifiche_richieste.FK_Id_Gruppo%TYPE , P_FK_Nome_Utente IN Notifiche_richieste.FK_Nome_Utente%TYPE)
+create or replace PROCEDURE Crea_Richiesta(P_FK_Id_Gruppo IN Notifiche_richieste.FK_Id_Gruppo%TYPE , P_FK_Nome_Utente IN Notifiche_richieste.FK_Nome_Utente%TYPE)
 AS 
 
 TMP_Nome Gruppi.Nome%TYPE;
@@ -750,7 +750,7 @@ END Crea_Richiesta;
 /
 
 -- Procedure per Visualizzare le notifiche dei contenuti di un utente
-create or replace NONEDITIONABLE PROCEDURE Visualizzato_Notifica_Contenuto(P_Id_Notifica IN Notifiche_Contenuti.Id_Notifica_C%TYPE)
+create or replace PROCEDURE Visualizzato_Notifica_Contenuto(P_Id_Notifica IN Notifiche_Contenuti.Id_Notifica_C%TYPE)
 AS 
 
 BEGIN
@@ -759,7 +759,7 @@ END Visualizzato_Notifica_Contenuto;
 /
 
 -- Procedure per Visualizzare le notifiche dei gruppi di un utente
-create or replace NONEDITIONABLE PROCEDURE Visualizzato_Notifica_Gruppo(P_Id_Notifica IN Notifiche_Gruppi.Id_Notifica_G%TYPE)
+create or replace PROCEDURE Visualizzato_Notifica_Gruppo(P_Id_Notifica IN Notifiche_Gruppi.Id_Notifica_G%TYPE)
 AS 
 
 BEGIN
@@ -812,7 +812,7 @@ END Mostra_Notifica;
 /
 
 --MODIFICA IL GRUPPO SOLO SE SEI IL CREATORE
-create or replace NONEDITIONABLE PROCEDURE Modifica_Gruppo(Campo IN VARCHAR2, Val_NEW IN VARCHAR2, P_FK_Nome_Utente IN Gruppi.FK_Nome_Utente%TYPE, P_Id_Gruppo IN Gruppi.Id_Gruppo%TYPE)
+create or replace PROCEDURE Modifica_Gruppo(Campo IN VARCHAR2, Val_NEW IN VARCHAR2, P_FK_Nome_Utente IN Gruppi.FK_Nome_Utente%TYPE, P_Id_Gruppo IN Gruppi.Id_Gruppo%TYPE)
 AS
 
 Comando VARCHAR(1000);
@@ -837,7 +837,7 @@ END Modifica_Gruppo;
 
 
 --MODIFICA IL CONTENUTO SOLO SE SEI IL CREATORE
-create or replace NONEDITIONABLE PROCEDURE Modifica_Contenuto(Campo IN VARCHAR2, Val_NEW IN VARCHAR2, P_FK_Nome_Utente IN Contenuti.FK_Nome_Utente%TYPE, P_Id_Contenuto IN Contenuti.Id_Contenuto%TYPE)
+create or replace PROCEDURE Modifica_Contenuto(Campo IN VARCHAR2, Val_NEW IN VARCHAR2, P_FK_Nome_Utente IN Contenuti.FK_Nome_Utente%TYPE, P_Id_Contenuto IN Contenuti.Id_Contenuto%TYPE)
 AS
 
 Comando VARCHAR(1000);
@@ -861,7 +861,7 @@ END Modifica_Contenuto;
 /
 
 --MODIFICA IL COMMENTO SOLO SE SEI IL CREATORE
-create or replace NONEDITIONABLE PROCEDURE Modifica_Commento(Val_NEW IN VARCHAR2, P_FK_Nome_Utente IN Commenti.FK_Nome_Utente%TYPE, P_Id_Commento IN Commenti.Id_Commento%TYPE)
+create or replace PROCEDURE Modifica_Commento(Val_NEW IN VARCHAR2, P_FK_Nome_Utente IN Commenti.FK_Nome_Utente%TYPE, P_Id_Commento IN Commenti.Id_Commento%TYPE)
 AS
 
 Comando VARCHAR(1000);
@@ -885,7 +885,7 @@ END Modifica_Commento;
 /
 
 --ACCETTA LA RICHIESTA DI PARTECIPAZIONE AD UN GRUPPO DA PARTE DELL'UTENTE 
-create or replace NONEDITIONABLE PROCEDURE Accetta_Profilo(P_FK_Nome_Utente IN NOTIFICHE_RICHIESTE.FK_Nome_Utente%TYPE, P_FK_Id_Gruppo IN NOTIFICHE_RICHIESTE.FK_Id_Gruppo%TYPE)
+create or replace PROCEDURE Accetta_Profilo(P_FK_Nome_Utente IN NOTIFICHE_RICHIESTE.FK_Nome_Utente%TYPE, P_FK_Id_Gruppo IN NOTIFICHE_RICHIESTE.FK_Id_Gruppo%TYPE)
 AS
 
 Comando VARCHAR(1000);
@@ -909,8 +909,8 @@ END Accetta_Profilo;
 
 /
 
---L'ABBANDONA O VIENE RIMOSSO DAL GRUPPO
-create or replace NONEDITIONABLE PROCEDURE Abbandona_Gruppo(P_FK_Nome_Utente IN Partecipano.FK_Nome_Utente%TYPE, P_FK_Id_Gruppo IN Partecipano.FK_Id_Gruppo%TYPE)
+--L'UTENTE ABBANDONA O VIENE RIMOSSO DAL GRUPPO
+create or replace PROCEDURE Abbandona_Gruppo(P_FK_Nome_Utente IN Partecipano.FK_Nome_Utente%TYPE, P_FK_Id_Gruppo IN Partecipano.FK_Id_Gruppo%TYPE)
 AS
 
 Comando VARCHAR(1000);
