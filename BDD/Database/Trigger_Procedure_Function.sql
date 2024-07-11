@@ -1,7 +1,7 @@
 -- TRIGGER 
 
 --Trigger per verificare la Data di nascita degli utenti
-create or replace TRIGGER Verifica_DataNascita
+create or replace TRIGGER Verifica_DataNascita 
 BEFORE INSERT ON Profili
 FOR EACH ROW
 WHEN (NEW.Data_Nascita>SYSDATE)
@@ -43,7 +43,7 @@ END;
 
 
 --Trigger che aggiunge il creatore quando crea un gruppo
-create or replace NONEDITIONABLE TRIGGER Partecipazione_Creatore
+create or replace TRIGGER Partecipazione_Creatore
 AFTER INSERT ON GRUPPI
 FOR EACH ROW
 
@@ -53,9 +53,6 @@ BEGIN
 
 END;
 /
-
-
-
 
 
 --Trigger che avvisa gli utenti iscritti ad un gruppo che un utente ha messo un contenuto
@@ -87,7 +84,7 @@ END;
 
 
 --Trigger che avvisa l'utente che un altro utente ha interagito con un like al suo post
-create or replace NONEDITIONABLE TRIGGER Notifica_Like
+create or replace TRIGGER Notifica_Like
 AFTER INSERT ON Likes
 FOR EACH ROW
 
@@ -100,7 +97,7 @@ Verifica_Notifica NUMBER;
 BEGIN
     SELECT FK_Nome_Utente INTO TMP_Utente FROM Contenuti WHERE Id_Contenuto=:NEW.FK_Id_Contenuto;
 
-    -- recupera l'id del gruppo e il nome creatore del contenuto del commento e con questi verifica se partecipa (contando se esiste almeno 1 riga)
+    -- recupera l'id del gruppo e il nome creatore, del contenuto, del commento e con questi verifica se partecipa (contando se esiste almeno 1 riga)
     SELECT COUNT(*) INTO Verifica_Notifica FROM Partecipano WHERE FK_ID_GRUPPO IN (SELECT FK_ID_GRUPPO FROM CONTENUTI WHERE Id_Contenuto = :NEW.FK_Id_Contenuto) AND FK_NOME_UTENTE IN (FK_Nome_Utente);
     
     --se è presente almeno una riga allora...
@@ -119,7 +116,7 @@ END;
 /
 
 --Trigger che avvisa l'utente che un altro utente ha interagito con un commento al suo post
-create or replace NONEDITIONABLE TRIGGER Notifica_Commento
+create or replace TRIGGER Notifica_Commento
 AFTER INSERT ON Commenti
 FOR EACH ROW
 
@@ -143,7 +140,7 @@ END;
 /
 
 --Trigger che avvisa l'utente che è stato eliminato da un gruppo
-create or replace NONEDITIONABLE TRIGGER Notifica_Eliminazione
+create or replace TRIGGER Notifica_Eliminazione
 AFTER DELETE ON Partecipano
 FOR EACH ROW
 
@@ -197,7 +194,7 @@ END;
 /
 
 --TRIGGER CHE MANDA UNA NOTIFICA A TUTTI GLI UTENTI DEL GRUPPO QUANDO UN UTENTE ELIMINA UN CONTENUTO
-create or replace NONEDITIONABLE TRIGGER Notifca_Contenuto_Eliminato
+create or replace TRIGGER Notifca_Contenuto_Eliminato
 AFTER DELETE ON Contenuti
 FOR EACH ROW
 
@@ -210,7 +207,7 @@ END;
 
 
 -- INVIA NOTIFICA ESITO
-create or replace NONEDITIONABLE TRIGGER Invia_Notifica_Esito
+create or replace TRIGGER Invia_Notifica_Esito
 AFTER UPDATE ON Notifiche_richieste
 FOR EACH ROW
 WHEN (OLD.Esitato<>'1' AND NEW.Esitato='1')
@@ -243,8 +240,8 @@ BEGIN
 END;
 /
 
---RIMOZIONE COMMENTO
-create or replace NONEDITIONABLE PROCEDURE Rimozione_Commento(P_Id_Commento IN COMMENTI.Id_Commento%TYPE)
+--PROCEDURE PER LA RIMOZIONE COMMENTO
+create or replace PROCEDURE Rimozione_Commento(P_Id_Commento IN COMMENTI.Id_Commento%TYPE)
 AS
 
 BEGIN
@@ -254,8 +251,8 @@ BEGIN
 END Rimozione_Commento;
 /
 
---RIMOZIONE LIKE
-create or replace NONEDITIONABLE PROCEDURE Rimozione_Like(P_Nome_Utente IN LIKES.FK_NOME_UTENTE%TYPE, P_ID_CONTENUTO IN LIKES.FK_ID_CONTENUTO%TYPE)
+--PROCEDURE PER LA RIMOZIONE LIKE
+create or replace  PROCEDURE Rimozione_Like(P_Nome_Utente IN LIKES.FK_NOME_UTENTE%TYPE, P_ID_CONTENUTO IN LIKES.FK_ID_CONTENUTO%TYPE)
 AS
 
 BEGIN
@@ -266,10 +263,8 @@ END Rimozione_Like;
 /
 
 
-
-
 -- RICERCA GRUPPO DA UNA STRINGA
-create or replace NONEDITIONABLE PROCEDURE Ricerca_Gruppo(P_NOME IN VARCHAR2)
+create or replace PROCEDURE Ricerca_Gruppo(P_NOME IN VARCHAR2)
 AS 
 
 CURSOR Rec_Gruppi IS SELECT NOME FROM GRUPPI WHERE NOME LIKE '%' || P_NOME || '%';
@@ -293,7 +288,7 @@ END Ricerca_Gruppo;
 /
 
 --RIMOZIONE CONTENUTO
-create or replace NONEDITIONABLE PROCEDURE Rimozione_Contenuto(P_Id_Contenuto IN CONTENUTI.Id_Contenuto%TYPE)
+create or replace PROCEDURE Rimozione_Contenuto(P_Id_Contenuto IN CONTENUTI.Id_Contenuto%TYPE)
 AS
 
 BEGIN
@@ -303,10 +298,9 @@ BEGIN
 END Rimozione_Contenuto;
 /
 
---PROCEDURE IMPORTANTI
 
 --MODIFICA UN SINGOLO ATTRIBUTO DELLA TABELLA PROFILI
-create or replace NONEDITIONABLE PROCEDURE Modifica_Profilo(Campo IN VARCHAR2, Val_NEW IN VARCHAR2, P_Nome_Utente IN Profili.Nome_Utente%TYPE)
+create or replace  PROCEDURE Modifica_Profilo(Campo IN VARCHAR2, Val_NEW IN VARCHAR2, P_Nome_Utente IN Profili.Nome_Utente%TYPE)
 AS
 
 Comando VARCHAR(1000);
@@ -320,7 +314,7 @@ END Modifica_Profilo;
 
 
 --MOSTRA TUTTE LE NOTIFICHE DELLE RICHIESTE DI PARTECIPAZIONE AL CREATORE DEL GRUPPO
-create or replace NONEDITIONABLE PROCEDURE Mostra_Richiesta (P_Nome_Utente IN Profili.Nome_Utente%TYPE)
+create or replace PROCEDURE Mostra_Richiesta (P_Nome_Utente IN Profili.Nome_Utente%TYPE)
 AS
 
 CURSOR Rec_Gruppo_C IS (SELECT Id_Gruppo From Gruppi Where FK_Nome_Utente = P_Nome_Utente);
@@ -366,7 +360,7 @@ END Mostra_Richiesta;
 /
 
 --MOSTRA TUTTI I LIKE E I COMMENTI DI UN ID_COMMNETO 
-create or replace NONEDITIONABLE PROCEDURE Mostra_Like_Commento (P_Id_Contenuto IN CONTENUTI_CON_LIKES.ID_CONTENUTO%TYPE)
+create or replace PROCEDURE Mostra_Like_Commento (P_Id_Contenuto IN CONTENUTI_CON_LIKES.ID_CONTENUTO%TYPE)
 AS
 
 
@@ -683,7 +677,7 @@ BEGIN
     FROM Contenuti 
     WHERE Id_Contenuto = P_FK_Id_Contenuto;
 
-    --Verifico se l'utente che mette LIKE partecipa effettivamente al gruppo (se si conta 1 riga)
+    --Verifico se l'utente che mette il commento partecipa effettivamente al gruppo (se si conta 1 riga)
     SELECT COUNT(*) INTO Verifica_Partecipano 
     FROM Partecipano 
     WHERE FK_Id_Gruppo = Trova_Gruppo AND FK_Nome_Utente = P_FK_Nome_Utente;

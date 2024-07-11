@@ -131,7 +131,7 @@ FOREIGN KEY (FK_Nome_Utente) REFERENCES Profili(Nome_Utente) ON DELETE CASCADE,
 FOREIGN KEY (FK_Id_Contenuto) REFERENCES Contenuti(Id_Contenuto) ON DELETE CASCADE
 );
 
---Viste 
+--Vista utile per il conteggio dei like di un contenuto
 CREATE View Contenuti_con_Likes AS (
     SELECT Contenuti.*, (SELECT COUNT(*) FROM Likes WHERE likes.fk_Id_Contenuto=Contenuti.Id_Contenuto) AS N_LIKE FROM Contenuti
 );

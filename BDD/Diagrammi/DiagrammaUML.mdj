@@ -6480,7 +6480,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 844,
-									"top": 899,
+									"top": 875,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -6501,7 +6501,7 @@
 									"visible": null,
 									"font": "Arial;13;0",
 									"left": 844,
-									"top": 884,
+									"top": 860,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 30,
@@ -6522,7 +6522,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 844,
-									"top": 929,
+									"top": 905,
 									"height": 13,
 									"alpha": -1.5707963267948966,
 									"distance": 15,
@@ -6692,7 +6692,7 @@
 							"tail": {
 								"$ref": "AAAAAAGMr7wPTbrwyEE="
 							},
-							"points": "400:302;400:920;1288:920;1288:879",
+							"points": "400:302;400:896;1288:896;1288:879",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAGQhRSuYtMbWUo="
@@ -6776,7 +6776,7 @@
 							},
 							"font": "Arial;13;0",
 							"left": 455,
-							"top": 896,
+							"top": 872,
 							"width": 100,
 							"height": 25,
 							"text": "+Rapporta"
