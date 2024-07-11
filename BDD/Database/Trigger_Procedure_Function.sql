@@ -963,3 +963,30 @@ BEGIN
 
 END Rimozione_Profilo;
 /
+
+--RITORNA TUTTE LE RICHIESTE SUI GRUPPI DOVE L'UTENTE E' STATO ACCETTATO O HA ACCETATTO UN ALTRO UTENTE 
+create or replace NONEDITIONABLE FUNCTION Mostra_Archiviata_F(P_Nome_Utente IN Profili.Nome_Utente%TYPE)
+RETURN SYS_REFCURSOR AS
+    rc SYS_REFCURSOR;
+BEGIN
+    OPEN rc FOR
+    SELECT Testo
+    FROM (
+        (SELECT Testo, FK_Id_gruppo
+         FROM NOTIFICHE_RICHIESTE 
+         WHERE Esitato <> '0'
+         AND FK_Nome_Utente <> P_Nome_Utente) 
+
+        UNION ALL
+
+        (SELECT Testo, FK_Id_gruppo
+         FROM NOTIFICHE_RICHIESTE 
+         WHERE Esitato <> '0'
+         AND FK_Nome_Utente = P_Nome_Utente)
+    )
+    GROUP BY FK_Id_gruppo, Testo
+    ORDER BY FK_Id_gruppo;
+
+    RETURN rc;
+END;
+/
