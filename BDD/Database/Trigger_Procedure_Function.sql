@@ -487,7 +487,7 @@ END Rifiuta_Profilo;
 /
 
 
---PROCEDURE INSERMINETO
+
 
 -- CREA PARTECIPANO
 create or replace NONEDITIONABLE PROCEDURE Crea_Partecipano (P_Nome_Utente IN PARTECIPANO.FK_NOME_UTENTE%TYPE, P_Id_Gruppo IN PARTECIPANO.FK_Id_Gruppo%TYPE)
@@ -499,7 +499,6 @@ END Crea_Partecipano;
 /
 
 -- CREA REGOLANO
-
 create or replace NONEDITIONABLE PROCEDURE Crea_Regolano (P_Nome_Utente IN Regolano.FK_NOME_UTENTE%TYPE, P_Id_Gruppo IN Regolano.FK_Id_Gruppo%TYPE)
 AS
 
@@ -546,7 +545,7 @@ END Crea_Possiedono;
 /
 
 
--- RIMOZIONE DI TUTTI I COMMENTO DI UN PROFILO IN UN GRUPPO
+-- RIMOZIONE DI TUTTI I COMMENTI DI UN PROFILO IN UN GRUPPO
 create or replace NONEDITIONABLE PROCEDURE Rimozione_Commento_Profilo(P_Nome_Utente COMMENTI.FK_Nome_Utente%TYPE, P_ID_GRUPPO GRUPPI.ID_GRUPPO%TYPE)
 AS
 
@@ -601,12 +600,9 @@ END Rimozione_Like_Profilo;
 create or replace NONEDITIONABLE PROCEDURE Rimozione_Contenuto_Profilo(P_Nome_Utente CONTENUTI.FK_Nome_Utente%TYPE, P_ID_GRUPPO GRUPPI.ID_GRUPPO%TYPE)
 AS
 
-
 BEGIN
 
-
     DELETE FROM CONTENUTI WHERE FK_NOME_UTENTE = P_Nome_Utente AND FK_ID_GRUPPO = P_ID_GRUPPO;
-
 
 END Rimozione_Contenuto_Profilo;
 /
@@ -649,7 +645,7 @@ Verifica_Partecipano NUMBER;
 BEGIN
 
 
-    --Verifico se l'utente che mette LIKE partecipa effettivamente al gruppo (se si conta 1 riga)
+    --Verifico se l'utente partecipa effettivamente al gruppo (se si conta 1 riga)
     SELECT COUNT(*) INTO Verifica_Partecipano 
     FROM Partecipano 
     WHERE FK_Id_Gruppo = P_FK_Id_Gruppo AND FK_Nome_Utente = P_FK_Nome_Utente;
