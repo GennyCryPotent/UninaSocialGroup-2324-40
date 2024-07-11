@@ -931,3 +931,35 @@ BEGIN
         END IF;
         
 END Abbandona_Gruppo;
+/
+
+--IL CREATORE ELIMINA IL GRUPPO
+create or replace  PROCEDURE Rimozione_Gruppo(P_Id_Gruppo IN Gruppi.Id_Gruppo%TYPE, P_FK_Nome_Utente IN Gruppi.FK_Nome_Utente%TYPE)
+AS
+
+TMP_Creatore Gruppi.FK_Nome_Utente%TYPE;
+
+BEGIN
+    -- trovo il creatore del gruppo
+    SELECT FK_Nome_Utente INTO TMP_Creatore
+    FROM Gruppi
+    WHERE Id_Gruppo = P_Id_Gruppo;
+
+
+    IF (TMP_Creatore LIKE P_FK_Nome_Utente) THEN
+         DELETE FROM Gruppi WHERE ID_Gruppo = P_Id_Gruppo;
+    END IF;
+    
+END Rimozione_Gruppo;
+/
+
+--L'UTENTE ELIMINA IL PROFOILO
+create or replace PROCEDURE Rimozione_Profilo(P_Nome_Utente IN Profili.Nome_Utente%TYPE)
+AS
+
+BEGIN
+
+    DELETE FROM Profili WHERE nome_utente = p_nome_utente;
+
+END Rimozione_Profilo;
+/

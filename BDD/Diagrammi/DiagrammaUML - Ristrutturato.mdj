@@ -6624,9 +6624,9 @@
 										"$ref": "AAAAAAGQmRnl8usobPc="
 									},
 									"font": "Arial;13;0",
-									"left": 638,
+									"left": 632,
 									"top": 326,
-									"width": 7.22998046875,
+									"width": 19.5126953125,
 									"height": 13,
 									"alpha": -0.5235987755982988,
 									"distance": 25,
@@ -6634,7 +6634,7 @@
 										"$ref": "AAAAAAGQmRnl8usrAgU="
 									},
 									"edgePosition": 2,
-									"text": "1"
+									"text": "0..*"
 								},
 								{
 									"_type": "EdgeLabelView",
@@ -6695,7 +6695,7 @@
 									"hostEdge": {
 										"$ref": "AAAAAAGQmRnl8usrAgU="
 									},
-									"text": "0..*"
+									"text": "1"
 								},
 								{
 									"_type": "UMLQualifierCompartmentView",
@@ -8038,7 +8038,7 @@
 								"reference": {
 									"$ref": "AAAAAAGQmRmQ3cYbPMg="
 								},
-								"multiplicity": "1"
+								"multiplicity": "0..*"
 							},
 							"end2": {
 								"_type": "UMLAssociationEnd",
@@ -8049,7 +8049,7 @@
 								"reference": {
 									"$ref": "AAAAAAGMr7tj7rrE9fI="
 								},
-								"multiplicity": "0..*"
+								"multiplicity": "1"
 							}
 						}
 					]
