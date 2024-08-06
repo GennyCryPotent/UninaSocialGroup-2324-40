@@ -21,6 +21,8 @@ public class Gruppi {
 		Creatore = creatore;
 	}
 
+	
+
 	public int getId_Gruppo() {
 		return Id_Gruppo;
 	}
