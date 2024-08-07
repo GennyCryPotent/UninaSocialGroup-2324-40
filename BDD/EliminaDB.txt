@@ -34,6 +34,8 @@ drop procedure "SYSTEM"."MODIFICA_GRUPPO";
 drop procedure "SYSTEM"."MODIFICA_PROFILO";
 drop procedure "SYSTEM"."MOSTRA_ARCHIVIATA";
 drop procedure "SYSTEM"."MOSTRA_RICHIESTA";
+drop procedure "SYSTEM"."MOSTRA_NOTIFICA";
+drop procedure "SYSTEM"."MOSTRA_LIKE_COMMENTO";
 drop procedure "SYSTEM"."RICERCA_GRUPPO";
 drop procedure "SYSTEM"."RIFIUTA_PROFILO";
 drop procedure "SYSTEM"."RIMOZIONE_COMMENTO";
