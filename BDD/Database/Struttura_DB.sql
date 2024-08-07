@@ -13,13 +13,12 @@
 
 --CREAZIONE TABELLA GRUPPI
  CREATE TABLE Gruppi(
- Id_Gruppo NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1), 
- Nome VARCHAR2(30) NOT NULL UNIQUE,
+ Nome VARCHAR2(30),
  Data_Creazione Date DEFAULT SYSDATE,
  Descrizione VARCHAR2(100) NOT NULL,
  OnlineC NUMBER(1) DEFAULT 0, --0 offline, 1 online
  FK_Nome_Utente VARCHAR2(30) NOT NULL,
- Primary key (Id_Gruppo),
+ Primary key (Nome),
  FOREIGN KEY (FK_Nome_Utente) REFERENCES Profili(Nome_Utente) ON DELETE CASCADE
 );
 
@@ -35,11 +34,11 @@
  Data_Creazione Date DEFAULT SYSDATE,
  Foto VARCHAR2(2000),
  Testo VARCHAR2(1000),
- FK_Id_Gruppo NUMBER NOT NULL,
+ FK_Nome_Gruppo VARCHAR2(30) NOT NULL,
  FK_Nome_Utente VARCHAR2(30) NOT NULL,
  Primary key (Id_Contenuto),
  FOREIGN KEY (FK_Nome_Utente) REFERENCES Profili(Nome_Utente) ON DELETE CASCADE,
- FOREIGN KEY (FK_Id_Gruppo) REFERENCES Gruppi(Id_Gruppo) ON DELETE CASCADE,
+ FOREIGN KEY (Fk_Nome_Gruppo) REFERENCES Gruppi(Nome) ON DELETE CASCADE,
  CONSTRAINT Check_Contenuto Check(Foto<>NULL OR Testo<>NULL)
 );
 
@@ -62,11 +61,11 @@
  Testo VARCHAR2(1000) NOT NULL,
  Data_Notifica TIMESTAMP DEFAULT SYSTIMESTAMP,
  Visualizzato CHAR(1) DEFAULT '0' CHECK(Visualizzato='0' OR Visualizzato='1'), --0 non visualizzato, 1 visualizzato
- FK_Id_Gruppo NUMBER NOT NULL,
+ FK_Nome_Gruppo VARCHAR2(30) NOT NULL,
  FK_Nome_Utente VARCHAR2(30) NOT NULL,
  Primary key (Id_Notifica_G),
  FOREIGN KEY (FK_Nome_Utente) REFERENCES Profili(Nome_Utente) ON DELETE CASCADE,
- FOREIGN KEY (FK_Id_Gruppo) REFERENCES Gruppi(Id_Gruppo) ON DELETE CASCADE
+ FOREIGN KEY (Fk_Nome_Gruppo) REFERENCES Gruppi(Nome) ON DELETE CASCADE
  );
 
  --CREAZIONE TABELLA NOTIFICHE CONTENUTI
@@ -88,38 +87,38 @@
  Testo VARCHAR2(1000) NOT NULL,
  Data_Notifica TIMESTAMP DEFAULT SYSTIMESTAMP,
  Esitato CHAR(1) DEFAULT '0' CHECK(Esitato='0' OR Esitato='1' OR Esitato='2'), --0 non risposto, 1 accettato, 2 rifutato
- FK_Id_Gruppo NUMBER NOT NULL,
+ FK_Nome_Gruppo VARCHAR2(30) NOT NULL,
  FK_Nome_Utente VARCHAR2(30) NOT NULL,
  Primary key (Id_Notifica_RE),
  FOREIGN KEY (FK_Nome_Utente) REFERENCES Profili(Nome_Utente) ON DELETE CASCADE,
- FOREIGN KEY (FK_Id_Gruppo) REFERENCES Gruppi(Id_Gruppo) ON DELETE CASCADE
+ FOREIGN KEY (Fk_Nome_Gruppo) REFERENCES Gruppi(Nome) ON DELETE CASCADE
 );
 
  --CREAZIONE TABELLA PARTECIPANO
 create table Partecipano (
  FK_Nome_Utente VARCHAR2(30),
- FK_Id_Gruppo NUMBER,
- Primary key(FK_Nome_Utente, FK_Id_Gruppo),
+ FK_Nome_Gruppo VARCHAR2(30),
+ Primary key(FK_Nome_Utente, Fk_Nome_Gruppo),
  FOREIGN KEY (FK_Nome_Utente) REFERENCES Profili(Nome_Utente) ON DELETE CASCADE,
- FOREIGN KEY (FK_Id_Gruppo) REFERENCES Gruppi(Id_Gruppo) ON DELETE CASCADE
+ FOREIGN KEY (Fk_Nome_Gruppo) REFERENCES Gruppi(Nome) ON DELETE CASCADE
 );
 
 --CREAZIONE TABELLA REGOLANO (Tabella per gli amministartori)
 create table Regolano (
  FK_Nome_Utente VARCHAR2(30),
- FK_Id_Gruppo NUMBER,
- Primary key(FK_Nome_Utente, FK_Id_Gruppo),
+ FK_Nome_Gruppo VARCHAR2(30),
+ Primary key(FK_Nome_Utente, Fk_Nome_Gruppo),
  FOREIGN KEY (FK_Nome_Utente) REFERENCES Profili(Nome_Utente) ON DELETE CASCADE,
- FOREIGN KEY (FK_Id_Gruppo) REFERENCES Gruppi(Id_Gruppo) ON DELETE CASCADE
+ FOREIGN KEY (Fk_Nome_Gruppo) REFERENCES Gruppi(Nome) ON DELETE CASCADE
 );
 
 --CREAZIONE TABELLA POSSIEDONO 
 create table Possiedono(
-FK_Id_Gruppo NUMBER,
+FK_Nome_Gruppo VARCHAR2(30),
 FK_Parola VARCHAR2(20),
-Primary key (FK_Id_Gruppo, FK_Parola),
+Primary key (Fk_Nome_Gruppo, FK_Parola),
 FOREIGN KEY (FK_Parola) REFERENCES TAGS(Parola) ON DELETE CASCADE,
-FOREIGN KEY (FK_Id_Gruppo) REFERENCES Gruppi(Id_Gruppo) ON DELETE CASCADE
+FOREIGN KEY (Fk_Nome_Gruppo) REFERENCES Gruppi(Nome) ON DELETE CASCADE
 );
 
 --CREAZIONE TABELLA LIKES

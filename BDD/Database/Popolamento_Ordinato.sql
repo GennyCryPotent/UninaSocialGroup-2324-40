@@ -54,78 +54,77 @@ CALL CREA_GRUPPO('Fitness e Benessere', 'Consigli su esercizi, diete e stile di 
 CALL CREA_GRUPPO('Musica per Tutti', 'Condivisione di playlist e nuovi artisti', 'Lauriel');
 
 --Popolamneto POSSIEDONO
-CALL CREA_POSSIEDONO(1, 'Sport');
-CALL CREA_POSSIEDONO(2, 'Sport');
-CALL CREA_POSSIEDONO(3, 'Gaming');
-CALL CREA_POSSIEDONO(4, 'Educazioe');
-CALL CREA_POSSIEDONO(4, 'Cinema');
-CALL CREA_POSSIEDONO(5, 'Fotografia');
-CALL CREA_POSSIEDONO(5, 'Geografia');
-CALL CREA_POSSIEDONO(5, 'Linguistica');
-CALL CREA_POSSIEDONO(5, 'Ambiente');
-CALL CREA_POSSIEDONO(6, 'Gastronomia');
-CALL CREA_POSSIEDONO(7, 'Matematica');
-CALL CREA_POSSIEDONO(8, 'Linguistica');
-CALL CREA_POSSIEDONO(8, 'Filosofia');
-CALL CREA_POSSIEDONO(8, 'Politica');
-CALL CREA_POSSIEDONO(8, 'Economia');
-CALL CREA_POSSIEDONO(9, 'Animali');
-CALL CREA_POSSIEDONO(10, 'Fitness');
-CALL CREA_POSSIEDONO(11, 'Musica');
+CALL CREA_POSSIEDONO('Fantacalcio', 'Sport');
+CALL CREA_POSSIEDONO('SSC_Napoli_Ultras', 'Sport');
+CALL CREA_POSSIEDONO('Dungeons N Dragons', 'Gaming');
+CALL CREA_POSSIEDONO('Amanti del Cinema', 'Educazione');
+CALL CREA_POSSIEDONO('Amanti del Cinema', 'Cinema');
+CALL CREA_POSSIEDONO('Fotografia per Passione', 'Fotografia');
+CALL CREA_POSSIEDONO('Viaggiatori del Mondo', 'Geografia');
+CALL CREA_POSSIEDONO('Viaggiatori del Mondo', 'Linguistica');
+CALL CREA_POSSIEDONO('Viaggiatori del Mondo', 'Ambiente');
+CALL CREA_POSSIEDONO('Cucinare con Amore', 'Gastronomia');
+CALL CREA_POSSIEDONO('Appassionati di Tecnologia', 'Matematica');
+CALL CREA_POSSIEDONO('Libri e Letteratura', 'Linguistica');
+CALL CREA_POSSIEDONO('Libri e Letteratura', 'Filosofia');
+CALL CREA_POSSIEDONO('Libri e Letteratura', 'Politica');
+CALL CREA_POSSIEDONO('Libri e Letteratura', 'Economia');
+CALL CREA_POSSIEDONO('Amici degli Animali', 'Animali');
+CALL CREA_POSSIEDONO('Fitness e Benessere', 'Fitness');
+CALL CREA_POSSIEDONO('Musica per Tutti', 'Musica');
 
 
 
 --Popolamento NOTIFICHE_RICHIESTE_ESITI
-CALL CREA_RICHIESTA (1, 'Gabbo');
-CALL CREA_RICHIESTA (1, 'DarkNine');
-CALL CREA_RICHIESTA (2, 'errore31');
-CALL CREA_RICHIESTA (4, 'errore31');
-CALL CREA_RICHIESTA (5, 'errore31');
-CALL CREA_RICHIESTA (6, 'errore31');
-CALL CREA_RICHIESTA (6, 'DarkNine');
-CALL CREA_RICHIESTA (5, 'Gabbo');
-CALL CREA_RICHIESTA (3, 'Lauriel');
-CALL CREA_RICHIESTA (1, 'Lauriel');
-CALL CREA_RICHIESTA (6, 'OgniRiccioUnCapriccio');
-CALL CREA_RICHIESTA (1, 'OgniRiccioUnCapriccio');
-CALL CREA_RICHIESTA (6, 'Mondindo');
-CALL CREA_RICHIESTA (6, 'Genny03cry');
+CALL CREA_RICHIESTA ('Fantacalcio', 'Gabbo');
+CALL CREA_RICHIESTA ('Fantacalcio', 'DarkNine');
+CALL CREA_RICHIESTA ('SSC_Napoli_Ultras', 'errore31');
+CALL CREA_RICHIESTA ('Amanti del Cinema', 'errore31');
+CALL CREA_RICHIESTA ('Fotografia per Passione', 'errore31');
+CALL CREA_RICHIESTA ('Viaggiatori del Mondo', 'errore31');
+CALL CREA_RICHIESTA ('Viaggiatori del Mondo', 'DarkNine');
+CALL CREA_RICHIESTA ('Fotografia per Passione', 'Gabbo');
+CALL CREA_RICHIESTA ('Dungeons N Dragons', 'Lauriel');
+CALL CREA_RICHIESTA ('Fantacalcio', 'Lauriel');
+CALL CREA_RICHIESTA ('Viaggiatori del Mondo', 'OgniRiccioUnCapriccio');
+CALL CREA_RICHIESTA ('Fantacalcio', 'OgniRiccioUnCapriccio');
+CALL CREA_RICHIESTA ('Viaggiatori del Mondo', 'Mondindo');
+CALL CREA_RICHIESTA ('Viaggiatori del Mondo', 'Genny03cry');
 
 
 
 --Popolamneto NOTIFICHE_RICHIESTE_ESITI (ACCETTAZIONI)   
-CALL ACCETTA_PROFILO ('Gabbo', 1);
-CALL ACCETTA_PROFILO ('DarkNine', 1);
-CALL RIFIUTA_PROFILO ('errore31', 2);
-CALL ACCETTA_PROFILO ('errore31', 4);
-CALL ACCETTA_PROFILO ('errore31', 5);
-CALL ACCETTA_PROFILO ('errore31', 6);
-CALL RIFIUTA_PROFILO ('DarkNine', 6);
-CALL ACCETTA_PROFILO ('Gabbo', 5);
-CALL ACCETTA_PROFILO ('Lauriel', 3);
-CALL ACCETTA_PROFILO ('Lauriel', 1);
-CALL ACCETTA_PROFILO ('OgniRiccioUnCapriccio', 6);
-CALL ACCETTA_PROFILO ('OgniRiccioUnCapriccio', 1);
-CALL ACCETTA_PROFILO ('Mondindo', 6);
-CALL ACCETTA_PROFILO ('Genny03cry', 6);
+CALL ACCETTA_PROFILO ('Gabbo', 'Fantacalcio');
+CALL ACCETTA_PROFILO ('DarkNine', 'Fantacalcio');
+CALL RIFIUTA_PROFILO ('errore31', 'SSC_Napoli_Ultras');
+CALL ACCETTA_PROFILO ('errore31', 'Fotografia per Passione');
+CALL ACCETTA_PROFILO ('errore31', 'Viaggiatori del Mondo');
+CALL RIFIUTA_PROFILO ('DarkNine', 'Viaggiatori del Mondo');
+CALL ACCETTA_PROFILO ('Gabbo', 'Fotografia per Passione');
+CALL ACCETTA_PROFILO ('Lauriel', 'Dungeons N Dragons');
+CALL ACCETTA_PROFILO ('Lauriel', 'Fantacalcio');
+CALL ACCETTA_PROFILO ('OgniRiccioUnCapriccio', 'Viaggiatori del Mondo');
+CALL ACCETTA_PROFILO ('OgniRiccioUnCapriccio', 'Fantacalcio');
+CALL ACCETTA_PROFILO ('Mondindo', 'Viaggiatori del Mondo');
+CALL ACCETTA_PROFILO ('Genny03cry', 'Viaggiatori del Mondo');
 
 
 --Popolamneto REGOLANO   
-CALL CREA_REGOLANO ('Gabbo', 1);
-CALL CREA_REGOLANO ('DarkNine', 1);
-CALL CREA_REGOLANO ('errore31', 4);
-CALL CREA_REGOLANO ('errore31', 5);
-CALL CREA_REGOLANO ('Gabbo', 5);
-CALL CREA_REGOLANO ('Lauriel', 3);
+CALL CREA_REGOLANO ('Gabbo', 'Fantacalcio');
+CALL CREA_REGOLANO ('DarkNine','Fantacalcio');
+CALL CREA_REGOLANO ('Lauriel', 'Amanti del Cinema');
+CALL CREA_REGOLANO ('errore31', 'Fotografia per Passione');
+CALL CREA_REGOLANO ('Gabbo', 'Fotografia per Passione');
+CALL CREA_REGOLANO ('Lauriel', 'Dungeons N Dragons');
 
 
 
 --Popolamento Contenuti
-CALL CREA_CONTENUTO(NULL,'Pako ha vinto il Fanta!!1!1!',1,'Gabbo');
-CALL CREA_CONTENUTO(NULL, 'Thuram è troppo forte',1,'DarkNine');
-CALL CREA_CONTENUTO(NULL, 'Buongiorno è troppo forte',1,'DarkNine');
-CALL CREA_CONTENUTO(NULL, 'A breve inizierà "Signore Oscuro in DND" ', 3, 'errore31');
-CALL CREA_CONTENUTO(NULL, 'Questo fantacalcio è molto equilibrato', 1, 'Lauriel');
+CALL CREA_CONTENUTO(NULL,'Pako ha vinto il Fanta!!1!1!','Fantacalcio','Gabbo');
+CALL CREA_CONTENUTO(NULL, 'Thuram è troppo forte','Fantacalcio','DarkNine');
+CALL CREA_CONTENUTO(NULL, 'Buongiorno è troppo forte','Fantacalcio','DarkNine');
+CALL CREA_CONTENUTO(NULL, 'A breve inizierà "Signore Oscuro in DND" ', 'Dungeons N Dragons', 'errore31');
+CALL CREA_CONTENUTO(NULL, 'Questo fantacalcio è molto equilibrato', 'Fantacalcio', 'Lauriel');
 
 
 --Popolamento Like
