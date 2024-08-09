@@ -2,8 +2,8 @@
 
 --Popolamento Profili
 CALL CREA_PROFILO('Genny03cry', 'Database03', 'Gennaro', 'De Luca', 'M', TO_DATE('04-11-2003', 'DD-MM-YYYY'));
-CALL CREA_PROFILO('Gabbo', 'SonoIo02', 'Gabriele', 'Cifuni', 'F', TO_DATE('21-4-2002', 'DD-MM-YYYY'));
-CALL CREA_PROFILO('DarkNine', 'Pagl1accio', 'Simone', 'Francesco', 'F', TO_DATE('21-11-2003', 'DD-MM-YYYY'));
+CALL CREA_PROFILO('Gabbo', 'SonoIo02', 'Gabriele', 'Cifuni', 'M', TO_DATE('21-4-2002', 'DD-MM-YYYY'));
+CALL CREA_PROFILO('DarkNine', 'Pagl1accio', 'Simone', 'Francesco', 'M', TO_DATE('21-11-2003', 'DD-MM-YYYY'));
 CALL CREA_PROFILO('errore31', 'Sbagliato03', 'Antonio', 'Caruso', 'M', TO_DATE('27-05-2003', 'DD-MM-YYYY'));
 CALL CREA_PROFILO('Lauriel', 'R0rioneDiRiccione', 'Laura', 'Miele', 'F', TO_DATE('24-02-2003', 'DD-MM-YYYY'));
 CALL CREA_PROFILO('OgniRiccioUnCapriccio', 'Ricci0ne', 'Mario Flavio', 'Di Blasio', 'M', TO_DATE('22-02-2003', 'DD-MM-YYYY'));
@@ -34,7 +34,6 @@ CALL CREA_TAG('Sport');
 CALL CREA_TAG('Cinema');
 CALL CREA_TAG('Animali');
 CALL CREA_TAG('Musica');
-CALL CREA_TAG('Educazione');
 
 
 
@@ -140,7 +139,7 @@ CALL CREA_LIKE ('Lauriel', 4);
 CALL CREA_COMMENTO('Non è vero che è troppo forte!!',2,'Gabbo'); 
 CALL CREA_COMMENTO('Invece si, ha rovinato il gioco!!',2,'errore31'); 
 CALL CREA_COMMENTO('🔥🔥🔥',2,'DarkNine'); 
-CALL CREA_COMMENTO('EVVIA!',4,'Lauriel'); 
+CALL CREA_COMMENTO('EVVIVA!',4,'Lauriel'); 
 
 
 

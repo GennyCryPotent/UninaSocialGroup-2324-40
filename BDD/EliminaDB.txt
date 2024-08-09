@@ -46,5 +46,7 @@ drop procedure "SYSTEM"."RIMOZIONE_LIKE";
 drop procedure "SYSTEM"."RIMOZIONE_LIKE_PROFILO";
 drop procedure "SYSTEM"."VISUALIZZATO_NOTIFICA_CONTENUTO";
 drop procedure "SYSTEM"."VISUALIZZATO_NOTIFICA_GRUPPO";
+drop procedure "SYSTEM"."RIMOZIONE_TAG";
+
 
 

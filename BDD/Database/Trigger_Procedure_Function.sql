@@ -22,7 +22,7 @@ DECLARE
 
 CURSOR Rec_Utente IS (SELECT FK_Nome_Utente FROM partecipano Where FK_Nome_Gruppo= :NEW.Nome);
 TMP_Utente Partecipano.FK_Nome_Utente%TYPE;
-
+TMP_GENERE PROFILI.Genere%TYPE;
 BEGIN
 
 OPEN Rec_Utente;
@@ -31,9 +31,14 @@ LOOP
 
     FETCH Rec_Utente INTO TMP_Utente;
     EXIT WHEN Rec_Utente%NOTFOUND;
-
-    INSERT INTO Notifiche_Gruppi (Testo, FK_Nome_Gruppo, FK_Nome_Utente) VALUES ('Il creatore del gruppo '|| :NEW.Nome || ' è Online!', :NEW.Nome, TMP_Utente); 
-
+    
+    SELECT GENERE INTO TMP_GENERE FROM PROFILI WHERE :NEW.FK_NOME_UTENTE = NOME_UTENTE;
+    
+    IF( TMP_GENERE = 'M' OR TMP_GENERE = 'N') THEN
+        INSERT INTO Notifiche_Gruppi (Testo, FK_Nome_Gruppo, FK_Nome_Utente) VALUES ('Il creatore del gruppo '|| :NEW.Nome || ' è Online!', :NEW.Nome, TMP_Utente); 
+    ELSE
+        INSERT INTO Notifiche_Gruppi (Testo, FK_Nome_Gruppo, FK_Nome_Utente) VALUES ('La creatrice del gruppo '|| :NEW.Nome || ' è Online!', :NEW.Nome, TMP_Utente); 
+    END IF;
 END LOOP;
 
 CLOSE Rec_Utente;
@@ -92,13 +97,15 @@ DECLARE
 TMP_Utente Profili.Nome_Utente%TYPE;
 TMP_Testo Contenuti.Testo%TYPE;
 Verifica_Notifica NUMBER;
+Verifica_Creatore_Partecipa Number;
 
 
 BEGIN
     SELECT FK_Nome_Utente INTO TMP_Utente FROM Contenuti WHERE Id_Contenuto=:NEW.FK_Id_Contenuto;
 
     -- recupera l'id del gruppo e il nome creatore, del contenuto, del commento e con questi verifica se partecipa (contando se esiste almeno 1 riga)
-    SELECT COUNT(*) INTO Verifica_Notifica FROM Partecipano WHERE FK_Nome_Gruppo IN (SELECT FK_Nome_Gruppo FROM CONTENUTI WHERE Id_Contenuto = :NEW.FK_Id_Contenuto) AND FK_NOME_UTENTE IN (FK_Nome_Utente);
+    SELECT COUNT(*) INTO Verifica_Notifica FROM Partecipano WHERE FK_Nome_Gruppo IN (SELECT FK_Nome_Gruppo FROM CONTENUTI WHERE Id_Contenuto = :NEW.FK_Id_Contenuto) AND FK_NOME_UTENTE IN (SELECT FK_Nome_Utente FROM CONTENUTI WHERE Id_Contenuto = :NEW.FK_Id_Contenuto);
+    
     
     --se è presente almeno una riga allora...
     IF(Verifica_Notifica <> 0) THEN
@@ -111,7 +118,7 @@ BEGIN
             END IF;
         END IF;
     END IF;
-        
+
 END;
 /
 
@@ -127,8 +134,8 @@ BEGIN
     SELECT FK_Nome_Utente INTO TMP_Utente FROM Contenuti WHERE Id_Contenuto=:NEW.FK_Id_Contenuto;
 
     -- recupera l'id del gruppo e il nome creatore del contenuto del commento e con questi verifica se partecipa (contando se esiste almeno 1 riga)
-    SELECT COUNT(*) INTO Verifica_Notifica FROM Partecipano WHERE FK_Nome_Gruppo IN (SELECT FK_Nome_Gruppo FROM CONTENUTI WHERE Id_Contenuto = :NEW.FK_Id_Contenuto) AND FK_NOME_UTENTE IN (FK_Nome_Utente);
-    
+    SELECT COUNT(*) INTO Verifica_Notifica FROM Partecipano WHERE FK_Nome_Gruppo IN (SELECT FK_Nome_Gruppo FROM CONTENUTI WHERE Id_Contenuto = :NEW.FK_Id_Contenuto) AND FK_NOME_UTENTE IN ((SELECT FK_Nome_Utente FROM CONTENUTI WHERE Id_Contenuto = :NEW.FK_Id_Contenuto));
+
     --se è presente almeno una riga allora...
     IF(Verifica_Notifica <> 0) THEN
 
@@ -220,27 +227,38 @@ DECLARE
 CURSOR Rec_Nome_Utente IS (SELECT FK_Nome_Utente FROM Partecipano WHERE FK_Nome_Gruppo = :NEW.FK_Nome_Gruppo);
 
 TMP_Nome_Utente Gruppi.FK_Nome_Utente%TYPE;
+TMP_GENERE PROFILI.Genere%TYPE;
 
 testo_Msg VARCHAR2(1000);
 
 BEGIN
 
     OPEN Rec_Nome_Utente;
-    
+
     LOOP
-        
+
         FETCH Rec_Nome_Utente INTO TMP_Nome_Utente;
         EXIT WHEN Rec_Nome_Utente%NOTFOUND;
        
-        INSERT INTO Notifiche_Gruppi(Testo, Visualizzato, FK_Nome_Gruppo, FK_Nome_Utente) VALUES (:NEW.FK_Nome_Utente ||' è stato aggiunto nel gruppo', 0 , :NEW.FK_Nome_Gruppo, TMP_Nome_Utente); 
-    
+        SELECT GENERE INTO TMP_GENERE FROM PROFILI WHERE :NEW.FK_Nome_Utente = NOME_UTENTE;
+
+        IF (TMP_GENERE LIKE 'M' OR TMP_GENERE LIKE 'N') THEN
+            INSERT INTO Notifiche_Gruppi(Testo, Visualizzato, FK_Nome_Gruppo, FK_Nome_Utente) VALUES (:NEW.FK_Nome_Utente ||' è stato aggiunto nel gruppo ' || :NEW.FK_Nome_Gruppo, 0 , :NEW.FK_Nome_Gruppo, TMP_Nome_Utente); 
+        ELSE 
+            INSERT INTO Notifiche_Gruppi(Testo, Visualizzato, FK_Nome_Gruppo, FK_Nome_Utente) VALUES (:NEW.FK_Nome_Utente ||' è stata aggiunta nel gruppo ' || :NEW.FK_Nome_Gruppo, 0 , :NEW.FK_Nome_Gruppo, TMP_Nome_Utente);     
+        END IF;
     END LOOP;
     ClOSE Rec_Nome_Utente;
     
-    INSERT INTO Notifiche_Gruppi(Testo, Visualizzato, FK_Nome_Gruppo, FK_Nome_Utente) VALUES ('Sei stato aggiunto nel gruppo', 0 , :NEW.FK_Nome_Gruppo, :NEW.FK_Nome_Utente); 
+    SELECT GENERE INTO TMP_GENERE FROM PROFILI WHERE :NEW.FK_Nome_Utente = NOME_UTENTE;
     
-    
+    IF (TMP_GENERE LIKE 'M' OR TMP_GENERE LIKE 'N') THEN
+        INSERT INTO Notifiche_Gruppi(Testo, Visualizzato, FK_Nome_Gruppo, FK_Nome_Utente) VALUES ('Sei stato aggiunto nel gruppo ' || :NEW.FK_Nome_Gruppo, 0 , :NEW.FK_Nome_Gruppo, :NEW.FK_Nome_Utente); 
+    ELSE
+        INSERT INTO Notifiche_Gruppi(Testo, Visualizzato, FK_Nome_Gruppo, FK_Nome_Utente) VALUES ('Sei stata aggiunta nel gruppo ' || :NEW.FK_Nome_Gruppo, 0 , :NEW.FK_Nome_Gruppo, :NEW.FK_Nome_Utente); 
+    END IF;
 END;
+
 /
 
 
@@ -267,6 +285,7 @@ NULL;
 
 END;
 /
+
 
 --PROCEDURE PER LA RIMOZIONE COMMENTO
 create or replace PROCEDURE Rimozione_Commento(P_Id_Commento IN COMMENTI.Id_Commento%TYPE)
@@ -497,16 +516,22 @@ AS
 Comando VARCHAR(1000);
 Tmp_Notifica NOTIFICHE_RICHIESTE.id_notifica_re%TYPE;
 
-
+TMP_GENERE PROFILI.Genere%TYPE;
 BEGIN
 
-    
+
     -- recupero l'id della notifica dell'utente che ha fatto richiesta al gruppo e che deve ancora avere una risposta (esitato = 0)
     SELECT id_notifica_re INTO TMP_Notifica
     FROM NOTIFICHE_RICHIESTE
     WHERE FK_Nome_Gruppo=P_FK_NOME_GRUPPO AND fk_nome_utente=P_FK_Nome_Utente AND Esitato='0';
-
-    Comando := 'UPDATE NOTIFICHE_RICHIESTE SET Esitato = ''2'', TESTO = ''Rifiutato ' || P_FK_Nome_Utente || ' nel gruppo :' || P_FK_NOME_GRUPPO || '''  WHERE id_notifica_re = '''||TMP_Notifica||'''';
+    
+    SELECT GENERE INTO TMP_GENERE FROM PROFILI WHERE P_FK_Nome_Utente = NOME_UTENTE;
+    
+    IF (TMP_GENERE = 'M' OR TMP_GENERE = 'N') THEN
+        Comando := 'UPDATE NOTIFICHE_RICHIESTE SET Esitato = ''2'', TESTO = ''Rifiutato ' || P_FK_Nome_Utente || ' nel gruppo :' || P_FK_NOME_GRUPPO || '''  WHERE id_notifica_re = '''||TMP_Notifica||'''';
+    ELSE
+        Comando := 'UPDATE NOTIFICHE_RICHIESTE SET Esitato = ''2'', TESTO = ''Rifiutata ' || P_FK_Nome_Utente || ' nel gruppo :' || P_FK_NOME_GRUPPO || '''  WHERE id_notifica_re = '''||TMP_Notifica||'''';    
+    END IF;
     EXECUTE IMMEDIATE Comando;
 
 END Rifiuta_Profilo;
@@ -685,6 +710,32 @@ BEGIN
 END Crea_Contenuto;
 
 /
+
+
+--Procedure rimozione regolano
+create or replace PROCEDURE Rimozione_Regolano(P_FK_Nome_Gruppo REGOLANO.FK_Nome_Gruppo%TYPE, P_FK_Nome_Utente REGOLANO.FK_Nome_Utente%TYPE)
+AS
+
+BEGIN
+
+    DELETE FROM REGOLANO WHERE FK_NOME_UTENTE = P_FK_Nome_Utente  AND FK_NOME_GRUPPO =  P_FK_Nome_Gruppo;
+
+END Rimozione_Regolano;
+/
+
+
+--Procedure rimozione possiedono
+create or replace PROCEDURE Rimozione_Possiedono(P_Nome_Gruppo GRUPPI.Nome%TYPE, P_Parola tags.parola%TYPE)
+AS
+
+BEGIN
+
+    DELETE FROM Possiedono WHERE FK_Parola = P_Parola AND FK_Nome_Gruppo = P_Nome_Gruppo;
+
+END Rimozione_Possiedono;
+/
+
+
 
 --Procedure per la creazione dei commenti
 create or replace PROCEDURE Crea_Commento(P_Testo IN Commenti.Testo%TYPE, P_FK_Id_Contenuto IN Commenti.FK_Id_Contenuto%TYPE, P_FK_Nome_Utente IN Commenti.FK_Nome_Utente%TYPE)
@@ -911,22 +962,30 @@ END Modifica_Commento;
 /
 
 --ACCETTA LA RICHIESTA DI PARTECIPAZIONE AD UN GRUPPO DA PARTE DELL'UTENTE 
-create or replace PROCEDURE Accetta_Profilo(P_FK_Nome_Utente IN NOTIFICHE_RICHIESTE.FK_Nome_Utente%TYPE, P_FK_NOME_GRUPPO IN NOTIFICHE_RICHIESTE.FK_Nome_Gruppo%TYPE)
+create or replace NONEDITIONABLE PROCEDURE Accetta_Profilo(P_FK_Nome_Utente IN NOTIFICHE_RICHIESTE.FK_Nome_Utente%TYPE, P_FK_NOME_GRUPPO IN NOTIFICHE_RICHIESTE.FK_Nome_Gruppo%TYPE)
 AS
 
 Comando VARCHAR(1000);
 Tmp_Notifica NOTIFICHE_RICHIESTE.id_notifica_re%TYPE;
+TMP_GENERE PROFILI.Genere%TYPE;
 
 BEGIN
 
-    
-    
+
+
     --Recupero l'id della notifica dell utente X che non ha ancora avuto risposta (esitato = 0)
     SELECT id_notifica_re INTO TMP_Notifica
     FROM NOTIFICHE_RICHIESTE
     WHERE FK_Nome_Gruppo=P_FK_NOME_GRUPPO AND fk_nome_utente=P_FK_Nome_Utente AND Esitato='0';
-
-    Comando := 'UPDATE NOTIFICHE_RICHIESTE SET Esitato = ''1'', TESTO = ''Accettato ' || P_FK_Nome_Utente || ' nel gruppo :' || P_FK_NOME_GRUPPO || '''  WHERE id_notifica_re = '''||TMP_Notifica||'''';
+    
+    
+    SELECT GENERE INTO TMP_GENERE FROM PROFILI WHERE P_FK_Nome_Utente = NOME_UTENTE;
+    
+     IF (TMP_GENERE = 'M' OR TMP_GENERE = 'N') THEN
+        Comando := 'UPDATE NOTIFICHE_RICHIESTE SET Esitato = ''1'', TESTO = ''Accettato ' || P_FK_Nome_Utente || ' nel gruppo :' || P_FK_NOME_GRUPPO || '''  WHERE id_notifica_re = '''||TMP_Notifica||'''';
+    ELSE
+        Comando := 'UPDATE NOTIFICHE_RICHIESTE SET Esitato = ''1'', TESTO = ''Accettata ' || P_FK_Nome_Utente || ' nel gruppo :' || P_FK_NOME_GRUPPO || '''  WHERE id_notifica_re = '''||TMP_Notifica||'''';
+    END IF;
     EXECUTE IMMEDIATE Comando;
 
 END Accetta_Profilo;
@@ -1006,4 +1065,17 @@ BEGIN
 
     RETURN rc;
 END;
+/
+
+
+
+--Rimozione di un tag dal gruppo
+create or replace PROCEDURE Rimozione_Tag(ParolaTag IN TAGS.Parola%TYPE)
+AS
+
+BEGIN
+
+    DELETE FROM TAGS WHERE Parola = ParolaTag;
+
+END Rimozione_Tag;
 /
