@@ -7,7 +7,7 @@ public class DB_Connection {
     public Connection c;
 
     String driver = "oracle.jdbc.OracleDriver";
-    String URL = "jdbc:oracle:thin:@localhost:1521:ORCL";
+    String URL = "jdbc:oracle:thin:@Gennaro.homenet.telecomitalia.it:1521:xe";
     
 
     public DB_Connection() {

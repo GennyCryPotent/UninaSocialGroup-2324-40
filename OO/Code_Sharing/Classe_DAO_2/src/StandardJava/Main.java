@@ -8,23 +8,25 @@ public class Main{
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		List<Gruppi> Res_Gruppi = new ArrayList<Gruppi>();
-		Gruppi_DAO GD = new Gruppi_DAO("system", "Unina@03");
+		List<Notifiche_Gruppi> Res_Notifiche_Gruppi = new ArrayList<Notifiche_Gruppi>();
+		Notifiche_Gruppi_DAO GD = new Notifiche_Gruppi_DAO("system", "Database@03");
 		
-//		Gruppi G = GD.SelSigGruppo("SSC_Napoli_Ultras");
-//		System.out.println("Nome del gruppo: "+ G.getNome());
-//		Res_Gruppi = GD.SelAllGruppo();
-//		
-//		for(int i=0; i<Res_Gruppi.size(); i++) {
-//			
-//			Gruppi R;
-//			R=Res_Gruppi.get(i);
-//			System.out.println(R.getNome());
-//			
-//		}
+		
+		
+		Res_Notifiche_Gruppi = GD.SelAllGruppo("Gabbo");
+		
+		for(int i=0; i<Res_Notifiche_Gruppi.size(); i++) {
+			Notifiche_Gruppi R;
+			R=Res_Notifiche_Gruppi.get(i);
+			System.out.println("Testo: "+ R.getTesto());			
+		}
 	
-		GD.InsGruppo("Ludopatici", "Gruppo bello", "Gabbo");
+		//GD.InsNotifica_R("Dungeons N Dragons", "Genny03cry");
+		
+		//GD.DelAmministratore("DarkNine", "Fantacalcio");
+		
+		
+		
+		 GD.Close_Connection();
 	}
 } 
-
-
