@@ -26,7 +26,7 @@ public class Login extends JFrame {
 	private JTextField NomeUtente;
 	private JPasswordField passwordField;
 	private JLabel Password;
-	private JLabel lblNewLabel_1;
+	private JLabel lblNewLabel_1;   
 	private Gestione_Finestre Accesso = new Gestione_Finestre();  //passaggio nel gestore delle finestre
     public String NU;   //variabile per nome utente
     private String PSW; //variabile per password
@@ -34,18 +34,6 @@ public class Login extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Login frame = new Login();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -77,7 +65,10 @@ public class Login extends JFrame {
 				String passaggio ="gabbo";
 				
 		         if(PSW.compareTo(passaggio)==0) {
+		        	 
+				     Login.this.setVisible(false);  //
 		        	 Accesso.AccessoHome(NU);
+		        	 
 		         }else {
 		        	 
 		        	 JOptionPane.showMessageDialog(null, "Controlla Nome Utente e Password", "Credenziali errate", JOptionPane.WARNING_MESSAGE );
