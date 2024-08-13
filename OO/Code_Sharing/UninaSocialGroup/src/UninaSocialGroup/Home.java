@@ -101,21 +101,21 @@ public class Home extends JFrame {
         ricerca.setBounds(440, 54, 46, 21);
         contentPane.add(ricerca);
         
-        JScrollPane GruppiV = new JScrollPane();
-        GruppiV.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        GruppiV.setBounds(10, 97, 110, 291);
-        contentPane.add(GruppiV);
+        JScrollPane GruppiGUIV = new JScrollPane();
+        GruppiGUIV.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        GruppiGUIV.setBounds(10, 97, 110, 291);
+        contentPane.add(GruppiGUIV);
         
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setBackground(new Color(255, 255, 255));
-        GruppiV.setViewportView(layeredPane);
+        GruppiGUIV.setViewportView(layeredPane);
         
         JButton btnNewButton = new JButton("Gruppo1");
         btnNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		Home.this.setVisible(false);
         		Gestione_Finestre G = new Gestione_Finestre();
-        		G.Gruppi(NU);
+        		G.GruppiGUI(NU);
         	}
         });
         btnNewButton.setForeground(new Color(0, 128, 255));
@@ -163,7 +163,7 @@ public class Home extends JFrame {
         		            Report.setBackground(new Color(31,31,31));
         		            Notifiche.setBackground(new Color(31,31,31));
         		           
-        		            GruppiV.setBackground(new Color(27,27,27));
+        		            GruppiGUIV.setBackground(new Color(27,27,27));
         		            layeredPane.setBackground(new Color(27,27,27));
         		            btnNewButton.setBackground(new Color(31,31,31));
         		            textField.setBackground(new Color(31,31,31));

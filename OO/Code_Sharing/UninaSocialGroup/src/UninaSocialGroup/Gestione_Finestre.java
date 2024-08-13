@@ -7,7 +7,7 @@ public class Gestione_Finestre {
     private String Trova; //variabile per la ricerca
     private String NG; // nome Gruppo
 	private Home Accesso = new Home(NU); //oggetto Home
-	private Gruppi Gruppo = new Gruppi(NU); //oggetto Gruppi
+	private GruppiGUI Gruppo = new GruppiGUI(NU); //oggetto GruppiGUI
 	private Notifiche Notifica = new Notifiche();  //oggetto Notifiche  
 	private Report_Statistico Report= new Report_Statistico();
 	public Gestione_Finestre() {
@@ -27,8 +27,8 @@ public class Gestione_Finestre {
 		});
 	}
 	
-	  public void Gruppi(String NU) {
-		  Gruppo = new Gruppi(NU);
+	  public void GruppiGUI(String NU) {
+		  Gruppo = new GruppiGUI(NU);
 		  Gruppo.setVisible(true);
 	  }
 	
