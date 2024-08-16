@@ -17,7 +17,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JComboBox;
 
-public class Report_Statistico extends JFrame {
+public class Report_Statistico_GUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -26,7 +26,7 @@ public class Report_Statistico extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Report_Statistico(String NU) {
+	public Report_Statistico_GUI(String NU) {
 
 		String[] mesi = { "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"};
 		Gruppi_DAO G = new Gruppi_DAO("system", "Database@03");
@@ -49,7 +49,7 @@ public class Report_Statistico extends JFrame {
 		JButton Indietro = new JButton("<");
 		Indietro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Report_Statistico.this.setVisible(false);
+				Report_Statistico_GUI.this.setVisible(false);
 				Gestione_Finestre N = new Gestione_Finestre();
 				N.AccessoHome(null);
 			}

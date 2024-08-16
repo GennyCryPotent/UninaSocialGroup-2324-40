@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import oracle.jdbc.OracleTypes;
+
 
 
 public class Notifiche_Gruppi_DAO {
@@ -18,28 +20,28 @@ public class Notifiche_Gruppi_DAO {
 	}
 	
 	//Mostra tutte le notifiche dei gruppi di un utente
-	public List<Notifiche_Gruppi> SelNotificheUtente(String Nome_Utente) {
+	public List<Notifiche> SelNotificheUtente(String Nome_Utente) {
 
 		try {
 
 			ResultSet rs = DB.ExeQuery("SELECT * FROM NOTIFICHE_GRUPPI WHERE FK_NOME_UTENTE = '" + Nome_Utente + "'");
 			
 			try {
-				List<Notifiche_Gruppi> Rec_Notifiche_Gruppi = new ArrayList<Notifiche_Gruppi>();
+				List<Notifiche> Rec_Notifiche = new ArrayList<Notifiche>();
 				
-				Notifiche_Gruppi Stampa;
+				Notifiche Stampa;
 
 				while (rs.next()) {
-					Stampa = new Notifiche_Gruppi(rs.getInt("Id_Notifica_G"), rs.getString("Testo"),
+					Stampa = new Notifiche(rs.getInt("Id_Notifica_G"), rs.getString("Testo"),
 							rs.getDate("Data_Notifica"), rs.getString("Visualizzato"), rs.getString("FK_Nome_Gruppo"),
 							rs.getString("FK_Nome_Utente"));
 					
-					Rec_Notifiche_Gruppi.add(Stampa);
+					Rec_Notifiche.add(Stampa);
 					Stampa = null;
 				}
 				
 				
-				return Rec_Notifiche_Gruppi;
+				return Rec_Notifiche;
 
 			} catch (SQLException e) {
 				System.out.println("query fallita");
@@ -53,6 +55,54 @@ public class Notifiche_Gruppi_DAO {
 			return null;
 		}
 	}
+	
+	// Select tutte le notifiche archiviate di un utente (esitato!=0)
+		public List<Notifiche> SelNotifiche(String Nome_Utente) {
+
+			
+			List<Notifiche> Rec_Notifiche = new ArrayList<Notifiche>();
+
+			try {
+
+					CallableStatement Call = DB.getC().prepareCall("{CALL Mostra_Notifica(?, ?)}");
+				
+					// Imposta il parametro di input (se la function ha dei parametri)
+					Call.setString(1, Nome_Utente); // Es. nome del gruppo come parametro IN
+					
+					// Imposta il parametro di output 
+		            Call.registerOutParameter(2, OracleTypes.CURSOR);
+
+					// Esegui la chiamata alla funzione
+					Call.execute();
+
+					// Ottieni il risultato come ResultSet
+					ResultSet rs = (ResultSet) Call.getObject(2); // Restituisce l'oggeto 2 cioè il cursore
+
+					try {
+
+						Notifiche Stampa;
+
+						while (rs.next()) {
+
+							Stampa = new Notifiche(rs.getInt("Id_Notifica_C"), rs.getString("Testo"), rs.getDate("Data_Notifica"), rs.getString("Visualizzato"));
+							Rec_Notifiche.add(Stampa);
+							
+							Stampa = null;
+						}
+						
+						return Rec_Notifiche;
+
+					} catch (SQLException e) {
+						System.out.println("query fallita" + e.getMessage());
+						return null;
+					}
+				
+			} catch (Exception e) {
+				System.out.println("Errore" + e.getMessage());
+				return null;
+			}
+
+		}
 	
 	public void Close_Connection() { 
 		DB.close();

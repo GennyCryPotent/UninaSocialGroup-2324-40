@@ -20,7 +20,7 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 
-public class GruppiGUI extends JFrame {
+public class Gruppi_GUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -29,7 +29,7 @@ public class GruppiGUI extends JFrame {
 	private String NewPost;
 	List<Contenuti> Res_Contenuti_Gruppi = new ArrayList<Contenuti>();
 
-	public GruppiGUI(String NU, String NG) {
+	public Gruppi_GUI(String NU, String NG) {
 
 		Contenuti_DAO C = new Contenuti_DAO("system", "Database@03");
 
@@ -71,7 +71,7 @@ public class GruppiGUI extends JFrame {
 		Notifiche.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				GruppiGUI.this.setVisible(false);
+				Gruppi_GUI.this.setVisible(false);
 				Gestione_Finestre G = new Gestione_Finestre();
 				G.Notifiche();
 
@@ -108,7 +108,7 @@ public class GruppiGUI extends JFrame {
 		Rimuovi_Post.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				GruppiGUI.this.setVisible(false);
+				Gruppi_GUI.this.setVisible(false);
 				Gestione_Finestre V = new Gestione_Finestre();
 				V.Elimina_Contenuto(NU, NG);
 

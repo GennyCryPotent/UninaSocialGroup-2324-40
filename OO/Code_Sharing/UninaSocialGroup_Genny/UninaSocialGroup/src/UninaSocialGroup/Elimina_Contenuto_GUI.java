@@ -20,7 +20,7 @@ import java.awt.ScrollPane;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 
-public class Elimina_Contenuto extends JFrame {
+public class Elimina_Contenuto_GUI extends JFrame {
 
 	List<Contenuti> Res_Contenuti_Gruppi = new ArrayList<Contenuti>();
 	private static final long serialVersionUID = 1L;
@@ -29,7 +29,7 @@ public class Elimina_Contenuto extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Elimina_Contenuto(String NU, String NG) {
+	public Elimina_Contenuto_GUI(String NU, String NG) {
 
 		Contenuti_DAO C = new Contenuti_DAO("system", "Database@03");
 
@@ -64,7 +64,7 @@ public class Elimina_Contenuto extends JFrame {
 				int DelPost = Integer.parseInt(JOptionPane.showInputDialog(Button_Elimina, "Quale post vuoi eliminare?",
 						"Elimina un post", JOptionPane.QUESTION_MESSAGE));
 				C.DelContenuto(DelPost);
-				Elimina_Contenuto.this.setVisible(false);
+				Elimina_Contenuto_GUI.this.setVisible(false);
 				Gestione_Finestre V = new Gestione_Finestre();
 				V.GruppiGUI(NU, NG);
 

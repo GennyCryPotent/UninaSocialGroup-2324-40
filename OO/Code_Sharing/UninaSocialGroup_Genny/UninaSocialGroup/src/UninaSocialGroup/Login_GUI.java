@@ -19,7 +19,7 @@ import java.awt.Color;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 
-public class Login extends JFrame {
+public class Login_GUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -39,7 +39,7 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	
-	public Login() {
+	public Login_GUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 400);
 		contentPane = new JPanel();
@@ -66,7 +66,7 @@ public class Login extends JFrame {
 				
 		         if(PSW.compareTo(passaggio)==0) {
 		        	 
-				     Login.this.setVisible(false);  //
+				     Login_GUI.this.setVisible(false);  //
 		        	 Accesso.AccessoHome(NU);
 		        	 
 		         }else {

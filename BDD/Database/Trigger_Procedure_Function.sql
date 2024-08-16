@@ -826,36 +826,36 @@ BEGIN
 END Crea_Richiesta;
 /
 
--- Procedure per Visualizzare le notifiche dei contenuti di un utente
-create or replace PROCEDURE Visualizzato_Notifica_Contenuto(P_Id_Notifica IN Notifiche_Contenuti.Id_Notifica_C%TYPE)
-AS 
-
-BEGIN
-    UPDATE Notifiche_Contenuti SET Visualizzato = '1' WHERE Id_Notifica_C = P_Id_Notifica;
-END Visualizzato_Notifica_Contenuto;
-/
-
--- Procedure per Visualizzare le notifiche dei gruppi di un utente
-create or replace PROCEDURE Visualizzato_Notifica_Gruppo(P_Id_Notifica IN Notifiche_Gruppi.Id_Notifica_G%TYPE)
-AS 
-
-BEGIN
-    UPDATE Notifiche_Gruppi SET Visualizzato = '1' WHERE Id_Notifica_G = P_Id_Notifica;
-END Visualizzato_Notifica_Gruppo;
-/
-
-
-
 -- Procedure per Mostrare le notifiche dei gruppi e dei contenuti di un utente
-create or replace NONEDITIONABLE PROCEDURE Mostra_Notifica(P_Nome_Utente IN Notifiche_Contenuti.FK_Nome_Utente%TYPE)
+create or replace NONEDITIONABLE PROCEDURE Mostra_Notifica(P_Nome_Utente IN Notifiche_Contenuti.FK_Nome_Utente%TYPE, P_Rec_Notifica OUT SYS_REFCURSOR)
 AS 
 
--- Creo un cursore ad una tabella che ah SIA Tutte le notifiche dei contenuti di un utente SIA tutte le notifiche dei gruppi di un utente e ordino per la data
-CURSOR Rec_Notifica IS SELECT  NULL AS Id_Notifica_G, Id_Notifica_C ,Visualizzato, Testo, Data_Notifica FROM Notifiche_Contenuti WHERE fk_nome_utente LIKE P_Nome_Utente
-                         UNION ALL
-                         SELECT Id_Notifica_G, NULL AS Id_Notifica_C,Visualizzato, Testo, Data_Notifica FROM Notifiche_Gruppi WHERE FK_NOME_UTENTE LIKE P_Nome_Utente
-                         ORDER BY Data_Notifica DESC;
+-- Creo un cursore ad una tabella che ha SIA Tutte le notifiche dei contenuti di un utente SIA tutte le notifiche dei gruppi di un utente e ordino per la data
 
+BEGIN 
+
+    OPEN P_Rec_Notifica FOR 
+        SELECT  NULL AS Id_Notifica_G, Id_Notifica_C ,Visualizzato, Testo, Data_Notifica FROM Notifiche_Contenuti WHERE fk_nome_utente LIKE P_Nome_Utente
+        UNION ALL
+        SELECT Id_Notifica_G, NULL AS Id_Notifica_C,Visualizzato, Testo, Data_Notifica FROM Notifiche_Gruppi WHERE FK_NOME_UTENTE LIKE P_Nome_Utente
+        ORDER BY Data_Notifica DESC;
+
+
+       visualizzato_notifica(P_Rec_Notifica);
+       
+       OPEN P_Rec_Notifica FOR 
+        SELECT  NULL AS Id_Notifica_G, Id_Notifica_C ,Visualizzato, Testo, Data_Notifica FROM Notifiche_Contenuti WHERE fk_nome_utente LIKE P_Nome_Utente
+        UNION ALL
+        SELECT Id_Notifica_G, NULL AS Id_Notifica_C,Visualizzato, Testo, Data_Notifica FROM Notifiche_Gruppi WHERE FK_NOME_UTENTE LIKE P_Nome_Utente
+        ORDER BY Data_Notifica DESC;
+
+END Mostra_Notifica;
+/
+
+--Procedure per Visualizzare le notifiche dei contenuti e dei gruppi di un utente
+create or replace NONEDITIONABLE PROCEDURE Visualizzato_Notifica(P_Rec_Notifiche IN SYS_REFCURSOR)
+
+AS 
 
 TMP_Testo Notifiche_Contenuti.Testo%TYPE;
 TMP_Data Notifiche_Contenuti.Data_Notifica%TYPE;
@@ -865,28 +865,26 @@ TMP_Id_Notifica_G Notifiche_Gruppi.Id_Notifica_G%TYPE;
 
 
 BEGIN 
-    OPEN Rec_Notifica;
 
-    LOOP
-        FETCH Rec_Notifica INTO TMP_Id_Notifica_G,TMP_Id_Notifica_C,TMP_Visualizzato,TMP_Testo, TMP_Data;
-        EXIT WHEN Rec_Notifica%NOTFOUND;
+        LOOP
+            FETCH P_Rec_Notifiche INTO TMP_Id_Notifica_G,TMP_Id_Notifica_C,TMP_Visualizzato,TMP_Testo, TMP_Data;
+            EXIT WHEN P_Rec_Notifiche%NOTFOUND;
 
-        DBMS_OUTPUT.PUT_LINE(TMP_Visualizzato || ' - ' || TMP_Testo || ' - ' ||TMP_Data);
+            IF TMP_Id_Notifica_C IS NOT NULL AND TMP_Id_Notifica_C <> 0 THEN
+                UPDATE Notifiche_Contenuti SET Visualizzato = '1' WHERE Id_Notifica_C = TMP_Id_Notifica_C;
+            ELSIF TMP_Id_Notifica_G IS NOT NULL AND TMP_Id_Notifica_G <> 0 THEN
+                 UPDATE Notifiche_Gruppi SET Visualizzato = '1' WHERE Id_Notifica_G = TMP_Id_Notifica_G;
+            END IF;
+
+        END LOOP;
         
-        IF TMP_Id_Notifica_C IS NOT NULL AND TMP_Id_Notifica_C <> 0 THEN
-            Visualizzato_Notifica_Contenuto(TMP_Id_Notifica_C);
-        ELSIF TMP_Id_Notifica_G IS NOT NULL AND TMP_Id_Notifica_G <> 0 THEN
-            Visualizzato_Notifica_Gruppo(TMP_Id_Notifica_G);
-        END IF;
+        CLOSE P_Rec_Notifiche;
 
-        
-    END LOOP;
-    CLOSE Rec_Notifica;
-    
   COMMIT;
 
-END Mostra_Notifica;
+END Visualizzato_Notifica;
 /
+
 
 --MODIFICA IL GRUPPO SOLO SE SEI IL CREATORE
 create or replace PROCEDURE Modifica_Gruppo(Campo IN VARCHAR2, Val_NEW IN VARCHAR2, P_FK_Nome_Utente IN Gruppi.FK_Nome_Utente%TYPE, P_Nome_Gruppo IN Gruppi.Nome%TYPE)

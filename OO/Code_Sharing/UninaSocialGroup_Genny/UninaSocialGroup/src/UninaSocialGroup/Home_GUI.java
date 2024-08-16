@@ -33,7 +33,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JTabbedPane;
 import javax.swing.ScrollPaneConstants;
 
-public class Home extends JFrame {
+public class Home_GUI extends JFrame {
 
     private static final long serialVersionUID = 1L;
     
@@ -49,7 +49,7 @@ public class Home extends JFrame {
      * Create the frame.
      */
 
-    public Home(String NU) {
+    public Home_GUI(String NU) {
     	setForeground(new Color(0, 128, 255));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 737, 484);
@@ -113,7 +113,7 @@ public class Home extends JFrame {
         JButton btnNewButton = new JButton("Fantacalcio");
         btnNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		Home.this.setVisible(false);
+        		Home_GUI.this.setVisible(false);
         		Gestione_Finestre G = new Gestione_Finestre();
         		NG = btnNewButton.getText();
         		G.GruppiGUI(NU, NG);
@@ -128,7 +128,7 @@ public class Home extends JFrame {
         JButton Notifiche = new JButton("🔔");
         Notifiche.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		Home.this.setVisible(false);
+        		Home_GUI.this.setVisible(false);
         		Gestione_Finestre V = new Gestione_Finestre();
         		V.Notifiche();
         	}
@@ -142,7 +142,7 @@ public class Home extends JFrame {
         JButton Report = new JButton("📊");
         Report.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		Home.this.setVisible(false);
+        		Home_GUI.this.setVisible(false);
         		Gestione_Finestre V = new Gestione_Finestre();
         		V.Report_S(NU);
         	}

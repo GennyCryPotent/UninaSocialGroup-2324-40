@@ -9,28 +9,30 @@ public class Main{
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int n;
-		List<Likes> Res_Likes = new ArrayList<Likes>();
-		Likes_DAO GD = new Likes_DAO("system", "Database@03");
+		List<Notifiche> Res_Notifiche = new ArrayList<Notifiche>();
+		Notifiche_Gruppi_DAO GD = new Notifiche_Gruppi_DAO("system", "Database@03");
 		
 	
-		GD.InsLike(2, "Genny03cry");
+		//GD.InsLike(2, "Genny03cry");
 		
 		//GD.UpCommento("Gabbo", 1, "Sono modificato");
 		
 		
 		
-		//System.out.println("Numero like: " + Res_Likes.size());	
+		//System.out.println("Numero like: " + Res_Notifiche.size());	
 		
-		//Res_Likes = GD.SelNotificheContenutiUtente("errore31");
+		//Res_Notifiche = GD.SelNotificheContenutiUtente("errore31");
 		
-		n = GD.SelNumLike(2);
-		System.out.println("Numero like: " + n);
+		//n = GD.SelNumLike(2);
+		// System.out.println("Numero like: " + n);
 		
-//		for(int i=0; i<Res_Likes.size(); i++) {
-//			Likes R;
-//			R=Res_Likes.get(i);
-//			System.out.println("Testo: "+ R.getTesto());			
-//		}
+		Res_Notifiche = GD.SelNotifiche("errore31");
+		
+		for(int i=0; i<Res_Notifiche.size(); i++) {
+			Notifiche R;
+			R=Res_Notifiche.get(i);
+			System.out.println("Testo: "+ R.getTesto() + "   vis: " + R.getVisualizzato_Esitato());		
+		}
 		
 		 GD.Close_Connection();
 	}
