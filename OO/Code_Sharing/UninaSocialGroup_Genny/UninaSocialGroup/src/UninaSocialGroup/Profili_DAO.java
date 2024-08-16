@@ -68,7 +68,7 @@ public class Profili_DAO {
 		}
 	}
 
-	// Select singolo gruppo per nome
+	// Select singolo per nome per nome
 	public Profili SelSigProfilo(String Nome) {
 
 		try {
@@ -99,7 +99,7 @@ public class Profili_DAO {
 		}
 	}
 
-	// Select singolo gruppo
+	// Select tutti i profili
 	public List<Profili> SelAllProfili() {
 
 		try {

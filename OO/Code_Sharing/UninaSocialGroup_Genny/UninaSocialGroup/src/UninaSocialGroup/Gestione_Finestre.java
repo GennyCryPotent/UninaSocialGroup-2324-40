@@ -9,7 +9,9 @@ public class Gestione_Finestre {
 	private Home Accesso = new Home(NU); //oggetto Home
 	private GruppiGUI Gruppo = new GruppiGUI(NU, NG); //oggetto GruppiGUI
 	private Notifiche Notifica = new Notifiche();  //oggetto Notifiche  
-	private Report_Statistico Report= new Report_Statistico();
+	private Elimina_Contenuto Elimina; 
+	private Report_Statistico Report;
+	
 	public Gestione_Finestre() {
 		
 	}
@@ -38,12 +40,19 @@ public class Gestione_Finestre {
 		
 	  }
 	  
+	  public void Elimina_Contenuto(String NG, String NU) {
+		  Elimina = new Elimina_Contenuto(NG, NU); // Passa NU al costruttore di Home
+		  Elimina.setVisible(true);
+		
+	  }
+	  
 	  public void Notifiche() {
 		  Notifica.setVisible(true);
 		  
 	  }
 	  
-	  public void Report_S() {
+	  public void Report_S(String NU) {
+		  Report = new Report_Statistico(NU);
 		  Report.setVisible(true);
 	  }
 	  

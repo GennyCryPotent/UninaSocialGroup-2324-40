@@ -65,7 +65,7 @@ public class Notifiche_Richieste_DAO {
 					.ExeQuery("SELECT Nome From Gruppi Where FK_Nome_Utente = '" + Nome_Utente + "'"); // Prende i nomi
 																										// dei gruppi
 																										// dove l'utente
-																										// partecipa
+																										// è creatore
 
 			try {
 

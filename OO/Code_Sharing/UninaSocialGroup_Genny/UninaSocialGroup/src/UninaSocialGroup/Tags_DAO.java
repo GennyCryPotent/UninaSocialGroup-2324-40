@@ -76,7 +76,7 @@ public class Tags_DAO {
 			}
 		}
 
-		// Select singolo gruppo
+		// Select tutti i tags
 		public List<Tags> SelAllTags() {
 
 			try {

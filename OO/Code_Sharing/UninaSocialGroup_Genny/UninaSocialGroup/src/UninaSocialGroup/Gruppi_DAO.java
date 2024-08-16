@@ -132,6 +132,42 @@ public class Gruppi_DAO {
 		}
 	}
 	
+	// Select tutti i gruppi creati da un utente
+		public List<Gruppi> SelAllGruppoUtente(String Nome_Utente) {
+
+			try {
+
+				ResultSet rs = DB.ExeQuery("SELECT * FROM GRUPPI WHERE FK_NOME_UTENTE = '" + Nome_Utente + "'");
+				
+				try {
+					List<Gruppi> Rec_Gruppi = new ArrayList<Gruppi>();
+					
+					Gruppi Stampa;
+
+					while (rs.next()) {
+						Stampa = new Gruppi(rs.getString("Nome"), rs.getDate("Data_Creazione"),
+								rs.getString("Descrizione"), rs.getInt("OnlineC"), rs.getString("FK_Nome_Utente"));
+						
+						Rec_Gruppi.add(Stampa);
+						Stampa = null;
+					}
+					
+					
+					return Rec_Gruppi;
+
+				} catch (SQLException e) {
+					System.out.println("query fallita");
+					
+					return null;
+				}
+
+			} catch (Exception e) {
+				System.out.println("Errore");
+				
+				return null;
+			}
+		}
+	
 	public void Close_Connection() { 
 		DB.close();
 	}

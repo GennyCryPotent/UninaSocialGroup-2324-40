@@ -8,24 +8,29 @@ public class Main{
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		List<Notifiche_Gruppi> Res_Notifiche_Gruppi = new ArrayList<Notifiche_Gruppi>();
-		Notifiche_Gruppi_DAO GD = new Notifiche_Gruppi_DAO("system", "Database@03");
+		int n;
+		List<Likes> Res_Likes = new ArrayList<Likes>();
+		Likes_DAO GD = new Likes_DAO("system", "Database@03");
 		
-		
-		
-		Res_Notifiche_Gruppi = GD.SelAllGruppo("Gabbo");
-		
-		for(int i=0; i<Res_Notifiche_Gruppi.size(); i++) {
-			Notifiche_Gruppi R;
-			R=Res_Notifiche_Gruppi.get(i);
-			System.out.println("Testo: "+ R.getTesto());			
-		}
 	
-		//GD.InsNotifica_R("Dungeons N Dragons", "Genny03cry");
+		GD.InsLike(2, "Genny03cry");
 		
-		//GD.DelAmministratore("DarkNine", "Fantacalcio");
+		//GD.UpCommento("Gabbo", 1, "Sono modificato");
 		
 		
+		
+		//System.out.println("Numero like: " + Res_Likes.size());	
+		
+		//Res_Likes = GD.SelNotificheContenutiUtente("errore31");
+		
+		n = GD.SelNumLike(2);
+		System.out.println("Numero like: " + n);
+		
+//		for(int i=0; i<Res_Likes.size(); i++) {
+//			Likes R;
+//			R=Res_Likes.get(i);
+//			System.out.println("Testo: "+ R.getTesto());			
+//		}
 		
 		 GD.Close_Connection();
 	}

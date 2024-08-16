@@ -2,32 +2,32 @@ package UninaSocialGroup;
 
 import java.sql.Date;
 
-public class Notifiche_Gruppi {
+public class Notifiche_Contenuti {
 
-	private int Id_Notifica_G; //PK
+	private int Id_Notifica_C; //PK
 	private String Testo;
 	private Date Data_Notifica; 
 	private String Visualizzato;
-	private String Nome_Gruppo; //FK_NOME_GRUPPO
+	private int FK_Id_Contenuto; 
 	private String Ricevente; //FK_NOME_UTENTE
 	
-	public Notifiche_Gruppi(int id_Notifica_G, String testo, Date data_Notifica, String visualizzato, String nome_Gruppo,
-			String ricevente) {
+	public Notifiche_Contenuti(int id_Notifica_C, String testo, Date data_Notifica, String visualizzato,
+			int fK_Id_Contenuto, String ricevente) {
 		super();
-		Id_Notifica_G = id_Notifica_G;
+		Id_Notifica_C = id_Notifica_C;
 		Testo = testo;
 		Data_Notifica = data_Notifica;
 		Visualizzato = visualizzato;
-		Nome_Gruppo = nome_Gruppo;
+		FK_Id_Contenuto = fK_Id_Contenuto;
 		Ricevente = ricevente;
 	}
 
-	public int getId_Notifica_G() {
-		return Id_Notifica_G;
+	public int getId_Notifica_C() {
+		return Id_Notifica_C;
 	}
 
-	public void setId_Notifica_G(int id_Notifica_G) {
-		Id_Notifica_G = id_Notifica_G;
+	public void setId_Notifica_C(int id_Notifica_C) {
+		Id_Notifica_C = id_Notifica_C;
 	}
 
 	public String getTesto() {
@@ -54,12 +54,12 @@ public class Notifiche_Gruppi {
 		Visualizzato = visualizzato;
 	}
 
-	public String getNome_Gruppo() {
-		return Nome_Gruppo;
+	public int getFK_Id_Contenuto() {
+		return FK_Id_Contenuto;
 	}
 
-	public void setNome_Gruppo(String nome_Gruppo) {
-		Nome_Gruppo = nome_Gruppo;
+	public void setFK_Id_Contenuto(int fK_Id_Contenuto) {
+		FK_Id_Contenuto = fK_Id_Contenuto;
 	}
 
 	public String getRicevente() {
@@ -69,5 +69,7 @@ public class Notifiche_Gruppi {
 	public void setRicevente(String ricevente) {
 		Ricevente = ricevente;
 	}
+	
+	
 	
 }

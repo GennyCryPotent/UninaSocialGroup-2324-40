@@ -144,7 +144,7 @@ public class Home extends JFrame {
         	public void actionPerformed(ActionEvent e) {
         		Home.this.setVisible(false);
         		Gestione_Finestre V = new Gestione_Finestre();
-        		V.Report_S();
+        		V.Report_S(NU);
         	}
         });
         Report.setForeground(new Color(0, 128, 255));

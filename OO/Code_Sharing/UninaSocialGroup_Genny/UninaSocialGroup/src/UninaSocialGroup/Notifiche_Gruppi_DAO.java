@@ -18,7 +18,7 @@ public class Notifiche_Gruppi_DAO {
 	}
 	
 	//Mostra tutte le notifiche dei gruppi di un utente
-	public List<Notifiche_Gruppi> SelAllGruppo(String Nome_Utente) {
+	public List<Notifiche_Gruppi> SelNotificheUtente(String Nome_Utente) {
 
 		try {
 
