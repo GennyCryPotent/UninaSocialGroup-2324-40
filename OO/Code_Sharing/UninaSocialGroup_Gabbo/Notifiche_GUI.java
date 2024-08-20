@@ -26,7 +26,6 @@ public class Notifiche_GUI extends JFrame {
         contentPane = new JPanel();
         contentPane.setBackground(new Color(255, 255, 255));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        contentPane.setLayout(new GridBagLayout());
         setContentPane(contentPane);
 
        
@@ -67,32 +66,32 @@ public class Notifiche_GUI extends JFrame {
         JPanel panelArchiviati = new JPanel();
         panelArchiviati.setBackground(new Color(255, 255, 255));
         Sezioni_Notifiche.addTab("Archiviati", null, panelArchiviati, null);
-
         GroupLayout gl_contentPane = new GroupLayout(contentPane);
         gl_contentPane.setHorizontalGroup(
-            gl_contentPane.createParallelGroup(Alignment.LEADING)
-                .addGroup(gl_contentPane.createSequentialGroup()
-                    .addGap(22)
-                    .addComponent(Indietro, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-                    .addGap(123)
-                    .addComponent(NomeGruppo, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE))
-                .addGroup(gl_contentPane.createSequentialGroup()
-                    .addGap(35)
-                    .addComponent(Sezioni_Notifiche, GroupLayout.PREFERRED_SIZE, 646, GroupLayout.PREFERRED_SIZE))
+        	gl_contentPane.createParallelGroup(Alignment.LEADING)
+        		.addGroup(gl_contentPane.createSequentialGroup()
+        			.addGap(22)
+        			.addComponent(Indietro, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+        			.addGap(123)
+        			.addComponent(NomeGruppo, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE))
+        		.addGroup(gl_contentPane.createSequentialGroup()
+        			.addGap(35)
+        			.addComponent(Sezioni_Notifiche, GroupLayout.DEFAULT_SIZE, 646, GroupLayout.DEFAULT_SIZE))
         );
         gl_contentPane.setVerticalGroup(
-            gl_contentPane.createParallelGroup(Alignment.LEADING)
-                .addGroup(gl_contentPane.createSequentialGroup()
-                    .addGap(5)
-                    .addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-                        .addGroup(gl_contentPane.createSequentialGroup()
-                            .addGap(12)
-                            .addComponent(Indietro, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE))
-                        .addComponent(NomeGruppo, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
-                    .addGap(39)
-                    .addComponent(Sezioni_Notifiche, GroupLayout.PREFERRED_SIZE, 308, GroupLayout.PREFERRED_SIZE))
+        	gl_contentPane.createParallelGroup(Alignment.LEADING)
+        		.addGroup(gl_contentPane.createSequentialGroup()
+        			.addGap(5)
+        			.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+        				.addGroup(gl_contentPane.createSequentialGroup()
+        					.addGap(12)
+        					.addComponent(Indietro, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE))
+        				.addComponent(NomeGruppo, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
+        			.addGap(39)
+        			.addComponent(Sezioni_Notifiche, GroupLayout.DEFAULT_SIZE, 308, GroupLayout.DEFAULT_SIZE))
         );
         contentPane.setLayout(gl_contentPane);
+
 
         int numbOfN = 1000;
 
@@ -108,16 +107,8 @@ public class Notifiche_GUI extends JFrame {
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-        gbc = new GridBagConstraints();
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.insets = new Insets(10, 0, 10, 0);
-        contentPane.add(NomeGruppo, gbc);
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.insets = new Insets(10, 10, 10, 10);
-        contentPane.add(Indietro, gbc);
+        contentPane.add(NomeGruppo);
+        contentPane.add(Indietro);
         
         // Imposta una dimensione preferita sufficiente per contenere tutte le JTextArea
         contentPaneForContent.setPreferredSize(new Dimension(700, numbOfN * 50)); // 50 è un'altezza approssimativa per ogni JTextArea
