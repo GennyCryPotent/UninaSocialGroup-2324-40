@@ -1,32 +1,37 @@
 package UninaSocialGroup;
 
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JScrollBar;
 import javax.swing.JTabbedPane;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
+import javax.swing.JTextArea;
 
-public class Notifiche extends JFrame {
+
+
+
+public class Notifiche_GUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-
-	/**
-	 * Launch the application.
-	 */
-
-	/**
-	 * Create the frame.
-	 */
-	public Notifiche() {
+    private String NU;
+    
+	List<Notifiche_Gruppi> Res_Notifiche_Gruppi = new ArrayList<Notifiche_Gruppi>();
+	
+	Notifiche_Gruppi_DAO Collegamento = new Notifiche_Gruppi_DAO("system", "Database@03");
+	
+	public Notifiche_GUI(String NU) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 737, 484);
         contentPane = new JPanel();
@@ -34,16 +39,19 @@ public class Notifiche extends JFrame {
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
         setContentPane(contentPane);
+        contentPane.setLayout(null);
         
         JLabel NomeGruppo = new JLabel();
         NomeGruppo.setForeground(new Color(0, 128, 255));
         NomeGruppo.setText("Notifiche");
         NomeGruppo.setFont(new Font("Tahoma", Font.BOLD, 18));
+        NomeGruppo.setBounds(210, 10, 202, 38);
+        contentPane.add(NomeGruppo);
         
         JButton Indietro = new JButton("<");
         Indietro.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		Notifiche.this.setVisible(false);
+        		Notifiche_GUI.this.setVisible(false);
         		Gestione_Finestre N = new Gestione_Finestre();
         		N.AccessoHome(null);
         	}
@@ -51,37 +59,52 @@ public class Notifiche extends JFrame {
         Indietro.setForeground(new Color(0, 128, 255));
         Indietro.setFont(new Font("Arial Black", Font.BOLD, 17));
         Indietro.setBackground(Color.WHITE);
+        Indietro.setBounds(27, 22, 60, 53);
+        contentPane.add(Indietro);
         
         JTabbedPane Sezioni_Notifiche = new JTabbedPane(JTabbedPane.TOP);
+        Sezioni_Notifiche.setForeground(new Color(0, 128, 255));
+        Sezioni_Notifiche.setBackground(new Color(255, 255, 255));
         
         // Pannello Gruppi
         JPanel panelGruppi = new JPanel();
+        panelGruppi.setBackground(new Color(255, 255, 255));
         Sezioni_Notifiche.addTab("Gruppi", null, panelGruppi, null);
         
-        JLabel Label_Prova = new JLabel("Notifiche Gruppi");
+        JTextArea textArea = new JTextArea();
+        textArea.setFont(new Font("Microsoft JhengHei Light", Font.BOLD, 18));
         GroupLayout gl_panelGruppi = new GroupLayout(panelGruppi);
         gl_panelGruppi.setHorizontalGroup(
         	gl_panelGruppi.createParallelGroup(Alignment.LEADING)
         		.addGroup(gl_panelGruppi.createSequentialGroup()
         			.addContainerGap()
-        			.addComponent(Label_Prova, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)
-        			.addContainerGap(538, Short.MAX_VALUE))
+        			.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 621, Short.MAX_VALUE)
+        			.addContainerGap())
         );
         gl_panelGruppi.setVerticalGroup(
         	gl_panelGruppi.createParallelGroup(Alignment.LEADING)
         		.addGroup(gl_panelGruppi.createSequentialGroup()
-        			.addGap(28)
-        			.addComponent(Label_Prova, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-        			.addContainerGap(227, Short.MAX_VALUE))
+        			.addContainerGap()
+        			.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
+        			.addContainerGap())
         );
         panelGruppi.setLayout(gl_panelGruppi);
-
+        
+        
+        
+		for (int i = 0; i < Res_Notifiche_Gruppi.size(); i++) {
+			textArea.append(Res_Notifiche_Gruppi.get(i)+"\n");
+		}
+		contentPane.add(textArea);
+        
         // Pannello Richieste
         JPanel panelRichieste = new JPanel();
+        panelRichieste.setBackground(new Color(255, 255, 255));
         Sezioni_Notifiche.addTab("Richieste", null, panelRichieste, null);
 
         // Pannello Archiviati
         JPanel panelArchiviati = new JPanel();
+        panelArchiviati.setBackground(new Color(255, 255, 255));
         Sezioni_Notifiche.addTab("Archiviati", null, panelArchiviati, null);
         
         GroupLayout gl_contentPane = new GroupLayout(contentPane);
@@ -109,6 +132,9 @@ public class Notifiche extends JFrame {
         			.addComponent(Sezioni_Notifiche, GroupLayout.PREFERRED_SIZE, 308, GroupLayout.PREFERRED_SIZE))
         );
         contentPane.setLayout(gl_contentPane);
+	
+        
+        
 	}
+	
 }
-
