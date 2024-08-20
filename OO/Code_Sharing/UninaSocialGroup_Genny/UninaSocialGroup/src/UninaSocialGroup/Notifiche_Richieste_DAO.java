@@ -53,6 +53,34 @@ public class Notifiche_Richieste_DAO {
 
 		}
 	}
+	
+	public void Accetta_Richiesta(String Nome_Gruppo, String Nome_Utente) {
+
+		try {
+			CallableStatement Call = DB.getC().prepareCall("CALL ACCETTA_PROFILO(?, ?)");
+			Call.setString(1, Nome_Utente );
+			Call.setString(2, Nome_Gruppo);
+			Call.execute();
+			System.out.println("Profilo accettato");
+		} catch (Exception e) {
+			System.out.println("Errore");
+
+		}
+	}
+	
+	public void Rifiuta_Richiesta(String Nome_Gruppo, String Nome_Utente) {
+
+		try {
+			CallableStatement Call = DB.getC().prepareCall("CALL RIFIUTA_PROFILO(?, ?)");
+			Call.setString(1, Nome_Utente );
+			Call.setString(2, Nome_Gruppo);
+			Call.execute();
+			System.out.println("Profilo riiutato");
+		} catch (Exception e) {
+			System.out.println("Errore");
+
+		}
+	}
 
 	// Select tutte le Notifiche che riceve un creatore
 	public List<Notifiche> SelNoitificheRichiesteDiUnCreatore(String Nome_Utente) {

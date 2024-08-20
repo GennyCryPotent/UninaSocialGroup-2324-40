@@ -148,12 +148,47 @@ public class Contenuti_DAO {
 		}
 	}
 	
-	// Select tutti i contenuti di un gruppo
+	// Select tutti i contenuti di un utente in un gruppo
 		public List<Contenuti> SelContenutiUtenteGruppo(String Nome_Gruppo, String Nome_Utente) {
 
 			try {
 
 				ResultSet rs = DB.ExeQuery("SELECT * FROM CONTENUTI WHERE FK_NOME_GRUPPO = '" + Nome_Gruppo + "' AND FK_NOME_UTENTE = '" + Nome_Utente + "'");
+
+				try {
+					List<Contenuti> Rec_Contenuti = new ArrayList<Contenuti>();
+
+					Contenuti Stampa;
+
+					while (rs.next()) {
+						Stampa = new Contenuti(rs.getInt("Id_Contenuto"), rs.getDate("Data_Creazione"),
+								rs.getString("Testo"), rs.getString("FK_Nome_Gruppo"), rs.getString("FK_Nome_Utente"));
+
+						Rec_Contenuti.add(Stampa);
+						Stampa = null;
+					}
+
+					return Rec_Contenuti;
+
+				} catch (SQLException e) {
+					System.out.println("query fallita: " + e.getMessage());
+
+					return null;
+				}
+
+			} catch (Exception e) {
+				System.out.println("Errore");
+
+				return null;
+			}
+		}
+		
+		// Select tutti i contenuti di un gruppo
+		public List<Contenuti> SelAllContenutiMeseGruppo(String Nome_Gruppo, int Mese) {
+
+			try {
+
+				ResultSet rs = DB.ExeQuery("SELECT * FROM CONTENUTI WHERE FK_NOME_GRUPPO = '" + Nome_Gruppo + "' AND EXTRACT(MONTH from DATA_CREAZIONE) =  " + Mese);
 
 				try {
 					List<Contenuti> Rec_Contenuti = new ArrayList<Contenuti>();

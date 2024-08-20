@@ -113,7 +113,7 @@ public class Likes_DAO {
 
 				if (rs.next()) {
 
-					N_Like = rs.getInt(1);
+					N_Like = rs.getInt(1); // 1 corrisponde all'elemento "COUNT(*)"
 
 				}
 

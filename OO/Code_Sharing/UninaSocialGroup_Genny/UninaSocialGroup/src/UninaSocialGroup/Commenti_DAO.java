@@ -152,6 +152,38 @@ public class Commenti_DAO {
 			return null;
 		}
 	}
+	
+	// Select numeri di commenti di un post
+		public int SelNumCommenti(int Id_Contenuto) {
+
+			try {
+
+				ResultSet rs = DB.ExeQuery("SELECT COUNT(*) FROM COMMENTI WHERE FK_ID_CONTENUTO = " + Id_Contenuto);
+
+				try {
+
+					int N_Like = 0;
+
+					if (rs.next()) {
+
+						N_Like = rs.getInt(1); // 1 corrisponde all'elemento "COUNT(*)"
+
+					}
+
+					return N_Like;
+
+				} catch (SQLException e) {
+					System.out.println("query fallita: " + e.getMessage());
+
+					return 0;
+				}
+
+			} catch (Exception e) {
+				System.out.println("Errore");
+
+				return 0;
+			}
+		}
 
 	public void Close_Connection() {
 		DB.close();
