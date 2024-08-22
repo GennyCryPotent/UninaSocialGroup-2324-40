@@ -19,6 +19,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JPopupMenu;
+import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JLayeredPane;
 
 public class Gruppi_GUI extends JFrame {
 
@@ -113,7 +120,7 @@ public class Gruppi_GUI extends JFrame {
 	private JTextArea createTextArea(String NG) {
 
 		JTextArea textContenuti = new JTextArea();
-		textContenuti.setEditable(true);
+		textContenuti.setEditable(false);
 		textContenuti.setBackground(new Color(244, 244, 244));
 		textContenuti.setLineWrap(true);
 		textContenuti.setBounds(27, 97, 686, 337);
