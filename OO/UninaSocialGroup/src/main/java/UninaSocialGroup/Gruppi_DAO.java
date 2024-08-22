@@ -6,7 +6,7 @@ import java.util.List;
 
 
 public class Gruppi_DAO {
-
+	
 	// Insert in un gruppo
 	public void InsGruppo(String Nome_Gruppo, String Descrizione, String Creatore) {
 
