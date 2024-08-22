@@ -93,7 +93,7 @@ public class Report_Statistico_GUI extends JFrame {
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(22)
 					.addComponent(Indietro, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-					.addGap(250)
+					.addGap(123)
 					.addComponent(Label, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE))
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(22)
@@ -128,10 +128,10 @@ public class Report_Statistico_GUI extends JFrame {
 		int indice_C_M = 0; // contenuto con più commenti
 		int indice_C_m = 0; // contenuto con meno commenti
 
-		Gruppi_DAO G = new Gruppi_DAO();
-		Likes_DAO L = new Likes_DAO();
-		Contenuti_DAO C = new Contenuti_DAO();
-		Commenti_DAO COM = new Commenti_DAO();
+		Gruppi_DAO G = new Gruppi_DAO("system", "Database@03");
+		Likes_DAO L = new Likes_DAO("system", "Database@03");
+		Contenuti_DAO C = new Contenuti_DAO("system", "Database@03");
+		Commenti_DAO COM = new Commenti_DAO("system", "Database@03");
 
 		Res_Gruppi = G.SelAllGruppoUtente(NU);
 

@@ -31,7 +31,7 @@ public class Elimina_Contenuto_GUI extends JFrame {
 	 */
 	public Elimina_Contenuto_GUI(String NU, String NG) {
 
-		Contenuti_DAO C = new Contenuti_DAO();
+		Contenuti_DAO C = new Contenuti_DAO("system", "Database@03");
 
 		// PANELLI
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

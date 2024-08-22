@@ -8,11 +8,17 @@ import oracle.jdbc.OracleTypes;
 
 public class Profili_DAO {
 
+	DB_Connection DB = new DB_Connection();
+
+	public Profili_DAO(String USR, String PSW) {
+		DB.connect(USR, PSW);
+	}
+
 	// Insert in un gruppo
 	public void InsProfilo(String Nome_Utente, String Password, String Nome, String Cognome, String Genere, Date DataNascita) {
 
 		try {
-			CallableStatement Call = Gestione_Finestre.DB.getC().prepareCall("CALL CREA_PROFILO(?, ?, ?, ?, ?, ?)");
+			CallableStatement Call = DB.getC().prepareCall("CALL CREA_PROFILO(?, ?, ?, ?, ?, ?)");
 			Call.setString(1, Nome_Utente);
 			Call.setString(2, Password);
 			Call.setString(3, Nome);
@@ -33,7 +39,7 @@ public class Profili_DAO {
 	public void DelProfilo(String Nome_Utente) {
 
 		try {
-			CallableStatement Call = Gestione_Finestre.DB.getC().prepareCall("CALL RIMOZIONE_PROFILO(?)");
+			CallableStatement Call = DB.getC().prepareCall("CALL RIMOZIONE_PROFILO(?)");
 			Call.setString(1, Nome_Utente);
 			Call.execute();
 			System.out.println("Profilo eliminato");
@@ -49,7 +55,7 @@ public class Profili_DAO {
 	public void UpProfilo(String Nome_Utente, String Campo_Mod, String New_Val) {
 
 		try {
-			CallableStatement Call = Gestione_Finestre.DB.getC().prepareCall("CALL MODIFICA_PROFILO(?, ?, ?)");
+			CallableStatement Call = DB.getC().prepareCall("CALL MODIFICA_PROFILO(?, ?, ?)");
 			Call.setString(1, Campo_Mod);
 			Call.setString(2, New_Val);
 			Call.setString(3, Nome_Utente);
@@ -67,7 +73,7 @@ public class Profili_DAO {
 
 		try {
 
-			ResultSet rs = Gestione_Finestre.DB.ExeQuery("SELECT * FROM PROFILI WHERE NOME_UTENTE = '" + Nome + "'");
+			ResultSet rs = DB.ExeQuery("SELECT * FROM PROFILI WHERE NOME_UTENTE = '" + Nome + "'");
 
 			try {
 
@@ -98,7 +104,7 @@ public class Profili_DAO {
 
 		try {
 
-			ResultSet rs = Gestione_Finestre.DB.ExeQuery("SELECT * FROM PROFILI");
+			ResultSet rs = DB.ExeQuery("SELECT * FROM PROFILI");
 			
 			try {
 				List<Profili> Rec_Profili = new ArrayList<Profili>();
@@ -128,5 +134,11 @@ public class Profili_DAO {
 			return null;
 		}
 	}
+	
+	public void Close_Connection() { 
+		DB.close();
+	}
+	
+	
 }
 

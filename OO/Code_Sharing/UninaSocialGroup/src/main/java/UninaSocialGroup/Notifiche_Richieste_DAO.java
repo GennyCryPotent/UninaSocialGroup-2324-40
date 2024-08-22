@@ -12,11 +12,17 @@ import oracle.jdbc.OracleTypes;
 
 public class Notifiche_Richieste_DAO {
 
+	DB_Connection DB = new DB_Connection();
+
+	public Notifiche_Richieste_DAO(String USR, String PSW) {
+		DB.connect(USR, PSW);
+	}
+
 	// Insert in Notifiche
 	public void InsNotifica_R(String Nome_Gruppo, String Nome_Utente) {
 
 		try {
-			CallableStatement Call = Gestione_Finestre.DB.getC().prepareCall("CALL CREA_RICHIESTA(?, ?)");
+			CallableStatement Call = DB.getC().prepareCall("CALL CREA_RICHIESTA(?, ?)");
 			Call.setString(1, Nome_Gruppo);
 			Call.setString(2, Nome_Utente);
 			Call.execute();
@@ -32,7 +38,7 @@ public class Notifiche_Richieste_DAO {
 	public void DelNotifica_R(int Id_Notifica_Richieste) {
 
 		try {
-			PreparedStatement Remove = Gestione_Finestre.DB.getC().prepareStatement(
+			PreparedStatement Remove = DB.getC().prepareStatement(
 					"DELETE FROM NOTIFICHE_RICHIESTE WHERE ID_NOTIFICA_RE = " + Id_Notifica_Richieste);
 			Remove.execute();
 			Remove.close();
@@ -51,7 +57,7 @@ public class Notifiche_Richieste_DAO {
 	public void Accetta_Richiesta(String Nome_Gruppo, String Nome_Utente) {
 
 		try {
-			CallableStatement Call = Gestione_Finestre.DB.getC().prepareCall("CALL ACCETTA_PROFILO(?, ?)");
+			CallableStatement Call = DB.getC().prepareCall("CALL ACCETTA_PROFILO(?, ?)");
 			Call.setString(1, Nome_Utente );
 			Call.setString(2, Nome_Gruppo);
 			Call.execute();
@@ -65,7 +71,7 @@ public class Notifiche_Richieste_DAO {
 	public void Rifiuta_Richiesta(String Nome_Gruppo, String Nome_Utente) {
 
 		try {
-			CallableStatement Call = Gestione_Finestre.DB.getC().prepareCall("CALL RIFIUTA_PROFILO(?, ?)");
+			CallableStatement Call = DB.getC().prepareCall("CALL RIFIUTA_PROFILO(?, ?)");
 			Call.setString(1, Nome_Utente );
 			Call.setString(2, Nome_Gruppo);
 			Call.execute();
@@ -83,8 +89,8 @@ public class Notifiche_Richieste_DAO {
 
 		try {
 
-			ResultSet rsNome_Gruppo = Gestione_Finestre.DB.ExeQuery("SELECT Nome From Gruppi Where FK_Nome_Utente = '" + Nome_Utente + "'"); // Prende 
-																										//i nomi
+			ResultSet rsNome_Gruppo = DB
+					.ExeQuery("SELECT Nome From Gruppi Where FK_Nome_Utente = '" + Nome_Utente + "'"); // Prende i nomi
 																										// dei gruppi
 																										// dove l'utente
 																										// è creatore
@@ -99,7 +105,7 @@ public class Notifiche_Richieste_DAO {
 
 					TMP_Nome_Gruppo = rsNome_Gruppo.getString("Nome");
 
-					ResultSet rsF = Gestione_Finestre.DB.ExeQuery("SELECT * FROM NOTIFICHE_RICHIESTE WHERE FK_Nome_Gruppo = '"
+					ResultSet rsF = DB.ExeQuery("SELECT * FROM NOTIFICHE_RICHIESTE WHERE FK_Nome_Gruppo = '"
 							+ TMP_Nome_Gruppo + "' AND Esitato = '0'");
 
 					while (rsF.next()) {
@@ -137,11 +143,12 @@ public class Notifiche_Richieste_DAO {
 
 		try {
 
-			ResultSet rsNome_Gruppo = Gestione_Finestre.DB.ExeQuery("SELECT Nome From Gruppi Where FK_Nome_Utente = '" + Nome_Utente + "'");
+			ResultSet rsNome_Gruppo = DB
+					.ExeQuery("SELECT Nome From Gruppi Where FK_Nome_Utente = '" + Nome_Utente + "'");
 
 			while (rsNome_Gruppo.next()) {
 
-				CallableStatement Call = Gestione_Finestre.DB.getC().prepareCall("{? = CALL Mostra_Archiviata_F(?, ?)}");
+				CallableStatement Call = DB.getC().prepareCall("{? = CALL Mostra_Archiviata_F(?, ?)}");
 
 				// Registra il parametro di output (in tutti casi saranno dei cursori)
 				Call.registerOutParameter(1, OracleTypes.CURSOR);
@@ -213,5 +220,9 @@ public class Notifiche_Richieste_DAO {
 			return check = 1;
 		}
 
+	}
+
+	public void Close_Connection() {
+		DB.close();
 	}
 }

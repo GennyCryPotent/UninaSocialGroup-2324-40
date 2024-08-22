@@ -10,7 +10,7 @@ public class Main{
 		// TODO Auto-generated method stub
 		int n;
 		List<Contenuti> Res_Contenuti = new ArrayList<Contenuti>();
-		Contenuti_DAO GD = new Contenuti_DAO();
+		Contenuti_DAO GD = new Contenuti_DAO("system", "Database@03");
 		
 	
 //		GD.InsCommento("Fai schifo", 13, "Genny03cry");
@@ -33,5 +33,7 @@ public class Main{
 			R=Res_Contenuti.get(i);
 			System.out.println("Testo: "+ R.getTesto());		
 		}
+		
+		 GD.Close_Connection();
 	}
 } 

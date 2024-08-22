@@ -9,11 +9,17 @@ import java.util.List;
 
 public class Possiedono_DAO {
 
+	DB_Connection DB = new DB_Connection();
+
+	public Possiedono_DAO(String USR, String PSW) {
+		DB.connect(USR, PSW);
+	}
+
 	// Insert in Possiedono
 	public void InsTagGruppo(String Nome_Gruppo, String Parola) {
 
 		try {
-			CallableStatement Call = Gestione_Finestre.DB.getC().prepareCall("CALL CREA_POSSIEDONO(?, ?)");
+			CallableStatement Call = DB.getC().prepareCall("CALL CREA_POSSIEDONO(?, ?)");
 			Call.setString(1, Nome_Gruppo);
 			Call.setString(2, Parola);
 			Call.execute();
@@ -29,7 +35,7 @@ public class Possiedono_DAO {
 	public void DelTagGruppo(String Nome_Gruppo, String Parola) {
 
 		try {
-			PreparedStatement Remove = Gestione_Finestre.DB.getC().prepareStatement("DELETE FROM POSSIEDONO WHERE FK_PAROLA = '" + Parola + "' AND FK_NOME_GRUPPO = '" + Nome_Gruppo + "'");
+			PreparedStatement Remove = DB.getC().prepareStatement("DELETE FROM POSSIEDONO WHERE FK_PAROLA = '" + Parola + "' AND FK_NOME_GRUPPO = '" + Nome_Gruppo + "'");
 			Remove.execute();
 			Remove.close();
 //			CallableStatement Call = DB.getC().prepareCall("CALL RIMOZIONE_POSSIEDONO(?, ?)");
@@ -49,7 +55,7 @@ public class Possiedono_DAO {
 
 		try {
 
-			ResultSet rs = Gestione_Finestre.DB.ExeQuery("SELECT * FROM Possiedono WHERE FK_PAROLA = '" + Parola + "'");
+			ResultSet rs = DB.ExeQuery("SELECT * FROM Possiedono WHERE FK_PAROLA = '" + Parola + "'");
 
 			try {
 
@@ -85,7 +91,7 @@ public class Possiedono_DAO {
 
 		try {
 
-			ResultSet rs = Gestione_Finestre.DB.ExeQuery("SELECT * FROM POSSIEDONO WHERE FK_NOME_GRUPPO = '" + Nome_Gruppo + "'" );
+			ResultSet rs = DB.ExeQuery("SELECT * FROM POSSIEDONO WHERE FK_NOME_GRUPPO = '" + Nome_Gruppo + "'" );
 			
 			try {
 				List<Possiedono> Rec_Possiedono = new ArrayList<Possiedono>();
@@ -114,4 +120,12 @@ public class Possiedono_DAO {
 			return null;
 		}
 	}
+	
+	
+	
+	public void Close_Connection() { 
+		DB.close();
+	}	
+	
+	
 }

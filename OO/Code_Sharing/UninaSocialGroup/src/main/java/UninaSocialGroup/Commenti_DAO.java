@@ -8,17 +8,17 @@ import java.util.List;
 
 public class Commenti_DAO {
 
-	
+	DB_Connection DB = new DB_Connection();
 
-	public Commenti_DAO() {
-		
+	public Commenti_DAO(String USR, String PSW) {
+		DB.connect(USR, PSW);
 	}
 
 	// Insert di un Commento
 	public void InsCommento(String Testo, int Id_Contenuto, String Creatore) {
 
 		try {
-			CallableStatement Call = Gestione_Finestre.DB.getC().prepareCall("CALL CREA_COMMENTO(?, ?, ?)");
+			CallableStatement Call = DB.getC().prepareCall("CALL CREA_COMMENTO(?, ?, ?)");
 			Call.setString(1, Testo);
 			Call.setInt(2, Id_Contenuto);
 			Call.setString(3, Creatore);
@@ -36,7 +36,7 @@ public class Commenti_DAO {
 	public void DelCommento(int Id_Commento) {
 
 		try {
-			CallableStatement Call = Gestione_Finestre.DB.getC().prepareCall("CALL RIMOZIONE_COMMENTO(?)");
+			CallableStatement Call = DB.getC().prepareCall("CALL RIMOZIONE_COMMENTO(?)");
 			Call.setInt(1, Id_Commento);
 			Call.execute();
 			System.out.println("Commento eliminato");
@@ -52,7 +52,7 @@ public class Commenti_DAO {
 	public void DelCommentoProfilo(String Nome_Utente, String Nome_Gruppo) {
 
 		try {
-			CallableStatement Call = Gestione_Finestre.DB.getC().prepareCall("CALL RIMOZIONE_COMMENTO_PROFILO(?, ?)");
+			CallableStatement Call = DB.getC().prepareCall("CALL RIMOZIONE_COMMENTO_PROFILO(?, ?)");
 			Call.setString(1, Nome_Utente);
 			Call.setString(2, Nome_Gruppo);
 			Call.execute();
@@ -69,7 +69,7 @@ public class Commenti_DAO {
 	public void UpCommento(String Creatore, int Id_Commento, String New_Val) {
 
 		try {
-			CallableStatement Call = Gestione_Finestre.DB.getC().prepareCall("CALL MODIFICA_COMMENTO(?, ?, ?)");
+			CallableStatement Call = DB.getC().prepareCall("CALL MODIFICA_COMMENTO(?, ?, ?)");
 			Call.setString(1, New_Val);
 			Call.setString(2, Creatore);
 			Call.setInt(3, Id_Commento);
@@ -87,7 +87,7 @@ public class Commenti_DAO {
 
 		try {
 
-			ResultSet rs = Gestione_Finestre.DB.ExeQuery("SELECT * FROM COMMENTI WHERE FK_ID_CONTENUTO = " + Id_Contenuto);
+			ResultSet rs = DB.ExeQuery("SELECT * FROM COMMENTI WHERE FK_ID_CONTENUTO = " + Id_Contenuto);
 
 			try {
 
@@ -123,7 +123,7 @@ public class Commenti_DAO {
 
 		try {
 
-			ResultSet rs = Gestione_Finestre.DB.ExeQuery("SELECT * FROM Commenti");
+			ResultSet rs = DB.ExeQuery("SELECT * FROM Commenti");
 
 			try {
 				List<Commenti> Rec_Commenti = new ArrayList<Commenti>();
@@ -158,7 +158,7 @@ public class Commenti_DAO {
 
 			try {
 
-				ResultSet rs = Gestione_Finestre.DB.ExeQuery("SELECT COUNT(*) FROM COMMENTI WHERE FK_ID_CONTENUTO = " + Id_Contenuto);
+				ResultSet rs = DB.ExeQuery("SELECT COUNT(*) FROM COMMENTI WHERE FK_ID_CONTENUTO = " + Id_Contenuto);
 
 				try {
 
@@ -184,4 +184,9 @@ public class Commenti_DAO {
 				return 0;
 			}
 		}
+
+	public void Close_Connection() {
+		DB.close();
+	}
+
 }

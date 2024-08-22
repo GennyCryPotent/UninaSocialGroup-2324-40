@@ -8,11 +8,18 @@ import java.util.List;
 
 public class Partecipano_DAO {
 
+	
+	DB_Connection DB = new DB_Connection();
+
+	public Partecipano_DAO(String USR, String PSW) {
+		DB.connect(USR, PSW);
+	}
+
 	// Insert in Partecipano
 	public void InsPartecipante(String Nome_Utente, String Nome_Gruppo) {
 
 		try {
-			CallableStatement Call = Gestione_Finestre.DB.getC().prepareCall("CALL CREA_PARTECIPANO(?, ?)");
+			CallableStatement Call = DB.getC().prepareCall("CALL CREA_PARTECIPANO(?, ?)");
 			Call.setString(1, Nome_Utente);
 			Call.setString(2, Nome_Gruppo);
 			Call.execute();
@@ -28,7 +35,7 @@ public class Partecipano_DAO {
 	public void DelPartecipante(String Nome_Utente, String Nome_Gruppo) {
 
 		try {
-			CallableStatement Call = Gestione_Finestre.DB.getC().prepareCall("CALL ABBANDONA_GRUPPO(?, ?)");
+			CallableStatement Call = DB.getC().prepareCall("CALL ABBANDONA_GRUPPO(?, ?)");
 			Call.setString(1, Nome_Utente);
 			Call.setString(2, Nome_Gruppo);
 			Call.execute();
@@ -45,7 +52,7 @@ public class Partecipano_DAO {
 		public void DelPartecipanoProfilo(String Nome_Utente, String Nome_Gruppo) {
 
 			try {
-				CallableStatement Call = Gestione_Finestre.DB.getC().prepareCall("CALL RIMOZIONE_Partecipano_PROFILO(?, ?)");
+				CallableStatement Call = DB.getC().prepareCall("CALL RIMOZIONE_Partecipano_PROFILO(?, ?)");
 				Call.setString(1, Nome_Utente);
 				Call.setString(2, Nome_Gruppo);
 				Call.execute();
@@ -63,7 +70,7 @@ public class Partecipano_DAO {
 
 		try {
 
-			ResultSet rs = Gestione_Finestre.DB.ExeQuery("SELECT * FROM PARTECIPANO WHERE FK_NOME_UTENTE = '" + Nome_Utente + "'");
+			ResultSet rs = DB.ExeQuery("SELECT * FROM PARTECIPANO WHERE FK_NOME_UTENTE = '" + Nome_Utente + "'");
 
 			try {
 
@@ -98,7 +105,7 @@ public class Partecipano_DAO {
 
 		try {
 
-			ResultSet rs = Gestione_Finestre.DB.ExeQuery("SELECT * FROM Partecipano WHERE FK_NOME_GRUPPO = '" + Nome_Gruppo + "'" );
+			ResultSet rs = DB.ExeQuery("SELECT * FROM Partecipano WHERE FK_NOME_GRUPPO = '" + Nome_Gruppo + "'" );
 			
 			try {
 				List<Partecipano> Rec_Partecipano = new ArrayList<Partecipano>();
@@ -127,5 +134,10 @@ public class Partecipano_DAO {
 			return null;
 		}
 	}
+	
+	public void Close_Connection() { 
+		DB.close();
+	}
+	
 }
 

@@ -6,7 +6,7 @@ public class DB_Connection {
     public Connection c;
 
     private String driver;
-    private String URL;
+    private String URL = "jdbc:oracle:thin:@Gennaro.homenet.telecomitalia.it:1521:xe";
     private String User;
     private String PSW;
 
@@ -23,7 +23,7 @@ public class DB_Connection {
         return c;
     }
 
-    public void connect() {
+    public void connect(String User, String PSW) {
         try {
             // REGISTRAZIONE DEL DRIVER
             Class.forName(driver);    

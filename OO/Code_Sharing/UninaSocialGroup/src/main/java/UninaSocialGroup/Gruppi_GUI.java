@@ -26,7 +26,7 @@ public class Gruppi_GUI extends JFrame {
 	private JPanel contentPane;
 	private String NewPost;
 	private List<Contenuti> Res_Contenuti_Gruppi = new ArrayList<Contenuti>();
-	private Contenuti_DAO C = new Contenuti_DAO();
+	private Contenuti_DAO C = new Contenuti_DAO("system", "Database@03");
 
 	public Gruppi_GUI(String NU, String NG) {
 

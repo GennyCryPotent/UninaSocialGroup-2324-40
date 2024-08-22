@@ -6,14 +6,10 @@ public class Gestione_Finestre {
 	
 	private Home_GUI Accesso;
 	private Gruppi_GUI Gruppo;
-	private Notifiche_GUI Notifica;  
+	private Notifiche_GUI Notifica = new Notifiche_GUI();  //oggetto Notifiche  
 	private Elimina_Contenuto_GUI Elimina; 
 	private Report_Statistico_GUI Report;
-	
-	public static DB_Connection DB = new DB_Connection("jdbc:oracle:thin:@localhost:1521:ORCL", "system", "Unina@03"); //portatile genny
-	//public static DB_Connection DB = new DB_Connection("jdbc:oracle:thin:@localhost:1521:ORCL", "system", "Unina@03"); //Fisso Genny
-	//public static DB_Connection DB = new DB_Connection("jdbc:oracle:thin:@localhost:1521:ORCL", "system", "Caruso"); //Caruso
-	//public static DB_Connection DB = new DB_Connection("jdbc:oracle:thin:@localhost:1521:ORCL", "system", "Unina@03"); //Gabbo
+	public DB_Connection DB = new DB_Connection();
 	
 	public Gestione_Finestre() {
 		
@@ -23,12 +19,10 @@ public class Gestione_Finestre {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DB.connect();
 					Login_GUI frame = new Login_GUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
-					DB.close();
 				}
 			}
 		});

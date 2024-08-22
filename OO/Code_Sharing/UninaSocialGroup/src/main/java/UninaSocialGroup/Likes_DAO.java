@@ -8,11 +8,17 @@ import java.util.List;
 
 public class Likes_DAO {
 
+	DB_Connection DB = new DB_Connection();
+
+	public Likes_DAO(String USR, String PSW) {
+		DB.connect(USR, PSW);
+	}
+
 	// Insert di un Like
 	public void InsLike(int Id_Contenuto, String Nome_Utente) {
 
 		try {
-			CallableStatement Call = Gestione_Finestre.DB.getC().prepareCall("CALL CREA_Like(?, ?)");
+			CallableStatement Call = DB.getC().prepareCall("CALL CREA_Like(?, ?)");
 			Call.setString(1, Nome_Utente);
 			Call.setInt(2, Id_Contenuto);
 			Call.execute();
@@ -29,7 +35,7 @@ public class Likes_DAO {
 	public void DelLike(int Id_Contenuto, String Nome_Utente) {
 
 		try {
-			CallableStatement Call = Gestione_Finestre.DB.getC().prepareCall("CALL RIMOZIONE_Like(?, ?)");
+			CallableStatement Call = DB.getC().prepareCall("CALL RIMOZIONE_Like(?, ?)");
 			Call.setString(1, Nome_Utente);
 			Call.setInt(2, Id_Contenuto);
 			Call.execute();
@@ -46,7 +52,7 @@ public class Likes_DAO {
 	public void DelLikeProfilo(String Nome_Utente, String Nome_Gruppo) {
 
 		try {
-			CallableStatement Call = Gestione_Finestre.DB.getC().prepareCall("CALL RIMOZIONE_LIKE_PROFILO(?, ?)");
+			CallableStatement Call = DB.getC().prepareCall("CALL RIMOZIONE_LIKE_PROFILO(?, ?)");
 			Call.setString(1, Nome_Utente);
 			Call.setString(2, Nome_Gruppo);
 			Call.execute();
@@ -64,7 +70,7 @@ public class Likes_DAO {
 
 		try {
 
-			ResultSet rs = Gestione_Finestre.DB.ExeQuery("SELECT * FROM LIKES WHERE FK_ID_CONTENUTO = " + Id_Contenuto);
+			ResultSet rs = DB.ExeQuery("SELECT * FROM LIKES WHERE FK_ID_CONTENUTO = " + Id_Contenuto);
 
 			try {
 
@@ -99,8 +105,7 @@ public class Likes_DAO {
 
 		try {
 
-			ResultSet rs = Gestione_Finestre.DB
-					.ExeQuery("SELECT COUNT(*) FROM LIKES WHERE FK_ID_CONTENUTO = " + Id_Contenuto);
+			ResultSet rs = DB.ExeQuery("SELECT COUNT(*) FROM LIKES WHERE FK_ID_CONTENUTO = " + Id_Contenuto);
 
 			try {
 
@@ -126,4 +131,9 @@ public class Likes_DAO {
 			return 0;
 		}
 	}
+
+	public void Close_Connection() {
+		DB.close();
+	}
+
 }
