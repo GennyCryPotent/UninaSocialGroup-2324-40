@@ -9,6 +9,7 @@ public class Gestione_Finestre {
 	private Notifiche_GUI Notifica = new Notifiche_GUI();  //oggetto Notifiche  
 	private Elimina_Contenuto_GUI Elimina; 
 	private Report_Statistico_GUI Report;
+	public DB_Connection DB = new DB_Connection();
 	
 	public Gestione_Finestre() {
 		
