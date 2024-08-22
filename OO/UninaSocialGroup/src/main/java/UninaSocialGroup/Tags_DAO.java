@@ -6,112 +6,98 @@ import java.util.List;
 
 public class Tags_DAO {
 
-	
-	DB_Connection DB = new DB_Connection();
-
-	public Tags_DAO(String USR, String PSW) {
-		DB.connect(USR, PSW);
-	}
-	
 	// Insert in un gruppo
-		public void InsTag(String Parola) {
+	public void InsTag(String Parola) {
 
-			try {
-				CallableStatement Call = DB.getC().prepareCall("CALL CREA_TAG(?)");
-				Call.setString(1, Parola);
-				Call.execute();
-				System.out.println("Tag Inserito");
-				
-			} catch (Exception e) {
-				System.out.println("Errore");
-				
-			}
-			
+		try {
+			CallableStatement Call = Gestione_Finestre.DB.getC().prepareCall("CALL CREA_TAG(?)");
+			Call.setString(1, Parola);
+			Call.execute();
+			System.out.println("Tag Inserito");
+
+		} catch (Exception e) {
+			System.out.println("Errore");
+
 		}
 
-		// Delete su un gruppo
-		public void DelTag(String Parola) {
+	}
 
-			try {
-				CallableStatement Call = DB.getC().prepareCall("CALL RIMOZIONE_TAG(?)");
-				Call.setString(1, Parola);
-				Call.execute();
-				System.out.println("Tags eliminato");
-			
-			} catch (Exception e) {
-				System.out.println(e);
-				
-			}
-			
+	// Delete su un gruppo
+	public void DelTag(String Parola) {
+
+		try {
+			CallableStatement Call = Gestione_Finestre.DB.getC().prepareCall("CALL RIMOZIONE_TAG(?)");
+			Call.setString(1, Parola);
+			Call.execute();
+			System.out.println("Tags eliminato");
+
+		} catch (Exception e) {
+			System.out.println(e);
+
 		}
 
+	}
 
-		// Select singolo Tags per parola
-		public Tags SelSigTag(String Parola) {
+	// Select singolo Tags per parola
+	public Tags SelSigTag(String Parola) {
+
+		try {
+
+			ResultSet rs = Gestione_Finestre.DB.ExeQuery("SELECT * FROM TAGS WHERE PAROLA = '" + Parola + "'");
 
 			try {
 
-				ResultSet rs = DB.ExeQuery("SELECT * FROM TAGS WHERE PAROLA = '" + Parola + "'");
+				Tags Res_Tag;
+				rs.next();
 
-				try {
+				Res_Tag = new Tags(rs.getString("Parola"));
 
-					Tags Res_Tag;
-					rs.next();
+				return Res_Tag;
 
-					Res_Tag = new Tags(rs.getString("Parola"));
-					
-					
-					return Res_Tag;
+			} catch (SQLException e) {
+				System.out.println("query fallita");
 
-				} catch (SQLException e) {
-					System.out.println("query fallita");
-				
-					return null;
-				}
-
-			} catch (Exception e) {
-				System.out.println("Errore");
-				
 				return null;
 			}
-		}
 
-		// Select tutti i tags
-		public List<Tags> SelAllTags() {
+		} catch (Exception e) {
+			System.out.println("Errore");
+
+			return null;
+		}
+	}
+
+	// Select tutti i tags
+	public List<Tags> SelAllTags() {
+
+		try {
+
+			ResultSet rs = Gestione_Finestre.DB.ExeQuery("SELECT * FROM TAGS");
 
 			try {
+				List<Tags> Rec_Tags = new ArrayList<Tags>();
 
-				ResultSet rs = DB.ExeQuery("SELECT * FROM TAGS");
-				
-				try {
-					List<Tags> Rec_Tags = new ArrayList<Tags>();
-					
-					Tags Stampa;
+				Tags Stampa;
 
-					while (rs.next()) {
-						Stampa = new Tags(rs.getString("Parola"));
-						
-						Rec_Tags.add(Stampa);
-						Stampa = null;
-					}
-					
-					
-					return Rec_Tags;
+				while (rs.next()) {
+					Stampa = new Tags(rs.getString("Parola"));
 
-				} catch (SQLException e) {
-					System.out.println("query fallita");
-					
-					return null;
+					Rec_Tags.add(Stampa);
+					Stampa = null;
 				}
 
-			} catch (Exception e) {
-				System.out.println("Errore");
-				
+				return Rec_Tags;
+
+			} catch (SQLException e) {
+				System.out.println("query fallita");
+
 				return null;
 			}
+
+		} catch (Exception e) {
+			System.out.println("Errore");
+
+			return null;
 		}
-		
-		public void Close_Connection() { 
-			DB.close();
-		}
+	}
 }

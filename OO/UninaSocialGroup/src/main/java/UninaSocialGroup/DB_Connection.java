@@ -5,25 +5,31 @@ public class DB_Connection {
 
     public Connection c;
 
-    String driver = "oracle.jdbc.OracleDriver";
-    String URL = "jdbc:oracle:thin:@Gennaro.homenet.telecomitalia.it:1521:xe";
-    
+    private String driver;
+    private String URL;
+    private String User;
+    private String PSW;
 
-    public DB_Connection() {
-        // TODO Auto-generated constructor stub
+    public DB_Connection(String uRL, String user, String psw) {
+        
+    	driver = "oracle.jdbc.OracleDriver";
+    	URL = uRL;
+    	User = user;
+    	PSW = psw;
+    	
     }
 
     public Connection getC() {
         return c;
     }
 
-    public void connect(String user, String psw) {
+    public void connect() {
         try {
             // REGISTRAZIONE DEL DRIVER
             Class.forName(driver);    
             
             // CONNESSIONE        
-            c = DriverManager.getConnection(URL, user, psw);
+            c = DriverManager.getConnection(URL, User, PSW);
             System.out.println("Connessione riuscita");
         } catch (ClassNotFoundException e) {
             System.out.println("Driver non trovato");

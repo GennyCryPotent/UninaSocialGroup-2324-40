@@ -26,7 +26,7 @@ public class Gruppi_GUI extends JFrame {
 	private JPanel contentPane;
 	private String NewPost;
 	private List<Contenuti> Res_Contenuti_Gruppi = new ArrayList<Contenuti>();
-	private Contenuti_DAO C = new Contenuti_DAO("system", "Database@03");
+	private Contenuti_DAO C = new Contenuti_DAO();
 
 	public Gruppi_GUI(String NU, String NG) {
 
@@ -48,12 +48,9 @@ public class Gruppi_GUI extends JFrame {
 		contentPane.add(NomeGruppo);
 
 		JTextArea textArea = createTextArea(NG); // crea la textArea con tutti i contenuti del gruppo
-		contentPane.add(textArea);
-
-		JScrollPane GruppiGUIV = new JScrollPane();
-		GruppiGUIV.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		GruppiGUIV.setBounds(10, 97, 110, 291);
-		contentPane.add(GruppiGUIV);
+		JScrollPane scrollPane = new JScrollPane(textArea);
+		scrollPane.setBounds(27, 86, 684, 348);
+		contentPane.add(scrollPane);
 		
 		
 		//BOTTONI
@@ -116,10 +113,10 @@ public class Gruppi_GUI extends JFrame {
 	private JTextArea createTextArea(String NG) {
 
 		JTextArea textContenuti = new JTextArea();
-		textContenuti.setEditable(false);
+		textContenuti.setEditable(true);
 		textContenuti.setBackground(new Color(244, 244, 244));
 		textContenuti.setLineWrap(true);
-		textContenuti.setBounds(140, 97, 573, 291);
+		textContenuti.setBounds(27, 97, 686, 337);
 
 		Res_Contenuti_Gruppi = C.SelAllContenutiGruppo(NG);
 		for (int i = 0; i < Res_Contenuti_Gruppi.size(); i++) {

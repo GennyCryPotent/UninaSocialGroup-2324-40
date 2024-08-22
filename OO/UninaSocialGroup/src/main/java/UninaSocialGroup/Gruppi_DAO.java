@@ -6,18 +6,12 @@ import java.util.List;
 
 
 public class Gruppi_DAO {
-
-	DB_Connection DB = new DB_Connection();
-
-	public Gruppi_DAO(String USR, String PSW) {
-		DB.connect(USR, PSW);
-	}
-
+	
 	// Insert in un gruppo
 	public void InsGruppo(String Nome_Gruppo, String Descrizione, String Creatore) {
 
 		try {
-			CallableStatement Call = DB.getC().prepareCall("CALL CREA_GRUPPO(?, ?, ?)");
+			CallableStatement Call = Gestione_Finestre.DB.getC().prepareCall("CALL CREA_GRUPPO(?, ?, ?)");
 			Call.setString(1, Nome_Gruppo);
 			Call.setString(2, Descrizione);
 			Call.setString(3, Creatore);
@@ -35,7 +29,7 @@ public class Gruppi_DAO {
 	public void DelGruppo(String Nome_Gruppo) {
 
 		try {
-			CallableStatement Call = DB.getC().prepareCall("CALL RIMOZIONE_GRUPPO(?)");
+			CallableStatement Call = Gestione_Finestre.DB.getC().prepareCall("CALL RIMOZIONE_GRUPPO(?)");
 			Call.setString(1, Nome_Gruppo);
 			Call.execute();
 			System.out.println("Gruppo eliminato");
@@ -51,7 +45,7 @@ public class Gruppi_DAO {
 	public void UpGruppo(String Nome_Gruppo, String Creatore, String Campo_Mod, String New_Val) {
 
 		try {
-			CallableStatement Call = DB.getC().prepareCall("CALL MODIFICA_GRUPPO(?, ?, ?, ?)");
+			CallableStatement Call = Gestione_Finestre.DB.getC().prepareCall("CALL MODIFICA_GRUPPO(?, ?, ?, ?)");
 			Call.setString(1, Campo_Mod);
 			Call.setString(2, New_Val);
 			Call.setString(3, Creatore);
@@ -70,7 +64,7 @@ public class Gruppi_DAO {
 
 		try {
 
-			ResultSet rs = DB.ExeQuery("SELECT * FROM GRUPPI WHERE NOME = '" + Nome + "'");
+			ResultSet rs = Gestione_Finestre.DB.ExeQuery("SELECT * FROM GRUPPI WHERE NOME = '" + Nome + "'");
 
 			try {
 
@@ -101,7 +95,7 @@ public class Gruppi_DAO {
 
 		try {
 
-			ResultSet rs = DB.ExeQuery("SELECT * FROM GRUPPI");
+			ResultSet rs = Gestione_Finestre.DB.ExeQuery("SELECT * FROM GRUPPI");
 			
 			try {
 				List<Gruppi> Rec_Gruppi = new ArrayList<Gruppi>();
@@ -137,7 +131,7 @@ public class Gruppi_DAO {
 
 			try {
 
-				ResultSet rs = DB.ExeQuery("SELECT * FROM GRUPPI WHERE FK_NOME_UTENTE = '" + Nome_Utente + "'");
+				ResultSet rs = Gestione_Finestre.DB.ExeQuery("SELECT * FROM GRUPPI WHERE FK_NOME_UTENTE = '" + Nome_Utente + "'");
 				
 				try {
 					List<Gruppi> Rec_Gruppi = new ArrayList<Gruppi>();
@@ -167,9 +161,4 @@ public class Gruppi_DAO {
 				return null;
 			}
 		}
-	
-	public void Close_Connection() { 
-		DB.close();
-	}
-
 }
