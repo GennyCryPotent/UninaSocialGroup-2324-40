@@ -30,6 +30,9 @@ public class Login_GUI extends JFrame {
 	private Gestione_Finestre Accesso = new Gestione_Finestre();  //passaggio nel gestore delle finestre
     public String NU;   //variabile per nome utente
     private String PSW; //variabile per password
+    private Profili_DAO Pass = new Profili_DAO();
+ 
+    
     
 	/**
 	 * Launch the application.
@@ -62,18 +65,28 @@ public class Login_GUI extends JFrame {
 				NU=NomeUtente.getText();
 				PSW= new String (passwordField.getPassword()); 
 				
-				String passaggio ="gabbo";
+				try {
+				String passaggio = Pass.SelSigProfilo(NU).getPassword();
+				String NomeU = Pass.SelSigProfilo(NU).getNome_Utente();
+					
+				     if(PSW.compareTo(passaggio)==0 && NU.compareTo(NomeU)==0) {
+			        	 
+					     Login_GUI.this.setVisible(false);  //
+			        	 Accesso.AccessoHome(NU);
+			        	 
+			         }else {
+			        	 
+			        	 JOptionPane.showMessageDialog(null, "Controlla Nome Utente e Password", "Credenziali errate", JOptionPane.WARNING_MESSAGE );
+			         }
 				
-		         if(PSW.compareTo(passaggio)==0) {
-		        	 
-				     Login_GUI.this.setVisible(false);  //
-		        	 Accesso.AccessoHome(NU);
-		        	 
-		         }else {
-		        	 
-		        	 JOptionPane.showMessageDialog(null, "Controlla Nome Utente e Password", "Credenziali errate", JOptionPane.WARNING_MESSAGE );
-		         }
 				
+				}catch(Exception e1){
+					JOptionPane.showMessageDialog(null, "Controlla Nome Utente e Password", "Credenziali errate", JOptionPane.WARNING_MESSAGE );
+					
+					
+				}				
+				
+		         
 			}
 		});
 		contentPane.add(accedi);
