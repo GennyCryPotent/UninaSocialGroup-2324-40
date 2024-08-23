@@ -37,18 +37,19 @@ public class Gruppi_GUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private String NewPost;
+	private String NewCommento;
 	private List<Contenuti> Res_Contenuti_Gruppi = new ArrayList<Contenuti>();
 	private List<Commenti> Res_Commenti = new ArrayList<Commenti>();
 	private Contenuti Res_Contenuto;
 	private Contenuti_DAO C = new Contenuti_DAO();
 	private Commenti_DAO CO = new Commenti_DAO();
+	private JTextArea textCommenti;
 
 	public Gruppi_GUI(String NU, String NG) {
-		
+
 		Res_Contenuto = C.SelSigContenuto(2);
-		
-		
-		//PANNELLI
+
+		// PANNELLI
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 737, 484);
 		contentPane = new JPanel();
@@ -57,70 +58,103 @@ public class Gruppi_GUI extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		//FRAME INTERNO
-		JInternalFrame internalFrame = new JInternalFrame("New JInternalFrame");
+
+		// FRAME INTERNO
+		JInternalFrame internalFrame = new JInternalFrame("Post");
+		internalFrame.setResizable(true);
+		internalFrame.setIconifiable(true);
+		internalFrame.setMaximizable(true);
+		internalFrame.setClosable(true);
 		internalFrame.setBounds(37, 0, 626, 434);
 		contentPane.add(internalFrame);
-		
+
 		JTextArea textAreaCommenti = createTextAreaCommenti(2);
-		
-		
+
 		JButton btnNewButton_1 = new JButton("Indietro");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				internalFrame.setVisible(false);
 			}
 		});
-		
+
 		JLabel LabelCommenti = new JLabel();
 		LabelCommenti.setText("Commenti");
 		LabelCommenti.setForeground(new Color(0, 128, 255));
 		LabelCommenti.setFont(new Font("Tahoma", Font.BOLD, 18));
-		
+
 		JTextArea textAreaPost = new JTextArea(Res_Contenuto.getTesto());
-		
+		textAreaPost.setEditable(false);
+
 		JLabel LabelPost = new JLabel();
-		LabelPost.setText(Res_Contenuto.getPubblicatore() + " dice:");
+		LabelPost.setText(Res_Contenuto.getPubblicatore());
 		LabelPost.setForeground(new Color(0, 128, 255));
 		LabelPost.setFont(new Font("Tahoma", Font.BOLD, 18));
+
+		JTextArea textAddCommento = new JTextArea();
+
+		JLabel lblAggiungiCommento = new JLabel();
+		lblAggiungiCommento.setText("Aggiungi commento");
+		lblAggiungiCommento.setForeground(new Color(0, 128, 255));
+		lblAggiungiCommento.setFont(new Font("Tahoma", Font.BOLD, 18));
+
+		JButton btnNewButtonAddCommento = new JButton("Commenta");
+		btnNewButtonAddCommento.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (textAddCommento.getText() != "") {
+					CO.InsCommento(textAddCommento.getText(), 2, NU);
+					textAreaCommenti.append(NU + " :" + textAddCommento.getText());
+					textAddCommento.setText("");
+				}
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(internalFrame.getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(textAreaPost, GroupLayout.PREFERRED_SIZE, 270, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(LabelCommenti, GroupLayout.PREFERRED_SIZE, 174, GroupLayout.PREFERRED_SIZE)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(197)
-									.addComponent(btnNewButton_1))
-								.addComponent(textAreaCommenti, GroupLayout.PREFERRED_SIZE, 268, GroupLayout.PREFERRED_SIZE)))
-						.addComponent(LabelPost, GroupLayout.PREFERRED_SIZE, 174, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addContainerGap()
-									.addComponent(LabelCommenti, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE))
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(groupLayout
+				.createSequentialGroup()
+				.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup().addContainerGap().addComponent(textAreaPost,
+								GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE))
+						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(groupLayout
+								.createSequentialGroup()
+								.addComponent(LabelPost, GroupLayout.PREFERRED_SIZE, 174, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addComponent(btnNewButton_1))
-							.addGap(40))
+								.addGroup(groupLayout.createSequentialGroup().addGroup(groupLayout
+										.createParallelGroup(Alignment.LEADING)
+										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+												.addGroup(groupLayout.createSequentialGroup().addContainerGap()
+														.addComponent(textAddCommento, GroupLayout.PREFERRED_SIZE, 271,
+																GroupLayout.PREFERRED_SIZE))
+												.addGroup(groupLayout.createSequentialGroup().addGap(14).addComponent(
+														lblAggiungiCommento, GroupLayout.DEFAULT_SIZE,
+														GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+										.addGroup(groupLayout.createSequentialGroup().addContainerGap()
+												.addComponent(btnNewButtonAddCommento)))
+										.addPreferredGap(ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+												.addComponent(LabelCommenti, GroupLayout.PREFERRED_SIZE, 174,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(textCommenti, GroupLayout.PREFERRED_SIZE, 268,
+														GroupLayout.PREFERRED_SIZE)))))
+				.addContainerGap()));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(groupLayout
+				.createSequentialGroup()
+				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(LabelPost, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+				.addPreferredGap(ComponentPlacement.RELATED)
+				.addComponent(textAreaPost, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+				.addPreferredGap(ComponentPlacement.RELATED)
+				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(LabelCommenti, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblAggiungiCommento, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE))
+				.addPreferredGap(ComponentPlacement.RELATED)
+				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(textCommenti, GroupLayout.PREFERRED_SIZE, 263, GroupLayout.PREFERRED_SIZE)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(LabelPost, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)))
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(textAreaPost, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textAreaCommenti, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
-		);
+								.addComponent(textAddCommento, GroupLayout.PREFERRED_SIZE, 122,
+										GroupLayout.PREFERRED_SIZE)
+								.addGap(8).addComponent(btnNewButtonAddCommento)))
+				.addGap(433)));
 		internalFrame.getContentPane().setLayout(groupLayout);
 
 		JLabel NomeGruppo = new JLabel();
@@ -134,9 +168,8 @@ public class Gruppi_GUI extends JFrame {
 		JScrollPane scrollPane = new JScrollPane(textArea);
 		scrollPane.setBounds(27, 86, 684, 348);
 		contentPane.add(scrollPane);
-		
-		
-		//BOTTONI
+
+		// BOTTONI
 		JButton Notifiche = new JButton("🔔");
 		Notifiche.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -189,7 +222,7 @@ public class Gruppi_GUI extends JFrame {
 		Rimuovi_Post.setBackground(Color.WHITE);
 		Rimuovi_Post.setBounds(190, 22, 60, 53);
 		contentPane.add(Rimuovi_Post);
-		
+
 		JButton btnNewButton = new JButton("Vedi post");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -198,11 +231,11 @@ public class Gruppi_GUI extends JFrame {
 		});
 		btnNewButton.setBounds(622, 29, 89, 23);
 		contentPane.add(btnNewButton);
-		
 
 	}
 
-	// costruisce e restutuisce una textArea che contine tutti i contenuti del gruppo 
+	// costruisce e restutuisce una textArea che contine tutti i contenuti del
+	// gruppo
 	private JTextArea createTextArea(String NG) {
 
 		JTextArea textContenuti = new JTextArea();
@@ -219,18 +252,17 @@ public class Gruppi_GUI extends JFrame {
 
 		return textContenuti;
 	}
-	
+
 	private JTextArea createTextAreaCommenti(int Id_Contenuto) {
 
-		JTextArea textContenuti = new JTextArea();
-		textContenuti.setEditable(false);
+		textCommenti = new JTextArea();
+		textCommenti.setEditable(false);
 
 		Res_Commenti = CO.SelCommentiPost(2);
 		for (int i = 0; i < Res_Commenti.size(); i++) {
-			textContenuti.append(Res_Commenti.get(i).getPubblicatore() + ": "
-					+ Res_Commenti.get(i).getTesto() + "\n");
+			textCommenti.append(Res_Commenti.get(i).getPubblicatore() + ": " + Res_Commenti.get(i).getTesto() + "\n");
 		}
 
-		return textContenuti;
+		return textCommenti;
 	}
 }
