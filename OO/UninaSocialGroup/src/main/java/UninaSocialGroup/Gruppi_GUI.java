@@ -37,17 +37,14 @@ public class Gruppi_GUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private String NewPost;
-	private String NewCommento;
 	private List<Contenuti> Res_Contenuti_Gruppi = new ArrayList<Contenuti>();
-	private List<Commenti> Res_Commenti = new ArrayList<Commenti>();
-	private Contenuti Res_Contenuto;
 	private Contenuti_DAO C = new Contenuti_DAO();
-	private Commenti_DAO CO = new Commenti_DAO();
-	private JTextArea textCommenti;
+	
+	
 
 	public Gruppi_GUI(String NU, String NG) {
 
-		Res_Contenuto = C.SelSigContenuto(2);
+	
 
 		// PANNELLI
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -55,108 +52,13 @@ public class Gruppi_GUI extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		// FRAME INTERNO
-		JInternalFrame internalFrame = new JInternalFrame("Post");
-		internalFrame.setResizable(true);
-		internalFrame.setIconifiable(true);
-		internalFrame.setMaximizable(true);
-		internalFrame.setClosable(true);
-		internalFrame.setBounds(37, 0, 626, 434);
-		contentPane.add(internalFrame);
-
-		JTextArea textAreaCommenti = createTextAreaCommenti(2);
-
-		JButton btnNewButton_1 = new JButton("Indietro");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				internalFrame.setVisible(false);
-			}
-		});
-
-		JLabel LabelCommenti = new JLabel();
-		LabelCommenti.setText("Commenti");
-		LabelCommenti.setForeground(new Color(0, 128, 255));
-		LabelCommenti.setFont(new Font("Tahoma", Font.BOLD, 18));
-
-		JTextArea textAreaPost = new JTextArea(Res_Contenuto.getTesto());
-		textAreaPost.setEditable(false);
-
-		JLabel LabelPost = new JLabel();
-		LabelPost.setText(Res_Contenuto.getPubblicatore());
-		LabelPost.setForeground(new Color(0, 128, 255));
-		LabelPost.setFont(new Font("Tahoma", Font.BOLD, 18));
-
-		JTextArea textAddCommento = new JTextArea();
-
-		JLabel lblAggiungiCommento = new JLabel();
-		lblAggiungiCommento.setText("Aggiungi commento");
-		lblAggiungiCommento.setForeground(new Color(0, 128, 255));
-		lblAggiungiCommento.setFont(new Font("Tahoma", Font.BOLD, 18));
-
-		JButton btnNewButtonAddCommento = new JButton("Commenta");
-		btnNewButtonAddCommento.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (textAddCommento.getText() != "") {
-					CO.InsCommento(textAddCommento.getText(), 2, NU);
-					textAreaCommenti.append(NU + " :" + textAddCommento.getText());
-					textAddCommento.setText("");
-				}
-			}
-		});
-		GroupLayout groupLayout = new GroupLayout(internalFrame.getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(groupLayout
-				.createSequentialGroup()
-				.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createSequentialGroup().addContainerGap().addComponent(textAreaPost,
-								GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE))
-						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(groupLayout
-								.createSequentialGroup()
-								.addComponent(LabelPost, GroupLayout.PREFERRED_SIZE, 174, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(btnNewButton_1))
-								.addGroup(groupLayout.createSequentialGroup().addGroup(groupLayout
-										.createParallelGroup(Alignment.LEADING)
-										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-												.addGroup(groupLayout.createSequentialGroup().addContainerGap()
-														.addComponent(textAddCommento, GroupLayout.PREFERRED_SIZE, 271,
-																GroupLayout.PREFERRED_SIZE))
-												.addGroup(groupLayout.createSequentialGroup().addGap(14).addComponent(
-														lblAggiungiCommento, GroupLayout.DEFAULT_SIZE,
-														GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-										.addGroup(groupLayout.createSequentialGroup().addContainerGap()
-												.addComponent(btnNewButtonAddCommento)))
-										.addPreferredGap(ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
-										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-												.addComponent(LabelCommenti, GroupLayout.PREFERRED_SIZE, 174,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(textCommenti, GroupLayout.PREFERRED_SIZE, 268,
-														GroupLayout.PREFERRED_SIZE)))))
-				.addContainerGap()));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(groupLayout
-				.createSequentialGroup()
-				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(LabelPost, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addComponent(textAreaPost, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(LabelCommenti, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblAggiungiCommento, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE))
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textCommenti, GroupLayout.PREFERRED_SIZE, 263, GroupLayout.PREFERRED_SIZE)
-						.addGroup(groupLayout.createSequentialGroup()
-								.addComponent(textAddCommento, GroupLayout.PREFERRED_SIZE, 122,
-										GroupLayout.PREFERRED_SIZE)
-								.addGap(8).addComponent(btnNewButtonAddCommento)))
-				.addGap(433)));
-		internalFrame.getContentPane().setLayout(groupLayout);
-
+		
+		JInternalFrame_Gruppi newFrame = new JInternalFrame_Gruppi(2, NU, NG);
+		contentPane.add(newFrame);
+		
 		JLabel NomeGruppo = new JLabel();
 		NomeGruppo.setForeground(new Color(0, 128, 255));
 		NomeGruppo.setText(NG);
@@ -226,7 +128,7 @@ public class Gruppi_GUI extends JFrame {
 		JButton btnNewButton = new JButton("Vedi post");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				internalFrame.setVisible(true);
+				newFrame.setVisible(true);
 			}
 		});
 		btnNewButton.setBounds(622, 29, 89, 23);
@@ -234,8 +136,7 @@ public class Gruppi_GUI extends JFrame {
 
 	}
 
-	// costruisce e restutuisce una textArea che contine tutti i contenuti del
-	// gruppo
+	// costruisce e restutuisce una textArea che contine tutti i contenuti del gruppo
 	private JTextArea createTextArea(String NG) {
 
 		JTextArea textContenuti = new JTextArea();
@@ -253,16 +154,4 @@ public class Gruppi_GUI extends JFrame {
 		return textContenuti;
 	}
 
-	private JTextArea createTextAreaCommenti(int Id_Contenuto) {
-
-		textCommenti = new JTextArea();
-		textCommenti.setEditable(false);
-
-		Res_Commenti = CO.SelCommentiPost(2);
-		for (int i = 0; i < Res_Commenti.size(); i++) {
-			textCommenti.append(Res_Commenti.get(i).getPubblicatore() + ": " + Res_Commenti.get(i).getTesto() + "\n");
-		}
-
-		return textCommenti;
-	}
 }

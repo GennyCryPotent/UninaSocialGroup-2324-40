@@ -172,15 +172,10 @@ public class Report_Statistico_GUI extends JFrame {
 					}
 				}
 
-				System.out.println("Contenuto con più like: " + Res_Contenuti.get(indice_L_M).getId_Contenuto());
-				System.out.println("Contenuto con meno like: " + Res_Contenuti.get(indice_L_m).getId_Contenuto());
-				System.out.println("Contenuto con più commenti: " + Res_Contenuti.get(indice_C_M).getId_Contenuto());
-				System.out.println("Contenuto con meno commenti: " + Res_Contenuti.get(indice_C_m).getId_Contenuto());
-
 				Res[i] = new Object[] { Res_Gruppi.get(i).getNome(), Res_Contenuti.get(indice_L_M).getTesto(),
 						Res_Contenuti.get(indice_L_m).getTesto(), Res_Contenuti.get(indice_C_M).getTesto(),
 						Res_Contenuti.get(indice_C_m).getTesto() };
-				// System.out.println(Res_Gruppi.get(i).getNome());
+				
 			}
 
 			return Res;

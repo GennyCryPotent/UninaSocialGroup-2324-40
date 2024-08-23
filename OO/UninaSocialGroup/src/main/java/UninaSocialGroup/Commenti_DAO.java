@@ -8,10 +8,8 @@ import java.util.List;
 
 public class Commenti_DAO {
 
-	
-
 	public Commenti_DAO() {
-		
+
 	}
 
 	// Insert di un Commento
@@ -87,7 +85,8 @@ public class Commenti_DAO {
 
 		try {
 
-			ResultSet rs = Gestione_Finestre.DB.ExeQuery("SELECT * FROM COMMENTI WHERE FK_ID_CONTENUTO = " + Id_Contenuto);
+			ResultSet rs = Gestione_Finestre.DB
+					.ExeQuery("SELECT * FROM COMMENTI WHERE FK_ID_CONTENUTO = " + Id_Contenuto);
 
 			try {
 
@@ -152,36 +151,74 @@ public class Commenti_DAO {
 			return null;
 		}
 	}
-	
+
 	// Select numeri di commenti di un post
-		public int SelNumCommenti(int Id_Contenuto) {
+	public int SelNumCommenti(int Id_Contenuto) {
+
+		try {
+
+			ResultSet rs = Gestione_Finestre.DB
+					.ExeQuery("SELECT COUNT(*) FROM COMMENTI WHERE FK_ID_CONTENUTO = " + Id_Contenuto);
 
 			try {
 
-				ResultSet rs = Gestione_Finestre.DB.ExeQuery("SELECT COUNT(*) FROM COMMENTI WHERE FK_ID_CONTENUTO = " + Id_Contenuto);
+				int N_Like = 0;
 
-				try {
+				if (rs.next()) {
 
-					int N_Like = 0;
+					N_Like = rs.getInt(1); // 1 corrisponde all'elemento "COUNT(*)"
 
-					if (rs.next()) {
-
-						N_Like = rs.getInt(1); // 1 corrisponde all'elemento "COUNT(*)"
-
-					}
-
-					return N_Like;
-
-				} catch (SQLException e) {
-					System.out.println("query fallita: " + e.getMessage());
-
-					return 0;
 				}
 
-			} catch (Exception e) {
-				System.out.println("Errore");
+				return N_Like;
+
+			} catch (SQLException e) {
+				System.out.println("query fallita: " + e.getMessage());
 
 				return 0;
 			}
+
+		} catch (Exception e) {
+			System.out.println("Errore");
+
+			return 0;
 		}
+	}
+
+	// Select tutti i Commenti di un utente in un post
+	public List<Commenti> SelCommentiUtentePost(String Nome_Utente, int Id_Contenuto) {
+
+		try {
+
+			ResultSet rs = Gestione_Finestre.DB.ExeQuery("SELECT * FROM Commenti WHERE FK_ID_CONTENUTO= '"
+					+ Id_Contenuto + "' AND FK_NOME_UTENTE = '" + Nome_Utente + "'");
+
+			try {
+				List<Commenti> Rec_Commenti = new ArrayList<Commenti>();
+
+				Commenti Stampa;
+
+				while (rs.next()) {
+					Stampa = new Commenti(rs.getInt("Id_Commento"), rs.getDate("Data_Creazione"), rs.getString("Testo"),
+							rs.getInt("FK_Id_Contenuto"), rs.getString("FK_Nome_Utente"));
+
+					Rec_Commenti.add(Stampa);
+					Stampa = null;
+				}
+
+				return Rec_Commenti;
+
+			} catch (SQLException e) {
+				System.out.println("query fallita: " + e.getMessage());
+
+				return null;
+			}
+
+		} catch (Exception e) {
+			System.out.println("Errore");
+
+			return null;
+		}
+	}
+
 }

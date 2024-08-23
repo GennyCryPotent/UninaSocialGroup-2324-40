@@ -2,12 +2,14 @@ package UninaSocialGroup;
 
 import java.awt.EventQueue;
 
+import javax.swing.JDialog;
+
 public class Gestione_Finestre {
 	
 	private Home_GUI Accesso;
 	private Gruppi_GUI Gruppo;
 	private Notifiche_GUI Notifica;  
-	private Elimina_Contenuto_GUI Elimina; 
+	private Elimina_Post_Commento_GUI Elimina; 
 	private Report_Statistico_GUI Report;
 	
 	//public static DB_Connection DB = new DB_Connection("jdbc:oracle:thin:@localhost:1521:ORCL", "system", "Unina@03"); //portatile genny
@@ -46,10 +48,17 @@ public class Gestione_Finestre {
 	  }
 	  
 	  public void Elimina_Contenuto(String NG, String NU) {
-		  Elimina = new Elimina_Contenuto_GUI(NG, NU); 
+		  Elimina = new Elimina_Post_Commento_GUI(NG, NU); 
 		  Elimina.setVisible(true);
 		
 	  }
+	  
+	  public void Elimina_Commento(String NG, String NU, int Id_Contenuto) {
+		  Elimina = new Elimina_Post_Commento_GUI(NG, NU, Id_Contenuto); 
+		  Elimina.setVisible(true);
+		
+	  }
+
 	  
 	  public void Notifiche() {
 		  Notifica = new Notifiche_GUI();
