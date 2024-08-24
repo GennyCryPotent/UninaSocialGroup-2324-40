@@ -27,11 +27,7 @@ public class Elimina_Post_Commento_GUI extends JFrame {
 	private List<Commenti> Res_Commenti = new ArrayList<Commenti>();
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private static boolean eliminato = false;
 
-	public static boolean isEliminato() {
-		return eliminato;
-	}
 
 	//Schermata 
 	public Elimina_Post_Commento_GUI(String NU, String NG) {
@@ -88,6 +84,9 @@ public class Elimina_Post_Commento_GUI extends JFrame {
 	}
 	
 	//Schermata commento
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public Elimina_Post_Commento_GUI(String NU, String NG, int Id_Contenuto) {
 
 		Commenti_DAO C = new Commenti_DAO();
@@ -101,17 +100,18 @@ public class Elimina_Post_Commento_GUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(114, 10, 396, 194);
+		//COMPONENTI
+		JTextArea textAreaCommenti = new JTextArea();
+		textAreaCommenti.setBounds(114, 10, 396, 194);
 
 		Res_Commenti = C.SelCommentiUtentePost(NU, Id_Contenuto);
 
 		for (int i = 0; i < Res_Commenti.size(); i++) {
-			textArea.append(Res_Commenti.get(i).getId_Commento() + " - "
+			textAreaCommenti.append(Res_Commenti.get(i).getId_Commento() + " - "
 					+ Res_Commenti.get(i).getTesto() + "\n");
 		}
 		
-		JScrollPane scrollPane = new JScrollPane(textArea, // mette un scroll panel con i contenuti della text Area
+		JScrollPane scrollPane = new JScrollPane(textAreaCommenti, // mette un scroll panel con i contenuti della text Area
 				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBounds(10, 56, 414, 194);
 		contentPane.add(scrollPane);
@@ -134,13 +134,34 @@ public class Elimina_Post_Commento_GUI extends JFrame {
 		Button_Elimina.setBounds(354, 10, 70, 40);
 		contentPane.add(Button_Elimina);
 		
+		Button Button_Modifica = new Button("Modifica");
+		Button_Modifica.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int ModCommento = Integer.parseInt(JOptionPane.showInputDialog(Button_Modifica, "Quale commento vuoi modificare?",
+						"Modifica un commento", JOptionPane.QUESTION_MESSAGE));
+				String NewCommento = JOptionPane.showInputDialog(Button_Modifica, "Cosa vuoi scrivere?",
+						"Modifica un commento", JOptionPane.QUESTION_MESSAGE);
+				
+				C.UpCommento(NU, ModCommento, NewCommento);
+				Elimina_Post_Commento_GUI.this.setVisible(false);
+				Gestione_Finestre V = new Gestione_Finestre();
+				V.GruppiGUI(NU, NG);
+				
+			}
+		});
+		Button_Modifica.setActionCommand("Modifica");
+		Button_Modifica.setBounds(265, 10, 70, 40);
+		contentPane.add(Button_Modifica);
+		
 		JLabel lblNewLabel = new JLabel("New Label");
 		lblNewLabel.setForeground(new Color(0, 128, 255));
-		lblNewLabel.setText("Quale contenuto vuoi eliminare?");
+		lblNewLabel.setText("Scegli un commento");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblNewLabel.setBounds(35, 10, 313, 22);
+		lblNewLabel.setBounds(10, 10, 217, 22);
 		contentPane.add(lblNewLabel);
+		
+		
 
 	}
-	
 }
