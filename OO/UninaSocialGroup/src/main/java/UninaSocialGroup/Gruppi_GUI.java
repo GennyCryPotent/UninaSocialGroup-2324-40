@@ -78,7 +78,7 @@ public class Gruppi_GUI extends JFrame {
 
 				Gruppi_GUI.this.setVisible(false);
 				Gestione_Finestre G = new Gestione_Finestre();
-				G.Notifiche();
+				G.Notifiche(NU);
 
 			}
 		});

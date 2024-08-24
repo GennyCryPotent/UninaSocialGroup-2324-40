@@ -122,7 +122,7 @@ public class Home_GUI extends JFrame {
         	public void actionPerformed(ActionEvent e) {
         		Home_GUI.this.setVisible(false);
         		Gestione_Finestre V = new Gestione_Finestre();
-        		V.Notifiche();
+        		V.Notifiche(NU);
         	}
         });
         Notifiche.setBackground(new Color(255, 255, 255));

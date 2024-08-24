@@ -30,6 +30,7 @@ public class Notifiche_Gruppi_DAO {
 							rs.getString("FK_Nome_Utente"));
 
 					Rec_Notifiche.add(Stampa);
+					
 					Stampa = null;
 				}
 
@@ -48,6 +49,8 @@ public class Notifiche_Gruppi_DAO {
 		}
 	}
 
+	
+	  
 	// Select tutte le notifiche dei gruppie dei contenuti di un utente
 	public List<Notifiche> SelNotifiche(String Nome_Utente) {
 

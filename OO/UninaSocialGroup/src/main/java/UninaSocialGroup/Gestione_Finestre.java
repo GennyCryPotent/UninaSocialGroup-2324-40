@@ -60,8 +60,8 @@ public class Gestione_Finestre {
 	  }
 
 	  
-	  public void Notifiche() {
-		  Notifica = new Notifiche_GUI();
+	  public void Notifiche(String NU) {
+		  Notifica = new Notifiche_GUI(NU);
 		  Notifica.setVisible(true);
 		  
 	  }
