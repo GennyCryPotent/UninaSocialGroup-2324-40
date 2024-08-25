@@ -912,7 +912,7 @@ END Modifica_Gruppo;
 
 
 --MODIFICA IL CONTENUTO SOLO SE SEI IL CREATORE
-create or replace PROCEDURE Modifica_Contenuto(Campo IN VARCHAR2, Val_NEW IN VARCHAR2, P_FK_Nome_Utente IN Contenuti.FK_Nome_Utente%TYPE, P_Id_Contenuto IN Contenuti.Id_Contenuto%TYPE)
+create or replace NONEDITIONABLE PROCEDURE Modifica_Contenuto(Val_NEW IN VARCHAR2, P_FK_Nome_Utente IN Contenuti.FK_Nome_Utente%TYPE, P_Id_Contenuto IN Contenuti.Id_Contenuto%TYPE)
 AS
 
 Comando VARCHAR(1000);
@@ -926,7 +926,7 @@ BEGIN
 
 
     IF (TMP_Creatore LIKE P_FK_Nome_Utente) THEN
-        Comando:='UPDATE Contenuti SET '||Campo||' =  '''||Val_New||''' WHERE Id_Contenuto = '''||P_Id_Contenuto||''''; -- Si usano le virgole (") prima e dopo gli || per ogni variabile che ha bisogno degli apici ('') nel comando
+        Comando:='UPDATE Contenuti SET Testo =  '''||Val_New||''' WHERE Id_Contenuto = '''||P_Id_Contenuto||''''; -- Si usano le virgole (") prima e dopo gli || per ogni variabile che ha bisogno degli apici ('') nel comando
         EXECUTE IMMEDIATE Comando;
     ELSE
         DBMS_OUTPUT.PUT_LINE('Non sei il creatore del contenuto');

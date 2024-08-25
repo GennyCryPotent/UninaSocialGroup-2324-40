@@ -82,23 +82,13 @@ public class JInternalFrame_Gruppi extends JInternalFrame {
             }
         });
 
-        JButton btnNewButtonRimCommento = new JButton("Rimuovi commento");
+        JButton btnNewButtonRimCommento = new JButton("Rimuovi/Modifica commento");
         btnNewButtonRimCommento.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Gestione_Finestre V = new Gestione_Finestre();
                 V.Elimina_Commento(NU, NG, 2);
                  
             }
-        });
-        
-        JButton btnNewButtonModCommento = new JButton("Modifica commento");
-        btnNewButtonModCommento.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		
-        		Gestione_Finestre V = new Gestione_Finestre();
-                V.Elimina_Commento(NU, NG, 2);
-        		
-        	}
         });
 
         //GroupLayout
@@ -116,26 +106,21 @@ public class JInternalFrame_Gruppi extends JInternalFrame {
         					.addComponent(btnNewButton_1))
         				.addGroup(groupLayout.createSequentialGroup()
         					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-        						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-        							.addGroup(groupLayout.createSequentialGroup()
-        								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-        									.addGroup(groupLayout.createSequentialGroup()
-        										.addContainerGap()
-        										.addComponent(textAddCommento, GroupLayout.PREFERRED_SIZE, 271, GroupLayout.PREFERRED_SIZE))
-        									.addGroup(groupLayout.createSequentialGroup()
-        										.addGap(14)
-        										.addComponent(lblAggiungiCommento, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        									.addGroup(groupLayout.createSequentialGroup()
-        										.addContainerGap()
-        										.addComponent(btnNewButtonAddCommento)))
-        								.addPreferredGap(ComponentPlacement.RELATED, 51, Short.MAX_VALUE))
-        							.addGroup(groupLayout.createSequentialGroup()
-        								.addContainerGap()
-        								.addComponent(btnNewButtonRimCommento)
-        								.addPreferredGap(ComponentPlacement.RELATED)))
+        						.addGroup(groupLayout.createSequentialGroup()
+        							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+        								.addGroup(groupLayout.createSequentialGroup()
+        									.addContainerGap()
+        									.addComponent(textAddCommento, GroupLayout.PREFERRED_SIZE, 271, GroupLayout.PREFERRED_SIZE))
+        								.addGroup(groupLayout.createSequentialGroup()
+        									.addGap(14)
+        									.addComponent(lblAggiungiCommento, GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE))
+        								.addGroup(groupLayout.createSequentialGroup()
+        									.addContainerGap()
+        									.addComponent(btnNewButtonAddCommento)))
+        							.addPreferredGap(ComponentPlacement.RELATED, 51, Short.MAX_VALUE))
         						.addGroup(groupLayout.createSequentialGroup()
         							.addContainerGap()
-        							.addComponent(btnNewButtonModCommento)
+        							.addComponent(btnNewButtonRimCommento)
         							.addPreferredGap(ComponentPlacement.RELATED)))
         					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
         						.addComponent(LabelCommenti, GroupLayout.PREFERRED_SIZE, 174, GroupLayout.PREFERRED_SIZE)
@@ -162,9 +147,7 @@ public class JInternalFrame_Gruppi extends JInternalFrame {
         					.addGap(8)
         					.addComponent(btnNewButtonAddCommento)
         					.addGap(5)
-        					.addComponent(btnNewButtonRimCommento)
-        					.addGap(4)
-        					.addComponent(btnNewButtonModCommento)))
+        					.addComponent(btnNewButtonRimCommento)))
         			.addGap(433))
         );
         getContentPane().setLayout(groupLayout);
