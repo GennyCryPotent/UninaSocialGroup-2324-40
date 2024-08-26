@@ -144,6 +144,104 @@ public class Contenuti_DAO {
 		}
 	}
 
+	
+	
+
+	// Select tutti i contenuti dei gruppi a cui un utente partecipa
+	public List<Contenuti> SelContenutiGruppiUtente(String Nome_Utente) {
+
+		String TMP_Nome_Gruppo;
+
+		try {
+
+			ResultSet rsNome_Gruppo = Gestione_Finestre.DB.ExeQuery("SELECT FK_NOME_GRUPPO From Partecipano Where FK_Nome_Utente = '" + Nome_Utente + "'"); // Prende 
+																										//i nomi
+																										// dei gruppi
+																										// dove l'utente
+																										// è creatore
+
+			try {
+
+				List<Contenuti> Rec_Contenuti = new ArrayList<Contenuti>();
+
+				Contenuti Stampa;
+
+				while (rsNome_Gruppo.next()) {
+
+					TMP_Nome_Gruppo = rsNome_Gruppo.getString("FK_NOME_GRUPPO");
+
+					ResultSet rsF = Gestione_Finestre.DB.ExeQuery("SELECT * FROM Contenuti WHERE FK_Nome_Gruppo = '"
+							+ TMP_Nome_Gruppo + "'");
+
+					while (rsF.next()) {
+						Stampa = new Contenuti(rsF.getInt("Id_Contenuto"), rsF.getDate("Data_Creazione"),
+								rsF.getString("Testo"), rsF.getString("FK_Nome_Gruppo"), rsF.getString("FK_Nome_Utente"));
+
+
+						Rec_Contenuti.add(Stampa);
+
+						Stampa = null;
+					}
+				}
+
+				return Rec_Contenuti;
+
+			} catch (SQLException e) {
+				System.out.println("query fallita: " + e.getMessage());
+
+				return null;
+			}
+
+		} catch (Exception e) {
+			System.out.println("Errore");
+
+			return null;
+		}
+	}
+
+	
+	
+	
+	// Select tutti i contenuti di un utente
+	public List<Contenuti> SelAllContenutiUtente(String Nome_Utente) {
+
+		try {
+
+			ResultSet rs = Gestione_Finestre.DB
+					.ExeQuery("SELECT * FROM CONTENUTI WHERE FK_NOME_UTENTE = '" + Nome_Utente + "'");
+
+			try {
+				List<Contenuti> Rec_Contenuti = new ArrayList<Contenuti>();
+
+				Contenuti Stampa;
+
+				while (rs.next()) {
+					Stampa = new Contenuti(rs.getInt("Id_Contenuto"), rs.getDate("Data_Creazione"),
+							rs.getString("Testo"), rs.getString("FK_Nome_Gruppo"), rs.getString("FK_Nome_Utente"));
+
+					Rec_Contenuti.add(Stampa);
+					Stampa = null;
+				}
+
+				return Rec_Contenuti;
+
+			} catch (SQLException e) {
+				System.out.println("query fallita: " + e.getMessage());
+
+				return null;
+			}
+
+		} catch (Exception e) {
+			System.out.println("Errore");
+
+			return null;
+		}
+	}
+	
+	
+	
+	
+	
 	// Select tutti i contenuti di un utente in un gruppo
 	public List<Contenuti> SelContenutiUtenteGruppo(String Nome_Gruppo, String Nome_Utente) {
 
@@ -194,6 +292,7 @@ public class Contenuti_DAO {
 				Contenuti Stampa;
 
 				while (rs.next()) {
+					System.out.println(rs.getString("Testo"));
 					Stampa = new Contenuti(rs.getInt("Id_Contenuto"), rs.getDate("Data_Creazione"),
 							rs.getString("Testo"), rs.getString("FK_Nome_Gruppo"), rs.getString("FK_Nome_Utente"));
 
@@ -210,7 +309,7 @@ public class Contenuti_DAO {
 			}
 
 		} catch (Exception e) {
-			System.out.println("Errore");
+			System.out.println("Errore : " + e.getMessage());
 
 			return null;
 		}

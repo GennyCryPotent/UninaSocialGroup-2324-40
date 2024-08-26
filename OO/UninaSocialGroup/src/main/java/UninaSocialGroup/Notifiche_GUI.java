@@ -119,7 +119,7 @@ public class Notifiche_GUI extends JFrame {
         contentPane.add(Indietro);
         
         // Imposta una dimensione preferita sufficiente per contenere tutte le JTextArea
-        contentPaneForContent.setPreferredSize(new Dimension(700, numbOfN * 50)); // 50 è un'altezza approssimativa per ogni JTextArea
+        contentPaneForContent.setPreferredSize(new Dimension(700, numbOfN * 50)); // 50 Ã¨ un'altezza approssimativa per ogni JTextArea
 
         JScrollPane scrollPane = new JScrollPane(contentPaneForContent);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -165,7 +165,7 @@ public class Notifiche_GUI extends JFrame {
         }
 
 
-       // Aggiungi un listener per impostare le dimensioni del JScrollPane dopo che il frame è visibile
+       // Aggiungi un listener per impostare le dimensioni del JScrollPane dopo che il frame Ã¨ visibile
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {

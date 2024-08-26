@@ -13,6 +13,8 @@ public class Main{
 		Contenuti_DAO GD = new Contenuti_DAO();
 		
 	
+
+		
 //		GD.InsCommento("Fai schifo", 13, "Genny03cry");
 		
 		//GD.UpCommento("Gabbo", 1, "Sono modificato");
