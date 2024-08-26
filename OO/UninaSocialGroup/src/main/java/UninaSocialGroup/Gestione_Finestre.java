@@ -12,15 +12,11 @@ public class Gestione_Finestre {
 	private Operazioni_Post_Commento_GUI Elimina; 
 	private Report_Statistico_GUI Report;
 	
-	//public static DB_Connection DB = new DB_Connection("jdbc:oracle:thin:@localhost:1521:ORCL", "system", "Unina@03"); //portatile genny
+	public static DB_Connection DB = new DB_Connection("jdbc:oracle:thin:@localhost:1521:ORCL", "system", "Unina@03"); //portatile genny
 	//public static DB_Connection DB = new DB_Connection("jdbc:oracle:thin:@Gennaro.homenet.telecomitalia.it:1521:xe", "system", "Database@03"); //Fisso Genny
-<<<<<<< HEAD
 	//public static DB_Connection DB = new DB_Connection("jdbc:oracle:thin:@DESKTOP-MLJV8GK:1521:xe", "system", "Caruso"); //Caruso
 	//public static DB_Connection DB = new DB_Connection("jdbc:oracle:thin:@localhost:1521:xe", "system", "Database@03"); //Gabbo
-=======
-	//public static DB_Connection DB = new DB_Connection("jdbc:oracle:thin:@localhost:1521:ORCL", "system", "Caruso"); //Caruso
-	//public static DB_Connection DB = new DB_Connection("jdbc:oracle:thin:@localhost:1521:xe", "system", "Database@03"); //Gabbo
->>>>>>> c6122b0750eb71ec098d787cd116ca63bc4099bd
+
 	
 	public Gestione_Finestre() {
 		
@@ -31,7 +27,7 @@ public class Gestione_Finestre {
 			public void run() {
 				try {
 					DB.connect();
-					Home_GUI frame = new Home_GUI("errore31");
+					Home_GUI frame = new Home_GUI("Genny03cry");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

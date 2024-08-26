@@ -122,11 +122,8 @@ public class Notifiche_GUI extends JFrame {
         
         
         // Imposta una dimensione preferita sufficiente per contenere tutte le JTextArea
-<<<<<<< HEAD
-        contentPaneForContent.setPreferredSize(new Dimension(700, numbOfN * 50)); // 50 Ã¨ un'altezza approssimativa per ogni JTextArea
-=======
         contentPaneForContent.setPreferredSize(new Dimension(700, dim * 50)); // 50 è un'altezza approssimativa per ogni JTextArea
->>>>>>> c6122b0750eb71ec098d787cd116ca63bc4099bd
+
 
         JScrollPane scrollPane = new JScrollPane(contentPaneForContent);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
