@@ -72,21 +72,21 @@ public class Gruppi_GUI extends JFrame {
 		contentPane.add(scrollPane);
 
 		// BOTTONI
-		JButton Notifiche = new JButton("🔔");
-		Notifiche.addActionListener(new ActionListener() {
+		JButton Home = new JButton("🏠");
+		Home.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				Gruppi_GUI.this.setVisible(false);
-				Gestione_Finestre G = new Gestione_Finestre();
-				G.Notifiche(NU);
+				Gestione_Finestre V = new Gestione_Finestre();
+				V.AccessoHome(NU);
 
 			}
 		});
-		Notifiche.setForeground(new Color(0, 128, 255));
-		Notifiche.setFont(new Font("Dialog", Font.PLAIN, 18));
-		Notifiche.setBackground(Color.WHITE);
-		Notifiche.setBounds(27, 22, 60, 53);
-		contentPane.add(Notifiche);
+		Home.setForeground(new Color(0, 128, 255));
+		Home.setFont(new Font("Dialog", Font.PLAIN, 18));
+		Home.setBackground(Color.WHITE);
+		Home.setBounds(27, 22, 60, 53);
+		contentPane.add(Home);
 
 		JButton AggiungiPost = new JButton("➕");
 		AggiungiPost.addActionListener(new ActionListener() {

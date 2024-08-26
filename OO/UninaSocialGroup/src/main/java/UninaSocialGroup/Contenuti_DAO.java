@@ -60,14 +60,13 @@ public class Contenuti_DAO {
 	}
 
 	// Update di un Contenuto
-	public void UpContenuto(String Nome_Utente, String Campo_Mod, String New_Val, int Id_Contenuto) {
+	public void UpContenuto(String Nome_Utente, String New_Val, int Id_Contenuto) {
 
 		try {
-			CallableStatement Call = Gestione_Finestre.DB.getC().prepareCall("CALL MODIFICA_CONTENUTO(?, ?, ?, ?)");
-			Call.setString(1, Campo_Mod);
-			Call.setString(2, New_Val);
-			Call.setString(3, Nome_Utente);
-			Call.setInt(4, Id_Contenuto);
+			CallableStatement Call = Gestione_Finestre.DB.getC().prepareCall("CALL MODIFICA_CONTENUTO(?, ?, ?)");
+			Call.setString(1, New_Val);
+			Call.setString(2, Nome_Utente);
+			Call.setInt(3, Id_Contenuto);
 			Call.execute();
 			System.out.println("Contenuto aggiornato ");
 
