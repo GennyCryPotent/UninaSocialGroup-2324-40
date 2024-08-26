@@ -28,7 +28,7 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
-	// Schermata
+	// Schermata Post
 	/**
 	 * @wbp.parser.constructor
 	 */
@@ -37,7 +37,6 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 		Contenuti_DAO C = new Contenuti_DAO();
 
 		// PANELLI
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 556, 334);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -110,7 +109,7 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 		Button Button_Annulla = new Button("Annulla");
 		Button_Annulla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Operazioni_Post_Commento_GUI.this.setVisible(false);
+				setVisible(false);
 				Gestione_Finestre V = new Gestione_Finestre();
 				V.GruppiGUI(NU, NG);
 			}
@@ -128,7 +127,10 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 		contentPane.add(lblNewLabel);
 
 	}
-
+	
+	
+	
+	//-----------------------------------------
 	// Schermata commento
 	public Operazioni_Post_Commento_GUI(String NU, String NG, int Id_Contenuto) {
 		setTitle("Modifica/Elimina commento");
@@ -136,7 +138,7 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 		Commenti_DAO C = new Commenti_DAO();
 
 		// PANELLI
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		setBounds(100, 100, 556, 334);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -155,7 +157,8 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 					.append(Res_Commenti.get(i).getId_Commento() + " - " + Res_Commenti.get(i).getTesto() + "\n");
 		}
 
-		JScrollPane scrollPane = new JScrollPane(textAreaCommenti, // mette un scroll panel con i commenti della text Area
+		JScrollPane scrollPane = new JScrollPane(textAreaCommenti, // mette un scroll panel con i commenti della text
+																	// Area
 				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBounds(10, 56, 522, 190);
 		contentPane.add(scrollPane);
@@ -169,9 +172,9 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 					int DelCommento = Integer.parseInt(JOptionPane.showInputDialog(Button_Elimina,
 							"Quale commento vuoi eliminare?", "Elimina un commento", JOptionPane.QUESTION_MESSAGE));
 					C.DelCommento(DelCommento);
-					Operazioni_Post_Commento_GUI.this.setVisible(false);
 					Gestione_Finestre V = new Gestione_Finestre();
-					V.GruppiGUI(NU, NG);
+					V.Info_Post(Id_Contenuto, NU, NG);
+					setVisible(false);
 				} catch (NumberFormatException E) { // eccezione quando non si inserisce un intero nella prima finestra
 													// di input
 					JOptionPane.showMessageDialog(Button_Elimina, "Inserisci un numero!");
@@ -193,9 +196,9 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 							"Modifica un commento", JOptionPane.QUESTION_MESSAGE);
 
 					C.UpCommento(NU, ModCommento, NewCommento);
-					Operazioni_Post_Commento_GUI.this.setVisible(false);
 					Gestione_Finestre V = new Gestione_Finestre();
-					V.GruppiGUI(NU, NG);
+					V.Info_Post(Id_Contenuto, NU, NG);
+					setVisible(false);
 				} catch (NumberFormatException E) { // eccezione quando non si inserisce un intero nella prima finestra
 													// di input
 					JOptionPane.showMessageDialog(Button_Modifica, "Inserisci un numero!");

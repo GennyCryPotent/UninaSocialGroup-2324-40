@@ -41,10 +41,6 @@ public class Gruppi_GUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	
-	public JPanel getContentPane() {
-		return contentPane;
-	}
 
 	private String NewPost;
 	
@@ -156,11 +152,12 @@ public class Gruppi_GUI extends JFrame {
 
 		for (int i = 0; i < numbOfTxt; i++) {
 
-			JPannelloContenuti NewPostPanel = new JPannelloContenuti(Res_Contenuti_Gruppi.get(i).getPubblicatore(),
+			JPannelloContenuti NewPostPanel = new JPannelloContenuti(Res_Contenuti_Gruppi.get(i).getPubblicatore(), 
+					NU,
 					Res_Contenuti_Gruppi.get(i).getNome_Gruppo(), Res_Contenuti_Gruppi.get(i).getTesto(),
 					Integer.toString(like_DAO.SelNumLike(Res_Contenuti_Gruppi.get(i).getId_Contenuto())),
 					Integer.toString(commento_DAO.SelNumCommenti(Res_Contenuti_Gruppi.get(i).getId_Contenuto())), 
-					Res_Contenuti_Gruppi.get(i).getId_Contenuto(), Gruppi_GUI.this);
+					Res_Contenuti_Gruppi.get(i).getId_Contenuto());
 
 			NewPostPanel.textArea.setWrapStyleWord(false);
 			NewPostPanel.textArea.setEditable(false);

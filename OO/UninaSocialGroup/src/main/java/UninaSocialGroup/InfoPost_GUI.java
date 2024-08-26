@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,7 +19,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 
 
-public class JInternalFrame_Gruppi extends JInternalFrame {
+public class InfoPost_GUI extends JFrame {
     
     private List<Commenti> Res_Commenti = new ArrayList<Commenti>();
     private Commenti_DAO CO = new Commenti_DAO();
@@ -26,16 +27,10 @@ public class JInternalFrame_Gruppi extends JInternalFrame {
     private Contenuti Res_Contenuto;
      
 
-    public JInternalFrame_Gruppi(int Id_Contenuto, String NU, String NG) {
+    public InfoPost_GUI(int Id_Contenuto, String NU, String NG) {
         
-    	//Nuovo JInternalFrame
-        setTitle("Post");
-        setResizable(true);
-        setIconifiable(true);
-        setMaximizable(true);
-        setClosable(true);
-        setBounds(37, 0, 626, 434);
-
+    	// PANNELLI
+    	setBounds(100, 100, 737, 484);
       
         Res_Contenuto = C.SelSigContenuto(Id_Contenuto);
 
@@ -43,53 +38,65 @@ public class JInternalFrame_Gruppi extends JInternalFrame {
         JTextArea textCommenti = new JTextArea(); 
         textCommenti.setEditable(false);
         createTextAreaCommenti(Id_Contenuto, textCommenti);
+        add(textCommenti);
         
         JButton btnNewButton_1 = new JButton("Indietro");
         btnNewButton_1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
+                Gestione_Finestre GF = new Gestione_Finestre();
+                GF.AccessoHome(NU);
             }
         });
+        add(btnNewButton_1);
 
         JLabel LabelCommenti = new JLabel();
         LabelCommenti.setText("Commenti");
         LabelCommenti.setForeground(new Color(0, 128, 255));
         LabelCommenti.setFont(new Font("Tahoma", Font.BOLD, 18));
+        add(LabelCommenti);
 
         JTextArea textAreaPost = new JTextArea(Res_Contenuto.getTesto());
         textAreaPost.setEditable(false);
+        add(textAreaPost);
 
         JLabel LabelPost = new JLabel();
         LabelPost.setText(Res_Contenuto.getPubblicatore());
         LabelPost.setForeground(new Color(0, 128, 255));
         LabelPost.setFont(new Font("Tahoma", Font.BOLD, 18));
+        add(LabelPost);
 
         JTextArea textAddCommento = new JTextArea();
-
+        add(textAddCommento);
+        
         JLabel lblAggiungiCommento = new JLabel();
         lblAggiungiCommento.setText("Aggiungi commento");
         lblAggiungiCommento.setForeground(new Color(0, 128, 255));
         lblAggiungiCommento.setFont(new Font("Tahoma", Font.BOLD, 18));
-
+        add(lblAggiungiCommento);
+        
         JButton btnNewButtonAddCommento = new JButton("Commenta");
         btnNewButtonAddCommento.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (!textAddCommento.getText().isEmpty()) {
-                    CO.InsCommento(textAddCommento.getText(), 2, NU);
+                    CO.InsCommento(textAddCommento.getText(), Id_Contenuto, NU);
                     textCommenti.append(NU + " :" + textAddCommento.getText() + "\n");
                     textAddCommento.setText("");
                 }
             }
         });
+        add(btnNewButtonAddCommento);
 
         JButton btnNewButtonRimCommento = new JButton("Rimuovi/Modifica commento");
         btnNewButtonRimCommento.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	 setVisible(false);
                 Gestione_Finestre V = new Gestione_Finestre();
-                V.Elimina_Commento(NU, NG, 2);
+                V.Elimina_Commento(NU, NG, Id_Contenuto);
                  
             }
         });
+        add(btnNewButtonRimCommento);
 
         //GroupLayout
         GroupLayout groupLayout = new GroupLayout(getContentPane());

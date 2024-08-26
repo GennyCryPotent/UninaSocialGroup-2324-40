@@ -241,7 +241,7 @@ public class Home_GUI extends JFrame {
         
         for(int i = 0 ; i < numbOfTxt; i++) {
         	
-        	JPannelloContenuti postPanel = new JPannelloContenuti( contenuti.get(i).getPubblicatore() , contenuti.get(i).getNome_Gruppo() ,contenuti.get(i).getTesto(), Integer.toString(like_DAO.SelNumLike(contenuti.get(i).getId_Contenuto())),  Integer.toString(commento_DAO.SelNumCommenti(contenuti.get(i).getId_Contenuto())), contenuti.get(i).getId_Contenuto(), null);
+        	JPannelloContenuti postPanel = new JPannelloContenuti( contenuti.get(i).getPubblicatore() , NU, contenuti.get(i).getNome_Gruppo() ,contenuti.get(i).getTesto(), Integer.toString(like_DAO.SelNumLike(contenuti.get(i).getId_Contenuto())),  Integer.toString(commento_DAO.SelNumCommenti(contenuti.get(i).getId_Contenuto())), contenuti.get(i).getId_Contenuto());
         	
         	
         	//postPanel.setLikeNum( Integer.toString(like_DAO.SelNumLike(contenuti.get(i).getId_Contenuto())) );      
@@ -274,10 +274,10 @@ public class Home_GUI extends JFrame {
             	for (int i = 0; i < numbOfTxt; i++) {
                     if(i==0) {
                     	
-                    	TestiLabel.get(i).setBounds(0, 10 , (int) TestiLabel.get(i).getPreferredSize().width, TestiLabel.get(i).getPreferredSize().height); // Imposta le dimensioni desiderate
+                    	TestiLabel.get(i).setBounds(129, 10 , (int) TestiLabel.get(i).getPreferredSize().width, TestiLabel.get(i).getPreferredSize().height); // Imposta le dimensioni desiderate
                     }else {
                     	System.out.println(TestiLabel.get(i).getBounds());
-                    	TestiLabel.get(i).setBounds(0, (int) (TestiLabel.get(i-1).getBounds().getY() + TestiLabel.get(i-1).getPreferredSize().getHeight() + 10 ), (int) TestiLabel.get(i).getPreferredSize().width,  TestiLabel.get(i).getPreferredSize().height); // Imposta le dimensioni desiderate
+                    	TestiLabel.get(i).setBounds(129, (int) (TestiLabel.get(i-1).getBounds().getY() + TestiLabel.get(i-1).getPreferredSize().getHeight() + 10 ), (int) TestiLabel.get(i).getPreferredSize().width,  TestiLabel.get(i).getPreferredSize().height); // Imposta le dimensioni desiderate
                     }
                   //crea la giusta dimensione per ContentPaneForContent che permette di fare lo scrollbar delle giuste dimensioni 
                     contentHeight += (TestiLabel.get(i).getHeight() + 10 );
