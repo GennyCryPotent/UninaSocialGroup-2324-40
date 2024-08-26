@@ -112,8 +112,8 @@ public class Contenuti_DAO {
 
 		try {
 
-			ResultSet rs = Gestione_Finestre.DB
-					.ExeQuery("SELECT * FROM CONTENUTI WHERE FK_NOME_GRUPPO = '" + Nome_Gruppo + "'");
+			ResultSet rs = Gestione_Finestre.DB.ExeQuery("SELECT * FROM CONTENUTI WHERE FK_NOME_GRUPPO = '"
+					+ Nome_Gruppo + "' ORDER BY DATA_CREAZIONE DESC");
 
 			try {
 				List<Contenuti> Rec_Contenuti = new ArrayList<Contenuti>();
@@ -143,9 +143,6 @@ public class Contenuti_DAO {
 		}
 	}
 
-	
-	
-
 	// Select tutti i contenuti dei gruppi a cui un utente partecipa
 	public List<Contenuti> SelContenutiGruppiUtente(String Nome_Utente) {
 
@@ -153,11 +150,12 @@ public class Contenuti_DAO {
 
 		try {
 
-			ResultSet rsNome_Gruppo = Gestione_Finestre.DB.ExeQuery("SELECT FK_NOME_GRUPPO From Partecipano Where FK_Nome_Utente = '" + Nome_Utente + "'"); // Prende 
-																										//i nomi
-																										// dei gruppi
-																										// dove l'utente
-																										// è creatore
+			ResultSet rsNome_Gruppo = Gestione_Finestre.DB
+					.ExeQuery("SELECT FK_NOME_GRUPPO From Partecipano Where FK_Nome_Utente = '" + Nome_Utente + "'"); // Prende
+			// i nomi
+			// dei gruppi
+			// dove l'utente
+			// è creatore
 
 			try {
 
@@ -170,12 +168,12 @@ public class Contenuti_DAO {
 					TMP_Nome_Gruppo = rsNome_Gruppo.getString("FK_NOME_GRUPPO");
 
 					ResultSet rsF = Gestione_Finestre.DB.ExeQuery("SELECT * FROM Contenuti WHERE FK_Nome_Gruppo = '"
-							+ TMP_Nome_Gruppo + "'");
+							+ TMP_Nome_Gruppo + "' ORDER BY DATA_CREAZIONE DESC");
 
 					while (rsF.next()) {
 						Stampa = new Contenuti(rsF.getInt("Id_Contenuto"), rsF.getDate("Data_Creazione"),
-								rsF.getString("Testo"), rsF.getString("FK_Nome_Gruppo"), rsF.getString("FK_Nome_Utente"));
-
+								rsF.getString("Testo"), rsF.getString("FK_Nome_Gruppo"),
+								rsF.getString("FK_Nome_Utente"));
 
 						Rec_Contenuti.add(Stampa);
 
@@ -198,9 +196,6 @@ public class Contenuti_DAO {
 		}
 	}
 
-	
-	
-	
 	// Select tutti i contenuti di un utente
 	public List<Contenuti> SelAllContenutiUtente(String Nome_Utente) {
 
@@ -236,11 +231,7 @@ public class Contenuti_DAO {
 			return null;
 		}
 	}
-	
-	
-	
-	
-	
+
 	// Select tutti i contenuti di un utente in un gruppo
 	public List<Contenuti> SelContenutiUtenteGruppo(String Nome_Gruppo, String Nome_Utente) {
 

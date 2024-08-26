@@ -9,8 +9,9 @@ public class Main{
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int n;
-		List<Contenuti> Res_Contenuti = new ArrayList<Contenuti>();
-		Contenuti_DAO GD = new Contenuti_DAO();
+		Gestione_Finestre.DB.connect();
+		List<Notifiche> Res_Notifiche = new ArrayList<Notifiche>();
+		Notifiche_Gruppi_DAO GD = new Notifiche_Gruppi_DAO();
 		
 	
 
@@ -21,18 +22,18 @@ public class Main{
 		
 		
 		
-		//System.out.println("Numero like: " + Res_Contenuti.size());	
+		//System.out.println("Numero like: " + Res_Notifiche.size());	
 		
-		//Res_Contenuti = GD.SelContenutiContenutiUtente("errore31");
+		//Res_Notifiche = GD.SelNotificheNotificheUtente("errore31");
 		
-//		n = GD.SelNumContenuti(4);
-//		 System.out.println("Numero Contenuti: " + n);
+//		n = GD.SelNumNotifiche(4);
+//		 System.out.println("Numero Notifiche: " + n);
 		
-		Res_Contenuti = GD.SelAllContenutiMeseGruppo("Fantacalcio", 8);
+		Res_Notifiche = GD.SelNotifiche("Genny03cry");
 		
-		for(int i=0; i<Res_Contenuti.size(); i++) {
-			Contenuti R;
-			R=Res_Contenuti.get(i);
+		for(int i=0; i<Res_Notifiche.size(); i++) {
+			Notifiche R;
+			R=Res_Notifiche.get(i);
 			System.out.println("Testo: "+ R.getTesto());		
 		}
 	}

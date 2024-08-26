@@ -241,7 +241,7 @@ public class Home_GUI extends JFrame {
         
         for(int i = 0 ; i < numbOfTxt; i++) {
         	
-        	JPannelloContenuti postPanel = new JPannelloContenuti( contenuti.get(i).getPubblicatore() , contenuti.get(i).getNome_Gruppo() ,contenuti.get(i).getTesto(), Integer.toString(like_DAO.SelNumLike(contenuti.get(i).getId_Contenuto())),  Integer.toString(commento_DAO.SelNumCommenti(contenuti.get(i).getId_Contenuto())));
+        	JPannelloContenuti postPanel = new JPannelloContenuti( contenuti.get(i).getPubblicatore() , contenuti.get(i).getNome_Gruppo() ,contenuti.get(i).getTesto(), Integer.toString(like_DAO.SelNumLike(contenuti.get(i).getId_Contenuto())),  Integer.toString(commento_DAO.SelNumCommenti(contenuti.get(i).getId_Contenuto())), contenuti.get(i).getId_Contenuto(), null);
         	
         	
         	//postPanel.setLikeNum( Integer.toString(like_DAO.SelNumLike(contenuti.get(i).getId_Contenuto())) );      
