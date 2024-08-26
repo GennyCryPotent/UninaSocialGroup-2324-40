@@ -100,9 +100,6 @@ public class Notifiche_GUI extends JFrame {
         );
         contentPane.setLayout(gl_contentPane);
 
-
-        int numbOfN = 300;
-
         JPanel contentPaneForContent = new JPanel();
         contentPaneForContent.setBackground(new Color(255, 255, 255));
         contentPaneForContent.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -118,51 +115,51 @@ public class Notifiche_GUI extends JFrame {
         contentPane.add(NomeGruppo);
         contentPane.add(Indietro);
         
+        ArrayList<JTextArea> notificheLabel = new ArrayList<>();
+        List<Notifiche> notifiche = notificheDAOG.SelNotificheUtente(NU);
+        int dim = notifiche.size();
+        
+        
+        
         // Imposta una dimensione preferita sufficiente per contenere tutte le JTextArea
-        contentPaneForContent.setPreferredSize(new Dimension(700, numbOfN * 50)); // 50 è un'altezza approssimativa per ogni JTextArea
+        contentPaneForContent.setPreferredSize(new Dimension(700, dim * 50)); // 50 è un'altezza approssimativa per ogni JTextArea
 
         JScrollPane scrollPane = new JScrollPane(contentPaneForContent);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-        ArrayList<JTextArea> notificheLabel = new ArrayList<>();
-        List<Notifiche> notifiche = notificheDAOG.SelNotificheUtente(NU);
-        int dim = notifiche.size();
-        for (int i = 0; i < dim ; i++) {
+        
             
         	
         	
-        	
+        	try {
         	 if (notifiche != null) {
                  for (Notifiche notifica : notifiche) {
-                     JTextArea textArea = new JTextArea("N: " + i + "\n" +
+                	 for (int i = 0; i < dim ; i++) {
+                	 JTextArea textArea = new JTextArea("N: " + i + "\n" +
                                                         notifica.getTesto() + "\n" +
                                                         notifica.getData_Notifica() + "\n" +
                                                         "Gruppo: " + notifica.getNome_Gruppo() + "\n" );
+                	 
                                                         
                      textArea.setLineWrap(true);
                      textArea.setWrapStyleWord(true);
                      textArea.setEditable(false);
                      contentPaneForContent.add(textArea);
                      contentPaneForContent.add(Box.createRigidArea(new Dimension(0, 10))); // Aggiungi spazio tra le notifiche
+                     
+                     
+                	 }
                  }
              } else {
                  JTextArea textArea = new JTextArea("Nessuna notifica trovata per l'utente specificato.");
              }
-                
-            
-        	
-        	
-        	JTextArea textArea = new JTextArea("Notifica " + i + ":");
-            
-            textArea.setLineWrap(true);
-            textArea.setWrapStyleWord(false);
-            textArea.setEditable(false);
-            notificheLabel.add(textArea);
-            contentPaneForContent.add(textArea);
-            contentPaneForContent.add(Box.createRigidArea(new Dimension(0, 10))); // Aggiungi spazio tra le notifiche
-        }
+        	}catch(Exception e1){
+				System.out.println("errore");
+				
+				
+			}	   
 
 
        // Aggiungi un listener per impostare le dimensioni del JScrollPane dopo che il frame è visibile
@@ -172,7 +169,7 @@ public class Notifiche_GUI extends JFrame {
 
             	
             	//Posiziona correttamente le notifiche
-            	for (int i = 0; i < numbOfN; i++) {
+            	for (int i = 0; i < dim; i++) {
                     if(i==0) {
                     	notificheLabel.get(i).setBounds(129, 100 , (int) notificheLabel.get(i).getPreferredSize().width, notificheLabel.get(i).getPreferredSize().height); // Imposta le dimensioni desiderate
                     }else {
@@ -184,7 +181,7 @@ public class Notifiche_GUI extends JFrame {
                 
                 //crea la giusta dimensione per ContentPaneForContent che permette di fare lo scrollbar delle giuste dimensioni 
         		contentHeight = 0;
-            	for(int i = 0; i<numbOfN; i++) {
+            	for(int i = 0; i<dim; i++) {
                     contentHeight += (notificheLabel.get(i).getBounds().getHeight() + 10 );
             	}
                 // Aggiorna la dimensione preferita del contenitore in base all'effettiva altezza di tutti gli elementi
