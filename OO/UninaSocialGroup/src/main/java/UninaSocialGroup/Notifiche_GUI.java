@@ -141,14 +141,12 @@ public class Notifiche_GUI extends JFrame {
                                                         notifica.getTesto() + "\n" +
                                                         notifica.getData_Notifica() + "\n" +
                                                         "Gruppo: " + notifica.getNome_Gruppo() + "\n" );
-                	 
-                                                        
+                	                
                      textArea.setLineWrap(true);
                      textArea.setWrapStyleWord(true);
                      textArea.setEditable(false);
                      contentPaneForContent.add(textArea);
                      contentPaneForContent.add(Box.createRigidArea(new Dimension(0, 10))); // Aggiungi spazio tra le notifiche
-                     
                      
                 	 }
                  }
@@ -157,7 +155,6 @@ public class Notifiche_GUI extends JFrame {
              }
         	}catch(Exception e1){
 				System.out.println("errore");
-				
 				
 			}	   
 
