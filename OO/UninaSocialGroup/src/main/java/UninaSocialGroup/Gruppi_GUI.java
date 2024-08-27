@@ -161,6 +161,7 @@ public class Gruppi_GUI extends JFrame {
 
 			NewPostPanel.textArea.setWrapStyleWord(false);
 			NewPostPanel.textArea.setEditable(false);
+			
 			ContenutiPanel.add(NewPostPanel);
 
 			postsArea.add(Box.createRigidArea(new Dimension(0, 10)));
