@@ -17,6 +17,7 @@ public class Notifiche_GUI extends JFrame {
 	
     private JPanel contentPane;
     private JPanel contentPaneForContent;
+    private JPanel contentPaneForContent2;
     private JScrollPane scrollPane;
     Notifiche_Gruppi_DAO notificheDAOG = new Notifiche_Gruppi_DAO();
     
@@ -67,11 +68,25 @@ public class Notifiche_GUI extends JFrame {
         JPanel panelRichieste = new JPanel();
         panelRichieste.setBackground(new Color(255, 255, 255));
         Sezioni_Notifiche.addTab("Richieste", null, panelRichieste, null);
+        
+        JScrollPane scrollPane_1 = new JScrollPane();
+        GroupLayout groupLayout = new GroupLayout(panelRichieste);
+        groupLayout.setHorizontalGroup(
+        	groupLayout.createParallelGroup(Alignment.LEADING)
+        		.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
+        );
+        groupLayout.setVerticalGroup(
+        	groupLayout.createParallelGroup(Alignment.LEADING)
+        		.addComponent(scrollPane_1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
+        );
+        panelRichieste.setLayout(groupLayout);
 
         // Pannello Archiviati
         JPanel panelArchiviati = new JPanel();
         panelArchiviati.setBackground(new Color(255, 255, 255));
         Sezioni_Notifiche.addTab("Archiviati", null, panelArchiviati, null);
+        
+        
         GroupLayout gl_contentPane = new GroupLayout(contentPane);
         gl_contentPane.setHorizontalGroup(
         	gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -85,6 +100,8 @@ public class Notifiche_GUI extends JFrame {
         			.addGap(35)
         			.addComponent(Sezioni_Notifiche, GroupLayout.DEFAULT_SIZE, 661, GroupLayout.DEFAULT_SIZE))
         );
+        
+        
         gl_contentPane.setVerticalGroup(
         	gl_contentPane.createParallelGroup(Alignment.LEADING)
         		.addGroup(gl_contentPane.createSequentialGroup()
@@ -100,6 +117,8 @@ public class Notifiche_GUI extends JFrame {
         );
         contentPane.setLayout(gl_contentPane);
 
+      //griglia per Notifiche gruppi e contenuti: 
+        
         JPanel contentPaneForContent = new JPanel();
         contentPaneForContent.setBackground(new Color(255, 255, 255));
         contentPaneForContent.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -114,50 +133,68 @@ public class Notifiche_GUI extends JFrame {
         gbc.weighty = 1.0;
         contentPane.add(NomeGruppo);
         contentPane.add(Indietro);
+     
         
         ArrayList<JTextArea> notificheLabel = new ArrayList<>();
         List<Notifiche> notifiche = notificheDAOG.SelNotificheUtente(NU);
+        
         int dim = notifiche.size();
         
         
         
         // Imposta una dimensione preferita sufficiente per contenere tutte le JTextArea
         contentPaneForContent.setPreferredSize(new Dimension(700, dim * 50)); // 50 è un'altezza approssimativa per ogni JTextArea
-
-
+        
+        
+        
+        
+        
         JScrollPane scrollPane = new JScrollPane(contentPaneForContent);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setEnabled(false);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-        
-            
+        try {
         	
         	
-        	try {
-        	 if (notifiche != null) {
-                 for (Notifiche notifica : notifiche) {
-                	 for (int i = 0; i < dim ; i++) {
-                	 JTextArea textArea = new JTextArea("N: " + i + "\n" +
-                                                        notifica.getTesto() + "\n" +
-                                                        notifica.getData_Notifica() + "\n" +
-                                                        "Gruppo: " + notifica.getNome_Gruppo() + "\n" );
-                	                
-                     textArea.setLineWrap(true);
-                     textArea.setWrapStyleWord(true);
-                     textArea.setEditable(false);
-                     contentPaneForContent.add(textArea);
-                     contentPaneForContent.add(Box.createRigidArea(new Dimension(0, 10))); // Aggiungi spazio tra le notifiche
+            if (notifiche != null) {
+            	int i=0;
+            	
+                for (Notifiche notifica : notifiche) {
+                	
+                	JTextArea textArea = new JTextArea("N: " + i + "\n" +
+                                                       notifica.getTesto() + "\n" +
+                                                       notifica.getData_Notifica() + "\n" +
+                                                       "Gruppo: " + notifica.getNome_Gruppo() + "\n");
+                                                        i++;
+             List<Notifiche> notifiche2 = notificheDAOG.SelNotifiche(NU);
+                   
+             
+             for (Notifiche notifica2 : notifiche2) {
+                                                        
+                     textArea.append("N: " + i + "\n" + 
+                    		 		 notifica2.getTesto() + "\n" +
+                                    notifica2.getData_Notifica() + "\n");
+                     i++;
                      
-                	 }
-                 }
-             } else {
-                 JTextArea textArea = new JTextArea("Nessuna notifica trovata per l'utente specificato.");
              }
-        	}catch(Exception e1){
-				System.out.println("errore");
-				
-			}	   
+                    textArea.setLineWrap(true);
+                    textArea.setWrapStyleWord(true);
+                    textArea.setEditable(false);
+                    contentPaneForContent.add(textArea);
+                    contentPaneForContent.add(Box.createRigidArea(new Dimension(0, 10))); // Aggiungi spazio tra le notifiche
+            }
+            } else {
+            	JTextArea textArea = new JTextArea("Nessuna notifica trovata per l'utente specificato.");
+                contentPaneForContent.add(textArea);                   //Se non trova notifiche nel db con il NomeUtente inserito
+            }
+            
+            
+            
+        } catch (Exception e1) {
+            System.out.println("errore");
+        }
 
 
        // Aggiungi un listener per impostare le dimensioni del JScrollPane dopo che il frame Ã¨ visibile
@@ -187,16 +224,24 @@ public class Notifiche_GUI extends JFrame {
                 
                 contentPaneForContent.revalidate();
                 contentPaneForContent.repaint();
-
+                
+                
             contentPane.revalidate();
             contentPane.repaint();
             }
         });
+        
         panelGruppi.add(scrollPane, BorderLayout.CENTER);
-
+       
         revalidate();
         repaint();
-
+        
+        
+     
+        
+        
+        
+        
 
     }
 }
