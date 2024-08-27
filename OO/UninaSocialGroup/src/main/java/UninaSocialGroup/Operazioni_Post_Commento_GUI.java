@@ -173,7 +173,7 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 							"Quale commento vuoi eliminare?", "Elimina un commento", JOptionPane.QUESTION_MESSAGE));
 					C.DelCommento(DelCommento);
 					Gestione_Finestre V = new Gestione_Finestre();
-					V.Info_Post(Id_Contenuto, NU, NG);
+					V.Info_Post(Id_Contenuto, NU, NG, 1);
 					setVisible(false);
 				} catch (NumberFormatException E) { // eccezione quando non si inserisce un intero nella prima finestra
 													// di input
@@ -197,7 +197,7 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 
 					C.UpCommento(NU, ModCommento, NewCommento);
 					Gestione_Finestre V = new Gestione_Finestre();
-					V.Info_Post(Id_Contenuto, NU, NG);
+					V.Info_Post(Id_Contenuto, NU, NG, 1);
 					setVisible(false);
 				} catch (NumberFormatException E) { // eccezione quando non si inserisce un intero nella prima finestra
 													// di input

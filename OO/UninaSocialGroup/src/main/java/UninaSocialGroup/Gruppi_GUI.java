@@ -46,6 +46,7 @@ public class Gruppi_GUI extends JFrame {
 	
 	private List<Contenuti> Res_Contenuti_Gruppi = new ArrayList<Contenuti>();
 	private Contenuti_DAO C = new Contenuti_DAO();
+	private ArrayList<JPannelloContenuti> ContenutiPanel = new ArrayList<>(); 
 
 	public Gruppi_GUI(String NU, String NG) {
 
@@ -64,6 +65,11 @@ public class Gruppi_GUI extends JFrame {
 		NomeGruppo.setFont(new Font("Tahoma", Font.BOLD, 18));
 		NomeGruppo.setBounds(316, 29, 202, 38);
 		contentPane.add(NomeGruppo);
+		
+		JPanel postsArea = new JPanel();
+		postsArea.setBackground(new Color(244, 244, 244));
+		postsArea.setBounds(140, 97, 573, 291);
+		postsArea.setLayout(null);
 
 		// BOTTONI
 		JButton Home = new JButton("🏠");
@@ -89,10 +95,10 @@ public class Gruppi_GUI extends JFrame {
 				NewPost = JOptionPane.showInputDialog(AggiungiPost, "Cosa c'è di nuovo?", "Aggiungi un post",
 						JOptionPane.QUESTION_MESSAGE);
 				C.InsContenuto(null, NewPost, NG, NU);
-
-				if (NewPost != null) {
-					// textArea.append(NU + ": " + NewPost + "\n");
-				}
+				
+				Gruppi_GUI.this.setVisible(false);
+				Gestione_Finestre GF = new Gestione_Finestre();
+				GF.GruppiGUI(NU, NG);
 
 			}
 
@@ -119,20 +125,6 @@ public class Gruppi_GUI extends JFrame {
 		Rimuovi_Post.setBounds(190, 22, 60, 53);
 		contentPane.add(Rimuovi_Post);
 
-//		JButton btnNewButton = new JButton("Vedi post");
-//		btnNewButton.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				newFrame.setVisible(true);
-//			}
-//		});
-//		btnNewButton.setBounds(622, 29, 89, 23);
-//		contentPane.add(btnNewButton);
-
-		JPanel postsArea = new JPanel();
-		postsArea.setBackground(new Color(244, 244, 244));
-		postsArea.setBounds(140, 97, 573, 291);
-		postsArea.setLayout(null);
-
 		//SCROLLPANE PER OSPITARE TUTTI I CONTENUTI
 		JScrollPane scrollPane = new JScrollPane(postsArea);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -141,7 +133,7 @@ public class Gruppi_GUI extends JFrame {
 		scrollPane.setBounds(27, 97, 686, 291);
 		scrollPane.setVisible(true);
 
-		ArrayList<JPannelloContenuti> ContenutiPanel = new ArrayList<>(); 
+		
 
 		Res_Contenuti_Gruppi = C.SelAllContenutiGruppo(NG);
 
@@ -152,11 +144,13 @@ public class Gruppi_GUI extends JFrame {
 
 		for (int i = 0; i < numbOfTxt; i++) {
 
-			JPannelloContenuti NewPostPanel = new JPannelloContenuti(Res_Contenuti_Gruppi.get(i).getPubblicatore(), 
+			JPannelloContenuti NewPostPanel = new JPannelloContenuti(
+					Res_Contenuti_Gruppi.get(i).getPubblicatore(), 
 					NU,
-					Res_Contenuti_Gruppi.get(i).getNome_Gruppo(), Res_Contenuti_Gruppi.get(i).getTesto(),
-					Integer.toString(like_DAO.SelNumLike(Res_Contenuti_Gruppi.get(i).getId_Contenuto())),
-					Integer.toString(commento_DAO.SelNumCommenti(Res_Contenuti_Gruppi.get(i).getId_Contenuto())), 
+					Res_Contenuti_Gruppi.get(i).getNome_Gruppo(), 
+					Res_Contenuti_Gruppi.get(i).getTesto(),
+					like_DAO.SelNumLike(Res_Contenuti_Gruppi.get(i).getId_Contenuto()),
+					commento_DAO.SelNumCommenti(Res_Contenuti_Gruppi.get(i).getId_Contenuto()), 
 					Res_Contenuti_Gruppi.get(i).getId_Contenuto());
 
 			NewPostPanel.textArea.setWrapStyleWord(false);

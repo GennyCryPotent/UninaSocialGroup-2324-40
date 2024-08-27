@@ -136,7 +136,7 @@ public class Notifiche_GUI extends JFrame {
      
         
         ArrayList<JTextArea> notificheLabel = new ArrayList<>();
-        List<Notifiche> notifiche = notificheDAOG.SelNotificheUtente(NU);
+        List<Notifiche> notifiche = notificheDAOG.SelNotifiche(NU);
         
         int dim = notifiche.size();
         

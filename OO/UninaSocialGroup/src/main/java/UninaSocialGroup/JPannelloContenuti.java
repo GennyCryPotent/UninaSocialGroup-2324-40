@@ -7,6 +7,8 @@ import java.awt.Font;
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class JPannelloContenuti extends JPanel {
     
@@ -21,16 +23,18 @@ public class JPannelloContenuti extends JPanel {
     private JButton likeButton = new JButton("❤️");
     private JButton commentButton = new JButton("💬");
     
+    private Likes_DAO L = new Likes_DAO();
+    
     public JPannelloContenuti() {
         super(new BorderLayout());
 
         
         this.add(textArea, BorderLayout.CENTER);
         
-        
         likeButton.setContentAreaFilled(false);
         likeButton.setBorderPainted(false);
         likeButton.setForeground(new Color(255, 0, 0));
+        
         
         commentButton.setContentAreaFilled(false);
         commentButton.setBorderPainted(false);
@@ -57,23 +61,56 @@ public class JPannelloContenuti extends JPanel {
     
     
     
-    public JPannelloContenuti(String creator, String nomeUtente,String nomeGruppo, String text, String likeNum, String commentNum, int Id_Post) {
+    public JPannelloContenuti(String creator, String nomeUtente,String nomeGruppo, String text, int likeNum, int commentNum, int Id_Post) {
     	this();
         textArea.setText(text);
         setLikeNum(likeNum);
         setCommentNum(commentNum);
         setCreatorAndGroup(creator, nomeGruppo);
         
+        //LISTENER DEI VARI COMPONENTI
         textArea.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseClicked(MouseEvent e) {
         		JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(JPannelloContenuti.this); //Recupero il JFrame della classe che invoca il costruttore
         		frame.setVisible(false);
-        		Gestione_Finestre GF = new Gestione_Finestre();        		
-        		GF.Info_Post(Id_Post, nomeUtente, nomeGruppo);
+        		
+        		Gestione_Finestre GF = new Gestione_Finestre();
+        		
+        		if(frame.getTitle().equals("Home")) { //if per verificare da quale JFrame proviene la richiesta (0 Home_GUI ; 1 Gruppi_GUI)
+        			GF.Info_Post(Id_Post, nomeUtente, nomeGruppo, 0);
+        		}else {
+        			GF.Info_Post(Id_Post, nomeUtente, nomeGruppo, 1);
+        		}
+        		
         	}
         });
         
+        likeButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		//fare eventuale controllo per vedere se l'utente ha gia messo like ed eventualmente rimuoverlo
+        		L.InsLike(Id_Post, nomeUtente);
+        		
+        		setLikeNum(likeNum+1);
+        	}
+        }); 
+        
+        commentButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		
+        		JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(JPannelloContenuti.this); //Recupero il JFrame della classe che invoca il costruttore
+        		frame.setVisible(false);
+        		
+        		Gestione_Finestre GF = new Gestione_Finestre();
+        		
+        		if(frame.getTitle().equals("Home")) { //if per verificare da quale JFrame proviene la richiesta (0 Home_GUI ; 1 Gruppi_GUI)
+        			GF.Info_Post(Id_Post, nomeUtente, nomeGruppo, 0);
+        		}else {
+        			GF.Info_Post(Id_Post, nomeUtente, nomeGruppo, 1);
+        		}
+        		
+        	}
+        });
     }
     
     public JPannelloContenuti(String text) {
@@ -81,7 +118,8 @@ public class JPannelloContenuti extends JPanel {
         textArea.setText(text);
     }
     
-    public void setLikeNum(String likeNum) {
+    public void setLikeNum(int likeNum) {
+    	likeButton.setText("❤️");
     	likeButton.setText(likeButton.getText() + " " + likeNum);;
     }
     
@@ -97,7 +135,7 @@ public class JPannelloContenuti extends JPanel {
     }
     
     
-    public void setCommentNum(String commentNum) {
+    public void setCommentNum(int commentNum) {
     	commentButton.setText(commentButton.getText() + " " + commentNum);;
     }
     
