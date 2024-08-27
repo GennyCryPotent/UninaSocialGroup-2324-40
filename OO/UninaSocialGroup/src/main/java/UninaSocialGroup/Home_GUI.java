@@ -1,10 +1,14 @@
 package UninaSocialGroup;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -36,7 +40,6 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
-import javax.swing.JLayeredPane;
 import javax.swing.JMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -48,11 +51,16 @@ public class Home_GUI extends JFrame {
     private static final long serialVersionUID = 1L;
     
     private JPanel contentPane;
+    private JPanel contentPaneNorth;
+    private JPanel contentPaneNorthNorth;
+    private JPanel contentPaneNorthWest;
+    private JPanel contentPaneNorthCenter;
+    
     private String NU; //Nome Utente
     private String NG; //Nome Gruppo
     private String trova; //cio che si trova nella textfield della ricerca
     private boolean darkMode=false;
-    private JScrollPane scrollPane;
+    private JScrollPane PostsScrollPane;
     
     
     
@@ -90,31 +98,46 @@ public class Home_GUI extends JFrame {
     	setForeground(new Color(0, 128, 255));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 737, 484);
-        contentPane = new JPanel();
+        contentPane = new JPanel(new BorderLayout());
         contentPane.setForeground(new Color(31,31,31));
         contentPane.setBackground(AcctualColorBG);
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
         setContentPane(contentPane);
-        contentPane.setLayout(null);
+       
 
+        contentPaneNorthNorth = new JPanel();
+        contentPaneNorthWest = new JPanel();
+        contentPaneNorthCenter = new JPanel();
+        contentPaneNorth = new JPanel(new BorderLayout());
+        contentPane.add(contentPaneNorth,BorderLayout.NORTH);
+        
+        contentPaneNorthNorth.setLayout(new BoxLayout(contentPaneNorthNorth, BoxLayout.X_AXIS));
+        contentPaneNorthWest.setLayout(new BoxLayout(contentPaneNorthWest, BoxLayout.X_AXIS));
+        contentPaneNorthCenter.setLayout(new BoxLayout(contentPaneNorthCenter, BoxLayout.X_AXIS));
+        
+        contentPaneNorth.add(contentPaneNorthNorth, BorderLayout.NORTH);
+        contentPaneNorth.add(contentPaneNorthWest, BorderLayout.WEST);
+        contentPaneNorth.add(contentPaneNorthCenter, BorderLayout.CENTER);
+        
+        
         JLabel lblNewLabel = new JLabel("Bentornato");
         lblNewLabel.setForeground(new Color(0, 128, 255));
         lblNewLabel.setBackground(new Color(255, 255, 255));
         lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
-        lblNewLabel.setBounds(210, 10, 106, 38);
-        contentPane.add(lblNewLabel);
+        lblNewLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        contentPaneNorthNorth.add(lblNewLabel);
 
         JLabel NomeUtente = new JLabel(NU);
         NomeUtente.setForeground(new Color(0, 128, 255));
         NomeUtente.setFont(new Font("Tahoma", Font.BOLD, 18));
-        NomeUtente.setBounds(319, 10, 260, 38);
-        contentPane.add(NomeUtente);
+        //NomeUtente.setBounds(319, 10, 260, 38);
+        contentPaneNorthNorth.add(NomeUtente);
         
-        JButton ricerca = new JButton("🔍");
-        ricerca.setForeground(new Color(0, 128, 255));
-        ricerca.setBackground(AcctualColorBG);
-        ricerca.addActionListener(new ActionListener() {
+        JButton ricercaButton = new JButton("🔍");
+        ricercaButton.setForeground(new Color(0, 128, 255));
+        ricercaButton.setBackground(AcctualColorBG);
+        ricercaButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         	        
         		
@@ -122,19 +145,82 @@ public class Home_GUI extends JFrame {
                 
         	}
         });
-        ricerca.setFont(new Font(null, Font.PLAIN, 12));
-        ricerca.setBounds(440, 54, 46, 21);
-        contentPane.add(ricerca);
+        ricercaButton.setFont(new Font(null, Font.PLAIN, 12));
+       // ricerca.setBounds(440, 54, 46, 21);
+        
         
         JScrollPane GruppiGUIV = new JScrollPane();
         GruppiGUIV.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        GruppiGUIV.setBounds(10, 97, 110, 291);
-        contentPane.add(GruppiGUIV);
+        //GruppiGUIV.setBounds(10, 97, 110, 291);
+        contentPane.add(GruppiGUIV, BorderLayout.WEST);
         
-        JLayeredPane layeredPane = new JLayeredPane();
-        layeredPane.setBackground(new Color(255, 255, 255));
-        GruppiGUIV.setViewportView(layeredPane);
+        JPanel GroupPane = new JPanel();
+        GroupPane.setLayout(new BoxLayout(GroupPane, BoxLayout.Y_AXIS));
+        GroupPane.setBackground(new Color(255, 255, 255));
+        GruppiGUIV.setViewportView(GroupPane);
         
+        
+        
+        
+        
+        
+        
+        
+        
+      
+        
+        List<Partecipano> partecipano = new ArrayList<>();
+        
+        List<JButton> GroupButtons = new ArrayList<>();
+        
+        Partecipano_DAO partecipano_DAO = new Partecipano_DAO();
+        
+        partecipano = partecipano_DAO.SelSigPartecipanoGruppo(NU);
+        
+        
+        
+        int numOfGroups = partecipano.size();
+        
+        for(int i=0; i< numOfGroups; i++) {
+        	 JButton btnNewButton = new JButton(partecipano.get(i).getNome_Gruppo());
+             btnNewButton.addActionListener(new ActionListener() {
+             	public void actionPerformed(ActionEvent e) {
+             		Home_GUI.this.setVisible(false);
+             		Gestione_Finestre G = new Gestione_Finestre();
+             		NG = btnNewButton.getText();
+             		G.GruppiGUI(NU, NG);
+             	}
+             });
+             btnNewButton.setForeground(new Color(0, 128, 255));
+             btnNewButton.setBackground(new Color(255, 255, 255));
+             btnNewButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+             //btnNewButton.setBorder(new EmptyBorder(20,0,20,0));
+             
+             
+             // Crea il bordo con la linea colorata
+             Border lineBorder = BorderFactory.createLineBorder(new Color(0, 128, 255));
+
+             // Crea il bordo vuoto (padding)
+             Border emptyBorder = new EmptyBorder(3, 2, 3, 2);
+
+             // Combina i due bordi in un CompoundBorder
+             Border compoundBorder = new CompoundBorder(emptyBorder,lineBorder);
+             
+             // Applica il CompoundBorder al pulsante
+             btnNewButton.setBorder(compoundBorder);
+             //btnNewButton.setBorder(BorderFactory.createLineBorder(new Color(0, 128, 255)));
+             //btnNewButton.setBorder(new EmptyBorder(20,0,20,0));
+             GroupButtons.add(btnNewButton);
+             GroupPane.add(GroupButtons.get(i));
+        }
+        
+        
+        
+        
+        
+        
+        
+        /*
         JButton btnNewButton = new JButton("Fantacalcio");
         btnNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -144,11 +230,10 @@ public class Home_GUI extends JFrame {
         		G.GruppiGUI(NU, NG);
         	}
         });
-        btnNewButton.setForeground(new Color(0, 128, 255));
-        btnNewButton.setBackground(new Color(255, 255, 255));
-        btnNewButton.setBounds(10, 10, 85, 21);
-        layeredPane.add(btnNewButton);
-        
+
+        //btnNewButton.setBounds(10, 10, 85, 21);
+        //GroupPane.add(btnNewButton);
+        */
         
         JButton Notifiche = new JButton("🔔");
         Notifiche.setContentAreaFilled(false);
@@ -164,8 +249,8 @@ public class Home_GUI extends JFrame {
         Notifiche.setBackground(new Color(255, 255, 255));
         Notifiche.setForeground(new Color(0, 128, 255));
         Notifiche.setFont(new Font(null, Font.PLAIN, 18));
-        Notifiche.setBounds(27, 22, 60, 53);
-        contentPane.add(Notifiche);
+        //Notifiche.setBounds(27, 22, 60, 53);
+        contentPaneNorthWest.add(Notifiche, BorderLayout.WEST);
         
         JButton Report = new JButton("😍");
         Report.setContentAreaFilled(false);
@@ -181,14 +266,13 @@ public class Home_GUI extends JFrame {
         Report.setForeground(new Color(0, 128, 255));
         Report.setFont(new Font("Dialog", Font.PLAIN, 18));
         Report.setBackground(Color.WHITE);
-        Report.setBounds(109, 22, 60, 53);
-        contentPane.add(Report);
+        //Report.setBounds(109, 22, 60, 53);
+        contentPaneNorthWest.add(Report, BorderLayout.WEST);
         
         JPanel postsArea = new JPanel();
-        postsArea.setBackground(new Color(244, 244, 244));
-        postsArea.setBounds(140, 97, 573, 291);
+        postsArea.setBackground(AcctualtColorInternalArea);
+        //postsArea.setBounds(140, 97, 573, 291);
         postsArea.setLayout(null);
-        //contentPane.add(postsArea);
         
         JButton Scuro = new JButton("🌙");
         Scuro.setContentAreaFilled(false);
@@ -200,8 +284,8 @@ public class Home_GUI extends JFrame {
         Scuro.setForeground(new Color(0, 128, 255));
         Scuro.setFont(new Font("Dialog", Font.PLAIN, 18));
         Scuro.setBackground(Color.WHITE);
-        Scuro.setBounds(604, 22, 120, 53);
-        contentPane.add(Scuro);
+        //Scuro.setBounds(604, 22, 120, 53);
+        contentPaneNorth.add(Scuro, BorderLayout.EAST);
         
 
         
@@ -209,20 +293,22 @@ public class Home_GUI extends JFrame {
         
         JComboBox Ricerca = new JComboBox(GruppiRicerca);
         Ricerca.setEditable(true);
-        Ricerca.setBounds(210, 54, 230, 21);
-        contentPane.add(Ricerca);
+        //Ricerca.setBounds(210, 54, 230, 21);
+        Ricerca.setBorder(new EmptyBorder(10,10,10,0));
+        contentPaneNorthCenter.add(Ricerca);
+        contentPaneNorthCenter.add(ricercaButton);
         
         trova=(String)Ricerca.getSelectedItem();
         
         
         //----------
        
-        JScrollPane scrollPane = new JScrollPane(postsArea);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        scrollPane.setBounds(140, 97, 573, 291);
-        scrollPane.setVisible(true);
+        JScrollPane PostsScrollPane = new JScrollPane(postsArea);
+        PostsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        PostsScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        //PostsScrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
+        //PostsScrollPane.setBounds(140, 97, 573, 291);
+        PostsScrollPane.setVisible(true);
         
         ArrayList<JPannelloContenuti> TestiLabel = new ArrayList<>();
         
@@ -232,14 +318,15 @@ public class Home_GUI extends JFrame {
         
         contenuti = contenuto_DAO.SelContenutiGruppiUtente(NU);
         
+        
         Likes_DAO like_DAO = new Likes_DAO();
         Commenti_DAO commento_DAO = new Commenti_DAO();
         
         
         
-        int numbOfTxt = contenuti.size();
+        int numbOfPosts = contenuti.size();
         
-        for(int i = 0 ; i < numbOfTxt; i++) {
+        for(int i = 0 ; i < numbOfPosts; i++) {
         	
         	JPannelloContenuti postPanel = new JPannelloContenuti( contenuti.get(i).getPubblicatore() , NU, contenuti.get(i).getNome_Gruppo() ,contenuti.get(i).getTesto(), Integer.toString(like_DAO.SelNumLike(contenuti.get(i).getId_Contenuto())),  Integer.toString(commento_DAO.SelNumCommenti(contenuti.get(i).getId_Contenuto())), contenuti.get(i).getId_Contenuto());
         	
@@ -256,7 +343,12 @@ public class Home_GUI extends JFrame {
         }
         
         
-        contentPane.add(scrollPane);
+
+
+        PostsScrollPane.setBorder(BorderFactory.createLineBorder(Color.black));
+        
+        contentPane.add(PostsScrollPane, BorderLayout.CENTER);
+        
  
         
         
@@ -271,16 +363,20 @@ public class Home_GUI extends JFrame {
         
             	int contentHeight = 0;
             	//Posiziona correttamente le notifiche
-            	for (int i = 0; i < numbOfTxt; i++) {
+            	for (int i = 0; i < numbOfPosts; i++) {
                     if(i==0) {
                     	
-                    	TestiLabel.get(i).setBounds(129, 10 , (int) TestiLabel.get(i).getPreferredSize().width, TestiLabel.get(i).getPreferredSize().height); // Imposta le dimensioni desiderate
+                    	TestiLabel.get(i).setBounds(10, 10 , (int) TestiLabel.get(i).getPreferredSize().width, TestiLabel.get(i).getPreferredSize().height); // Imposta le dimensioni desiderate
                     }else {
                     	System.out.println(TestiLabel.get(i).getBounds());
-                    	TestiLabel.get(i).setBounds(129, (int) (TestiLabel.get(i-1).getBounds().getY() + TestiLabel.get(i-1).getPreferredSize().getHeight() + 10 ), (int) TestiLabel.get(i).getPreferredSize().width,  TestiLabel.get(i).getPreferredSize().height); // Imposta le dimensioni desiderate
+                    	TestiLabel.get(i).setBounds(10, (int) (TestiLabel.get(i-1).getBounds().getY() + TestiLabel.get(i-1).getPreferredSize().getHeight() + 10 ), (int) TestiLabel.get(i).getPreferredSize().width,  TestiLabel.get(i).getPreferredSize().height); // Imposta le dimensioni desiderate
+
                     }
-                  //crea la giusta dimensione per ContentPaneForContent che permette di fare lo scrollbar delle giuste dimensioni 
+                    //crea la giusta dimensione per ContentPaneForContent che permette di fare lo scrollbar delle giuste dimensioni 
                     contentHeight += (TestiLabel.get(i).getHeight() + 10 );
+                    
+                    //Colori
+                	TestiLabel.get(i).setColors(AcctualtColorInternalArea, AcctualColorFont);
                 }
                 
                 
@@ -288,13 +384,13 @@ public class Home_GUI extends JFrame {
         		
             	
                 // Aggiorna la dimensione preferita del contenitore in base all'effettiva altezza di tutti gli elementi
-            	postsArea.setPreferredSize(new Dimension(scrollPane.getWidth()-27, contentHeight));
+            	postsArea.setPreferredSize(new Dimension(PostsScrollPane.getWidth()-27, contentHeight));
                 
             	postsArea.revalidate();
             	postsArea.repaint();
             	
-            	scrollPane.revalidate();
-            	scrollPane.repaint();
+            	PostsScrollPane.revalidate();
+            	PostsScrollPane.repaint();
             	
             	
 	            contentPane.revalidate();
@@ -314,6 +410,9 @@ public class Home_GUI extends JFrame {
         		    AcctualColorButton = darkColorButton;
         		    AcctualColorFont = darkColorFont;
         		    AcctualtColorInternalArea = darkColorInternalArea;
+
+        	        PostsScrollPane.setBorder(BorderFactory.createLineBorder(Color.white));
+
         		    Scuro.setText("🃜🃚🃖🃁🂭🂺");
         		    darkMode = true;
         		    
@@ -322,25 +421,37 @@ public class Home_GUI extends JFrame {
         		    AcctualColorButton = lightColorButton;
         		    AcctualColorFont = lightColorFont;
         		    AcctualtColorInternalArea = lightColorInternalArea;
+        		    
+
+        	        PostsScrollPane.setBorder(BorderFactory.createLineBorder(Color.black));
+        	        
         		    Scuro.setText("🌙");
         		    darkMode = false;
         		}
         		
 	        	//contentPane.setBackground(new Color(27,27,27)); 
         		contentPane.setBackground(AcctualColorBG);//pannello 
+        		
+                contentPaneNorthNorth.setBackground(AcctualColorBG);
+	            contentPaneNorthWest.setBackground(AcctualColorBG);
+	            contentPaneNorthCenter.setBackground(AcctualColorBG);
+	            contentPaneNorth.setBackground(AcctualColorBG);
+	            
 	        	Scuro.setBackground(AcctualColorButton);     //pulsante scuro
-	            ricerca.setBackground(AcctualColorButton);   //ricerca
+	            ricercaButton.setBackground(AcctualColorButton);   //ricerca
 	            Report.setBackground(AcctualColorButton);
 	            Notifiche.setBackground(AcctualColorButton);
 	           
 	            GruppiGUIV.setBackground(AcctualColorBG);
+	            GruppiGUIV.setForeground(AcctualColorBG);
 	            
-	            layeredPane.setForeground(AcctualColorFont);
-	            layeredPane.setBackground(AcctualColorBG);
 	            
-	            btnNewButton.setBackground(AcctualColorButton);
+	            //GroupPane.setForeground(AcctualColorFont);
+	            GroupPane.setBackground(AcctualtColorInternalArea);
+	            
+	            //btnNewButton.setBackground(AcctualColorButton);
         		
-	            
+	            PostsScrollPane.setBackground(AcctualColorButton);
 	            
 	            postsArea.setBackground(AcctualtColorInternalArea);
 	            postsArea.setForeground(AcctualColorFont);
@@ -349,6 +460,14 @@ public class Home_GUI extends JFrame {
 	            Ricerca.setForeground(AcctualColorFont);
 	            Ricerca.setBackground(AcctualColorBG);
 	            
+	            
+	            
+
+	
+	            
+	            for (int i = 0; i < numbOfPosts; i++) {
+	            	TestiLabel.get(i).setColors(AcctualtColorInternalArea, AcctualColorFont);
+	            }
         	}
         });
 

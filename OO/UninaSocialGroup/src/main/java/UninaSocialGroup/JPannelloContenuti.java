@@ -2,6 +2,7 @@ package UninaSocialGroup;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
@@ -10,9 +11,12 @@ import java.awt.event.MouseEvent;
 public class JPannelloContenuti extends JPanel {
     
     private JPanel secondPanel = new JPanel();
+    private JPanel thirdPanel = new JPanel();
+    
     
     public JTextArea textArea = new JTextArea();
-    public JLabel creatorLabel = new JLabel();
+    public JTextArea creatorText = new JTextArea();
+    public JTextArea GroupText = new JTextArea();
     
     private JButton likeButton = new JButton("❤️");
     private JButton commentButton = new JButton("💬");
@@ -21,8 +25,6 @@ public class JPannelloContenuti extends JPanel {
         super(new BorderLayout());
 
         
-        
-        this.add(creatorLabel, BorderLayout.NORTH);
         this.add(textArea, BorderLayout.CENTER);
         
         
@@ -32,7 +34,7 @@ public class JPannelloContenuti extends JPanel {
         
         commentButton.setContentAreaFilled(false);
         commentButton.setBorderPainted(false);
-        
+        commentButton.setForeground(new Color(0, 0, 0));
         
         
         // Imposta il layout del secondPanel prima di aggiungere i pulsanti
@@ -40,7 +42,17 @@ public class JPannelloContenuti extends JPanel {
         secondPanel.add(likeButton);
         secondPanel.add(commentButton);
         
+        // Imposta il layout del ThirdPanel prima di aggiungere i titoli del post
+        thirdPanel.setLayout(new BoxLayout(thirdPanel, BoxLayout.Y_AXIS));
+        thirdPanel.add(creatorText);
+        thirdPanel.add(GroupText);
+        
+        
+        this.add(thirdPanel, BorderLayout.NORTH);
         this.add(secondPanel, BorderLayout.SOUTH);
+
+        //this.setBorder(BorderFactory.createLineBorder(Color.black));
+
     }
     
     
@@ -50,7 +62,7 @@ public class JPannelloContenuti extends JPanel {
         textArea.setText(text);
         setLikeNum(likeNum);
         setCommentNum(commentNum);
-        setCreator(creator, nomeGruppo);
+        setCreatorAndGroup(creator, nomeGruppo);
         
         InfoPost_GUI newFrame = new InfoPost_GUI(Id_Post, creator, nomeGruppo);
         
@@ -74,8 +86,15 @@ public class JPannelloContenuti extends JPanel {
     	likeButton.setText(likeButton.getText() + " " + likeNum);;
     }
     
-    public void setCreator(String creator, String nomeGruppo) {
-    	creatorLabel.setText(creator + " - " + nomeGruppo);
+    public void setCreatorAndGroup(String creator, String nomeGruppo) {
+    	creatorText.setText(creator);
+    	creatorText.setEditable(false);
+    	
+    	GroupText.setText(nomeGruppo);
+    	GroupText.setEditable(false);
+    	
+    	creatorText.setFont(new Font("Dialog", Font.BOLD, 11));
+    	GroupText.setFont(new Font("Dialog", Font.ITALIC, 8));
     }
     
     
@@ -83,7 +102,18 @@ public class JPannelloContenuti extends JPanel {
     	commentButton.setText(commentButton.getText() + " " + commentNum);;
     }
     
-    
+    public void setColors(Color bgC, Color fontC) {
+        secondPanel.setBackground(bgC);
+        textArea.setBackground(bgC);
+        textArea.setForeground(fontC);
+        creatorText.setBackground(bgC);
+        creatorText.setForeground(fontC);
+        GroupText.setBackground(bgC);
+        GroupText.setForeground(fontC);
+        likeButton.setBackground(bgC);
+        commentButton.setBackground(bgC);
+        
+    }
     public String getText() {
         return textArea.getText();
     }
