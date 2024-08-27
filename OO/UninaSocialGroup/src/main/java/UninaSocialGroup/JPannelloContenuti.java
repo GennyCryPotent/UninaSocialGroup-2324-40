@@ -52,12 +52,11 @@ public class JPannelloContenuti extends JPanel {
         setCommentNum(commentNum);
         setCreator(creator, nomeGruppo);
         
-        InfoPost_GUI newFrame = new InfoPost_GUI(Id_Post, creator, nomeGruppo);
-        
-        
         textArea.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseClicked(MouseEvent e) {
+        		JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(JPannelloContenuti.this); //Recupero il JFrame della classe che invoca il costruttore
+        		frame.setVisible(false);
         		Gestione_Finestre GF = new Gestione_Finestre();        		
         		GF.Info_Post(Id_Post, nomeUtente, nomeGruppo);
         	}
