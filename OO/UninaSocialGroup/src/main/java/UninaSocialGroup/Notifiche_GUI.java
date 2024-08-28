@@ -137,17 +137,12 @@ public class Notifiche_GUI extends JFrame {
         
         ArrayList<JTextArea> notificheLabel = new ArrayList<>();
         List<Notifiche> notifiche = notificheDAOG.SelNotifiche(NU);
+        List<Notifiche> notifiche2 = notificheDAOG.SelNotifiche(NU);
         
-        int dim = notifiche.size();
-        
-        
+        int dim = notifiche.size(); //dimensione utilizzata per generare le notifiche
         
         // Imposta una dimensione preferita sufficiente per contenere tutte le JTextArea
-        contentPaneForContent.setPreferredSize(new Dimension(700, dim * 50)); // 50 è un'altezza approssimativa per ogni JTextArea
-        
-        
-        
-        
+        contentPaneForContent.setPreferredSize(new Dimension(700, dim * 65)); // 50 è un'altezza approssimativa per ogni JTextArea
         
         JScrollPane scrollPane = new JScrollPane(contentPaneForContent);
         scrollPane.setEnabled(false);
@@ -157,36 +152,31 @@ public class Notifiche_GUI extends JFrame {
 
         try {
         	
+        	JTextArea textArea=new JTextArea();
         	
             if (notifiche != null) {
             	int i=0;
             	
-                for (Notifiche notifica : notifiche) {
+            	
+                for (Notifiche notifica : notifiche2) {
                 	
-                	JTextArea textArea = new JTextArea("N: " + i + "\n" +
+                	 textArea.append( "N: " + i + "\n" +
                                                        notifica.getTesto() + "\n" +
                                                        notifica.getData_Notifica() + "\n" +
                                                        "Gruppo: " + notifica.getNome_Gruppo() + "\n");
                                                         i++;
-             List<Notifiche> notifiche2 = notificheDAOG.SelNotifiche(NU);
+                     System.out.println(dim);
                    
-             
-             for (Notifiche notifica2 : notifiche2) {
-                                                        
-                     textArea.append("N: " + i + "\n" + 
-                    		 		 notifica2.getTesto() + "\n" +
-                                    notifica2.getData_Notifica() + "\n");
-                     i++;
-                     
-             }
+                
+            }
                     textArea.setLineWrap(true);
                     textArea.setWrapStyleWord(true);
                     textArea.setEditable(false);
                     contentPaneForContent.add(textArea);
                     contentPaneForContent.add(Box.createRigidArea(new Dimension(0, 10))); // Aggiungi spazio tra le notifiche
-            }
+            
             } else {
-            	JTextArea textArea = new JTextArea("Nessuna notifica trovata per l'utente specificato.");
+            	 textArea = new JTextArea("Nessuna notifica trovata per l'utente specificato.");
                 contentPaneForContent.add(textArea);                   //Se non trova notifiche nel db con il NomeUtente inserito
             }
             
@@ -196,7 +186,36 @@ public class Notifiche_GUI extends JFrame {
             System.out.println("errore");
         }
 
+        JPanel contentPaneForArchiviati = new JPanel();
+        contentPaneForArchiviati.setBackground(new Color(255, 255, 255));
+        contentPaneForArchiviati.setBorder(new EmptyBorder(5, 5, 5, 5));
+        contentPaneForArchiviati.setLayout(new BoxLayout(contentPaneForArchiviati, BoxLayout.Y_AXIS));
 
+        JScrollPane scrollPaneArchiviati = new JScrollPane(contentPaneForArchiviati);
+        scrollPaneArchiviati.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPaneArchiviati.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPaneArchiviati.setBorder(new EmptyBorder(5, 5, 5, 5));
+        
+
+        panelArchiviati.add(scrollPaneArchiviati, BorderLayout.CENTER);
+
+		revalidate();
+		repaint();
+
+        ArrayList<JTextArea> archiviatiLabel = new ArrayList<>();
+        
+        int dimArchiviati=2;
+
+        for (int i = 0; i < dimArchiviati; i++) {
+            JTextArea textArea = new JTextArea("Archiviato " + i + " : esempio notifica " + i);
+            textArea.setLineWrap(true);
+            textArea.setWrapStyleWord(false);
+            textArea.setEditable(false);
+            archiviatiLabel.add(textArea);
+            contentPaneForArchiviati.add(textArea);
+            contentPaneForArchiviati.add(Box.createRigidArea(new Dimension(0, 10))); // Aggiungi spazio tra gli archiviati
+        }
+        
        // Aggiungi un listener per impostare le dimensioni del JScrollPane dopo che il frame Ã¨ visibile
         addComponentListener(new ComponentAdapter() {
             @Override
@@ -206,10 +225,10 @@ public class Notifiche_GUI extends JFrame {
             	//Posiziona correttamente le notifiche
             	for (int i = 0; i < dim; i++) {
                     if(i==0) {
-                    	notificheLabel.get(i).setBounds(129, 100 , (int) notificheLabel.get(i).getPreferredSize().width, notificheLabel.get(i).getPreferredSize().height); // Imposta le dimensioni desiderate
+                    	notificheLabel.get(i).setBounds(129, (int) (notificheLabel.get(i-1).getBounds().getY() + notificheLabel.get(i-1).getPreferredSize().getHeight() + 10 ), (int) notificheLabel.get(i).getPreferredSize().width,  notificheLabel.get(i).getPreferredSize().height); 
                     }else {
-                    	notificheLabel.get(i).setBounds(129, (int) (notificheLabel.get(i-1).getBounds().getY() + notificheLabel.get(i-1).getPreferredSize().getHeight() + 10 ), (int) notificheLabel.get(i).getPreferredSize().width,  notificheLabel.get(i).getPreferredSize().height); // Imposta le dimensioni desiderate
-                    
+                    	// Imposta le dimensioni desiderate
+                    	notificheLabel.get(i).setBounds(129, 100 , (int) notificheLabel.get(i).getPreferredSize().width, notificheLabel.get(i).getPreferredSize().height); // Imposta le dimensioni desiderate
                     }        
                 }
                 
@@ -229,18 +248,18 @@ public class Notifiche_GUI extends JFrame {
             contentPane.revalidate();
             contentPane.repaint();
             }
-        });
+            
+            
+            
+            
+            
+        }); 
+        
         
         panelGruppi.add(scrollPane, BorderLayout.CENTER);
        
         revalidate();
         repaint();
-        
-        
-     
-        
-        
-        
         
 
     }
