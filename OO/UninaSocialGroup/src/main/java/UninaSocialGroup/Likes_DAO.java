@@ -58,6 +58,31 @@ public class Likes_DAO {
 		}
 
 	}
+	
+	
+	// Controlla se l'utente ha già messo like al post
+	public boolean SelLikeProfilo(String Nome_Utente, int Id_Contenuto) {
+
+		try {
+			
+			
+			ResultSet rs = Gestione_Finestre.DB.ExeQuery("SELECT COUNT(*) FROM LIKES WHERE FK_NOME_UTENTE = '" + Nome_Utente + "' AND FK_ID_CONTENUTO =" + Id_Contenuto);
+			
+			rs.next();
+			
+			if(rs.getInt(1) >= 1) {
+				return true;
+			}else {
+				return false;
+			}
+
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+
+		}
+		
+	}
 
 	// Select Likes per post
 	public List<Likes> SelLikesPost(int Id_Contenuto) {

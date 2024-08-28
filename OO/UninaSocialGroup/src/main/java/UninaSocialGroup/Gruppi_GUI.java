@@ -48,6 +48,21 @@ public class Gruppi_GUI extends JFrame {
 	private Contenuti_DAO C = new Contenuti_DAO();
 	private ArrayList<JPannelloContenuti> ContenutiPanel = new ArrayList<>(); 
 
+	
+	
+	
+	private Color lightColorBG = new Color(255, 255, 255);
+	private Color lightColorButton = new Color(255, 255, 255);
+	private Color lightColorFont = new Color(0, 0, 0);
+	private Color lightColorInternalArea = new Color(244, 244, 244);
+
+	private Color AcctualColorBG = lightColorBG;
+	private Color AcctualColorButton = lightColorButton;
+	private Color AcctualColorFont = lightColorFont;
+	private Color AcctualtColorInternalArea = lightColorInternalArea;
+
+	
+	
 	public Gruppi_GUI(String NU, String NG) {
 
 		// PANNELLI
@@ -72,7 +87,7 @@ public class Gruppi_GUI extends JFrame {
 		postsArea.setLayout(null);
 
 		// BOTTONI
-		JButton Home = new JButton("🏠");
+		JButton Home = new JButton("ðŸ� ");
 		Home.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -88,11 +103,11 @@ public class Gruppi_GUI extends JFrame {
 		Home.setBounds(27, 22, 60, 53);
 		contentPane.add(Home);
 
-		JButton AggiungiPost = new JButton("➕");
+		JButton AggiungiPost = new JButton("âž•");
 		AggiungiPost.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				NewPost = JOptionPane.showInputDialog(AggiungiPost, "Cosa c'è di nuovo?", "Aggiungi un post",
+				NewPost = JOptionPane.showInputDialog(AggiungiPost, "Cosa c'Ã¨ di nuovo?", "Aggiungi un post",
 						JOptionPane.QUESTION_MESSAGE);
 				C.InsContenuto(null, NewPost, NG, NU);
 				
@@ -109,7 +124,7 @@ public class Gruppi_GUI extends JFrame {
 		AggiungiPost.setBounds(109, 22, 60, 53);
 		contentPane.add(AggiungiPost);
 
-		JButton Rimuovi_Post = new JButton("➖");
+		JButton Rimuovi_Post = new JButton("âž–");
 		Rimuovi_Post.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -152,12 +167,15 @@ public class Gruppi_GUI extends JFrame {
 					like_DAO.SelNumLike(Res_Contenuti_Gruppi.get(i).getId_Contenuto()),
 					commento_DAO.SelNumCommenti(Res_Contenuti_Gruppi.get(i).getId_Contenuto()), 
 					Res_Contenuti_Gruppi.get(i).getId_Contenuto());
-
+			
+			
 			NewPostPanel.textArea.setWrapStyleWord(false);
 			NewPostPanel.textArea.setEditable(false);
 			
 			ContenutiPanel.add(NewPostPanel);
-
+			
+			ContenutiPanel.get(i).setColors(AcctualtColorInternalArea, AcctualColorFont);
+			
 			postsArea.add(Box.createRigidArea(new Dimension(0, 10)));
 			postsArea.add(ContenutiPanel.get(i));
 		}
@@ -167,7 +185,7 @@ public class Gruppi_GUI extends JFrame {
 		// ---------------
 
 		// Aggiungi un listener per impostare le dimensioni del JScrollPane dopo che il
-		// frame Ã¨ visibile
+		// frame ÃƒÂ¨ visibile
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
@@ -177,11 +195,11 @@ public class Gruppi_GUI extends JFrame {
 				for (int i = 0; i < numbOfTxt; i++) {
 					if (i == 0) {
 
-						ContenutiPanel.get(i).setBounds(129, 10, (int) ContenutiPanel.get(i).getPreferredSize().width,
+						ContenutiPanel.get(i).setBounds(10, 10, (int) ContenutiPanel.get(i).getPreferredSize().width,
 								ContenutiPanel.get(i).getPreferredSize().height); // Imposta le dimensioni desiderate
 					} else {
 						System.out.println(ContenutiPanel.get(i).getBounds());
-						ContenutiPanel.get(i).setBounds(129,
+						ContenutiPanel.get(i).setBounds(10,
 								(int) (ContenutiPanel.get(i - 1).getBounds().getY()
 										+ ContenutiPanel.get(i - 1).getPreferredSize().getHeight() + 10),
 								(int) ContenutiPanel.get(i).getPreferredSize().width,

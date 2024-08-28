@@ -33,8 +33,9 @@ public class JPannelloContenuti extends JPanel {
         
         likeButton.setContentAreaFilled(false);
         likeButton.setBorderPainted(false);
-        likeButton.setForeground(new Color(255, 0, 0));
         
+        
+
         
         commentButton.setContentAreaFilled(false);
         commentButton.setBorderPainted(false);
@@ -54,7 +55,9 @@ public class JPannelloContenuti extends JPanel {
         
         this.add(thirdPanel, BorderLayout.NORTH);
         this.add(secondPanel, BorderLayout.SOUTH);
-
+        
+        
+  		
         //this.setBorder(BorderFactory.createLineBorder(Color.black));
 
     }
@@ -67,6 +70,16 @@ public class JPannelloContenuti extends JPanel {
         setLikeNum(likeNum);
         setCommentNum(commentNum);
         setCreatorAndGroup(creator, nomeGruppo);
+        
+        
+
+		//cambia il colore del cuore del mi piace 
+        if(L.SelLikeProfilo(creator,Id_Post)) {
+        	likeButton.setForeground(new Color(255, 0, 0));
+        }else {
+        	likeButton.setForeground(new Color(0, 0, 0));
+        }
+        
         
         //LISTENER DEI VARI COMPONENTI
         textArea.addMouseListener(new MouseAdapter() {
@@ -90,6 +103,8 @@ public class JPannelloContenuti extends JPanel {
         	public void actionPerformed(ActionEvent e) {
         		//fare eventuale controllo per vedere se l'utente ha gia messo like ed eventualmente rimuoverlo
         		L.InsLike(Id_Post, nomeUtente);
+        		
+        		likeButton.setForeground(new Color(255, 0, 0));
         		
         		setLikeNum(likeNum+1);
         	}
