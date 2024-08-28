@@ -29,7 +29,7 @@ public class Gestione_Finestre {
 			public void run() {
 				try {
 					DB.connect();
-					Home_GUI frame = new Home_GUI("Gabbo");
+					Home_GUI frame = new Home_GUI("Genny03cry");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
