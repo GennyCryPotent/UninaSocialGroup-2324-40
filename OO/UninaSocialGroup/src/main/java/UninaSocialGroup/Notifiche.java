@@ -16,7 +16,6 @@ public class Notifiche {
 	//Costruttore per Notifiche_Contenuti
 	public Notifiche(int id_Notifica, String testo, Date data_Notifica, String visualizzato_esitato, int fK_Id_Contenuto,
 			String ricevente) {
-		super();
 		Id_Notifica = id_Notifica;
 		Testo = testo;
 		Data_Notifica = data_Notifica;
@@ -28,7 +27,7 @@ public class Notifiche {
 	//Costruttore per Notifiche_Gruppi e Notifiche_Richieste
 	public Notifiche(int id_Notifica, String testo, Date data_Notifica, String visualizzato_esitato, String nome_Gruppo,
 			String ricevente) {
-		super();
+		
 		Id_Notifica = id_Notifica;
 		Testo = testo;
 		Data_Notifica = data_Notifica;
@@ -39,12 +38,12 @@ public class Notifiche {
 	
 	
 	//Costrutture per mostrare le Notifiche_Gruppi e Notifiche_Contenuti 
-	public Notifiche(int id_Notifica, String testo, Date data_Notifica, String visualizzato_Esitato) {
-		super();
+	public Notifiche(int id_Notifica, String testo, Date data_Notifica, String visualizzato_Esitato, String nome_Gruppo) {
 		Id_Notifica = id_Notifica;
 		Testo = testo;
 		Data_Notifica = data_Notifica;
 		Visualizzato_Esitato = visualizzato_Esitato;
+		Nome_Gruppo = nome_Gruppo;
 	}
 
 	public int getId_Notifica() {

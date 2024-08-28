@@ -51,13 +51,9 @@ public class Gruppi_GUI extends JFrame {
 	
 	
 	
-	private Color lightColorBG = new Color(255, 255, 255);
-	private Color lightColorButton = new Color(255, 255, 255);
 	private Color lightColorFont = new Color(0, 0, 0);
 	private Color lightColorInternalArea = new Color(244, 244, 244);
 
-	private Color AcctualColorBG = lightColorBG;
-	private Color AcctualColorButton = lightColorButton;
 	private Color AcctualColorFont = lightColorFont;
 	private Color AcctualtColorInternalArea = lightColorInternalArea;
 

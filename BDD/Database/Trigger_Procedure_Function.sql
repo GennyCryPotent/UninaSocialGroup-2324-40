@@ -830,26 +830,16 @@ END Crea_Richiesta;
 create or replace NONEDITIONABLE PROCEDURE Mostra_Notifica(P_Nome_Utente IN Notifiche_Contenuti.FK_Nome_Utente%TYPE, P_Rec_Notifica OUT SYS_REFCURSOR)
 AS 
 
--- Creo un cursore ad una tabella che ha SIA Tutte le notifiche dei contenuti di un utente SIA tutte le notifiche dei gruppi di un utente e ordino per la data
-
 BEGIN 
 
     OPEN P_Rec_Notifica FOR 
-        SELECT  NULL AS Id_Notifica_G, Id_Notifica_C ,Visualizzato, Testo, Data_Notifica FROM Notifiche_Contenuti WHERE fk_nome_utente LIKE P_Nome_Utente
+        SELECT  NULL AS Id_Notifica_G, Id_Notifica_C ,Visualizzato, Testo, Data_Notifica, NULL AS FK_Nome_Gruppo FROM Notifiche_Contenuti WHERE fk_nome_utente LIKE P_Nome_Utente
         UNION ALL
-        SELECT Id_Notifica_G, NULL AS Id_Notifica_C,Visualizzato, Testo, Data_Notifica FROM Notifiche_Gruppi WHERE FK_NOME_UTENTE LIKE P_Nome_Utente
-        ORDER BY Data_Notifica DESC;
-
-
-       visualizzato_notifica(P_Rec_Notifica);
-       
-       OPEN P_Rec_Notifica FOR 
-        SELECT  NULL AS Id_Notifica_G, Id_Notifica_C ,Visualizzato, Testo, Data_Notifica FROM Notifiche_Contenuti WHERE fk_nome_utente LIKE P_Nome_Utente
-        UNION ALL
-        SELECT Id_Notifica_G, NULL AS Id_Notifica_C,Visualizzato, Testo, Data_Notifica FROM Notifiche_Gruppi WHERE FK_NOME_UTENTE LIKE P_Nome_Utente
+        SELECT Id_Notifica_G, NULL AS Id_Notifica_C,Visualizzato, Testo, Data_Notifica, FK_Nome_Gruppo FROM Notifiche_Gruppi WHERE FK_NOME_UTENTE LIKE P_Nome_Utente
         ORDER BY Data_Notifica DESC;
 
 END Mostra_Notifica;
+
 /
 
 --Procedure per Visualizzare le notifiche dei contenuti e dei gruppi di un utente

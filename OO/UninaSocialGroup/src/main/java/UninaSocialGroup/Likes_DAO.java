@@ -60,7 +60,7 @@ public class Likes_DAO {
 	}
 	
 	
-	// Controlla se l'utente ha già messo like al post
+	// Controlla se l'utente ha giï¿½ messo like al post
 	public boolean SelLikeProfilo(String Nome_Utente, int Id_Contenuto) {
 
 		try {

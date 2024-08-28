@@ -29,12 +29,12 @@ public class Main{
 //		n = GD.SelNumNotifiche(4);
 //		 System.out.println("Numero Notifiche: " + n);
 		
-		Res_Notifiche = GD.SelNotifiche("Genny03cry");
+		Res_Notifiche = GD.SelNotifiche("Gabbo");
 		
 		for(int i=0; i<Res_Notifiche.size(); i++) {
 			Notifiche R;
 			R=Res_Notifiche.get(i);
-			System.out.println("Testo: "+ R.getTesto());		
+			System.out.println("Testo: "+ R.getTesto() + " num: " + i);		
 		}
 	}
 } 

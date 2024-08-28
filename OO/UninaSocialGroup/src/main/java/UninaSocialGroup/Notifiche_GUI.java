@@ -47,7 +47,7 @@ public class Notifiche_GUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 Notifiche_GUI.this.setVisible(false);
                 Gestione_Finestre N = new Gestione_Finestre();
-                N.AccessoHome(null);
+                N.AccessoHome(NU);
             }
         });
         Indietro.setForeground(new Color(0, 128, 255));

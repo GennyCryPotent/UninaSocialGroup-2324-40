@@ -79,7 +79,7 @@ public class Notifiche_Gruppi_DAO {
 				while (rs.next()) {
 
 					Stampa = new Notifiche(rs.getInt("Id_Notifica_C"), rs.getString("Testo"),
-							rs.getDate("Data_Notifica"), rs.getString("Visualizzato"));
+							rs.getDate("Data_Notifica"), rs.getString("Visualizzato"), rs.getString("FK_Nome_Gruppo"));
 					Rec_Notifiche.add(Stampa);
 
 					Stampa = null;
