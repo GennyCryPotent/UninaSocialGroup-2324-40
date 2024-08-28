@@ -70,7 +70,7 @@ public class Home_GUI extends JFrame {
 	private Color lightColorBG = new Color(255, 255, 255);
 	private Color lightColorButton = new Color(255, 255, 255);
 	private Color lightColorFont = new Color(0, 0, 0);
-	private Color lightColorInternalArea = new Color(238, 238, 238);
+	private Color lightColorInternalArea = new Color(244, 244, 244);
 
 	private Color AcctualColorBG = lightColorBG;
 	private Color AcctualColorButton = lightColorButton;
@@ -366,7 +366,7 @@ public class Home_GUI extends JFrame {
 
 					PostsScrollPane.setBorder(BorderFactory.createLineBorder(Color.white));
 
-					Scuro.setText("🃜🃚🃖🃁🂭🂺");
+					Scuro.setText("🔆");
 					darkMode = true;
 
 				} else {
@@ -412,6 +412,10 @@ public class Home_GUI extends JFrame {
 
 				for (int i = 0; i < numbOfPosts; i++) {
 					TestiLabel.get(i).setColors(AcctualtColorInternalArea, AcctualColorFont);
+				}
+				
+				for (int i = 0; i < numOfGroups; i++) {
+					GroupButtons.get(i).setBackground(AcctualtColorInternalArea);
 				}
 			}
 		});
