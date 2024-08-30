@@ -6,6 +6,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
 import javax.swing.SpringLayout;
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -26,11 +31,11 @@ public class Login_GUI extends JFrame {
 	private JTextField NomeUtente;
 	private JPasswordField passwordField;
 	private JLabel Password;
-	private JLabel lblNewLabel_1;   
 	private Gestione_Finestre Accesso = new Gestione_Finestre();  //passaggio nel gestore delle finestre
     public String NU;   //variabile per nome utente
     private String PSW; //variabile per password
     private Profili_DAO Pass = new Profili_DAO();
+    private JButton btnRegistrati;
  
     
     
@@ -43,6 +48,8 @@ public class Login_GUI extends JFrame {
 	 */
 	
 	public Login_GUI() {
+		
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 400);
 		contentPane = new JPanel();
@@ -53,10 +60,10 @@ public class Login_GUI extends JFrame {
 		SpringLayout sl_contentPane = new SpringLayout();
 		contentPane.setLayout(sl_contentPane);
 		
+		
+		
 		JButton accedi = new JButton("Accedi");
-		sl_contentPane.putConstraint(SpringLayout.WEST, accedi, 236, SpringLayout.WEST, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, accedi, -62, SpringLayout.SOUTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.EAST, accedi, -264, SpringLayout.EAST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.EAST, accedi, -313, SpringLayout.EAST, contentPane);
 		accedi.setForeground(new Color(0, 128, 255));
 		accedi.setBackground(new Color(255, 255, 255));
 		accedi.addActionListener(new ActionListener() {
@@ -96,10 +103,11 @@ public class Login_GUI extends JFrame {
 		NomeUtente.setColumns(10);
 		
 		passwordField = new JPasswordField();
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, passwordField, -118, SpringLayout.SOUTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.NORTH, accedi, 36, SpringLayout.SOUTH, passwordField);
 		sl_contentPane.putConstraint(SpringLayout.WEST, NomeUtente, 0, SpringLayout.WEST, passwordField);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, NomeUtente, -23, SpringLayout.NORTH, passwordField);
 		sl_contentPane.putConstraint(SpringLayout.WEST, passwordField, 225, SpringLayout.WEST, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, passwordField, -33, SpringLayout.NORTH, accedi);
 		sl_contentPane.putConstraint(SpringLayout.EAST, passwordField, 331, SpringLayout.WEST, contentPane);
 		contentPane.add(passwordField);
 		
@@ -117,10 +125,24 @@ public class Login_GUI extends JFrame {
 		ImageIcon highResIcon = new ImageIcon("C:\\Users\\pc\\Downloads\\th (11).png");
 		
 		JLabel lblNewLabel_2 = new JLabel(highResIcon);
+		sl_contentPane.putConstraint(SpringLayout.WEST, accedi, 0, SpringLayout.WEST, lblNewLabel_2);
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblNewLabel_2, 0, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblNewLabel_2, 187, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblNewLabel_2, -11, SpringLayout.NORTH, NomeUtente);
 		contentPane.add(lblNewLabel_2);
+		
+		btnRegistrati = new JButton("Registrati");
+		btnRegistrati.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Login_GUI.this.setVisible(false);  
+				Accesso.RegistrazioneGUI();
+			}
+		});
+		sl_contentPane.putConstraint(SpringLayout.WEST, btnRegistrati, 6, SpringLayout.EAST, accedi);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnRegistrati, 0, SpringLayout.SOUTH, accedi);
+		btnRegistrati.setForeground(new Color(0, 128, 255));
+		btnRegistrati.setBackground(Color.WHITE);
+		contentPane.add(btnRegistrati);
 
 		
         

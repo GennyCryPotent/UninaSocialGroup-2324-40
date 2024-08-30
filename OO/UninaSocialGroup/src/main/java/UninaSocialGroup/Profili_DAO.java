@@ -23,7 +23,7 @@ public class Profili_DAO {
 			System.out.println("Utente creato");
 			
 		} catch (Exception e) {
-			System.out.println("Errore");
+			System.out.println("Errore: " + e.getMessage());
 			
 		}
 		
