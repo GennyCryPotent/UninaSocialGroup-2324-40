@@ -1,12 +1,13 @@
 package UninaSocialGroup;
 
 import java.awt.EventQueue;
-
 import javax.swing.JDialog;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-
 import com.formdev.flatlaf.FlatLightLaf;
+import UninaSocialGroup.Classi_DAO.*;
+import UninaSocialGroup.Classi_GUI.*;
+import UninaSocialGroup.Classi_Java.*;
 
 public class Gestione_Finestre {
 	
