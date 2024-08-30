@@ -3,6 +3,10 @@ package UninaSocialGroup;
 import java.awt.EventQueue;
 
 import javax.swing.JDialog;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
+import com.formdev.flatlaf.FlatLightLaf;
 
 public class Gestione_Finestre {
 	
@@ -20,7 +24,15 @@ public class Gestione_Finestre {
 	//public static DB_Connection DB = new DB_Connection("jdbc:oracle:thin:@DESKTOP-MLJV8GK:1521:xe", "system", "Caruso"); //Caruso
 	public static DB_Connection DB = new DB_Connection("jdbc:oracle:thin:@localhost:1521:xe", "system", "Database@03"); //Gabbo
 
-
+	static {
+		try {
+			UIManager.setLookAndFeel(new FlatLightLaf());
+			UIManager.put( "Button.arc", 10 ); //rende i bottoni circolari
+			UIManager.put( "ScrollBar.showButtons", true ); //mostra le frecce nella scrollBar
+		} catch (UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
+	}
 
 	
 	public Gestione_Finestre() {
