@@ -68,15 +68,15 @@ public class Notifiche_GUI extends JFrame {
         panelRichieste.setBackground(new Color(255, 255, 255));
         Sezioni_Notifiche.addTab("Richieste", null, panelRichieste, null);
         
-        JScrollPane scrollPane_1 = new JScrollPane();
+        JScrollPane scrollPaneRichieste = new JScrollPane();
         GroupLayout groupLayout = new GroupLayout(panelRichieste);
         groupLayout.setHorizontalGroup(
         	groupLayout.createParallelGroup(Alignment.LEADING)
-        		.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
+        		.addComponent(scrollPaneRichieste, GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
         );
         groupLayout.setVerticalGroup(
         	groupLayout.createParallelGroup(Alignment.LEADING)
-        		.addComponent(scrollPane_1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
+        		.addComponent(scrollPaneRichieste, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
         );
         panelRichieste.setLayout(groupLayout);
 
@@ -226,6 +226,7 @@ public class Notifiche_GUI extends JFrame {
         }
         */
         
+         //Visualizzazione Notifiche archiviate
          try {
         	
         	JTextArea textAreaArchiviati=new JTextArea();  //textArea per la visualizzazione delle notifiche
@@ -262,9 +263,13 @@ public class Notifiche_GUI extends JFrame {
         }
         
         
-        
-        
-        
+        //Visualizzazione Notifiche Richieste 
+         
+         try {
+        	 
+         }catch(Exception e1){
+        	 
+         }
         
        // Aggiungi un listener per impostare le dimensioni del JScrollPane dopo che il frame Ã¨ visibile
         addComponentListener(new ComponentAdapter() {
