@@ -1,9 +1,6 @@
 package UninaSocialGroup;
 
 import java.sql.*;
-import UninaSocialGroup.Classi_DAO.*;
-import UninaSocialGroup.Classi_GUI.*;
-import UninaSocialGroup.Classi_Java.*;
 import java.util.ArrayList;
 import java.util.List;
 
