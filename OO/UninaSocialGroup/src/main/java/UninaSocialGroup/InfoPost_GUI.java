@@ -41,7 +41,7 @@ public class InfoPost_GUI extends JFrame {
 
 		BorderLayout bl_contentPane = new BorderLayout();
 		bl_contentPane.setHgap(10);
-		bl_contentPane.setVgap(10);
+		bl_contentPane.setVgap(20);
 		contentPane = new JPanel(bl_contentPane);
 		contentPane.setForeground(new Color(31, 31, 31));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -92,6 +92,7 @@ public class InfoPost_GUI extends JFrame {
 
 		JTextArea textAreaPost = new JTextArea(Res_Contenuto.getTesto());
 		textAreaPost.setEditable(false);
+		textAreaPost.setPreferredSize(new Dimension(0, 40));
 		textAreaPost.setBackground(UIManager.getColor("TextArea.background"));
 		textAreaPost.setForeground(UIManager.getColor("TextArea.foreground"));
 		textAreaPost.setLineWrap(true);

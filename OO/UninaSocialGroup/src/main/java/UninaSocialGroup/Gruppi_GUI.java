@@ -43,23 +43,25 @@ public class Gruppi_GUI extends JFrame {
 	private JPanel contentPane;
 
 	private String NewPost;
-	
+
 	private List<Contenuti> Res_Contenuti_Gruppi = new ArrayList<Contenuti>();
 	private Contenuti_DAO C = new Contenuti_DAO();
-	private ArrayList<JPannelloContenuti> ContenutiPanel = new ArrayList<>(); 
+	private ArrayList<JPannelloContenuti> ContenutiPanel = new ArrayList<>();
+	private Regolano_DAO P = new Regolano_DAO();
+	private Gruppi_DAO G = new Gruppi_DAO();
+	private Gruppi Gruppo;
+	private boolean checkAmm;
 
-	
-	
-	
 	private Color lightColorFont = new Color(0, 0, 0);
 	private Color lightColorInternalArea = new Color(244, 244, 244);
 
 	private Color AcctualColorFont = lightColorFont;
 	private Color AcctualtColorInternalArea = lightColorInternalArea;
 
-	
-	
 	public Gruppi_GUI(String NU, String NG) {
+
+		checkAmm = P.CheckRegola(NG, NU);
+		Gruppo = G.SelSigGruppo(NG);
 
 		// PANNELLI
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -74,16 +76,16 @@ public class Gruppi_GUI extends JFrame {
 		NomeGruppo.setForeground(new Color(0, 128, 255));
 		NomeGruppo.setText(NG);
 		NomeGruppo.setFont(new Font("Tahoma", Font.BOLD, 18));
-		NomeGruppo.setBounds(316, 29, 202, 38);
+		NomeGruppo.setBounds(270, 22, 202, 38);
 		contentPane.add(NomeGruppo);
-		
+
 		JPanel postsArea = new JPanel();
 		postsArea.setBackground(new Color(244, 244, 244));
 		postsArea.setBounds(140, 97, 573, 291);
 		postsArea.setLayout(null);
 
 		// BOTTONI
-		JButton Home = new JButton("ðŸ� ");
+		JButton Home = new JButton("🏠");
 		Home.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -99,17 +101,20 @@ public class Gruppi_GUI extends JFrame {
 		Home.setBounds(27, 22, 60, 53);
 		contentPane.add(Home);
 
-		JButton AggiungiPost = new JButton("âž•");
+		JButton AggiungiPost = new JButton("➕");
 		AggiungiPost.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				NewPost = JOptionPane.showInputDialog(AggiungiPost, "Cosa c'Ã¨ di nuovo?", "Aggiungi un post",
+				NewPost = JOptionPane.showInputDialog(AggiungiPost, "Cosa c'è di nuovo?", "Aggiungi un post",
 						JOptionPane.QUESTION_MESSAGE);
-				C.InsContenuto(null, NewPost, NG, NU);
-				
-				Gruppi_GUI.this.setVisible(false);
-				Gestione_Finestre GF = new Gestione_Finestre();
-				GF.GruppiGUI(NU, NG);
+
+				if (!NewPost.isEmpty()) {
+					C.InsContenuto(null, NewPost, NG, NU);
+
+					Gruppi_GUI.this.setVisible(false);
+					Gestione_Finestre GF = new Gestione_Finestre();
+					GF.GruppiGUI(NU, NG);
+				}
 
 			}
 
@@ -120,7 +125,7 @@ public class Gruppi_GUI extends JFrame {
 		AggiungiPost.setBounds(109, 22, 60, 53);
 		contentPane.add(AggiungiPost);
 
-		JButton Rimuovi_Post = new JButton("âž–");
+		JButton Rimuovi_Post = new JButton("🔃");
 		Rimuovi_Post.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -136,15 +141,13 @@ public class Gruppi_GUI extends JFrame {
 		Rimuovi_Post.setBounds(190, 22, 60, 53);
 		contentPane.add(Rimuovi_Post);
 
-		//SCROLLPANE PER OSPITARE TUTTI I CONTENUTI
+		// SCROLLPANE PER OSPITARE TUTTI I CONTENUTI
 		JScrollPane scrollPane = new JScrollPane(postsArea);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		scrollPane.setBounds(27, 97, 686, 291);
 		scrollPane.setVisible(true);
-
-		
 
 		Res_Contenuti_Gruppi = C.SelAllContenutiGruppo(NG);
 
@@ -155,33 +158,40 @@ public class Gruppi_GUI extends JFrame {
 
 		for (int i = 0; i < numbOfTxt; i++) {
 
-			JPannelloContenuti NewPostPanel = new JPannelloContenuti(
-					Res_Contenuti_Gruppi.get(i).getPubblicatore(), 
-					NU,
-					Res_Contenuti_Gruppi.get(i).getNome_Gruppo(), 
-					Res_Contenuti_Gruppi.get(i).getTesto(),
+			JPannelloContenuti NewPostPanel = new JPannelloContenuti(Res_Contenuti_Gruppi.get(i).getPubblicatore(), NU,
+					Res_Contenuti_Gruppi.get(i).getNome_Gruppo(), Res_Contenuti_Gruppi.get(i).getTesto(),
 					like_DAO.SelNumLike(Res_Contenuti_Gruppi.get(i).getId_Contenuto()),
-					commento_DAO.SelNumCommenti(Res_Contenuti_Gruppi.get(i).getId_Contenuto()), 
+					commento_DAO.SelNumCommenti(Res_Contenuti_Gruppi.get(i).getId_Contenuto()),
 					Res_Contenuti_Gruppi.get(i).getId_Contenuto());
-			
-			
+
 			NewPostPanel.textArea.setWrapStyleWord(false);
 			NewPostPanel.textArea.setEditable(false);
-			
+
 			ContenutiPanel.add(NewPostPanel);
-			
+
 			ContenutiPanel.get(i).setColors(AcctualtColorInternalArea, AcctualColorFont);
-			
+
 			postsArea.add(Box.createRigidArea(new Dimension(0, 10)));
 			postsArea.add(ContenutiPanel.get(i));
 		}
 
 		contentPane.add(scrollPane);
 
+		JLabel labelRuolo = new JLabel();
+		labelRuolo.setBounds(280, 61, 113, 14);
+		labelRuolo.setVisible(false);
+		contentPane.add(labelRuolo);
+
+		if (Gruppo.getCreatore().equals(NU)) {
+			labelRuolo.setText("Creatore");
+			labelRuolo.setVisible(true);
+		} else if (checkAmm) {
+			labelRuolo.setText("Amministratore");
+			labelRuolo.setVisible(true);
+		}
+
 		// ---------------
 
-		// Aggiungi un listener per impostare le dimensioni del JScrollPane dopo che il
-		// frame ÃƒÂ¨ visibile
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {

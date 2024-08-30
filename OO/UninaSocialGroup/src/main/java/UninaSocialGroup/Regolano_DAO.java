@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Regolano_DAO {
-	
+
 	// Insert in Regolano
 	public void InsAmministratore(String Nome_Utente, String Nome_Gruppo) {
 
@@ -18,12 +18,12 @@ public class Regolano_DAO {
 			Call.setString(2, Nome_Gruppo);
 			Call.execute();
 			System.out.println("Amministratore aggiunto al gruppo");
-			
+
 		} catch (Exception e) {
 			System.out.println("Errore");
-			
+
 		}
-		
+
 	}
 
 	// Delete su un Regolano
@@ -35,12 +35,12 @@ public class Regolano_DAO {
 			Call.setString(2, Nome_Utente);
 			Call.execute();
 			System.out.println("Amministratore eliminato");
-		
+
 		} catch (Exception e) {
 			System.out.println(e);
-			
+
 		}
-		
+
 	}
 
 	// Select tutti i gruppi dove regola l'utente
@@ -48,69 +48,105 @@ public class Regolano_DAO {
 
 		try {
 
-			ResultSet rs = Gestione_Finestre.DB.ExeQuery("SELECT * FROM REGOLANO WHERE FK_NOME_UTENTE = '" + Nome_Utente + "'");
+			ResultSet rs = Gestione_Finestre.DB
+					.ExeQuery("SELECT * FROM REGOLANO WHERE FK_NOME_UTENTE = '" + Nome_Utente + "'");
 
 			try {
 
 				List<Regolano> Rec_Regolano = new ArrayList<Regolano>();
-				
+
 				Regolano Stampa;
 
 				while (rs.next()) {
-					
-					Stampa =  new Regolano(rs.getString("FK_Nome_Utente"),rs.getString("FK_Nome_Gruppo"));
-					
+
+					Stampa = new Regolano(rs.getString("FK_Nome_Utente"), rs.getString("FK_Nome_Gruppo"));
+
 					Rec_Regolano.add(Stampa);
 					Stampa = null;
 				}
-				
+
 				return Rec_Regolano;
 
 			} catch (SQLException e) {
 				System.out.println("query fallita: " + e.getMessage());
-			
+
 				return null;
 			}
 
 		} catch (Exception e) {
 			System.out.println("Errore");
-			
+
 			return null;
 		}
 	}
 
 	// Select tutti gli amministratori di un gruppo
-	public List<Regolano> SelAllRegolanoGruppo(String Nome_Gruppo){
+	public List<Regolano> SelAllRegolanoGruppo(String Nome_Gruppo) {
 
 		try {
 
-			ResultSet rs = Gestione_Finestre.DB.ExeQuery("SELECT * FROM REGOLANO WHERE FK_NOME_GRUPPO = '" + Nome_Gruppo + "'" );
-			
+			ResultSet rs = Gestione_Finestre.DB
+					.ExeQuery("SELECT * FROM REGOLANO WHERE FK_NOME_GRUPPO = '" + Nome_Gruppo + "'");
+
 			try {
 				List<Regolano> Rec_Regolano = new ArrayList<Regolano>();
-				
+
 				Regolano Stampa;
 
 				while (rs.next()) {
-					Stampa =  new Regolano(rs.getString("FK_Nome_Utente"),rs.getString("FK_Nome_Gruppo"));
-					
+					Stampa = new Regolano(rs.getString("FK_Nome_Utente"), rs.getString("FK_Nome_Gruppo"));
+
 					Rec_Regolano.add(Stampa);
 					Stampa = null;
 				}
-				
-				
+
 				return Rec_Regolano;
 
 			} catch (SQLException e) {
 				System.out.println("query fallita: " + e.getMessage());
-				
+
 				return null;
 			}
 
 		} catch (Exception e) {
 			System.out.println("Errore");
-			
+
 			return null;
 		}
 	}
+
+	// Select tutti gli amministratori di un gruppo
+	public boolean CheckRegola(String Nome_Gruppo, String Nome_Utente) {
+
+		try {
+
+			ResultSet rs = Gestione_Finestre.DB.ExeQuery("SELECT COUNT(*) FROM REGOLANO WHERE FK_NOME_GRUPPO = '"
+					+ Nome_Gruppo + "'AND FK_NOME_UTENTE = '" + Nome_Utente + "'");
+
+			try {
+
+				if (rs.next()) {
+
+					if (rs.getInt(1) == 0) {
+						return false;
+					} else {
+						return true;
+					}
+
+				}
+
+			} catch (SQLException e) {
+				System.out.println("query fallita: " + e.getMessage());
+
+				return false;
+			}
+
+		} catch (Exception e) {
+			System.out.println("Errore");
+
+			return false;
+		}
+		return false;
+	}
+
 }
