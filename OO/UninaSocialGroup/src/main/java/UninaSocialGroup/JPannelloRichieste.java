@@ -22,23 +22,25 @@ public class JPannelloRichieste extends JPanel {
     JButton Accetta = new JButton("Accetta");
     JButton Rifiuta = new JButton("Rifiuta");
 
-    public JPannelloRichieste(String NU, String NG) {
+    public JPannelloRichieste(String NU, String NG, Notifiche N) { //Passa la singola notifica
         super(new BorderLayout());
 
         List<Notifiche> notificheR = Esitato.SelNoitificheRichiesteDiUnCreatore(NU);
 
         if (notificheR != null) {
-            for (Notifiche notifica : notificheR) {
-                NotificationText.append(notifica.getTesto() + "\n");
-                GroupText.append(notifica.getNome_Gruppo() + "\n");
-            }
+            
+                NotificationText.append(N.getTesto() + "\n"); //prende testo della notifica
+            
         } else {
             NotificationText.append("Nessuna notifica trovata.\n");
         }
 
         Accetta.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Esitato.Accetta_Richiesta(NG, NU);
+            	System.out.println(N.getRicevente());
+            	System.out.println(NG);
+                Esitato.Accetta_Richiesta(NG, N.getRicevente()); //Nome utente che manda la richiesta
+                setVisible(false);
             }
         });
         Accetta.setBackground(new Color(255, 255, 255));
@@ -47,7 +49,10 @@ public class JPannelloRichieste extends JPanel {
 
         Rifiuta.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Esitato.Rifiuta_Richiesta(NG, NU);
+            	System.out.println(N.getRicevente());
+            	System.out.println(NG);
+                Esitato.Rifiuta_Richiesta(NG, N.getRicevente()); //
+                setVisible(false);
             }
         });
         Rifiuta.setBackground(new Color(255, 255, 255));
