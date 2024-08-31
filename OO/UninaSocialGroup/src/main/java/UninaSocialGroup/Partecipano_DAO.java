@@ -40,23 +40,6 @@ public class Partecipano_DAO {
 		}
 		
 	}
-	
-	// Delete di tutti i Partecipano di un profilo su un gruppo
-		public void DelPartecipanoProfilo(String Nome_Utente, String Nome_Gruppo) {
-
-			try {
-				CallableStatement Call = Gestione_Finestre.DB.getC().prepareCall("CALL RIMOZIONE_Partecipano_PROFILO(?, ?)");
-				Call.setString(1, Nome_Utente);
-				Call.setString(2, Nome_Gruppo);
-				Call.execute();
-				System.out.println("Partecipano eliminato");
-			
-			} catch (Exception e) {
-				System.out.println(e);
-				
-			}
-			
-		}
 
 	// Select tutti i gruppi dove partecipa l'utente
 	public List<Partecipano> SelSigPartecipanoGruppo(String Nome_Utente) {

@@ -50,6 +50,7 @@ public class Gruppi_GUI extends JFrame {
 	private Regolano_DAO P = new Regolano_DAO();
 	private Gruppi_DAO G = new Gruppi_DAO();
 	private Gruppi Gruppo;
+	private boolean CkeckCreatore;
 	private boolean checkAmm;
 
 	private Color lightColorFont = new Color(0, 0, 0);
@@ -60,8 +61,11 @@ public class Gruppi_GUI extends JFrame {
 
 	public Gruppi_GUI(String NU, String NG) {
 
-		checkAmm = P.CheckRegola(NG, NU);
+		
 		Gruppo = G.SelSigGruppo(NG);
+		
+		checkAmm = P.CheckRegola(NG, NU);
+		CkeckCreatore = Gruppo.getCreatore().equals(NU);
 
 		// PANNELLI
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -182,7 +186,7 @@ public class Gruppi_GUI extends JFrame {
 		labelRuolo.setVisible(false);
 		contentPane.add(labelRuolo);
 
-		if (Gruppo.getCreatore().equals(NU)) {
+		if (CkeckCreatore) {
 			labelRuolo.setText("Creatore");
 			labelRuolo.setVisible(true);
 		} else if (checkAmm) {
