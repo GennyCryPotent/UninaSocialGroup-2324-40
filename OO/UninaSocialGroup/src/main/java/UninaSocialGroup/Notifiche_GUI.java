@@ -32,9 +32,6 @@ public class Notifiche_GUI extends JFrame {
         contentPane.setBackground(new Color(255, 255, 255));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
-        
-
-       
 
         JLabel NomeGruppo = new JLabel("Notifiche");
         NomeGruppo.setForeground(new Color(0, 128, 255));
@@ -68,18 +65,7 @@ public class Notifiche_GUI extends JFrame {
         panelRichieste.setBackground(new Color(255, 255, 255));
         Sezioni_Notifiche.addTab("Richieste", null, panelRichieste, null);
         
-        JScrollPane scrollPaneRichieste = new JScrollPane();
-        GroupLayout groupLayout = new GroupLayout(panelRichieste);
-        groupLayout.setHorizontalGroup(
-        	groupLayout.createParallelGroup(Alignment.LEADING)
-        		.addComponent(scrollPaneRichieste, GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
-        );
-        groupLayout.setVerticalGroup(
-        	groupLayout.createParallelGroup(Alignment.LEADING)
-        		.addComponent(scrollPaneRichieste, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
-        );
-        panelRichieste.setLayout(groupLayout);
-
+        
         // Pannello Archiviati
         JPanel panelArchiviati = new JPanel();
         panelArchiviati.setBackground(new Color(255, 255, 255));
@@ -164,7 +150,7 @@ public class Notifiche_GUI extends JFrame {
                                                        notifica.getData_Notifica() + "\n" +
                                                        "Gruppo: " + notifica.getNome_Gruppo() + "\n");
                                                         i++;
-                     System.out.println(dim);                  //numero di stampe
+                     System.out.println("Gruppi: " + dim);                  //numero di stampe
                    
                 
             }
@@ -213,18 +199,33 @@ public class Notifiche_GUI extends JFrame {
         List<Notifiche> notificheA = notificheDAOR.SelNoitificheArchiviate(NU); //list per le notifiche archiviate
         
         int dimArchiviati= notificheA.size();
-       
-        /*
-        for (int i = 0; i < dimArchiviati; i++) {
-            JTextArea textArea = new JTextArea("Archiviato " + i + " : esempio notifica " + i);
-            textArea.setLineWrap(true);
-            textArea.setWrapStyleWord(false);
-            textArea.setEditable(false);
-            archiviatiLabel.add(textArea);
-            contentPaneForArchiviati.add(textArea);
-            contentPaneForArchiviati.add(Box.createRigidArea(new Dimension(0, 10))); // Aggiungi spazio tra gli archiviati
-        }
-        */
+        
+        JPanel contentPaneForRichieste = new JPanel();
+        contentPaneForRichieste.setBackground(new Color(255, 255, 255));
+        contentPaneForRichieste.setBorder(new EmptyBorder(5, 5, 5, 5));
+        contentPaneForRichieste.setLayout(new BoxLayout(contentPaneForRichieste, BoxLayout.Y_AXIS));
+ 
+        
+        JScrollPane scrollPaneRichieste = new JScrollPane(contentPaneForRichieste);
+        scrollPaneRichieste.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPaneRichieste.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPaneRichieste.setBorder(new EmptyBorder(5, 5, 5, 5));
+        GroupLayout groupLayout = new GroupLayout(panelRichieste);
+        groupLayout.setHorizontalGroup(
+        	groupLayout.createParallelGroup(Alignment.LEADING)
+        		.addComponent(scrollPaneRichieste, GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
+        );
+        groupLayout.setVerticalGroup(
+        	groupLayout.createParallelGroup(Alignment.LEADING)
+        		.addComponent(scrollPaneRichieste, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
+        );
+        panelRichieste.setLayout(groupLayout);
+     
+        
+		revalidate();
+		repaint();
+
+        
         
          //Visualizzazione Notifiche archiviate
          try {
@@ -243,7 +244,7 @@ public class Notifiche_GUI extends JFrame {
                                                        "Gruppo: " + notifica.getNome_Gruppo() + "\n"
                                                         );
                                                         i++;
-                     System.out.println(dimArchiviati);                  //numero di stampe
+                     System.out.println("Archiviati: " + dimArchiviati);                  //numero di stampe
                    
                 
             }
@@ -263,12 +264,37 @@ public class Notifiche_GUI extends JFrame {
         }
         
         
-        //Visualizzazione Notifiche Richieste 
-         
+      // Visualizzazione Notifiche Richieste 
+         List<Notifiche> notificheRichieste = notificheDAOR.SelNoitificheRichiesteDiUnCreatore(NU);
+
+         int DimRichieste = notificheRichieste.size();
+
+         ArrayList<JPannelloRichieste> TestiLabel = new ArrayList<>();
+         Gestione_Finestre RecuperaGruppo = new Gestione_Finestre();
+
          try {
-        	 
-         }catch(Exception e1){
-        	 
+        	 System.out.println("Richieste: " + DimRichieste);
+             for (int i = 0; i < DimRichieste; i++) {
+            	 
+            	 System.out.println("Richieste: " + DimRichieste);
+            	 
+                 Notifiche notifica = notificheRichieste.get(i);
+                 JPannelloRichieste NotPanel = new JPannelloRichieste(NU, "Fantacalcio");
+
+                 NotPanel.NotificationText.append(notifica.getTesto());
+
+                 NotPanel.NotificationText.setWrapStyleWord(false);
+                 NotPanel.NotificationText.setEditable(false);
+                 TestiLabel.add(NotPanel);
+
+                 NotPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+                 NotPanel.add(TestiLabel.get(i));
+
+                 contentPaneForRichieste.add(NotPanel);
+                
+             }
+         } catch (Exception e1) {
+             System.out.println("Errore: " + e1.getMessage());
          }
         
        // Aggiungi un listener per impostare le dimensioni del JScrollPane dopo che il frame Ã¨ visibile
@@ -302,12 +328,54 @@ public class Notifiche_GUI extends JFrame {
                 
             contentPane.revalidate();
             contentPane.repaint();
+            
             }
             
-            
-            
-            
-            
+         /*   addComponentListener(new ComponentAdapter() {
+    			@Override
+    			public void componentResized(ComponentEvent e) {
+
+    				int contentHeight = 0;
+    				// Posiziona correttamente le notifiche
+    				for (int i = 0; i < numbOfPosts; i++) {
+    					if (i == 0) {
+
+    						TestiLabel.get(i).setBounds(10, 10, (int) TestiLabel.get(i).getPreferredSize().width,
+    								TestiLabel.get(i).getPreferredSize().height); // Imposta le dimensioni desiderate
+    					} else {
+    						System.out.println(TestiLabel.get(i).getBounds());
+    						TestiLabel.get(i).setBounds(10,
+    								(int) (TestiLabel.get(i - 1).getBounds().getY()
+    										+ TestiLabel.get(i - 1).getPreferredSize().getHeight() + 10),
+    								(int) TestiLabel.get(i).getPreferredSize().width,
+    								TestiLabel.get(i).getPreferredSize().height); // Imposta le dimensioni desiderate
+
+    					}
+    					// crea la giusta dimensione per ContentPaneForContent che permette di fare lo
+    					// scrollbar delle giuste dimensioni
+    					contentHeight += (TestiLabel.get(i).getHeight() + 10);
+
+    					// Colori
+    					TestiLabel.get(i).setColors(AcctualtColorInternalArea, AcctualColorFont);
+    				}
+
+    				// Aggiorna la dimensione preferita del contenitore in base all'effettiva
+    				// altezza di tutti gli elementi
+    				postsArea.setPreferredSize(new Dimension(PostsScrollPane.getWidth() - 27, contentHeight));
+
+    				postsArea.revalidate();
+    				postsArea.repaint();
+
+    				PostsScrollPane.revalidate();
+    				PostsScrollPane.repaint();
+
+    				contentPane.revalidate();
+    				contentPane.repaint();
+    			}
+
+    	
+    		*/
+        
         }); 
         
         

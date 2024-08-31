@@ -103,6 +103,7 @@ public class Gestione_Finestre {
 	  public void LoginGUI() {
 		  Login = new Login_GUI();
 		  Login.setVisible(true);
+		  
 	  }
 	  
 }
