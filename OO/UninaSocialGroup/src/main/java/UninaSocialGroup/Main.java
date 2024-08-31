@@ -11,7 +11,7 @@ public class Main{
 		int n;
 		Gestione_Finestre.DB.connect();
 		List<Notifiche> Res_Notifiche = new ArrayList<Notifiche>();
-		Notifiche_Gruppi_DAO GD = new Notifiche_Gruppi_DAO();
+		Notifiche_Richieste_DAO GD = new Notifiche_Richieste_DAO();
 		
 	
 
@@ -29,7 +29,7 @@ public class Main{
 //		n = GD.SelNumNotifiche(4);
 //		 System.out.println("Numero Notifiche: " + n);
 		
-		Res_Notifiche = GD.SelNotifiche("Gabbo");
+		Res_Notifiche = GD.SelNoitificheRichiesteDiUnCreatore("Genny03cry");
 		
 		for(int i=0; i<Res_Notifiche.size(); i++) {
 			Notifiche R;

@@ -16,8 +16,6 @@ public class Notifiche_GUI extends JFrame {
     private static final long serialVersionUID = 1L;
 	
     private JPanel contentPane;
-    private JPanel contentPaneForContent;
-    private JScrollPane scrollPane;
     Notifiche_Gruppi_DAO notificheDAOG = new Notifiche_Gruppi_DAO();
     Notifiche_Richieste_DAO notificheDAOR = new Notifiche_Richieste_DAO();
   
@@ -268,6 +266,7 @@ public class Notifiche_GUI extends JFrame {
          List<Notifiche> notificheRichieste = notificheDAOR.SelNoitificheRichiesteDiUnCreatore(NU);
 
          int DimRichieste = notificheRichieste.size();
+         System.out.println("Richieste: " + DimRichieste);
 
          ArrayList<JPannelloRichieste> TestiLabel = new ArrayList<>();
          Gestione_Finestre RecuperaGruppo = new Gestione_Finestre();
@@ -275,8 +274,6 @@ public class Notifiche_GUI extends JFrame {
          try {
         	 System.out.println("Richieste: " + DimRichieste);
              for (int i = 0; i < DimRichieste; i++) {
-            	 
-            	 System.out.println("Richieste: " + DimRichieste);
             	 
                  Notifiche notifica = notificheRichieste.get(i);
                  JPannelloRichieste NotPanel = new JPannelloRichieste(NU, "Fantacalcio");

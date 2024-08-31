@@ -56,12 +56,9 @@ public class Home_GUI extends JFrame {
 	private JPanel contentPaneNorthWest;
 	private JPanel contentPaneNorthCenter;
 
-	private String NU; // Nome Utente
 	private String NG; // Nome Gruppo
 	private String trova; // cio che si trova nella textfield della ricerca
 	private boolean darkMode = false;
-	private JScrollPane PostsScrollPane;
-
 	private Color darkColorBG = new Color(27, 27, 27);
 	private Color darkColorButton = new Color(15, 15, 15);
 	private Color darkColorFont = new Color(255, 255, 255);

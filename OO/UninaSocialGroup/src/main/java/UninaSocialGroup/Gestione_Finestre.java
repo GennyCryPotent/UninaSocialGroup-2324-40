@@ -43,7 +43,7 @@ public class Gestione_Finestre {
 			public void run() {
 				try {
 					DB.connect();
-					Home_GUI frame = new Home_GUI("Genny03cry");
+					Home_GUI frame = new Home_GUI("Gabbo");
 					//Login_GUI frame = new Login_GUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
