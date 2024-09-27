@@ -1,15 +1,9 @@
 package UninaSocialGroup;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.SpringLayout;
 import javax.swing.JButton;
@@ -18,38 +12,22 @@ import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
 import java.awt.Color;
-import javax.swing.ImageIcon;
-import java.awt.Font;
 
 public class Login_GUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField NomeUtente;
-	private JPasswordField passwordField;
+	public JTextField NomeUtente;
+	public JPasswordField passwordField;
 	private JLabel Password;
-	private Gestione_Finestre Accesso = new Gestione_Finestre();  //passaggio nel gestore delle finestre
-    public String NU;   //variabile per nome utente
-    private String PSW; //variabile per password
-    private Profili_DAO Pass = new Profili_DAO();
-    private JButton btnRegistrati;
- 
-    
-    
-	/**
-	 * Launch the application.
-	 */
-
-	/**
-	 * Create the frame.
-	 */
+	public String NU; // variabile per nome utente
+	private JButton btnRegistrati;
 	
+	private LoginController LC = new LoginController(Login_GUI.this);
+
 	public Login_GUI() {
-		
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 400);
 		contentPane = new JPanel();
@@ -59,49 +37,22 @@ public class Login_GUI extends JFrame {
 		setContentPane(contentPane);
 		SpringLayout sl_contentPane = new SpringLayout();
 		contentPane.setLayout(sl_contentPane);
-		
-		
-		
+
 		JButton accedi = new JButton("Accedi");
 		sl_contentPane.putConstraint(SpringLayout.EAST, accedi, -313, SpringLayout.EAST, contentPane);
 		accedi.setForeground(new Color(0, 128, 255));
 		accedi.setBackground(new Color(255, 255, 255));
 		accedi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				NU=NomeUtente.getText();
-				PSW= new String (passwordField.getPassword()); 
-				
-				try {
-				String passaggio = Pass.SelSigProfilo(NU).getPassword();
-				String NomeU = Pass.SelSigProfilo(NU).getNome_Utente();
-					
-				     if(PSW.compareTo(passaggio)==0 && NU.compareTo(NomeU)==0) {
-			        	 
-					     Login_GUI.this.setVisible(false);  //
-			        	 Accesso.AccessoHome(NU);
-			        	 
-			         }else {
-			        	 
-			        	 JOptionPane.showMessageDialog(null, "Controlla Nome Utente e Password", "Credenziali errate", JOptionPane.WARNING_MESSAGE );
-			         }
-				
-				
-				}catch(Exception e1){
-					JOptionPane.showMessageDialog(null, "Controlla Nome Utente e Password", "Credenziali errate", JOptionPane.WARNING_MESSAGE );
-					
-					
-				}				
-				
-		         
+				LC.ActionAccedi();
 			}
 		});
 		contentPane.add(accedi);
-		
+
 		NomeUtente = new JTextField();
 		contentPane.add(NomeUtente);
 		NomeUtente.setColumns(10);
-		
+
 		passwordField = new JPasswordField();
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, passwordField, -118, SpringLayout.SOUTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.NORTH, accedi, 36, SpringLayout.SOUTH, passwordField);
@@ -110,32 +61,31 @@ public class Login_GUI extends JFrame {
 		sl_contentPane.putConstraint(SpringLayout.WEST, passwordField, 225, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.EAST, passwordField, 331, SpringLayout.WEST, contentPane);
 		contentPane.add(passwordField);
-		
+
 		JLabel lblNewLabel = new JLabel("Nome Utente");
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblNewLabel, 3, SpringLayout.NORTH, NomeUtente);
 		contentPane.add(lblNewLabel);
-		
+
 		Password = new JLabel("Password");
 		sl_contentPane.putConstraint(SpringLayout.WEST, Password, 146, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.EAST, Password, -11, SpringLayout.WEST, passwordField);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblNewLabel, 0, SpringLayout.WEST, Password);
 		sl_contentPane.putConstraint(SpringLayout.NORTH, Password, 3, SpringLayout.NORTH, passwordField);
 		contentPane.add(Password);
-		
+
 		ImageIcon highResIcon = new ImageIcon("C:\\Users\\pc\\Downloads\\th (11).png");
-		
+
 		JLabel lblNewLabel_2 = new JLabel(highResIcon);
 		sl_contentPane.putConstraint(SpringLayout.WEST, accedi, 0, SpringLayout.WEST, lblNewLabel_2);
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblNewLabel_2, 0, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblNewLabel_2, 187, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblNewLabel_2, -11, SpringLayout.NORTH, NomeUtente);
 		contentPane.add(lblNewLabel_2);
-		
+
 		btnRegistrati = new JButton("Registrati");
 		btnRegistrati.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Login_GUI.this.setVisible(false);  
-				Accesso.RegistrazioneGUI();
+				LC.ActionRegistrati();
 			}
 		});
 		sl_contentPane.putConstraint(SpringLayout.WEST, btnRegistrati, 6, SpringLayout.EAST, accedi);
@@ -144,14 +94,5 @@ public class Login_GUI extends JFrame {
 		btnRegistrati.setBackground(Color.WHITE);
 		contentPane.add(btnRegistrati);
 
-		
-        
-
-		
-		
-
-	       
-	        
-	      
 	}
 }
