@@ -74,14 +74,11 @@ public class Gruppi_GUI extends JFrame {
 		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 
 		JLabel NomeGruppo = new JLabel();
 		NomeGruppo.setForeground(new Color(0, 128, 255));
 		NomeGruppo.setText(NG);
 		NomeGruppo.setFont(new Font("Tahoma", Font.BOLD, 18));
-		NomeGruppo.setBounds(270, 22, 202, 38);
-		contentPane.add(NomeGruppo);
 
 		JPanel postsArea = new JPanel();
 		postsArea.setBackground(new Color(244, 244, 244));
@@ -102,8 +99,6 @@ public class Gruppi_GUI extends JFrame {
 		Home.setForeground(new Color(0, 128, 255));
 		Home.setFont(new Font("Dialog", Font.PLAIN, 18));
 		Home.setBackground(Color.WHITE);
-		Home.setBounds(27, 22, 60, 53);
-		contentPane.add(Home);
 
 		JButton AggiungiPost = new JButton("➕");
 		AggiungiPost.addActionListener(new ActionListener() {
@@ -126,8 +121,6 @@ public class Gruppi_GUI extends JFrame {
 		AggiungiPost.setForeground(new Color(0, 128, 255));
 		AggiungiPost.setFont(new Font("Dialog", Font.PLAIN, 18));
 		AggiungiPost.setBackground(Color.WHITE);
-		AggiungiPost.setBounds(109, 22, 60, 53);
-		contentPane.add(AggiungiPost);
 
 		JButton Rimuovi_Post = new JButton("🔃");
 		Rimuovi_Post.addActionListener(new ActionListener() {
@@ -142,15 +135,12 @@ public class Gruppi_GUI extends JFrame {
 		Rimuovi_Post.setForeground(new Color(0, 128, 255));
 		Rimuovi_Post.setFont(new Font("Dialog", Font.PLAIN, 18));
 		Rimuovi_Post.setBackground(Color.WHITE);
-		Rimuovi_Post.setBounds(190, 22, 60, 53);
-		contentPane.add(Rimuovi_Post);
 
 		// SCROLLPANE PER OSPITARE TUTTI I CONTENUTI
 		JScrollPane scrollPane = new JScrollPane(postsArea);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		scrollPane.setBounds(27, 97, 686, 291);
 		scrollPane.setVisible(true);
 
 		Res_Contenuti_Gruppi = C.SelAllContenutiGruppo(NG);
@@ -179,12 +169,44 @@ public class Gruppi_GUI extends JFrame {
 			postsArea.add(ContenutiPanel.get(i));
 		}
 
-		contentPane.add(scrollPane);
-
 		JLabel labelRuolo = new JLabel();
-		labelRuolo.setBounds(280, 61, 113, 14);
 		labelRuolo.setVisible(false);
-		contentPane.add(labelRuolo);
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup( 
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(22)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(Home, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+							.addGap(22)
+							.addComponent(AggiungiPost, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+							.addGap(21)
+							.addComponent(Rimuovi_Post, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+							.addGap(20)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(NomeGruppo, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(10)
+									.addComponent(labelRuolo, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE))))
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 90 , GroupLayout.DEFAULT_SIZE)))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(17)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(Home, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+						.addComponent(AggiungiPost, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+						.addComponent(Rimuovi_Post, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(NomeGruppo, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+							.addGap(1)
+							.addComponent(labelRuolo, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)))
+					.addGap(22)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 291, GroupLayout.DEFAULT_SIZE))
+		);
+		contentPane.setLayout(gl_contentPane);
 
 		if (CkeckCreatore) {
 			labelRuolo.setText("Creatore");

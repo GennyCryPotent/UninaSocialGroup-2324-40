@@ -156,9 +156,13 @@ public class Notifiche_GUI extends JFrame {
         panelRichieste.add(scrollPaneRichieste, BorderLayout.CENTER);
 
         List<Notifiche> notificheRichieste = notificheDAOR.SelNoitificheRichiesteDiUnCreatore(NU);
-
+        
+        System.out.println("Notifiche R trovate: " + notificheRichieste.size());
+        
         if (notificheRichieste != null && !notificheRichieste.isEmpty()) {
+        	System.out.println("Notifiche trovate: " + notificheRichieste.size());
             for (Notifiche notifica : notificheRichieste) {
+            	System.out.println("Notifiche trovate: " + notificheRichieste.size());
                 JPannelloRichieste notPanel = new JPannelloRichieste(NU, notifica.getNome_Gruppo(), notifica); //Passa la singola notifica e il nome del gruppo
                 notPanel.NotificationText.setWrapStyleWord(true);
                 notPanel.NotificationText.setEditable(false);

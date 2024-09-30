@@ -12,6 +12,7 @@ import java.util.List;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Component;
+import java.awt.Rectangle;
 
 public class JPannelloRichieste extends JPanel {
     private Notifiche_Richieste_DAO Esitato = new Notifiche_Richieste_DAO();
@@ -61,6 +62,7 @@ public class JPannelloRichieste extends JPanel {
         Rifiuta.setForeground(new Color(0, 0, 0));
 
         secondPanel.setLayout(new BoxLayout(secondPanel, BoxLayout.X_AXIS));
+        secondPanel.setBounds(new Rectangle(21, 8, 13, 8));
         secondPanel.add(Accetta);
         secondPanel.add(Rifiuta);
 
@@ -71,7 +73,7 @@ public class JPannelloRichieste extends JPanel {
         thirdPanel.add(GroupText);
 
         this.add(thirdPanel, BorderLayout.NORTH);
-        this.add(secondPanel, BorderLayout.SOUTH);
+        this.add(secondPanel, BorderLayout.EAST);
     }
 }
 
