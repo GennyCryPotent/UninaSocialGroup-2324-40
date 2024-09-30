@@ -1,41 +1,24 @@
 package UninaSocialGroup;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JToolBar;
 import javax.swing.JButton;
-import javax.swing.ScrollPaneConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.awt.event.ActionEvent;
-import javax.swing.JTextArea;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JPopupMenu;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JLayeredPane;
-import javax.swing.JInternalFrame;
-import java.awt.BorderLayout;
-
+import java.awt.event.ActionEvent;
 import javax.swing.Box;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class Gruppi_GUI extends JFrame {
 
@@ -43,6 +26,7 @@ public class Gruppi_GUI extends JFrame {
 	private JPanel contentPane;
 
 	private String NewPost;
+	private GruppiController GC = new GruppiController(Gruppi_GUI.this);
 
 	private List<Contenuti> Res_Contenuti_Gruppi = new ArrayList<Contenuti>();
 	private Contenuti_DAO C = new Contenuti_DAO();
@@ -61,9 +45,8 @@ public class Gruppi_GUI extends JFrame {
 
 	public Gruppi_GUI(String NU, String NG) {
 
-		
 		Gruppo = G.SelSigGruppo(NG);
-		
+
 		checkAmm = P.CheckRegola(NG, NU);
 		CkeckCreatore = Gruppo.getCreatore().equals(NU);
 
@@ -89,11 +72,7 @@ public class Gruppi_GUI extends JFrame {
 		JButton Home = new JButton("🏠");
 		Home.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				Gruppi_GUI.this.setVisible(false);
-				Gestione_Finestre V = new Gestione_Finestre();
-				V.AccessoHome(NU);
-
+				GC.ActionHome(NU);
 			}
 		});
 		Home.setForeground(new Color(0, 128, 255));
@@ -103,18 +82,9 @@ public class Gruppi_GUI extends JFrame {
 		JButton AggiungiPost = new JButton("➕");
 		AggiungiPost.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				NewPost = JOptionPane.showInputDialog(AggiungiPost, "Cosa c'è di nuovo?", "Aggiungi un post",
 						JOptionPane.QUESTION_MESSAGE);
-
-				if (!NewPost.isEmpty()) {
-					C.InsContenuto(null, NewPost, NG, NU);
-
-					Gruppi_GUI.this.setVisible(false);
-					Gestione_Finestre GF = new Gestione_Finestre();
-					GF.GruppiGUI(NU, NG);
-				}
-
+				GC.ActionPost(NU, NG, NewPost);
 			}
 
 		});
@@ -125,11 +95,7 @@ public class Gruppi_GUI extends JFrame {
 		JButton Rimuovi_Post = new JButton("🔃");
 		Rimuovi_Post.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				Gruppi_GUI.this.setVisible(false);
-				Gestione_Finestre V = new Gestione_Finestre();
-				V.Elimina_Contenuto(NU, NG);
-
+				GC.ActionModifica(NU, NG);
 			}
 		});
 		Rimuovi_Post.setForeground(new Color(0, 128, 255));
@@ -141,71 +107,40 @@ public class Gruppi_GUI extends JFrame {
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		scrollPane.setBounds(27, 97, 686, 291);
 		scrollPane.setVisible(true);
+		contentPane.add(scrollPane);
 
-		Res_Contenuti_Gruppi = C.SelAllContenutiGruppo(NG);
-
-		Likes_DAO like_DAO = new Likes_DAO();
-		Commenti_DAO commento_DAO = new Commenti_DAO();
-
-		int numbOfTxt = Res_Contenuti_Gruppi.size();
-
-		for (int i = 0; i < numbOfTxt; i++) {
-
-			JPannelloContenuti NewPostPanel = new JPannelloContenuti(Res_Contenuti_Gruppi.get(i).getPubblicatore(), NU,
-					Res_Contenuti_Gruppi.get(i).getNome_Gruppo(), Res_Contenuti_Gruppi.get(i).getTesto(),
-					like_DAO.SelNumLike(Res_Contenuti_Gruppi.get(i).getId_Contenuto()),
-					commento_DAO.SelNumCommenti(Res_Contenuti_Gruppi.get(i).getId_Contenuto()),
-					Res_Contenuti_Gruppi.get(i).getId_Contenuto());
-
-			NewPostPanel.textArea.setWrapStyleWord(false);
-			NewPostPanel.textArea.setEditable(false);
-
-			ContenutiPanel.add(NewPostPanel);
-
-			ContenutiPanel.get(i).setColors(AcctualtColorInternalArea, AcctualColorFont);
-
-			postsArea.add(Box.createRigidArea(new Dimension(0, 10)));
-			postsArea.add(ContenutiPanel.get(i));
-		}
+		recuperaPostGruppo(NG, NU, postsArea, scrollPane); //Recupera tutti  i post
 
 		JLabel labelRuolo = new JLabel();
 		labelRuolo.setVisible(false);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup( 
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(22)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(Home, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-							.addGap(22)
-							.addComponent(AggiungiPost, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-							.addGap(21)
-							.addComponent(Rimuovi_Post, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-							.addGap(20)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+		gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPane
+				.createSequentialGroup().addGap(22)
+				.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPane
+						.createSequentialGroup()
+						.addComponent(Home, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE).addGap(22)
+						.addComponent(AggiungiPost, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+						.addGap(21)
+						.addComponent(Rimuovi_Post, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+						.addGap(20)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(NomeGruppo, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGap(10)
-									.addComponent(labelRuolo, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE))))
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 90 , GroupLayout.DEFAULT_SIZE)))
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(17)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup().addGap(10).addComponent(labelRuolo,
+										GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE))))
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 90, GroupLayout.DEFAULT_SIZE))));
+		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPane
+				.createSequentialGroup().addGap(17)
+				.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addComponent(Home, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
 						.addComponent(AggiungiPost, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
 						.addComponent(Rimuovi_Post, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(NomeGruppo, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-							.addGap(1)
-							.addComponent(labelRuolo, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)))
-					.addGap(22)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 291, GroupLayout.DEFAULT_SIZE))
-		);
+								.addComponent(NomeGruppo, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+								.addGap(1)
+								.addComponent(labelRuolo, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)))
+				.addGap(22).addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 291, GroupLayout.DEFAULT_SIZE)));
 		contentPane.setLayout(gl_contentPane);
 
 		if (CkeckCreatore) {
@@ -224,7 +159,7 @@ public class Gruppi_GUI extends JFrame {
 
 				int contentHeight = 0;
 				// Posiziona correttamente le notifiche
-				for (int i = 0; i < numbOfTxt; i++) {
+				for (int i = 0; i < ContenutiPanel.size(); i++) {
 					if (i == 0) {
 
 						ContenutiPanel.get(i).setBounds(10, 10, (int) ContenutiPanel.get(i).getPreferredSize().width,
@@ -258,5 +193,34 @@ public class Gruppi_GUI extends JFrame {
 
 		});
 
+	}
+
+	// Funzione per recuperare i post del gruppo
+	private void recuperaPostGruppo(String NG, String NU, JPanel postsArea, JScrollPane scrollPane) {
+		Res_Contenuti_Gruppi = C.SelAllContenutiGruppo(NG);
+
+		Likes_DAO like_DAO = new Likes_DAO();
+		Commenti_DAO commento_DAO = new Commenti_DAO();
+
+		int numbOfTxt = Res_Contenuti_Gruppi.size();
+
+		for (int i = 0; i < numbOfTxt; i++) {
+
+			JPannelloContenuti NewPostPanel = new JPannelloContenuti(Res_Contenuti_Gruppi.get(i).getPubblicatore(), NU,
+					Res_Contenuti_Gruppi.get(i).getNome_Gruppo(), Res_Contenuti_Gruppi.get(i).getTesto(),
+					like_DAO.SelNumLike(Res_Contenuti_Gruppi.get(i).getId_Contenuto()),
+					commento_DAO.SelNumCommenti(Res_Contenuti_Gruppi.get(i).getId_Contenuto()),
+					Res_Contenuti_Gruppi.get(i).getId_Contenuto());
+
+			NewPostPanel.textArea.setWrapStyleWord(false);
+			NewPostPanel.textArea.setEditable(false);
+
+			ContenutiPanel.add(NewPostPanel);
+
+			ContenutiPanel.get(i).setColors(AcctualtColorInternalArea, AcctualColorFont);
+
+			postsArea.add(Box.createRigidArea(new Dimension(0, 10)));
+			postsArea.add(ContenutiPanel.get(i));
+		}
 	}
 }
