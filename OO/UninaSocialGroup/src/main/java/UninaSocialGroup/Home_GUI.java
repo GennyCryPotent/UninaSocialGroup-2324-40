@@ -106,7 +106,7 @@ public class Home_GUI extends JFrame {
 		// Notifiche.setBounds(27, 22, 60, 53);
 		contentPaneNorthWest.add(Notifiche, BorderLayout.WEST);
 
-		JButton Report = new JButton("😍");
+		JButton Report = new JButton("📈");
 		Report.setContentAreaFilled(false);
 		Report.setBorderPainted(false);
 		Report.addActionListener(new ActionListener() {
