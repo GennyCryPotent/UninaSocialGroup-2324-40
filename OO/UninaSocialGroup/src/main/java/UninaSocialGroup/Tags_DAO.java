@@ -100,4 +100,41 @@ public class Tags_DAO {
 			return null;
 		}
 	}
+	
+	// Select tutti i tags
+	public List<String> SelAllTags_String() {
+
+		try {
+
+			ResultSet rs = Gestione_Finestre.DB.ExeQuery("SELECT * FROM TAGS");
+
+			try {
+				List<String> Rec_Tags = new ArrayList<String>();
+
+				String Stampa;
+
+				while (rs.next()) {
+					Stampa = new String(rs.getString("Parola"));
+
+					Rec_Tags.add(Stampa);
+					Stampa = null;
+				}
+				
+				//String[] ret = Rec_Tags.toArray(new String[0]);;
+
+				return Rec_Tags;
+
+			} catch (SQLException e) {
+				System.out.println("query fallita");
+
+				return null;
+			}
+
+		} catch (Exception e) {
+			System.out.println("Errore");
+
+			return null;
+		}
+	}
+	
 }
