@@ -82,6 +82,7 @@ public class Gruppi_GUI extends JFrame {
 		JButton AggiungiPost = new JButton("➕");
 		AggiungiPost.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 				NewPost = JOptionPane.showInputDialog(AggiungiPost, "Cosa c'è di nuovo?", "Aggiungi un post",
 						JOptionPane.QUESTION_MESSAGE);
 				GC.ActionPost(NU, NG, NewPost);

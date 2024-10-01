@@ -17,6 +17,7 @@ public class Gestione_Finestre {
 	private InfoPost_GUI InfoPost;
 	private Registrazione_GUI Registrazione;
 	private Login_GUI Login;
+	private Ricerca_GUI Ricerca;
 	
 	//public static DB_Connection DB = new DB_Connection("jdbc:oracle:thin:@localhost:1521:ORCL", "system", "Unina@03"); //portatile genny
 	//public static DB_Connection DB = new DB_Connection("jdbc:oracle:thin:@Gennaro.homenet.telecomitalia.it:1521:xe", "system", "Database@03"); //Fisso Genny
@@ -104,6 +105,11 @@ public class Gestione_Finestre {
 		  Login = new Login_GUI();
 		  Login.setVisible(true);
 		  
+	  }
+	  
+	  public void RicercaGUI() {
+		  Ricerca = new Ricerca_GUI();
+		  Ricerca.setVisible(true);
 	  }
 	  
 }
