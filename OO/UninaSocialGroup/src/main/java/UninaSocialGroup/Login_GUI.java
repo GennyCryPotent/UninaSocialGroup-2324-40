@@ -77,20 +77,20 @@ public class Login_GUI extends JFrame {
 		ImageIcon highResIcon = new ImageIcon(getClass().getResource("image.png"));
 
 		JLabel icona = new JLabel(highResIcon);
-		sl_contentPane.putConstraint(SpringLayout.WEST, accedi, 0, SpringLayout.WEST, icona);
+		sl_contentPane.putConstraint(SpringLayout.WEST, accedi, -20, SpringLayout.WEST, icona);
 		sl_contentPane.putConstraint(SpringLayout.NORTH, icona, 0, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, icona, 215, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, icona, -11, SpringLayout.NORTH, NomeUtente);
 		contentPane.add(icona);
 
 		btnRegistrati = new JButton("Registrati");
+		sl_contentPane.putConstraint(SpringLayout.NORTH, btnRegistrati, 36, SpringLayout.SOUTH, passwordField);
+		sl_contentPane.putConstraint(SpringLayout.WEST, btnRegistrati, 1, SpringLayout.EAST, accedi);
 		btnRegistrati.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LC.ActionRegistrati();
 			}
 		});
-		sl_contentPane.putConstraint(SpringLayout.WEST, btnRegistrati, 6, SpringLayout.EAST, accedi);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnRegistrati, 0, SpringLayout.SOUTH, accedi);
 		btnRegistrati.setForeground(new Color(0, 128, 255));
 		btnRegistrati.setBackground(Color.WHITE);
 		contentPane.add(btnRegistrati);
