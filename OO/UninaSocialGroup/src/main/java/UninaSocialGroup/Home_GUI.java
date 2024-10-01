@@ -192,15 +192,6 @@ public class Home_GUI extends JFrame {
 		postsArea.setBackground(AcctualtColorInternalArea);
 		postsArea.setLayout(null);
 
-		/*String[] GruppiRicerca = { "Fantacalcio", "SSC_Napoli_Ultras", "Dungeons N Dragons", "Amanti del Cinema",
-				"Fotografia per Passione", "Viaggiatori del Mondo", "Cucinare con Amore", "Appassionati di Tecnologia",
-				"Libri e Letteratura", "Amici degli Animali", "Fitness e Benessere", "Musica per tutti" };
-
-		JComboBox Ricerca = new JComboBox(GruppiRicerca);
-		Ricerca.setEditable(true);
-		Ricerca.setBorder(new EmptyBorder(10, 10, 10, 0));
-		contentPaneNorthCenter.add(Ricerca);
-		Ricerca.getSelectedItem();*/
 		
 		contentPaneNorthCenter.add(ricercaButton);
 
