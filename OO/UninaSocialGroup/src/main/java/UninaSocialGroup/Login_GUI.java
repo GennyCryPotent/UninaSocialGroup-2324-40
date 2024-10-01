@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import java.awt.Color;
+import java.awt.MediaTracker;
 
 public class Login_GUI extends JFrame {
 
@@ -73,14 +74,14 @@ public class Login_GUI extends JFrame {
 		sl_contentPane.putConstraint(SpringLayout.NORTH, Password, 3, SpringLayout.NORTH, passwordField);
 		contentPane.add(Password);
 
-		ImageIcon highResIcon = new ImageIcon("C:\\Users\\pc\\Downloads\\th (11).png");
+		ImageIcon highResIcon = new ImageIcon(getClass().getResource("image.png"));
 
-		JLabel lblNewLabel_2 = new JLabel(highResIcon);
-		sl_contentPane.putConstraint(SpringLayout.WEST, accedi, 0, SpringLayout.WEST, lblNewLabel_2);
-		sl_contentPane.putConstraint(SpringLayout.NORTH, lblNewLabel_2, 0, SpringLayout.NORTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.WEST, lblNewLabel_2, 187, SpringLayout.WEST, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblNewLabel_2, -11, SpringLayout.NORTH, NomeUtente);
-		contentPane.add(lblNewLabel_2);
+		JLabel icona = new JLabel(highResIcon);
+		sl_contentPane.putConstraint(SpringLayout.WEST, accedi, 0, SpringLayout.WEST, icona);
+		sl_contentPane.putConstraint(SpringLayout.NORTH, icona, 0, SpringLayout.NORTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.WEST, icona, 215, SpringLayout.WEST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, icona, -11, SpringLayout.NORTH, NomeUtente);
+		contentPane.add(icona);
 
 		btnRegistrati = new JButton("Registrati");
 		btnRegistrati.addActionListener(new ActionListener() {
