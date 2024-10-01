@@ -82,11 +82,11 @@ public class Home_GUI extends JFrame {
 
 		ricercaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				
 				Home_GUI.this.setVisible(true);
-				Gestione_Finestre G = new Gestione_Finestre();
-				//NG = btnNewButton.getText();
-				G.RicercaGUI();
+                Gestione_Finestre G = new Gestione_Finestre();
+                //NG = btnNewButton.getText();
+                G.RicercaGUI();
 
 			}
 		});
@@ -104,62 +104,7 @@ public class Home_GUI extends JFrame {
 
 		// Popolazione dei bottoni dei gruppi
 		creaBottoniGruppi(NU, GroupPane);
-		
-		List<Partecipano> partecipano = new ArrayList<>();
-
-		List<JButton> GroupButtons = new ArrayList<>();
-
-		Partecipano_DAO partecipano_DAO = new Partecipano_DAO();
-
-		partecipano = partecipano_DAO.SelSigPartecipanoGruppo(NU);
-
-		int numOfGroups = partecipano.size();
-
-		for (int i = 0; i < numOfGroups; i++) {
-			JButton btnNewButton = new JButton(partecipano.get(i).getNome_Gruppo());
-			btnNewButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					Home_GUI.this.setVisible(false);
-					Gestione_Finestre G = new Gestione_Finestre();
-					NG = btnNewButton.getText();
-					G.GruppiGUI(NU, NG);
-				}
-			});
-			btnNewButton.setForeground(new Color(0, 128, 255));
-			btnNewButton.setBackground(AcctualtColorInternalArea);
-			btnNewButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-			// btnNewButton.setBorder(new EmptyBorder(20,0,20,0));
-
-			// Crea il bordo con la linea colorata
-			Border lineBorder = BorderFactory.createLineBorder(new Color(0, 128, 255));
-
-			// Crea il bordo vuoto (padding)
-			Border emptyBorder = new EmptyBorder(3, 2, 3, 2);
-
-			// Combina i due bordi in un CompoundBorder
-			Border compoundBorder = new CompoundBorder(emptyBorder, lineBorder);
-
-			// Applica il CompoundBorder al pulsante
-			btnNewButton.setBorder(compoundBorder);
-			// btnNewButton.setBorder(BorderFactory.createLineBorder(new Color(0, 128,
-			// 255)));
-			// btnNewButton.setBorder(new EmptyBorder(20,0,20,0));
-			GroupButtons.add(btnNewButton);
-			GroupPane.add(GroupButtons.get(i));
-		}
-
-		/*
-		 * JButton btnNewButton = new JButton("Fantacalcio");
-		 * btnNewButton.addActionListener(new ActionListener() { public void
-		 * actionPerformed(ActionEvent e) { Home_GUI.this.setVisible(false);
-		 * Gestione_Finestre G = new Gestione_Finestre(); NG = btnNewButton.getText();
-		 * G.GruppiGUI(NU, NG); } });
-		 * 
-		 * //btnNewButton.setBounds(10, 10, 85, 21); //GroupPane.add(btnNewButton);
-		 */
-
-
-		
+	
 		JButton Notifiche = new JButton("🔔");
 		Notifiche.setContentAreaFilled(false);
 		Notifiche.setBorderPainted(false);
@@ -262,19 +207,6 @@ public class Home_GUI extends JFrame {
 	private void adjustPostLayout(JPanel postsArea, JScrollPane PostsScrollPane) {
 
 		contentPane.add(PostsScrollPane, BorderLayout.CENTER);
-
-		
-		
-		
-		
-		
-		// SET DI COLORI ALL'INIZIO
-		
-		
-		// ---------------
-
-		// Aggiungi un listener per impostare le dimensioni del JScrollPane dopo che il
-		// frame Ã¨ visibile
 
 		addComponentListener(new ComponentAdapter() {
 
