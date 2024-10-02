@@ -10,10 +10,14 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.EmptyBorder;
+import java.util.Comparator;
+	
 
 public class Notifiche_GUI extends JFrame {
 
     private static final long serialVersionUID = 1L;
+    
+    
 
     private JPanel contentPane;
     private JPanel contentPaneForContent;
@@ -37,6 +41,7 @@ public class Notifiche_GUI extends JFrame {
         NomeGruppo.setFont(new Font("Tahoma", Font.BOLD, 18));
 
         JButton Indietro = new JButton("◀️");
+		Indietro.setBorderPainted(false);
         Indietro.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Notifiche_GUI.this.setVisible(false);
@@ -44,9 +49,9 @@ public class Notifiche_GUI extends JFrame {
                 N.AccessoHome(NU);
             }
         });
+        Indietro.setBackground(new Color(255, 255, 255));
         Indietro.setForeground(new Color(0, 128, 255));
-        Indietro.setFont(new Font("Dialog", Font.PLAIN, 16));
-        Indietro.setBackground(Color.WHITE);
+        Indietro.setFont(new Font(null, Font.PLAIN, 18));
 
         JTabbedPane Sezioni_Notifiche = new JTabbedPane(JTabbedPane.TOP);
         Sezioni_Notifiche.setForeground(new Color(0, 128, 255));
@@ -178,6 +183,7 @@ public class Notifiche_GUI extends JFrame {
         contentPaneForRichieste.revalidate();
         contentPaneForRichieste.repaint();
     }
+
 
     //notifiche archiviate
     private void initializeArchiviatiTab(JPanel panelArchiviati, String NU) {

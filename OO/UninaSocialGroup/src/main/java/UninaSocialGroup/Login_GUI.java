@@ -1,10 +1,12 @@
 package UninaSocialGroup;
 
 import javax.swing.ImageIcon;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import javafx.scene.image.Image;
 import javax.swing.SpringLayout;
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -40,7 +42,7 @@ public class Login_GUI extends JFrame {
 		contentPane.setLayout(sl_contentPane);
 
 		JButton accedi = new JButton("Accedi");
-		sl_contentPane.putConstraint(SpringLayout.EAST, accedi, -313, SpringLayout.EAST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.WEST, accedi, 195, SpringLayout.WEST, contentPane);
 		accedi.setForeground(new Color(0, 128, 255));
 		accedi.setBackground(new Color(255, 255, 255));
 		accedi.addActionListener(new ActionListener() {
@@ -75,17 +77,21 @@ public class Login_GUI extends JFrame {
 		contentPane.add(Password);
 
 		ImageIcon highResIcon = new ImageIcon(getClass().getResource("image.png"));
+		java.awt.Image image = highResIcon.getImage(); // Recupera l'immagine originale
+		java.awt.Image scaledImage = image.getScaledInstance(190, 190 ,java.awt.Image.SCALE_SMOOTH); // Ridimensiona l'immagine
+		ImageIcon scaledIcon = new ImageIcon(scaledImage); // Crea un nuovo ImageIcon con l'immagine ridimensionata
 
-		JLabel icona = new JLabel(highResIcon);
-		sl_contentPane.putConstraint(SpringLayout.WEST, accedi, -20, SpringLayout.WEST, icona);
-		sl_contentPane.putConstraint(SpringLayout.NORTH, icona, 0, SpringLayout.NORTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.WEST, icona, 215, SpringLayout.WEST, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, icona, -11, SpringLayout.NORTH, NomeUtente);
+		JLabel icona = new JLabel(scaledIcon);
+		sl_contentPane.putConstraint(SpringLayout.NORTH, icona, 5, SpringLayout.NORTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.WEST, icona, 0, SpringLayout.WEST, accedi);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, icona, -6, SpringLayout.NORTH, NomeUtente);
+		sl_contentPane.putConstraint(SpringLayout.EAST, icona, 360, SpringLayout.WEST, contentPane);
 		contentPane.add(icona);
 
 		btnRegistrati = new JButton("Registrati");
+		sl_contentPane.putConstraint(SpringLayout.WEST, btnRegistrati, 264, SpringLayout.WEST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.EAST, accedi, -1, SpringLayout.WEST, btnRegistrati);
 		sl_contentPane.putConstraint(SpringLayout.NORTH, btnRegistrati, 36, SpringLayout.SOUTH, passwordField);
-		sl_contentPane.putConstraint(SpringLayout.WEST, btnRegistrati, 1, SpringLayout.EAST, accedi);
 		btnRegistrati.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LC.ActionRegistrati();
