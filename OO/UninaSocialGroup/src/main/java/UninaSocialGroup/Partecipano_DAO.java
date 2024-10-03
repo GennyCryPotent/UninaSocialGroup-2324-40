@@ -110,5 +110,40 @@ public class Partecipano_DAO {
 			return null;
 		}
 	}
+	
+	
+	// Ritorna true se l'utente partecipa al gruppo
+	public boolean SelPartecipanoGruppo(String Nome_Gruppo, String Nome_Utente){
+
+		try {
+			
+				
+			ResultSet rs = Gestione_Finestre.DB.ExeQuery("SELECT * FROM Partecipano WHERE FK_NOME_GRUPPO = '" + Nome_Gruppo + "' AND FK_NOME_UTENTE = '" + Nome_Utente + "'" );
+			
+			try {
+
+					List<Partecipano> Rec_Partecipano = new ArrayList<Partecipano>();
+					
+					Partecipano Stampa;
+					
+					while (rs.next()) {
+						return true;
+					}
+					return false;
+
+					
+				
+			} catch (SQLException e) {
+				System.out.println("query fallita: " + e.getMessage());
+				
+				return false;
+			}
+
+		} catch (Exception e) {
+			System.out.println("Errore");
+			
+			return false;
+		}
+	}
 }
 

@@ -86,7 +86,7 @@ public class Home_GUI extends JFrame {
 				Home_GUI.this.setVisible(true);
                 Gestione_Finestre G = new Gestione_Finestre();
                 //NG = btnNewButton.getText();
-                G.RicercaGUI();
+                G.RicercaGUI(NU);
 
 			}
 		});

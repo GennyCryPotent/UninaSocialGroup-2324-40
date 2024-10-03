@@ -44,7 +44,7 @@ public class Possiedono_DAO {
 		}
 	}
 
-	// Select tutti i gruppi dove Ã¨ associato il tag
+	// Select tutti i gruppi dove è associato il tag
 	public List<Possiedono> SelGruppiConTag(String Parola) {
 
 		try {

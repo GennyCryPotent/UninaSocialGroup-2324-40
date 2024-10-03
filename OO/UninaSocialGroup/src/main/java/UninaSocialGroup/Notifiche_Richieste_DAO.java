@@ -128,6 +128,63 @@ public class Notifiche_Richieste_DAO {
 		}
 	}
 
+	
+	
+	// Select se esiste un utente che ha in sospeso una richiesta di un gurppo
+		public boolean SelNoitificheRichiesteDiUtenteDiGruppo(String Nome_Gruppo, String Nome_Utente) {
+
+			String TMP_Nome_Gruppo;
+
+			try {
+
+
+				try {
+
+					List<Notifiche> Rec_Notifiche = new ArrayList<Notifiche>();
+
+					Notifiche Stampa;
+
+
+						ResultSet rsF = Gestione_Finestre.DB.ExeQuery("SELECT * FROM NOTIFICHE_RICHIESTE WHERE FK_Nome_Gruppo = '"
+								+ Nome_Gruppo + "' AND FK_Nome_Utente = '" + Nome_Utente  +"' AND Esitato = '0'");
+
+						while (rsF.next()) {
+
+							return true;
+						}
+					
+
+
+				} catch (SQLException e) {
+					System.out.println("query fallita: " + e.getMessage());
+
+					return false;
+				}
+
+			} catch (Exception e) {
+				System.out.println("Errore");
+
+				return false;
+			}
+			return false;
+		}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// Select tutte le notifiche archiviate di un utente (esitato!=0)
 	public List<Notifiche> SelNoitificheArchiviate(String Nome_Utente) {
 

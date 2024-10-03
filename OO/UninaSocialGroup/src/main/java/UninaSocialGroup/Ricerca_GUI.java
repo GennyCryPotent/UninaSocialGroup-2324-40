@@ -15,12 +15,16 @@ public class Ricerca_GUI extends JFrame {
     private JPanel contentPane;
     private JPopupMenu popUpMenu;
     private JPanel panelOfSearch;
+    private JPanel panelOfRicercaResoult;
     private JPanel ParametresArea;
     	
     private JTextArea SearchText;
     private JPanel ResoultArea;
+    private JPanel ResoultRicercaArea;
     private JComboBox TagsBox;
     private JScrollPane ScrollResoult;
+    private JScrollPane ScrollRicercaResoult;
+    
     
     private Color darkColorBG = new Color(27, 27, 27);
     private Color darkColorButton = new Color(15, 15, 15);
@@ -37,7 +41,7 @@ public class Ricerca_GUI extends JFrame {
     private Color AcctualColorFont = lightColorFont;
     private Color AcctualtColorInternalArea = lightColorInternalArea;
 
-    public Ricerca_GUI() {
+    public Ricerca_GUI(String NU) {
         setTitle("Ricerca");
         setForeground(new Color(0, 128, 255));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,6 +67,9 @@ public class Ricerca_GUI extends JFrame {
         popUpMenu.add(panelOfSearch);
 
         
+        panelOfRicercaResoult = new JPanel();
+        panelOfRicercaResoult.setBackground(AcctualtColorInternalArea);
+        
         List<String> tags = new ArrayList<String>();
         
 		Tags_DAO tags_DAO = new Tags_DAO();
@@ -85,27 +92,101 @@ public class Ricerca_GUI extends JFrame {
         
         
         
+        
+        
+        //-------- Tasto Ricerca 
+        
+        
+        ResoultRicercaArea = new JPanel();
+        ResoultRicercaArea.setLayout(new BoxLayout(ResoultRicercaArea, BoxLayout.Y_AXIS));
+		
+        ScrollRicercaResoult = new JScrollPane(ResoultRicercaArea);
+        ScrollRicercaResoult.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        ScrollRicercaResoult.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        
+        panelOfRicercaResoult.add(ScrollRicercaResoult,  BorderLayout.CENTER);
+        
+        List<JPanel> listaDellaRicerca = new ArrayList<>();
+      
+        
         JButton ricercaButton = new JButton("🔍");
 		ricercaButton.setForeground(new Color(0, 128, 255));
 		ricercaButton.setBackground(AcctualColorBG);
 		ricercaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				//this.setVisible(true);
-				//Gestione_Finestre G = new Gestione_Finestre();
-				//NG = btnNewButton.getText();
-				//G.RicercaGUI();
-				System.out.println("CIAO");
-
+				
+				ResoultRicercaArea.removeAll();
+				listaDellaRicerca.clear();
+				panelOfRicercaResoult.removeAll();
+            	
+        		List<Possiedono> possiedono = new ArrayList<>();
+            	
+        		Possiedono_DAO possiedono_DAO = new Possiedono_DAO();
+            	
+            	
+            	possiedono = possiedono_DAO.SelGruppiConTag((String)TagsBox.getSelectedItem());
+            	
+            	System.out.println(TagsBox.getSelectedItem()); 
+            	
+				
+				
+				for(int i=0; i<possiedono.size(); i++) {
+            		
+					
+					System.out.println(possiedono.get(i).Nome_Gruppo);
+            		
+            		JPanel panel = new JPanel();
+            		panel.setBackground(AcctualtColorInternalArea);
+            		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+            		
+            		
+            		panel.add(new JTextArea(possiedono.get(i).Nome_Gruppo));
+            		panel.add(CreazioneTastoInterazioneGruppoCercato(NU, possiedono.get(i).Nome_Gruppo));
+            		//JButton button = new JButton("🚫");
+            		//panel.add(button);
+            		
+            		listaDellaRicerca.add(panel);
+            		//listaDellaRicerca.get(i).setEditable(false);
+            		
+            		ResoultRicercaArea.add(listaDellaRicerca.get(i));
+            		panelOfRicercaResoult.add(ResoultRicercaArea);				
+    				
+            		RefreshSearch();
+				}
+				
+				
+				RefreshSearch();
+				
 			}
 		});
-		//ricercaButton.setFont(new Font(null, Font.PLAIN, 12));
+
 
         
         
         
-        
-        
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		// ------- Barra della ricerca
+		
         
         
         
@@ -149,31 +230,29 @@ public class Ricerca_GUI extends JFrame {
     			
             	ResoultArea.removeAll();
             	
-            	if(gruppi != null && !gruppi.isEmpty()) {
+            	if(GruppiIsNotEmpty(gruppi)) {
             	
             			for(int i = 0; i< gruppi.size(); i++) {
             				
             				JTextArea textArea = new JTextArea();
             				
-            				
             				System.out.println(gruppi.get(i).getNome());
             				textArea.setText(gruppi.get(i).getNome());
+           
             				textArea.setEditable(false);
             				
             				// Aggiungi il MouseListener per mostrare il testo quando si passa sopra
             				textArea.addMouseListener(new MouseAdapter() {
             	                @Override
             	                public void mouseEntered(MouseEvent e) {
-            	                	textArea.setBackground(darkColorInternalArea);
-            	                	textArea.setForeground(darkColorFont);
+            	                	textAreaSetColor(textArea,darkColorInternalArea, darkColorFont);
             	                    // Puoi usare un JToolTip personalizzato
             	                	textArea.setToolTipText(textArea.getText());
             	                }
 
             	                @Override
             	                public void mouseExited(MouseEvent e) {
-            	                	textArea.setBackground(lightColorInternalArea);
-            	                	textArea.setForeground(lightColorFont);
+            	                	textAreaSetColor(textArea,lightColorInternalArea, lightColorFont);
             	                	// Nascondi il tooltip quando il mouse esce
             	                	textArea.setToolTipText(null);
             	                }
@@ -192,27 +271,18 @@ public class Ricerca_GUI extends JFrame {
         				ResoultText.add(textArea);
         				ResoultArea.add(ResoultText.get(i));
         			
-        				ResoultArea.setPreferredSize(new Dimension(200, gruppi.size() * 18));
+        				ResoultArea.setPreferredSize(new Dimension(200, gruppi.size() * 20));
             			
-            			//popUpMenu.setPreferredSize(new Dimension(100, (int) ResoultArea.getPreferredSize().getHeight()));
-            			
-            			//popUpMenu.setPreferredSize(new Dimension(100, gruppi.size() * 18));
-            			
-            			
-            			ResoultArea.revalidate();
-            			ResoultArea.repaint();
-            			
-            			popUpMenu.revalidate();
-            			popUpMenu.repaint();
-
-            			panelOfSearch.revalidate();
-            			panelOfSearch.repaint();
+        				
+        				RefreshSearchPopUp();
             	}
             	
             	popUpMenu.pack();  // Questo forzerà il JPopupMenu a ridimensionarsi correttamente.
             	// Point location = SearchText.getLocationOnScreen();
                 popUpMenu.show(SearchText, 0, SearchText.getHeight());
                 
+            }else {
+    			popUpMenu.setVisible(false);
             }
            }
         });
@@ -223,9 +293,65 @@ public class Ricerca_GUI extends JFrame {
 		ParametresArea.add(ricercaButton);
         
         contentPane.add(ParametresArea, BorderLayout.NORTH);
+        contentPane.add(panelOfRicercaResoult, BorderLayout.CENTER);
         //ParametresArea.setLayout(new BorderLayout(100,100));
         
         //SearchText.setBorder(new EmptyBorder(5, 5, 5, 5));
         
     }
+    
+	private void RefreshSearchPopUp() {
+		ResoultArea.revalidate();
+		ResoultArea.repaint();
+		
+		popUpMenu.revalidate();
+		popUpMenu.repaint();
+
+		panelOfSearch.revalidate();
+		panelOfSearch.repaint();
+	}
+	
+	
+	private void RefreshSearch() {
+		ResoultRicercaArea.revalidate();
+		ResoultRicercaArea.repaint();
+		
+		panelOfRicercaResoult.revalidate();
+		panelOfRicercaResoult.repaint();
+	}
+	
+	private boolean GruppiIsNotEmpty(List<Gruppi> g) {
+		return g != null && !g.isEmpty();
+	}
+	
+	private void textAreaSetColor(JTextArea textArea, Color ColorInternalArea, Color ColorFont ) {
+    	textArea.setBackground(ColorInternalArea);
+    	textArea.setForeground(ColorFont);
+	}
+	
+	private JButton CreazioneTastoInterazioneGruppoCercato(String Nome_Utente, String Nome_Gruppo) {
+		
+		Partecipano_DAO partecipano_DAO = new Partecipano_DAO(); 
+		Notifiche_Richieste_DAO notifiche_Richieste_DAO = new Notifiche_Richieste_DAO(); 
+		
+		JButton button = new JButton();
+		
+		if(partecipano_DAO.SelPartecipanoGruppo(Nome_Gruppo, Nome_Utente)) {
+			button.setText("🚫");
+			System.out.println("Bottone - " + Nome_Utente + " - " + Nome_Gruppo);
+		}else if(notifiche_Richieste_DAO.SelNoitificheRichiesteDiUtenteDiGruppo(Nome_Gruppo, Nome_Utente)) {
+			button.setText("⏳");
+
+		}else{
+			button.setText("ENTRA");
+			button.addActionListener(new ActionListener(){  
+				public void actionPerformed(ActionEvent e){  
+					notifiche_Richieste_DAO.InsNotifica_R(Nome_Gruppo, Nome_Utente);
+					button.setText("⏳");
+		        }  
+			});
+		}
+		return button;
+	}
+	
 }
