@@ -32,5 +32,9 @@ public class GruppiController {
 		GF.Elimina_Contenuto(NU, NG);
 
 	}
+	
+	public void ActionElimina(String NU, String NG) {
+		GF.EliminaPartecipante();
+	}
 
 }
