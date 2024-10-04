@@ -113,8 +113,8 @@ public class Gestione_Finestre {
 		  Ricerca.setVisible(true);
 	  }
 	  
-	  public void EliminaPartecipante() {
-		  EliminaP = new EliminaPartecipante_GUI();
+	  public void EliminaPartecipante(String NU, String NG) {
+		  EliminaP = new EliminaPartecipante_GUI(NU, NG);
 		  EliminaP.setVisible(true);
 	  }
 	  

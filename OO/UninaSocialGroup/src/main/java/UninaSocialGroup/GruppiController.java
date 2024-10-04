@@ -34,7 +34,7 @@ public class GruppiController {
 	}
 	
 	public void ActionElimina(String NU, String NG) {
-		GF.EliminaPartecipante();
+		GF.EliminaPartecipante(NU, NG);
 	}
 
 }

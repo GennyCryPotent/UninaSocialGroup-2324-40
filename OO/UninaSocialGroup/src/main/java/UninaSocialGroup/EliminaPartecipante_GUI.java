@@ -4,44 +4,51 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
+import javax.swing.JButton;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
+import java.util.List;
+
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class EliminaPartecipante_GUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					EliminaPartecipante_GUI frame = new EliminaPartecipante_GUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public EliminaPartecipante_GUI() {
+	
+	public EliminaPartecipante_GUI(String NU, String NG) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
+		
+		JScrollPane ScrollPartecipanti = new JScrollPane();
+		ScrollPartecipanti.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		ScrollPartecipanti.setBounds(20, 50, 390, 190);
+		contentPane.add(ScrollPartecipanti, BorderLayout.WEST);
+		
+		JPanel ParteciPanel = new JPanel();
+		ScrollPartecipanti.setViewportView(ParteciPanel);
+		
+		// Popolazione dei bottoni dei gruppi
+				creaBottoniPartecipanti(NU, ParteciPanel, NG);
 		
 		JLabel Label = new JLabel("Quale partecipante vuoi eliminare?");
 		Label.setForeground(new Color(0, 128, 255));
@@ -64,4 +71,36 @@ public class EliminaPartecipante_GUI extends JFrame {
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
+	
+	// crea dinamicamente tutti i bottoni per accedere ai gruppi
+		private void creaBottoniPartecipanti(String NU, JPanel ParteciPanel, String NG) {
+			Partecipano_DAO partecipano_DAO = new Partecipano_DAO();
+			List<Partecipano> partecipano = partecipano_DAO. SelAllPartecipanoGruppo(NG);
+
+			for (Partecipano p : partecipano) {
+				JButton btnNewButton = new JButton(p.getNome_Partecipante());
+				btnNewButton.addActionListener(e -> {
+					
+					int scelta = JOptionPane.YES_NO_OPTION;
+			        JOptionPane.showConfirmDialog(null, "Sicuro di voler eliminare questo utente?", "Elimina", scelta);
+				    
+			        if (scelta == JOptionPane.YES_OPTION) {
+						partecipano_DAO.DelPartecipante(p.getNome_Partecipante() ,NG);
+						JOptionPane.showMessageDialog(null,"Partecipante " + p.getNome_Partecipante() +" Eliminato","Eliminato",1);
+					}
+					
+				});
+
+				btnNewButton.setForeground(new Color(0, 128, 255));
+				btnNewButton.setBackground(new Color(255, 255, 255));
+				btnNewButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+                
+				Border lineBorder = BorderFactory.createLineBorder(new Color(0, 128, 255));
+				Border emptyBorder = new EmptyBorder(3, 2, 3, 2);
+				Border compoundBorder = new CompoundBorder(emptyBorder, lineBorder);
+
+				btnNewButton.setBorder(compoundBorder);
+				ParteciPanel.add(btnNewButton);
+			}
+		}
 }
