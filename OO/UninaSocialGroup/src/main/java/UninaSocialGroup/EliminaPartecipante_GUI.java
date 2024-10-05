@@ -29,9 +29,10 @@ public class EliminaPartecipante_GUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-
+	private Gestione_Finestre GF = new Gestione_Finestre();
 	
 	public EliminaPartecipante_GUI(String NU, String NG) {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -81,14 +82,20 @@ public class EliminaPartecipante_GUI extends JFrame {
 				JButton btnNewButton = new JButton(p.getNome_Partecipante());
 				btnNewButton.addActionListener(e -> {
 					
-					int scelta = JOptionPane.YES_NO_OPTION;
-			        JOptionPane.showConfirmDialog(null, "Sicuro di voler eliminare questo utente?", "Elimina", scelta);
-				    
+			        int scelta = JOptionPane.showConfirmDialog(null, "Sicuro di voler eliminare questo utente?", "Elimina", JOptionPane.YES_NO_OPTION);
+
 			        if (scelta == JOptionPane.YES_OPTION) {
-						partecipano_DAO.DelPartecipante(p.getNome_Partecipante() ,NG);
-						JOptionPane.showMessageDialog(null,"Partecipante " + p.getNome_Partecipante() +" Eliminato","Eliminato",1);
-					}
-					
+			            partecipano_DAO.DelPartecipante(p.getNome_Partecipante(), NG);
+			            JOptionPane.showMessageDialog(null, "Partecipante " + p.getNome_Partecipante() + " eliminato", "Eliminato", JOptionPane.INFORMATION_MESSAGE);
+			            EliminaPartecipante_GUI.this.setVisible(false);
+			        } else if (scelta == JOptionPane.NO_OPTION) {
+			        	JOptionPane.showMessageDialog(null, "Partecipante " + p.getNome_Partecipante() + " non eliminato", "Eliminato", JOptionPane.INFORMATION_MESSAGE);
+			        	EliminaPartecipante_GUI.this.setVisible(false);
+			        }
+
+			        System.out.println("scelta : " + scelta);
+
+			        
 				});
 
 				btnNewButton.setForeground(new Color(0, 128, 255));
