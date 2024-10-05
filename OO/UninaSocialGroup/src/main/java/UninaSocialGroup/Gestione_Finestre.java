@@ -18,6 +18,7 @@ public class Gestione_Finestre {
 	private Registrazione_GUI Registrazione;
 	private Login_GUI Login;
 	private Ricerca_GUI Ricerca;
+	private EliminaPartecipante_GUI EliminaP;
 	
 	//public static DB_Connection DB = new DB_Connection("jdbc:oracle:thin:@localhost:1521:ORCL", "system", "Unina@03"); //portatile genny
 	//public static DB_Connection DB = new DB_Connection("jdbc:oracle:thin:@Gennaro.homenet.telecomitalia.it:1521:xe", "system", "Database@03"); //Fisso Genny
@@ -47,6 +48,7 @@ public class Gestione_Finestre {
 				try {
 					DB.connect();
 					Home_GUI frame = new Home_GUI("Lauriel");
+
 					//Login_GUI frame = new Login_GUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -112,6 +114,11 @@ public class Gestione_Finestre {
 	  public void RicercaGUI(String NU, Home_GUI homeView) {
 		  Ricerca = new Ricerca_GUI(NU, homeView);
 		  Ricerca.setVisible(true);
+	  }
+	  
+	  public void EliminaPartecipante(String NU, String NG) {
+		  EliminaP = new EliminaPartecipante_GUI(NU, NG);
+		  EliminaP.setVisible(true);
 	  }
 	  
 }

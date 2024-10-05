@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.Box;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class Gruppi_GUI extends JFrame {
 
@@ -36,6 +37,7 @@ public class Gruppi_GUI extends JFrame {
 	private Gruppi Gruppo;
 	private boolean CkeckCreatore;
 	private boolean checkAmm;
+	private String RuoloStr;
 
 	private Color lightColorFont = new Color(0, 0, 0);
 	private Color lightColorInternalArea = new Color(244, 244, 244);
@@ -117,42 +119,89 @@ public class Gruppi_GUI extends JFrame {
 
 		JLabel labelRuolo = new JLabel();
 		labelRuolo.setVisible(false);
+		
+		RuoloStr=labelRuolo.getText();
+		
+		
+		
+		JButton EliminaPartecipante = new JButton("🚷");
+		EliminaPartecipante.setForeground(new Color(0, 128, 255));
+		EliminaPartecipante.setFont(new Font("Dialog", Font.PLAIN, 20));
+		EliminaPartecipante.setVisible(false);
+		EliminaPartecipante.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GC.ActionElimina(NU, NG);
+			}
+		});
+		
+		JButton Abbandona = new JButton("❌");
+		Abbandona.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		Abbandona.setForeground(new Color(0, 128, 255));
+		Abbandona.setFont(new Font("Dialog", Font.PLAIN, 18));
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPane
-				.createSequentialGroup().addGap(22)
-				.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPane
-						.createSequentialGroup()
-						.addComponent(Home, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE).addGap(22)
-						.addComponent(AggiungiPost, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-						.addGap(21)
-						.addComponent(Rimuovi_Post, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-						.addGap(20)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(NomeGruppo, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_contentPane.createSequentialGroup().addGap(10).addComponent(labelRuolo,
-										GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE))))
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 90, GroupLayout.DEFAULT_SIZE))));
-		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPane
-				.createSequentialGroup().addGap(17)
-				.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(Home, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
-						.addComponent(AggiungiPost, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
-						.addComponent(Rimuovi_Post, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(22)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(Home, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+							.addGap(22)
+							.addComponent(AggiungiPost, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+							.addGap(21)
+							.addComponent(Rimuovi_Post, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+							.addGap(20)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(NomeGruppo, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(10)
+									.addComponent(labelRuolo, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)))
+							.addPreferredGap(ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
+							.addComponent(Abbandona, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(EliminaPartecipante, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 691, GroupLayout.DEFAULT_SIZE)))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(17)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(Abbandona, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+						.addComponent(EliminaPartecipante, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+							.addComponent(Home, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+							.addComponent(AggiungiPost, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+							.addComponent(Rimuovi_Post, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+							.addGroup(gl_contentPane.createSequentialGroup()
 								.addComponent(NomeGruppo, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
 								.addGap(1)
-								.addComponent(labelRuolo, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)))
-				.addGap(22).addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 291, GroupLayout.DEFAULT_SIZE)));
+								.addComponent(labelRuolo, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE))))
+					.addGap(22)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 345, GroupLayout.DEFAULT_SIZE))
+		);
 		contentPane.setLayout(gl_contentPane);
 
 		if (CkeckCreatore) {
 			labelRuolo.setText("Creatore");
 			labelRuolo.setVisible(true);
+			EliminaPartecipante.setVisible(true);
+			EliminaPartecipante.setEnabled(true);
 		} else if (checkAmm) {
 			labelRuolo.setText("Amministratore");
 			labelRuolo.setVisible(true);
+			EliminaPartecipante.setVisible(true);
+			EliminaPartecipante.setEnabled(true);
 		}
-
+		
+		
+		
 		// ---------------
 
 		addComponentListener(new ComponentAdapter() {

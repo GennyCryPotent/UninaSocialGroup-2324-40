@@ -2,6 +2,7 @@ package UninaSocialGroup;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Collections;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -115,6 +116,7 @@ public class Notifiche_GUI extends JFrame {
         contentPaneForContent.setLayout(new BoxLayout(contentPaneForContent, BoxLayout.Y_AXIS));
 
         JScrollPane scrollPane = new JScrollPane(contentPaneForContent);
+        scrollPane.getVerticalScrollBar().setValue(0); //imposta lo Scroll Panel in alto
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -122,7 +124,15 @@ public class Notifiche_GUI extends JFrame {
         panelGruppi.add(scrollPane, BorderLayout.CENTER);
         
         List<Notifiche> notificheGruppi = notificheDAOG.SelNotifiche(NU);
-
+        
+        if (notificheGruppi != null && !notificheGruppi.isEmpty()) {
+            // Ordina le notifiche per data con i comparetor e collectionsSort
+            Collections.sort(notificheGruppi, new Comparator<Notifiche>() {
+                public int compare(Notifiche n1, Notifiche n2) {
+                    return n2.getData_Notifica().compareTo(n1.getData_Notifica());
+                }
+            });
+        
         if (notificheGruppi != null && !notificheGruppi.isEmpty()) {
             for (Notifiche notifica : notificheGruppi) {
                 JTextArea textArea = new JTextArea("N: " + notificheGruppi.indexOf(notifica) + "\n" +
@@ -140,8 +150,8 @@ public class Notifiche_GUI extends JFrame {
             textArea.setEditable(false);
             contentPaneForContent.add(textArea);
         }
-        
-        // Repaint and revalidate to ensure components are displayed correctly
+        }
+       
         contentPaneForContent.revalidate();
         contentPaneForContent.repaint();
     }
@@ -154,6 +164,7 @@ public class Notifiche_GUI extends JFrame {
         contentPaneForRichieste.setLayout(new BoxLayout(contentPaneForRichieste, BoxLayout.Y_AXIS));
 
         JScrollPane scrollPaneRichieste = new JScrollPane(contentPaneForRichieste);
+        //scrollPaneRichieste.getVerticalScrollBar().setValue(0);
         scrollPaneRichieste.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPaneRichieste.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPaneRichieste.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -167,22 +178,25 @@ public class Notifiche_GUI extends JFrame {
         if (notificheRichieste != null && !notificheRichieste.isEmpty()) {
         	System.out.println("Notifiche trovate: " + notificheRichieste.size());
             for (Notifiche notifica : notificheRichieste) {
+            
             	System.out.println("Notifiche trovate: " + notificheRichieste.size());
                 JPannelloRichieste notPanel = new JPannelloRichieste(NU, notifica.getNome_Gruppo(), notifica); //Passa la singola notifica e il nome del gruppo
                 notPanel.NotificationText.setWrapStyleWord(true);
                 notPanel.NotificationText.setEditable(false);
                 contentPaneForRichieste.add(notPanel);
-                contentPaneForRichieste.add(Box.createRigidArea(new Dimension(0, 10)));
-            }
+                contentPaneForRichieste.add(Box.createRigidArea(new Dimension(0, 10)));}
+            	
         } else {
             JTextArea textArea = new JTextArea("Nessuna richiesta trovata.");
             textArea.setEditable(false);
             contentPaneForRichieste.add(textArea);
         }
-
+        
         contentPaneForRichieste.revalidate();
         contentPaneForRichieste.repaint();
     }
+    
+   
 
 
     //notifiche archiviate
@@ -193,6 +207,7 @@ public class Notifiche_GUI extends JFrame {
         contentPaneForArchiviati.setLayout(new BoxLayout(contentPaneForArchiviati, BoxLayout.Y_AXIS));
 
         JScrollPane scrollPaneArchiviati = new JScrollPane(contentPaneForArchiviati);
+        scrollPaneArchiviati.getVerticalScrollBar().setValue(0);
         scrollPaneArchiviati.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPaneArchiviati.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPaneArchiviati.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -203,12 +218,18 @@ public class Notifiche_GUI extends JFrame {
         List<Notifiche> notificheArchiviati = notificheDAOR.SelNoitificheArchiviate(NU);
 
         if (notificheArchiviati != null && !notificheArchiviati.isEmpty()) {
+        	// Ordina le notifiche per data con i comparetor e collectionsSort
+            Collections.sort(notificheArchiviati, new Comparator<Notifiche>() {
+                public int compare(Notifiche n1, Notifiche n2) {
+                    return n2.getData_Notifica().compareTo(n1.getData_Notifica());
+                }
+            });
+
             for (Notifiche notifica : notificheArchiviati) {
-                JTextArea textArea = new JTextArea(
-                        "Testo: " + notifica.getTesto() + "\n" +
-                        "Data: " + notifica.getData_Notifica() + "\n" +
-                        "Gruppo: " + notifica.getNome_Gruppo()
-                );
+                JTextArea textArea = new JTextArea("N: " + notificheArchiviati.indexOf(notifica) + "\n" +
+                        notifica.getTesto() + "\n" +
+                        notifica.getData_Notifica() + "\n" +
+                        "Gruppo: " + notifica.getNome_Gruppo() + "\n");
                 textArea.setLineWrap(true);
                 textArea.setWrapStyleWord(true);
                 textArea.setEditable(false);
