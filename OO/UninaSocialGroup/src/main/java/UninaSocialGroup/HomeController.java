@@ -31,6 +31,11 @@ public class HomeController {
 		GF.GruppiGUI(NU, NG);
     	
     }
+    
+    public void ActionRicerca(String NU) {
+    	homeView.setVisible(true);
+    	GF.RicercaGUI(NU, homeView);
+    }
   
 
    }
