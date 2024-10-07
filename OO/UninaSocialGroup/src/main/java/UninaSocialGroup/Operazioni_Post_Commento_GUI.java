@@ -1,23 +1,17 @@
 package UninaSocialGroup;
 
-import java.awt.EventQueue;
 import java.awt.Font;
 
-import javax.swing.JDialog;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollBar;
 import javax.swing.JTextArea;
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
-import java.awt.ScrollPane;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 
@@ -28,6 +22,8 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private Gruppi_GUI gView;
+	private OperazioniPostCommentoController OPC = new OperazioniPostCommentoController(
+			Operazioni_Post_Commento_GUI.this);
 
 	// Schermata Post
 	/**
@@ -63,61 +59,21 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 		contentPane.add(scrollPane);
 
 		// BOTTONI
-		Button Button_Elimina = new Button("Elimina");
+		JButton Button_Elimina = new JButton("Elimina");
 		Button_Elimina.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-             
-				try {
-					
-					int DelPost = Integer.parseInt(JOptionPane.showInputDialog(Button_Elimina,
-							"Quale post vuoi eliminare?", "Elimina un post", JOptionPane.QUESTION_MESSAGE));
-					
-					C.DelContenuto(DelPost);
-					Operazioni_Post_Commento_GUI.this.setVisible(false);
-					
-					gView.setVisible(false);
-					
-					gView = new Gruppi_GUI(NU , NG);
-
-					gView.setVisible(true);
-					
-					
-				} catch (NumberFormatException E) { // eccezione quando non si inserisce un intero nella prima finestra
-													// di input
-				
-					JOptionPane.showMessageDialog(Button_Elimina, "Inserisci un numero!");
-				    
-				}
-
+				OPC.ActionEliminaPost(Button_Elimina, NU, NG);
+				gView.setVisible(false);
 			}
 		});
 		Button_Elimina.setBounds(462, 10, 70, 40);
 		contentPane.add(Button_Elimina);
 
-		Button Button_Modifica = new Button("Modifica");
+		JButton Button_Modifica = new JButton("Modifica");
 		Button_Modifica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				try {
-					int ModPost = Integer.parseInt(JOptionPane.showInputDialog(Button_Modifica,
-							"Quale commento vuoi modificare?", "Modifica un commento", JOptionPane.QUESTION_MESSAGE));
-					String NewPost = JOptionPane.showInputDialog(Button_Modifica, "Cosa vuoi scrivere?",
-							"Modifica un commento", JOptionPane.QUESTION_MESSAGE);
-
-					C.UpContenuto(NU, NewPost, ModPost);
-					Operazioni_Post_Commento_GUI.this.setVisible(false);
-					
-					gView.setVisible(false);
-					
-					gView = new Gruppi_GUI(NU , NG);
-
-					gView.setVisible(true);
-					
-				} catch (NumberFormatException E) { // eccezione quando non si inserisce un intero nella prima finestra
-													// di input
-					JOptionPane.showMessageDialog(Button_Modifica, "Inserisci un numero!");
-				}
-
+				OPC.ActionModificaPost(Button_Modifica, NU, NG);
+				gView.setVisible(false);
 			}
 		});
 		Button_Modifica.setActionCommand("Modifica");
@@ -125,13 +81,11 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 		contentPane.add(Button_Modifica);
         
 		
-		Button Button_Annulla = new Button("Annulla");
+		JButton Button_Annulla = new JButton("Annulla");
 		Button_Annulla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-				//Gestione_Finestre V = new Gestione_Finestre();
-				//V.GruppiGUI(NU, NG);
-				gView = new Gruppi_GUI(NU , NG);
+				OPC.ActionAnnulla(NU, NG);
+				gView.setVisible(false);
 			}
 		});
 		Button_Annulla.setActionCommand("Modifica");
@@ -184,58 +138,29 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 		contentPane.add(scrollPane);
 
 		// BOTTONI
-		Button Button_Elimina = new Button("Elimina");
+		JButton Button_Elimina = new JButton("Elimina");
 		Button_Elimina.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				try {
-					int DelCommento = Integer.parseInt(JOptionPane.showInputDialog(Button_Elimina,
-							"Quale commento vuoi eliminare?", "Elimina un commento", JOptionPane.QUESTION_MESSAGE));
-					C.DelCommento(DelCommento);
-					Gestione_Finestre V = new Gestione_Finestre();
-					V.Info_Post(Id_Contenuto, NU, NG, 1);
-					setVisible(false);
-				} catch (NumberFormatException E) { // eccezione quando non si inserisce un intero nella prima finestra
-													// di input
-					JOptionPane.showMessageDialog(Button_Elimina, "Inserisci un numero!");
-				}
-
+				OPC.ActionEliminaCommento(Button_Elimina, NU, NG, Id_Contenuto);
 			}
 		});
 		Button_Elimina.setBounds(462, 10, 70, 40);
 		contentPane.add(Button_Elimina);
 
-		Button Button_Modifica = new Button("Modifica");
+		JButton Button_Modifica = new JButton("Modifica");
 		Button_Modifica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				try {
-					int ModCommento = Integer.parseInt(JOptionPane.showInputDialog(Button_Modifica,
-							"Quale commento vuoi modificare?", "Modifica un commento", JOptionPane.QUESTION_MESSAGE));
-					String NewCommento = JOptionPane.showInputDialog(Button_Modifica, "Cosa vuoi scrivere?",
-							"Modifica un commento", JOptionPane.QUESTION_MESSAGE);
-
-					C.UpCommento(NU, ModCommento, NewCommento);
-					Gestione_Finestre V = new Gestione_Finestre();
-					V.Info_Post(Id_Contenuto, NU, NG, 1);
-					setVisible(false);
-				} catch (NumberFormatException E) { // eccezione quando non si inserisce un intero nella prima finestra
-													// di input
-					JOptionPane.showMessageDialog(Button_Modifica, "Inserisci un numero!");
-				}
-
+				OPC.ActionModificaCommento(Button_Modifica, NU, NG, Id_Contenuto);
 			}
 		});
 		Button_Modifica.setActionCommand("Modifica");
 		Button_Modifica.setBounds(386, 10, 70, 40);
 		contentPane.add(Button_Modifica);
 
-		Button Button_Annulla = new Button("Annulla");
+		JButton Button_Annulla = new JButton("Annulla");
 		Button_Annulla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Operazioni_Post_Commento_GUI.this.setVisible(false);
-				Gestione_Finestre V = new Gestione_Finestre();
-				V.GruppiGUI(NU, NG);
+				OPC.ActionAnnulla(NU, NG);
 			}
 		});
 		Button_Annulla.setActionCommand("Modifica");

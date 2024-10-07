@@ -25,10 +25,9 @@ public class Notifiche_GUI extends JFrame {
     private JPanel contentPaneForContent;
     private JPanel contentPaneForRichieste;
     private JPanel contentPaneForArchiviati;
-    private int contentHeight = 0;
-
-    Notifiche_Gruppi_DAO notificheDAOG = new Notifiche_Gruppi_DAO();
-    Notifiche_Richieste_DAO notificheDAOR = new Notifiche_Richieste_DAO();
+    private Notifiche_Gruppi_DAO notificheDAOG = new Notifiche_Gruppi_DAO();
+    private Notifiche_Richieste_DAO notificheDAOR = new Notifiche_Richieste_DAO();
+    private NotificheController NC = new NotificheController(Notifiche_GUI.this);
 
     public Notifiche_GUI(String NU) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -46,9 +45,7 @@ public class Notifiche_GUI extends JFrame {
 		Indietro.setBorderPainted(false);
         Indietro.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Notifiche_GUI.this.setVisible(false);
-                Gestione_Finestre N = new Gestione_Finestre();
-                N.AccessoHome(NU);
+            	NC.ActionInditero(NU);
             }
         });
         Indietro.setBackground(new Color(255, 255, 255));

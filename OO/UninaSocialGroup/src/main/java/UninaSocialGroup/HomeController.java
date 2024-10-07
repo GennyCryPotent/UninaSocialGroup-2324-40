@@ -7,11 +7,6 @@ public class HomeController {
     
     public HomeController(Home_GUI homeView) {
         this.homeView = homeView;
-        new Partecipano_DAO();
-        new Contenuti_DAO();
-        new Likes_DAO();
-        new Commenti_DAO();
-
     }
     
     public void ActionReport(String NU) {

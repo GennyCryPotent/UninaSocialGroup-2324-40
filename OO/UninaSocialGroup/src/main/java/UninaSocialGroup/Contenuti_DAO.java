@@ -20,6 +20,7 @@ public class Contenuti_DAO {
 			Call.setString(4, Nome_Utente);
 			Call.execute();
 			System.out.println("Contenuto creato");
+			Call.close();
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -34,6 +35,7 @@ public class Contenuti_DAO {
 			Call.setInt(1, Id_Contenuto);
 			Call.execute();
 			System.out.println("Contenuto eliminato");
+			Call.close();
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -51,6 +53,7 @@ public class Contenuti_DAO {
 			Call.setString(2, Nome_Gruppo);
 			Call.execute();
 			System.out.println("Contenuti eliminato");
+			Call.close();
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -69,6 +72,7 @@ public class Contenuti_DAO {
 			Call.setInt(3, Id_Contenuto);
 			Call.execute();
 			System.out.println("Contenuto aggiornato ");
+			Call.close();
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -98,7 +102,10 @@ public class Contenuti_DAO {
 				System.out.println("query fallita: " + e.getMessage());
 
 				return null;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
+
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -134,7 +141,10 @@ public class Contenuti_DAO {
 				System.out.println("query fallita: " + e.getMessage());
 
 				return null;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
+
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -179,15 +189,19 @@ public class Contenuti_DAO {
 
 						Stampa = null;
 					}
+					rsF.close();
 				}
-
+				
 				return Rec_Contenuti;
 
 			} catch (SQLException e) {
 				System.out.println("query fallita: " + e.getMessage());
 
 				return null;
+			} finally {
+				rsNome_Gruppo.close(); // chiude sempre il cursore
 			}
+
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -223,7 +237,10 @@ public class Contenuti_DAO {
 				System.out.println("query fallita: " + e.getMessage());
 
 				return null;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
+
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -259,7 +276,10 @@ public class Contenuti_DAO {
 				System.out.println("query fallita: " + e.getMessage());
 
 				return null;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
+
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -296,7 +316,10 @@ public class Contenuti_DAO {
 				System.out.println("query fallita: " + e.getMessage());
 
 				return null;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
+
 
 		} catch (Exception e) {
 			System.out.println("Errore : " + e.getMessage());

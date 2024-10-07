@@ -22,6 +22,7 @@ public class Commenti_DAO {
 			Call.setString(3, Creatore);
 			Call.execute();
 			System.out.println("Commento Inserito");
+			Call.close();
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -38,6 +39,7 @@ public class Commenti_DAO {
 			Call.setInt(1, Id_Commento);
 			Call.execute();
 			System.out.println("Commento eliminato");
+			Call.close();
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -55,6 +57,7 @@ public class Commenti_DAO {
 			Call.setString(2, Nome_Gruppo);
 			Call.execute();
 			System.out.println("Commenti eliminati");
+			Call.close();
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -73,6 +76,7 @@ public class Commenti_DAO {
 			Call.setInt(3, Id_Commento);
 			Call.execute();
 			System.out.println("Commento aggiornato ");
+			Call.close();
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -108,7 +112,10 @@ public class Commenti_DAO {
 				System.out.println("query fallita");
 
 				return null;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
+
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -143,7 +150,10 @@ public class Commenti_DAO {
 				System.out.println("query fallita");
 
 				return null;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
+
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -176,7 +186,10 @@ public class Commenti_DAO {
 				System.out.println("query fallita: " + e.getMessage());
 
 				return 0;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
+
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -212,6 +225,8 @@ public class Commenti_DAO {
 				System.out.println("query fallita: " + e.getMessage());
 
 				return null;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
 
 		} catch (Exception e) {

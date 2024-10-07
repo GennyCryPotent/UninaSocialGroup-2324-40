@@ -35,7 +35,10 @@ public class Notifiche_Contenuti_DAO {
 				System.out.println("query fallita: " + e.getMessage());
 
 				return null;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
+
 
 		} catch (Exception e) {
 			System.out.println("Errore");

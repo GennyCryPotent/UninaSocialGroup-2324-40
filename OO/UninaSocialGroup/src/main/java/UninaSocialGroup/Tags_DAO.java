@@ -14,6 +14,7 @@ public class Tags_DAO {
 			Call.setString(1, Parola);
 			Call.execute();
 			System.out.println("Tag Inserito");
+			Call.close();
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -30,6 +31,7 @@ public class Tags_DAO {
 			Call.setString(1, Parola);
 			Call.execute();
 			System.out.println("Tags eliminato");
+			Call.close();
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -58,6 +60,8 @@ public class Tags_DAO {
 				System.out.println("query fallita");
 
 				return null;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
 
 		} catch (Exception e) {
@@ -92,6 +96,8 @@ public class Tags_DAO {
 				System.out.println("query fallita");
 
 				return null;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
 
 		} catch (Exception e) {
@@ -100,7 +106,7 @@ public class Tags_DAO {
 			return null;
 		}
 	}
-	
+
 	// Select tutti i tags
 	public List<String> SelAllTags_String() {
 
@@ -119,8 +125,8 @@ public class Tags_DAO {
 					Rec_Tags.add(Stampa);
 					Stampa = null;
 				}
-				
-				//String[] ret = Rec_Tags.toArray(new String[0]);;
+
+				// String[] ret = Rec_Tags.toArray(new String[0]);;
 
 				return Rec_Tags;
 
@@ -128,6 +134,8 @@ public class Tags_DAO {
 				System.out.println("query fallita");
 
 				return null;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
 
 		} catch (Exception e) {
@@ -136,5 +144,5 @@ public class Tags_DAO {
 			return null;
 		}
 	}
-	
+
 }

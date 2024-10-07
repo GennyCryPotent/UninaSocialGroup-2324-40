@@ -1,6 +1,5 @@
 package UninaSocialGroup;
 
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.util.Properties;
 
@@ -8,17 +7,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import org.jdatepicker.DateModel;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.SqlDateModel;
-import org.jdatepicker.impl.UtilDateModel;
-
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.SwingConstants;
@@ -38,7 +30,7 @@ public class Registrazione_GUI extends JFrame {
 	private JTextField textFieldPassword;
 	private JTextField textFieldNome;
 	private JTextField textFieldCognome;
-	private Profili_DAO P = new Profili_DAO();
+	private RegistrazioneController RC = new RegistrazioneController(Registrazione_GUI.this);
 	private Date DataNascita;
 
 	public Registrazione_GUI() {
@@ -117,33 +109,12 @@ public class Registrazione_GUI extends JFrame {
 		});
 		panel.add(datePicker);
 
-		JButton btnNewButton = new JButton("Registrati");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnRegistrati = new JButton("Registrati");
+		btnRegistrati.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				boolean check = textFieldNomeUtente.getText().isEmpty() || textFieldPassword.getText().isEmpty()
-						|| textFieldNome.getText().isEmpty() || textFieldCognome.getText().isEmpty()
-						|| datePicker.getJFormattedTextField().getText().isEmpty();
-
-				if (!check) { // controllo se tutti i campi sono stati inseriti
-					if (!(textFieldPassword.getText().length() < 8)) {
-
-						P.InsProfilo(textFieldNomeUtente.getText(), textFieldPassword.getText(),
-								textFieldNome.getText(), textFieldCognome.getText(),
-								String.valueOf(comboBoxGenere.getSelectedItem()), DataNascita);
-
-						JOptionPane.showMessageDialog(btnNewButton, "Registrazione completata. Benvenuto!");
-						Registrazione_GUI.this.setVisible(false);
-						Gestione_Finestre GF = new Gestione_Finestre();
-						GF.LoginGUI();
-					} else {
-						JOptionPane.showMessageDialog(btnNewButton, "La password deve essere lunga minimo 8 caratteri");
-					}
-				} else {
-					JOptionPane.showMessageDialog(btnNewButton, "Inserisci tutti i campi");
-				}
+				RC.ActionRegistrati(textFieldNomeUtente, textFieldPassword, textFieldNome, textFieldCognome, datePicker, DataNascita, comboBoxGenere, btnRegistrati);
 			}
 		});
-		contentPane.add(btnNewButton, BorderLayout.SOUTH);
+		contentPane.add(btnRegistrati, BorderLayout.SOUTH);
 	}
 }

@@ -9,7 +9,7 @@ import oracle.jdbc.OracleTypes;
 public class Profili_DAO {
 
 	// Insert in un gruppo
-	public void InsProfilo(String Nome_Utente, String Password, String Nome, String Cognome, String Genere, Date DataNascita) {
+	public void InsProfilo(String Nome_Utente, String Password, String Nome, String Cognome, String Genere, Date DataNascita) throws Exception {
 
 		try {
 			CallableStatement Call = Gestione_Finestre.DB.getC().prepareCall("CALL CREA_PROFILO(?, ?, ?, ?, ?, ?)");
@@ -21,10 +21,11 @@ public class Profili_DAO {
 			Call.setDate(6, DataNascita);
 			Call.execute();
 			System.out.println("Utente creato");
+			Call.close();
 			
 		} catch (Exception e) {
 			System.out.println("Errore: " + e.getMessage());
-			
+			throw e;
 		}
 		
 	}
@@ -37,6 +38,7 @@ public class Profili_DAO {
 			Call.setString(1, Nome_Utente);
 			Call.execute();
 			System.out.println("Profilo eliminato");
+			Call.close();
 		
 		} catch (Exception e) {
 			System.out.println(e);
@@ -55,6 +57,7 @@ public class Profili_DAO {
 			Call.setString(3, Nome_Utente);
 			Call.execute();
 			System.out.println("Profilo aggiornato ");
+			Call.close();
 		
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -84,7 +87,10 @@ public class Profili_DAO {
 				System.out.println("query fallita: " + e.getMessage());
 			
 				return null;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
+
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -120,7 +126,10 @@ public class Profili_DAO {
 				System.out.println("query fallita: " + e.getMessage());
 				
 				return null;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
+
 
 		} catch (Exception e) {
 			System.out.println("Errore");

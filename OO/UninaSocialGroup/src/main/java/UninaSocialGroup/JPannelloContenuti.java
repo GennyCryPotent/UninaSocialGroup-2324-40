@@ -23,7 +23,8 @@ public class JPannelloContenuti extends JPanel {
 	private JButton commentButton = new JButton("💬");
 
 	private Likes_DAO L = new Likes_DAO();
-	private int likeNumDinamico;
+	public int likeNumDinamico;
+	private JPannelloContenutiController JPC = new JPannelloContenutiController(JPannelloContenuti.this);
 
 	public JPannelloContenuti() {
 		super(new BorderLayout());
@@ -76,61 +77,19 @@ public class JPannelloContenuti extends JPanel {
 		textArea.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(JPannelloContenuti.this); // Recupero il JFrame
-																									// della classe che
-																									// invoca il
-																									// costruttore
-				frame.setVisible(false);
-
-				Gestione_Finestre GF = new Gestione_Finestre();
-
-				if (frame.getTitle().equals("Home")) { // if per verificare da quale JFrame proviene la richiesta (0
-														// Home_GUI ; 1 Gruppi_GUI)
-					GF.Info_Post(Id_Post, nomeUtente, nomeGruppo, 0);
-				} else {
-					GF.Info_Post(Id_Post, nomeUtente, nomeGruppo, 1);
-				}
-
+				JPC.ActionViewPost(Id_Post, nomeUtente, nomeGruppo);
 			}
 		});
 
 		likeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				// Controllo per vedere se si deve inserire un like o toglierlo alla pressione
-				// del pulasante
-				if (L.SelLikeProfilo(nomeUtente, Id_Post) == false) {
-					likeButton.setForeground(new Color(255, 0, 0));
-					L.InsLike(Id_Post, nomeUtente);
-					likeNumDinamico++;
-					setLikeNum(likeNumDinamico);
-				} else {
-					likeButton.setForeground(new Color(0, 0, 0));
-					L.DelLike(Id_Post, nomeUtente);
-					likeNumDinamico--;
-					setLikeNum(likeNumDinamico);
-				}
+				JPC.ActionInsLike(nomeUtente, Id_Post, likeButton);
 			}
 		});
 
 		commentButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(JPannelloContenuti.this); // Recupero il JFrame
-																									// della classe che
-																									// invoca il
-																									// costruttore
-				frame.setVisible(false);
-
-				Gestione_Finestre GF = new Gestione_Finestre();
-
-				if (frame.getTitle().equals("Home")) { // if per verificare da quale JFrame proviene la richiesta (0
-														// Home_GUI ; 1 Gruppi_GUI)
-					GF.Info_Post(Id_Post, nomeUtente, nomeGruppo, 0);
-				} else {
-					GF.Info_Post(Id_Post, nomeUtente, nomeGruppo, 1);
-				}
-
+				JPC.ActionViewPost(Id_Post, nomeUtente, nomeGruppo);
 			}
 		});
 	}

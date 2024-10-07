@@ -21,6 +21,7 @@ public class Notifiche_Richieste_DAO {
 			Call.setString(2, Nome_Utente);
 			Call.execute();
 			System.out.println("Richiesta inviata al gruppo");
+			Call.close();
 		} catch (Exception e) {
 			System.out.println("Errore");
 
@@ -36,10 +37,6 @@ public class Notifiche_Richieste_DAO {
 					"DELETE FROM NOTIFICHE_RICHIESTE WHERE ID_NOTIFICA_RE = " + Id_Notifica_Richieste);
 			Remove.execute();
 			Remove.close();
-//			CallableStatement Call = DB.getC().prepareCall("CALL RIMOZIONE_Notifiche(?, ?)");
-//			Call.setString(1, Nome_Gruppo);
-//			Call.setString(2, Parola);
-//			Call.execute();
 			System.out.println("Notifica Eliminata");
 
 		} catch (Exception e) {
@@ -56,6 +53,7 @@ public class Notifiche_Richieste_DAO {
 			Call.setString(2, Nome_Gruppo);
 			Call.execute();
 			System.out.println("Profilo accettato");
+			Call.close();
 		} catch (Exception e) {
 			System.out.println("Errore");
 
@@ -70,6 +68,7 @@ public class Notifiche_Richieste_DAO {
 			Call.setString(2, Nome_Gruppo);
 			Call.execute();
 			System.out.println("Profilo riiutato");
+			Call.close();
 		} catch (Exception e) {
 			System.out.println("Errore");
 
@@ -111,6 +110,7 @@ public class Notifiche_Richieste_DAO {
 
 						Stampa = null;
 					}
+					rsF.close();
 				}
 
 				return Rec_Notifiche;
@@ -119,7 +119,10 @@ public class Notifiche_Richieste_DAO {
 				System.out.println("query fallita: " + e.getMessage());
 
 				return null;
+			} finally {
+				rsNome_Gruppo.close(); // chiude sempre il cursore
 			}
+
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -133,20 +136,13 @@ public class Notifiche_Richieste_DAO {
 	// Select se esiste un utente che ha in sospeso una richiesta di un gurppo
 		public boolean SelNoitificheRichiesteDiUtenteDiGruppo(String Nome_Gruppo, String Nome_Utente) {
 
-			String TMP_Nome_Gruppo;
-
 			try {
 
-
+				ResultSet rsF = Gestione_Finestre.DB.ExeQuery("SELECT * FROM NOTIFICHE_RICHIESTE WHERE FK_Nome_Gruppo = '"
+						+ Nome_Gruppo + "' AND FK_Nome_Utente = '" + Nome_Utente  +"' AND Esitato = '0'");
 				try {
 
-					List<Notifiche> Rec_Notifiche = new ArrayList<Notifiche>();
-
-					Notifiche Stampa;
-
-
-						ResultSet rsF = Gestione_Finestre.DB.ExeQuery("SELECT * FROM NOTIFICHE_RICHIESTE WHERE FK_Nome_Gruppo = '"
-								+ Nome_Gruppo + "' AND FK_Nome_Utente = '" + Nome_Utente  +"' AND Esitato = '0'");
+					
 
 						while (rsF.next()) {
 
@@ -159,6 +155,8 @@ public class Notifiche_Richieste_DAO {
 					System.out.println("query fallita: " + e.getMessage());
 
 					return false;
+				} finally {
+					rsF.close(); // chiude sempre il cursore
 				}
 
 			} catch (Exception e) {

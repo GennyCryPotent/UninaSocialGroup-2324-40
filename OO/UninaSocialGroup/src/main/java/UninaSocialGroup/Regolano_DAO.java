@@ -18,6 +18,7 @@ public class Regolano_DAO {
 			Call.setString(2, Nome_Gruppo);
 			Call.execute();
 			System.out.println("Amministratore aggiunto al gruppo");
+			Call.close();
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -35,6 +36,7 @@ public class Regolano_DAO {
 			Call.setString(2, Nome_Utente);
 			Call.execute();
 			System.out.println("Amministratore eliminato");
+			Call.close();
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -71,7 +73,10 @@ public class Regolano_DAO {
 				System.out.println("query fallita: " + e.getMessage());
 
 				return null;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
+
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -106,7 +111,10 @@ public class Regolano_DAO {
 				System.out.println("query fallita: " + e.getMessage());
 
 				return null;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
+
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -139,7 +147,10 @@ public class Regolano_DAO {
 				System.out.println("query fallita: " + e.getMessage());
 
 				return false;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
+
 
 		} catch (Exception e) {
 			System.out.println("Errore");

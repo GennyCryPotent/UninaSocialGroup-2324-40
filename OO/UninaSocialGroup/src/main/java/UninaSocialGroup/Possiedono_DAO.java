@@ -18,33 +18,32 @@ public class Possiedono_DAO {
 			Call.setString(2, Parola);
 			Call.execute();
 			System.out.println("Tag aggiunto al gruppo");
+			Call.close();
 		} catch (Exception e) {
 			System.out.println("Errore");
-			
+
 		}
-		
+
 	}
 
 	// Delete su Possiedono
 	public void DelTagGruppo(String Nome_Gruppo, String Parola) {
 
 		try {
-			PreparedStatement Remove = Gestione_Finestre.DB.getC().prepareStatement("DELETE FROM POSSIEDONO WHERE FK_PAROLA = '" + Parola + "' AND FK_NOME_GRUPPO = '" + Nome_Gruppo + "'");
+			PreparedStatement Remove = Gestione_Finestre.DB.getC()
+					.prepareStatement("DELETE FROM POSSIEDONO WHERE FK_PAROLA = '" + Parola + "' AND FK_NOME_GRUPPO = '"
+							+ Nome_Gruppo + "'");
 			Remove.execute();
 			Remove.close();
-//			CallableStatement Call = DB.getC().prepareCall("CALL RIMOZIONE_POSSIEDONO(?, ?)");
-//			Call.setString(1, Nome_Gruppo);
-//			Call.setString(2, Parola);
-//			Call.execute();
 			System.out.println("Tag eliminato dal gruppo");
-		
+
 		} catch (Exception e) {
 			System.out.println(e);
-			
+
 		}
 	}
 
-	// Select tutti i gruppi dove è associato il tag
+	// Select tutti i gruppi dove ï¿½ associato il tag
 	public List<Possiedono> SelGruppiConTag(String Parola) {
 
 		try {
@@ -54,63 +53,67 @@ public class Possiedono_DAO {
 			try {
 
 				List<Possiedono> Rec_Possiedono = new ArrayList<Possiedono>();
-				
+
 				Possiedono Stampa;
 
 				while (rs.next()) {
-					
-					Stampa =  new Possiedono(rs.getString("FK_Parola"),rs.getString("FK_Nome_Gruppo"));
-					
+
+					Stampa = new Possiedono(rs.getString("FK_Parola"), rs.getString("FK_Nome_Gruppo"));
+
 					Rec_Possiedono.add(Stampa);
 					Stampa = null;
 				}
-				
+
 				return Rec_Possiedono;
 
 			} catch (SQLException e) {
 				System.out.println("query fallita: " + e.getMessage());
-			
+
 				return null;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
 
 		} catch (Exception e) {
 			System.out.println("Errore");
-			
+
 			return null;
 		}
 	}
 
 	// Select tutti i tag di un gruppo
-	public List<Possiedono> SelTagGruppo(String Nome_Gruppo){
+	public List<Possiedono> SelTagGruppo(String Nome_Gruppo) {
 
 		try {
 
-			ResultSet rs = Gestione_Finestre.DB.ExeQuery("SELECT * FROM POSSIEDONO WHERE FK_NOME_GRUPPO = '" + Nome_Gruppo + "'" );
-			
+			ResultSet rs = Gestione_Finestre.DB
+					.ExeQuery("SELECT * FROM POSSIEDONO WHERE FK_NOME_GRUPPO = '" + Nome_Gruppo + "'");
+
 			try {
 				List<Possiedono> Rec_Possiedono = new ArrayList<Possiedono>();
-				
+
 				Possiedono Stampa;
 
 				while (rs.next()) {
-					Stampa =  new Possiedono(rs.getString("FK_Parola"),rs.getString("FK_Nome_Gruppo"));
-					
+					Stampa = new Possiedono(rs.getString("FK_Parola"), rs.getString("FK_Nome_Gruppo"));
+
 					Rec_Possiedono.add(Stampa);
 					Stampa = null;
 				}
-				
-				
+
 				return Rec_Possiedono;
 
 			} catch (SQLException e) {
 				System.out.println("query fallita: " + e.getMessage());
-				
+
 				return null;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
 
 		} catch (Exception e) {
 			System.out.println("Errore");
-			
+
 			return null;
 		}
 	}

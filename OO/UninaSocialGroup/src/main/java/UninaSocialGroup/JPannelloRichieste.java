@@ -23,8 +23,9 @@ public class JPannelloRichieste extends JPanel {
     private JPanel thirdPanel = new JPanel();
     public JTextArea NotificationText = new JTextArea();
     public JTextArea GroupText = new JTextArea();
-    JButton Accetta = new JButton("Accetta");
-    JButton Rifiuta = new JButton("Rifiuta");
+    private JButton Accetta = new JButton("Accetta");
+    private JButton Rifiuta = new JButton("Rifiuta");
+    private NotificheController NC = new NotificheController(JPannelloRichieste.this);
 
     public JPannelloRichieste(String NU, String NG, Notifiche N) { //Passa la singola notifica
         super(new BorderLayout());
@@ -47,20 +48,14 @@ public class JPannelloRichieste extends JPanel {
         
                 Accetta.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                    	System.out.println(N.getRicevente());
-                    	System.out.println(NG);
-                        Esitato.Accetta_Richiesta(NG, N.getRicevente()); //Nome utente che manda la richiesta
-                        setVisible(false);
+                    	NC.ActionAccetta(NG, N);
                     }
                 });
                 Accetta.setBackground(new Color(255, 255, 255));
                 
                         Rifiuta.addActionListener(new ActionListener() {
                             public void actionPerformed(ActionEvent e) {
-                            	System.out.println(N.getRicevente());
-                            	System.out.println(NG);
-                                Esitato.Rifiuta_Richiesta(NG, N.getRicevente()); //
-                                setVisible(false);
+                            	NC.ActionRifiuta(NG, N);
                             }
                         });
                         Rifiuta.setBackground(new Color(255, 255, 255));

@@ -37,8 +37,6 @@ public class Gruppi_GUI extends JFrame {
 	private Gruppi Gruppo;
 	private boolean CkeckCreatore;
 	private boolean checkAmm;
-	private String RuoloStr;
-
 	private Color lightColorFont = new Color(0, 0, 0);
 	private Color lightColorInternalArea = new Color(244, 244, 244);
 
@@ -125,7 +123,7 @@ public class Gruppi_GUI extends JFrame {
 		JLabel labelRuolo = new JLabel();
 		labelRuolo.setVisible(false);
 		
-		RuoloStr=labelRuolo.getText();
+		labelRuolo.getText();
 		
 		
 		
@@ -144,19 +142,7 @@ public class Gruppi_GUI extends JFrame {
 		JButton Abbandona = new JButton("❌");
 		Abbandona.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				Partecipano_DAO partecipano_DAO = new Partecipano_DAO();
-				
-				int scelta = JOptionPane.showConfirmDialog(null, "Sicuro di voler abbandonare questo gruppo?", "Abbandona", JOptionPane.YES_NO_OPTION);
-
-		        if (scelta == JOptionPane.YES_OPTION) {
-		            partecipano_DAO.DelPartecipante(NU, NG);
-		            JOptionPane.showMessageDialog(null, "Hai abbandonato il gruppo " + NG , "Abbandonato", JOptionPane.INFORMATION_MESSAGE);
-		            GC.ActionHome(NU);
-		        }
-	
-		        //System.out.println("scelta : " + scelta);
-
+				GC.ActionAbbandona(NU, NG);
 			}
 		});
 		Abbandona.setBorderPainted(false);

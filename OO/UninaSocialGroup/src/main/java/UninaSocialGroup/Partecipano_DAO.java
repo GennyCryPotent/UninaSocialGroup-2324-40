@@ -17,6 +17,7 @@ public class Partecipano_DAO {
 			Call.setString(2, Nome_Gruppo);
 			Call.execute();
 			System.out.println("Utente aggiunto al gruppo");
+			Call.close();
 			
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -33,6 +34,7 @@ public class Partecipano_DAO {
 			Call.setString(2, Nome_Gruppo);
 			Call.execute();
 			System.out.println("Partecipante eliminato");
+			Call.close();
 		
 		} catch (Exception e) {
 			System.out.println(e);
@@ -67,7 +69,10 @@ public class Partecipano_DAO {
 				System.out.println("query fallita: " + e.getMessage());
 			
 				return null;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
+
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -102,7 +107,10 @@ public class Partecipano_DAO {
 				System.out.println("query fallita: " + e.getMessage());
 				
 				return null;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
+
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -122,10 +130,6 @@ public class Partecipano_DAO {
 			
 			try {
 
-					List<Partecipano> Rec_Partecipano = new ArrayList<Partecipano>();
-					
-					Partecipano Stampa;
-					
 					while (rs.next()) {
 						return true;
 					}
@@ -137,7 +141,10 @@ public class Partecipano_DAO {
 				System.out.println("query fallita: " + e.getMessage());
 				
 				return false;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
+
 
 		} catch (Exception e) {
 			System.out.println("Errore");

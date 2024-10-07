@@ -17,6 +17,7 @@ public class Likes_DAO {
 			Call.setInt(2, Id_Contenuto);
 			Call.execute();
 			System.out.println("Like Inserito");
+			Call.close();
 
 		} catch (Exception e) {
 			System.out.println("Errore: " + e.getMessage());
@@ -34,6 +35,7 @@ public class Likes_DAO {
 			Call.setInt(2, Id_Contenuto);
 			Call.execute();
 			System.out.println("Like eliminato");
+			Call.close();
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -51,6 +53,7 @@ public class Likes_DAO {
 			Call.setString(2, Nome_Gruppo);
 			Call.execute();
 			System.out.println("Likes eliminati");
+			Call.close();
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -71,8 +74,10 @@ public class Likes_DAO {
 			rs.next();
 			
 			if(rs.getInt(1) >= 1) {
+				rs.close();
 				return true;
 			}else {
+				rs.close();
 				return false;
 			}
 
@@ -80,7 +85,7 @@ public class Likes_DAO {
 			System.out.println(e);
 			return false;
 
-		}
+		} 
 		
 	}
 
@@ -110,7 +115,10 @@ public class Likes_DAO {
 				System.out.println("query fallita");
 
 				return null;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
+
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -143,7 +151,10 @@ public class Likes_DAO {
 				System.out.println("query fallita: " + e.getMessage());
 
 				return 0;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
+
 
 		} catch (Exception e) {
 			System.out.println("Errore");

@@ -1,13 +1,10 @@
 package UninaSocialGroup;
 
-import java.awt.EventQueue;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,10 +22,12 @@ public class InfoPost_GUI extends JFrame {
 	private JPanel contentPaneWest;
 
 	private List<Commenti> Res_Commenti = new ArrayList<Commenti>();
+
 	private Commenti_DAO CO = new Commenti_DAO();
 	private Contenuti_DAO C = new Contenuti_DAO();
 	private Likes_DAO L = new Likes_DAO();
 	private Contenuti Res_Contenuto;
+	private InfoPostController IC = new InfoPostController(InfoPost_GUI.this);
 
 	public InfoPost_GUI(int Id_Contenuto, String NU, String NG, int check) {
 
@@ -66,29 +65,20 @@ public class InfoPost_GUI extends JFrame {
 		// parte Ovest
 		contentPaneWest.setLayout(new BoxLayout(contentPaneWest, BoxLayout.PAGE_AXIS));
 
-		
-
 		JLabel LabelPost = new JLabel();
 		LabelPost.setText(Res_Contenuto.getPubblicatore());
 		LabelPost.setForeground(new Color(0, 128, 255));
 		LabelPost.setFont(new Font("Tahoma", Font.BOLD, 18));
 		contentPaneNorthNorth.add(LabelPost);
 
-		JButton btnNewButton_1 = new JButton("Indietro");
+		JButton btnIndietro = new JButton("Indietro");
 		contentPaneNorthNorth.add(Box.createHorizontalGlue()); // sposta il pulsante a destra
-		btnNewButton_1.addActionListener(new ActionListener() {
+		btnIndietro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-				Gestione_Finestre GF = new Gestione_Finestre();
-
-				if (check == 0) { // ritorna nella schermata che ha invocato InfoPost (0 = Home ; 1 = Gruppi)
-					GF.AccessoHome(NU);
-				} else {
-					GF.GruppiGUI(NU, NG);
-				}
+				IC.ActionIndietro(check, NU, NG);
 			}
 		});
-		contentPaneNorthNorth.add(btnNewButton_1);
+		contentPaneNorthNorth.add(btnIndietro);
 
 		JTextArea textAreaPost = new JTextArea(Res_Contenuto.getTesto());
 		textAreaPost.setEditable(false);
@@ -116,19 +106,19 @@ public class InfoPost_GUI extends JFrame {
 		JScrollPane PostsScrollPane = new JScrollPane(textCommenti);
 		PostsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		PostsScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		
+
 		PostsScrollPane.setVisible(true);
 		contentPaneCenter.add(PostsScrollPane, BorderLayout.CENTER);
-		
+
 		JTextPane textPane = new JTextPane();
 		textPane.setEditable(false);
-		textPane.setText("Post inserito nel gruppo : " + Res_Contenuto.getNome_Gruppo() + "\nData: " + Res_Contenuto.getData_Creazione() + 
-						 "\nNumero di like: " + L.SelNumLike(Id_Contenuto) + "\nNumero di commenti: " + CO.SelNumCommenti(Id_Contenuto));
-		
+		textPane.setText("Post inserito nel gruppo : " + Res_Contenuto.getNome_Gruppo() + "\nData: "
+				+ Res_Contenuto.getData_Creazione() + "\nNumero di like: " + L.SelNumLike(Id_Contenuto)
+				+ "\nNumero di commenti: " + CO.SelNumCommenti(Id_Contenuto));
+
 		contentPaneCenter.add(textPane, BorderLayout.SOUTH);
 
-		
-		//OVEST
+		// OVEST
 		JLabel lblAggiungiCommento = new JLabel();
 		lblAggiungiCommento.setHorizontalAlignment(SwingConstants.LEFT);
 		lblAggiungiCommento.setText("Aggiungi un commento");
@@ -140,43 +130,36 @@ public class InfoPost_GUI extends JFrame {
 		textAddCommento.setLineWrap(true);
 		contentPaneWest.add(textAddCommento);
 
-		JButton btnNewButtonAddCommento = new JButton("Commenta");
-		btnNewButtonAddCommento.setHorizontalAlignment(SwingConstants.LEFT);
-		btnNewButtonAddCommento.addActionListener(new ActionListener() {
+		JButton btnAddCommento = new JButton("Commenta");
+		btnAddCommento.setHorizontalAlignment(SwingConstants.LEFT);
+		btnAddCommento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (!textAddCommento.getText().isEmpty()) {
-					CO.InsCommento(textAddCommento.getText(), Id_Contenuto, NU);
-					 textCommenti.append(NU + " :" + textAddCommento.getText() + "\n");
-					textAddCommento.setText("");
-				}
+				IC.ActionAddCommento(textAddCommento, textCommenti, Id_Contenuto, NU);
 			}
 		});
-		contentPaneWest.add(btnNewButtonAddCommento);
+		contentPaneWest.add(btnAddCommento);
 
-		JButton btnNewButtonRimCommento = new JButton("Rimuovi/Modifica commento");
-		btnNewButtonRimCommento.setHorizontalAlignment(SwingConstants.LEFT);
-		btnNewButtonRimCommento.addActionListener(new ActionListener() {
+		JButton btnRimCommento = new JButton("Rimuovi/Modifica commento");
+		btnRimCommento.setHorizontalAlignment(SwingConstants.LEFT);
+		btnRimCommento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-				Gestione_Finestre V = new Gestione_Finestre();
-				V.Elimina_Commento(NU, NG, Id_Contenuto);
-
+				IC.ActionModCommento(Id_Contenuto, NU, NG);
 			}
 		});
-		contentPaneWest.add(btnNewButtonRimCommento);
+		contentPaneWest.add(btnRimCommento);
 
 	}
-	
-	// costruisce e restutuisce una textArea che contine tutti i commenti del post
-		private void createTextAreaCommenti(int Id_Contenuto, JTextArea textArea) {
 
-			Res_Commenti = CO.SelCommentiPost(Id_Contenuto);
+	// restutuisce una textArea che contine tutti i commenti del post
+	private void createTextAreaCommenti(int Id_Contenuto, JTextArea textArea) {
 
-			// For speciale
-			for (Commenti commento : Res_Commenti) {
-				textArea.append(commento.getPubblicatore() + ": " + commento.getTesto() + "\n");
-			}
+		Res_Commenti = CO.SelCommentiPost(Id_Contenuto);
 
+		// For speciale
+		for (Commenti commento : Res_Commenti) {
+			textArea.append(commento.getPubblicatore() + ": " + commento.getTesto() + "\n");
 		}
+
+	}
 
 }

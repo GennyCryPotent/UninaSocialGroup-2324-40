@@ -82,15 +82,7 @@ public class Home_GUI extends JFrame {
 
 		ricercaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				HC.ActionRicerca(NU);
-				
-				
-				//Home_GUI.this.setVisible(true);
-                //Gestione_Finestre G = new Gestione_Finestre();
-                //NG = btnNewButton.getText();
-               // G.RicercaGUI(NU);
-
 			}
 		});
 

@@ -17,6 +17,7 @@ public class Gruppi_DAO {
 			Call.setString(3, Creatore);
 			Call.execute();
 			System.out.println("Gruppo Inserito");
+			Call.close();
 			
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -33,6 +34,7 @@ public class Gruppi_DAO {
 			Call.setString(1, Nome_Gruppo);
 			Call.execute();
 			System.out.println("Gruppo eliminato");
+			Call.close();
 		
 		} catch (Exception e) {
 			System.out.println(e);
@@ -52,6 +54,7 @@ public class Gruppi_DAO {
 			Call.setString(4, Nome_Gruppo);
 			Call.execute();
 			System.out.println("Gruppo aggiornato ");
+			Call.close();
 		
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -81,7 +84,10 @@ public class Gruppi_DAO {
 				System.out.println("query fallita");
 			
 				return null;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
+
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -117,7 +123,10 @@ public class Gruppi_DAO {
 				System.out.println("query fallita");
 				
 				return null;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
+
 
 		} catch (Exception e) {
 			System.out.println("Errore" + e.getMessage());
@@ -156,7 +165,10 @@ public class Gruppi_DAO {
 				System.out.println("query fallita");
 				
 				return null;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
+
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -192,7 +204,10 @@ public class Gruppi_DAO {
 					System.out.println("query fallita");
 					
 					return null;
+				} finally {
+					rs.close(); // chiude sempre il cursore
 				}
+
 
 			} catch (Exception e) {
 				System.out.println("Errore");
