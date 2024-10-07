@@ -30,7 +30,7 @@ public class Notifiche_Gruppi_DAO {
 							rs.getString("FK_Nome_Utente"));
 
 					Rec_Notifiche.add(Stampa);
-					
+
 					Stampa = null;
 				}
 
@@ -40,6 +40,8 @@ public class Notifiche_Gruppi_DAO {
 				System.out.println("query fallita");
 
 				return null;
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
 
 		} catch (Exception e) {
@@ -49,8 +51,6 @@ public class Notifiche_Gruppi_DAO {
 		}
 	}
 
-	
-	  
 	// Select tutte le notifiche dei gruppie dei contenuti di un utente
 	public List<Notifiche> SelNotifiche(String Nome_Utente) {
 
@@ -90,6 +90,9 @@ public class Notifiche_Gruppi_DAO {
 			} catch (SQLException e) {
 				System.out.println("query fallita" + e.getMessage());
 				return null;
+
+			} finally {
+				rs.close(); // chiude sempre il cursore
 			}
 
 		} catch (Exception e) {
