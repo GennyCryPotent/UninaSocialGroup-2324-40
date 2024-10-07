@@ -79,6 +79,7 @@ public class EliminaPartecipante_GUI extends JFrame {
 			List<Partecipano> partecipano = partecipano_DAO. SelAllPartecipanoGruppo(NG);
 
 			for (Partecipano p : partecipano) {
+				if(NU.compareTo(p.getNome_Partecipante())!=0) {  
 				JButton btnNewButton = new JButton(p.getNome_Partecipante());
 				btnNewButton.addActionListener(e -> {
 					
@@ -94,10 +95,9 @@ public class EliminaPartecipante_GUI extends JFrame {
 			        }
 
 			        System.out.println("scelta : " + scelta);
-
-			        
+				
 				});
-
+				
 				btnNewButton.setForeground(new Color(0, 128, 255));
 				btnNewButton.setBackground(new Color(255, 255, 255));
 				btnNewButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -108,6 +108,7 @@ public class EliminaPartecipante_GUI extends JFrame {
 
 				btnNewButton.setBorder(compoundBorder);
 				ParteciPanel.add(btnNewButton);
+				}	
 			}
 		}
 }

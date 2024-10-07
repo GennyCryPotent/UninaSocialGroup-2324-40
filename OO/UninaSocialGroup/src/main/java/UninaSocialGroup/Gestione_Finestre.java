@@ -47,9 +47,9 @@ public class Gestione_Finestre {
 			public void run() {
 				try {
 					DB.connect();
-					Home_GUI frame = new Home_GUI("Genny03cry");
+					//Home_GUI frame = new Home_GUI("test");
 
-					//Login_GUI frame = new Login_GUI();
+					Login_GUI frame = new Login_GUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -62,12 +62,13 @@ public class Gestione_Finestre {
 	  public void GruppiGUI(String NU, String NG) {
 		  Gruppo = new Gruppi_GUI(NU, NG);
 		  Gruppo.setVisible(true);
+	  
 	  }
 	
 	  public void AccessoHome(String NU) {
 		  Accesso = new Home_GUI(NU); 
 		  Accesso.setVisible(true);
-		
+		  
 	  }
 	  
 	  public void Elimina_Contenuto(String NG, String NU, Gruppi_GUI gruppiView) {

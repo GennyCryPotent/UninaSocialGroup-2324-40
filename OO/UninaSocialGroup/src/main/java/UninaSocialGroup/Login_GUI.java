@@ -32,6 +32,7 @@ public class Login_GUI extends JFrame {
 	public Login_GUI() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
 		setBounds(100, 100, 600, 400);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));
@@ -78,13 +79,13 @@ public class Login_GUI extends JFrame {
 
 		ImageIcon highResIcon = new ImageIcon(getClass().getResource("image.png"));
 		java.awt.Image image = highResIcon.getImage(); // Recupera l'immagine originale
-		java.awt.Image scaledImage = image.getScaledInstance(190, 190 ,java.awt.Image.SCALE_SMOOTH); // Ridimensiona l'immagine
+		java.awt.Image scaledImage = image.getScaledInstance(155, 180 ,java.awt.Image.SCALE_SMOOTH); // Ridimensiona l'immagine
 		ImageIcon scaledIcon = new ImageIcon(scaledImage); // Crea un nuovo ImageIcon con l'immagine ridimensionata
 
 		JLabel icona = new JLabel(scaledIcon);
-		sl_contentPane.putConstraint(SpringLayout.NORTH, icona, 5, SpringLayout.NORTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.NORTH, icona, -5, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, icona, 0, SpringLayout.WEST, accedi);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, icona, -6, SpringLayout.NORTH, NomeUtente);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, icona, -11, SpringLayout.NORTH, lblNewLabel);
 		sl_contentPane.putConstraint(SpringLayout.EAST, icona, 360, SpringLayout.WEST, contentPane);
 		contentPane.add(icona);
 

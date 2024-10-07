@@ -12,6 +12,7 @@ import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.EmptyBorder;
 import java.util.Comparator;
+import javax.swing.LayoutStyle.ComponentPlacement;
 	
 
 public class Notifiche_GUI extends JFrame {
@@ -75,30 +76,26 @@ public class Notifiche_GUI extends JFrame {
 
         GroupLayout gl_contentPane = new GroupLayout(contentPane);
         gl_contentPane.setHorizontalGroup(
-            gl_contentPane.createParallelGroup(Alignment.LEADING)
-                .addGroup(gl_contentPane.createSequentialGroup()
-                    .addGap(22)
-                    .addComponent(Indietro, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-                    .addGap(123)
-                    .addComponent(NomeGruppo, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE)
-                    .addGap(344))
-                .addGroup(gl_contentPane.createSequentialGroup()
-                    .addGap(35)
-                    .addComponent(Sezioni_Notifiche, GroupLayout.DEFAULT_SIZE, 661, GroupLayout.DEFAULT_SIZE))
+        	gl_contentPane.createParallelGroup(Alignment.LEADING)
+        		.addGroup(gl_contentPane.createSequentialGroup()
+        			.addGap(22)
+        			.addComponent(Indietro, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+        			.addGap(18)
+        			.addComponent(NomeGruppo, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE)
+        			.addGap(449))
+        		.addGroup(gl_contentPane.createSequentialGroup()
+        			.addGap(35)
+        			.addComponent(Sezioni_Notifiche, GroupLayout.DEFAULT_SIZE, 661, GroupLayout.DEFAULT_SIZE))
         );
-
         gl_contentPane.setVerticalGroup(
-            gl_contentPane.createParallelGroup(Alignment.LEADING)
-                .addGroup(gl_contentPane.createSequentialGroup()
-                    .addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-                        .addGroup(gl_contentPane.createSequentialGroup()
-                            .addGap(17)
-                            .addComponent(Indietro, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE))
-                        .addGroup(gl_contentPane.createSequentialGroup()
-                            .addGap(5)
-                            .addComponent(NomeGruppo, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)))
-                    .addGap(39)
-                    .addComponent(Sezioni_Notifiche, GroupLayout.DEFAULT_SIZE, 308, GroupLayout.DEFAULT_SIZE))
+        	gl_contentPane.createParallelGroup(Alignment.LEADING)
+        		.addGroup(gl_contentPane.createSequentialGroup()
+        			.addGap(17)
+        			.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+        				.addComponent(Indietro, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(NomeGruppo, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
+        			.addPreferredGap(ComponentPlacement.UNRELATED)
+        			.addComponent(Sezioni_Notifiche, GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE))
         );
         contentPane.setLayout(gl_contentPane);
 
@@ -116,7 +113,6 @@ public class Notifiche_GUI extends JFrame {
         contentPaneForContent.setLayout(new BoxLayout(contentPaneForContent, BoxLayout.Y_AXIS));
 
         JScrollPane scrollPane = new JScrollPane(contentPaneForContent);
-        scrollPane.getVerticalScrollBar().setValue(0); //imposta lo Scroll Panel in alto
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -144,6 +140,7 @@ public class Notifiche_GUI extends JFrame {
                 textArea.setEditable(false);
                 contentPaneForContent.add(textArea);
                 contentPaneForContent.add(Box.createRigidArea(new Dimension(0, 10)));
+               
             }
         } else {
             JTextArea textArea = new JTextArea("Nessuna notifica trovata per l'utente specificato.");
@@ -151,12 +148,17 @@ public class Notifiche_GUI extends JFrame {
             contentPaneForContent.add(textArea);
         }
         }
-       
         contentPaneForContent.revalidate();
         contentPaneForContent.repaint();
+        
+        SwingUtilities.invokeLater(new Runnable() {  // imposta la scrollbar in cima
+            public void run() {
+                scrollPane.getVerticalScrollBar().setValue(0);
+            }
+        });
     }
 
-    //notifiche richieste
+    //notifiche richieste7
     private void initializeRichiesteTab(JPanel panelRichieste, String NU) {
         contentPaneForRichieste = new JPanel();
         contentPaneForRichieste.setBackground(Color.WHITE);
@@ -244,5 +246,11 @@ public class Notifiche_GUI extends JFrame {
 
         contentPaneForArchiviati.revalidate();
         contentPaneForArchiviati.repaint();
+        
+        SwingUtilities.invokeLater(new Runnable() {  // imposta la scrollbar in cima
+            public void run() {
+                scrollPaneArchiviati.getVerticalScrollBar().setValue(0);
+            }
+        });
     }
 }
