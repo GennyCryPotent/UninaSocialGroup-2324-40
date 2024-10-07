@@ -146,14 +146,10 @@ public class Gruppi_GUI extends JFrame {
 		            partecipano_DAO.DelPartecipante(NU, NG);
 		            JOptionPane.showMessageDialog(null, "Hai abbandonato il gruppo " + NG , "Abbandonato", JOptionPane.INFORMATION_MESSAGE);
 		            GC.ActionHome(NU);
-		        } else if (scelta == JOptionPane.NO_OPTION) {
-		        	
 		        }
+	
+		        //System.out.println("scelta : " + scelta);
 
-		        System.out.println("scelta : " + scelta);
-
-				
-				
 			}
 		});
 		Abbandona.setForeground(new Color(0, 128, 255));
