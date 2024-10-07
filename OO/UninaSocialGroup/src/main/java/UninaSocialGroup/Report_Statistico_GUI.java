@@ -54,7 +54,8 @@ public class Report_Statistico_GUI extends JFrame {
 		Label.setFont(new Font("Tahoma", Font.BOLD, 18));
 
 		// BOTTONI
-		JButton Indietro = new JButton("<");
+		JButton Indietro = new JButton("◀️");
+		Indietro.setBorderPainted(false);
 		Indietro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Report_Statistico_GUI.this.setVisible(false);
@@ -62,9 +63,10 @@ public class Report_Statistico_GUI extends JFrame {
 				N.AccessoHome(NU);
 			}
 		});
-		Indietro.setForeground(new Color(0, 128, 255));
-		Indietro.setFont(new Font("Arial Black", Font.BOLD, 17));
-		Indietro.setBackground(Color.WHITE);
+		Indietro.setBackground(new Color(255, 255, 255));
+        Indietro.setForeground(new Color(0, 128, 255));
+        Indietro.setFont(new Font(null, Font.PLAIN, 18));
+		
 
 		// JCOMBOBOX
 		// inserimento di tutti i mesi dell'anno
@@ -89,25 +91,34 @@ public class Report_Statistico_GUI extends JFrame {
 
 		// Ridimensionamento pagina
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup().addGap(22)
-						.addComponent(Indietro, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE).addGap(250)
-						.addComponent(Label, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_contentPane.createSequentialGroup().addGap(22)
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(22)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(Indietro, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(Label, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())
 						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_contentPane.createSequentialGroup()
-										.addComponent(Sel_Mese, GroupLayout.PREFERRED_SIZE, 155,
-												GroupLayout.PREFERRED_SIZE)
-										.addContainerGap())
-								.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE))));
-		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup().addGap(5)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(Indietro, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
-								.addComponent(Label, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
-						.addGap(16).addComponent(Sel_Mese, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)));
+							.addGroup(gl_contentPane.createSequentialGroup()
+								.addComponent(Sel_Mese, GroupLayout.PREFERRED_SIZE, 155, GroupLayout.PREFERRED_SIZE)
+								.addContainerGap())
+							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 691, Short.MAX_VALUE))))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(5)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(Indietro, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+						.addComponent(Label, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
+					.addGap(16)
+					.addComponent(Sel_Mese, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE))
+		);
 		contentPane.setLayout(gl_contentPane);
 
 	}

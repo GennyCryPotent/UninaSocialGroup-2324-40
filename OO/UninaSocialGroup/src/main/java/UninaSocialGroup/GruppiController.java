@@ -28,8 +28,8 @@ public class GruppiController {
 
 	public void ActionModifica(String NU, String NG) {
 
-		gruppiView.setVisible(false);
-		GF.Elimina_Contenuto(NU, NG);
+		//gruppiView.setVisible(false);
+		GF.Elimina_Contenuto(NU, NG, gruppiView );
 
 	}
 	

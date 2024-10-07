@@ -77,9 +77,11 @@ public class Gruppi_GUI extends JFrame {
 				GC.ActionHome(NU);
 			}
 		});
+		Home.setBorderPainted(false);
+		Home.setBackground(new Color(255, 255, 255));
 		Home.setForeground(new Color(0, 128, 255));
-		Home.setFont(new Font("Dialog", Font.PLAIN, 18));
-		Home.setBackground(Color.WHITE);
+		Home.setFont(new Font(null, Font.PLAIN, 18));
+
 
 		JButton AggiungiPost = new JButton("➕");
 		AggiungiPost.addActionListener(new ActionListener() {
@@ -92,9 +94,11 @@ public class Gruppi_GUI extends JFrame {
 			}
 
 		});
+		AggiungiPost.setBorderPainted(false);
+		AggiungiPost.setBackground(new Color(255, 255, 255));
 		AggiungiPost.setForeground(new Color(0, 128, 255));
-		AggiungiPost.setFont(new Font("Dialog", Font.PLAIN, 18));
-		AggiungiPost.setBackground(Color.WHITE);
+		AggiungiPost.setFont(new Font(null, Font.PLAIN, 18));
+
 
 		JButton Rimuovi_Post = new JButton("🔃");
 		Rimuovi_Post.addActionListener(new ActionListener() {
@@ -102,9 +106,10 @@ public class Gruppi_GUI extends JFrame {
 				GC.ActionModifica(NU, NG);
 			}
 		});
+		Rimuovi_Post.setBorderPainted(false);
+		Rimuovi_Post.setBackground(new Color(255, 255, 255));
 		Rimuovi_Post.setForeground(new Color(0, 128, 255));
-		Rimuovi_Post.setFont(new Font("Dialog", Font.PLAIN, 18));
-		Rimuovi_Post.setBackground(Color.WHITE);
+		Rimuovi_Post.setFont(new Font(null, Font.PLAIN, 18));
 
 		// SCROLLPANE PER OSPITARE TUTTI I CONTENUTI
 		JScrollPane scrollPane = new JScrollPane(postsArea);
@@ -125,8 +130,10 @@ public class Gruppi_GUI extends JFrame {
 		
 		
 		JButton EliminaPartecipante = new JButton("🚷");
+		EliminaPartecipante.setBorderPainted(false);
+		EliminaPartecipante.setBackground(new Color(255, 255, 255));
 		EliminaPartecipante.setForeground(new Color(0, 128, 255));
-		EliminaPartecipante.setFont(new Font("Dialog", Font.PLAIN, 20));
+		EliminaPartecipante.setFont(new Font(null, Font.PLAIN, 18));
 		EliminaPartecipante.setVisible(false);
 		EliminaPartecipante.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -138,10 +145,24 @@ public class Gruppi_GUI extends JFrame {
 		Abbandona.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				Partecipano_DAO partecipano_DAO = new Partecipano_DAO();
+				
+				int scelta = JOptionPane.showConfirmDialog(null, "Sicuro di voler abbandonare questo gruppo?", "Abbandona", JOptionPane.YES_NO_OPTION);
+
+		        if (scelta == JOptionPane.YES_OPTION) {
+		            partecipano_DAO.DelPartecipante(NU, NG);
+		            JOptionPane.showMessageDialog(null, "Hai abbandonato il gruppo " + NG , "Abbandonato", JOptionPane.INFORMATION_MESSAGE);
+		            GC.ActionHome(NU);
+		        }
+	
+		        //System.out.println("scelta : " + scelta);
+
 			}
 		});
+		Abbandona.setBorderPainted(false);
+		Abbandona.setBackground(new Color(255, 255, 255));
 		Abbandona.setForeground(new Color(0, 128, 255));
-		Abbandona.setFont(new Font("Dialog", Font.PLAIN, 18));
+		Abbandona.setFont(new Font(null, Font.PLAIN, 18));
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -149,42 +170,42 @@ public class Gruppi_GUI extends JFrame {
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(22)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 691, GroupLayout.DEFAULT_SIZE)
 						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(4)
 							.addComponent(Home, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-							.addGap(22)
+							.addGap(18)
 							.addComponent(AggiungiPost, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-							.addGap(21)
+							.addGap(18)
 							.addComponent(Rimuovi_Post, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-							.addGap(20)
+							.addGap(23)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(NomeGruppo, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(NomeGruppo, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
+									.addComponent(Abbandona, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(EliminaPartecipante, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addGap(10)
 									.addComponent(labelRuolo, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)))
-							.addPreferredGap(ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
-							.addComponent(Abbandona, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(EliminaPartecipante, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 691, GroupLayout.DEFAULT_SIZE)))
+							.addContainerGap())))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(17)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(NomeGruppo, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
 						.addComponent(Abbandona, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
 						.addComponent(EliminaPartecipante, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-							.addComponent(Home, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
-							.addComponent(AggiungiPost, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
-							.addComponent(Rimuovi_Post, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
-							.addGroup(gl_contentPane.createSequentialGroup()
-								.addComponent(NomeGruppo, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-								.addGap(1)
-								.addComponent(labelRuolo, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE))))
-					.addGap(22)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 345, GroupLayout.DEFAULT_SIZE))
+						.addComponent(Rimuovi_Post, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+						.addComponent(AggiungiPost, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+						.addComponent(Home, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE))
+					.addGap(1)
+					.addComponent(labelRuolo, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
 
