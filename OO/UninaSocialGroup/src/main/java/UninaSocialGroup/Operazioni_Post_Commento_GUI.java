@@ -27,17 +27,19 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 	private List<Commenti> Res_Commenti = new ArrayList<Commenti>();
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private Gruppi_GUI gView;
 
 	// Schermata Post
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public Operazioni_Post_Commento_GUI(String NU, String NG) {
+	public Operazioni_Post_Commento_GUI(String NU, String NG, Gruppi_GUI gruppiView) {
 
 		Contenuti_DAO C = new Contenuti_DAO();
-
+		gView = gruppiView;
 		// PANELLI
 		setBounds(100, 100, 556, 334);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -45,6 +47,7 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 		contentPane.setLayout(null);
 
 		JTextArea textArea = new JTextArea();
+		textArea.setEditable(false);
 		textArea.setBounds(114, 10, 396, 194);
 
 		Res_Contenuti_Gruppi = C.SelContenutiUtenteGruppo(NG, NU);
@@ -63,17 +66,27 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 		Button Button_Elimina = new Button("Elimina");
 		Button_Elimina.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+             
 				try {
+					
 					int DelPost = Integer.parseInt(JOptionPane.showInputDialog(Button_Elimina,
 							"Quale post vuoi eliminare?", "Elimina un post", JOptionPane.QUESTION_MESSAGE));
+					
 					C.DelContenuto(DelPost);
 					Operazioni_Post_Commento_GUI.this.setVisible(false);
-					Gestione_Finestre V = new Gestione_Finestre();
-					V.GruppiGUI(NU, NG);
+					
+					gView.setVisible(false);
+					
+					gView = new Gruppi_GUI(NU , NG);
+
+					gView.setVisible(true);
+					
+					
 				} catch (NumberFormatException E) { // eccezione quando non si inserisce un intero nella prima finestra
 													// di input
+				
 					JOptionPane.showMessageDialog(Button_Elimina, "Inserisci un numero!");
+				    
 				}
 
 			}
@@ -93,8 +106,13 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 
 					C.UpContenuto(NU, NewPost, ModPost);
 					Operazioni_Post_Commento_GUI.this.setVisible(false);
-					Gestione_Finestre V = new Gestione_Finestre();
-					V.GruppiGUI(NU, NG);
+					
+					gView.setVisible(false);
+					
+					gView = new Gruppi_GUI(NU , NG);
+
+					gView.setVisible(true);
+					
 				} catch (NumberFormatException E) { // eccezione quando non si inserisce un intero nella prima finestra
 													// di input
 					JOptionPane.showMessageDialog(Button_Modifica, "Inserisci un numero!");
@@ -105,13 +123,15 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 		Button_Modifica.setActionCommand("Modifica");
 		Button_Modifica.setBounds(386, 10, 70, 40);
 		contentPane.add(Button_Modifica);
-
+        
+		
 		Button Button_Annulla = new Button("Annulla");
 		Button_Annulla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				Gestione_Finestre V = new Gestione_Finestre();
-				V.GruppiGUI(NU, NG);
+				//Gestione_Finestre V = new Gestione_Finestre();
+				//V.GruppiGUI(NU, NG);
+				gView = new Gruppi_GUI(NU , NG);
 			}
 		});
 		Button_Annulla.setActionCommand("Modifica");
@@ -229,6 +249,8 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblNewLabel.setBounds(10, 10, 186, 22);
 		contentPane.add(lblNewLabel);
+		
 
 	}
+	
 }

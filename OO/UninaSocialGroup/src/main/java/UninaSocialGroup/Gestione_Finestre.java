@@ -47,7 +47,7 @@ public class Gestione_Finestre {
 			public void run() {
 				try {
 					DB.connect();
-					Home_GUI frame = new Home_GUI("test");
+					Home_GUI frame = new Home_GUI("Genny03cry");
 
 					//Login_GUI frame = new Login_GUI();
 					frame.setVisible(true);
@@ -70,8 +70,8 @@ public class Gestione_Finestre {
 		
 	  }
 	  
-	  public void Elimina_Contenuto(String NG, String NU) {
-		  Elimina = new Operazioni_Post_Commento_GUI(NG, NU); 
+	  public void Elimina_Contenuto(String NG, String NU, Gruppi_GUI gruppiView) {
+		  Elimina = new Operazioni_Post_Commento_GUI(NG, NU, gruppiView); 
 		  Elimina.setVisible(true);
 		
 	  }
