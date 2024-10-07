@@ -12,7 +12,7 @@ import javax.swing.event.DocumentListener;
 
 public class Ricerca_GUI extends JFrame {
 	
-	
+	private Gestione_Finestre GF = new Gestione_Finestre();
 	private Home_GUI homeView;
 	
     private JPanel contentPane;
@@ -41,7 +41,8 @@ public class Ricerca_GUI extends JFrame {
     private Color darkColorFont = new Color(255, 255, 255);
 
     public Ricerca_GUI(String NU, Home_GUI HomeView) {
-
+    	
+    	homeView = HomeView;
     	
         setTitle("Ricerca");
         setForeground(new Color(0, 128, 255));
@@ -318,8 +319,15 @@ public class Ricerca_GUI extends JFrame {
 		JButton button = new JButton();
 		
 		if(partecipano_DAO.SelPartecipanoGruppo(Nome_Gruppo, Nome_Utente)) {
-			button.setText("🚫");
+			button.setText("🚪");
 			//System.out.println("Bottone - " + Nome_Utente + " - " + Nome_Gruppo);
+			button.addActionListener(new ActionListener(){  
+				public void actionPerformed(ActionEvent e){  
+					setVisible(false);
+					GF.GruppiGUI(Nome_Utente, Nome_Gruppo);
+					homeView.setVisible(false);
+		        }  
+			});
 		}else if(notifiche_Richieste_DAO.SelNoitificheRichiesteDiUtenteDiGruppo(Nome_Gruppo, Nome_Utente)) {
 			button.setText("⏳");
 
