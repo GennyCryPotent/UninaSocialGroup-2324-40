@@ -2,12 +2,19 @@ package UninaSocialGroup;
 
 import java.awt.Font;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextArea;
+
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +38,6 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 	 */
 	public Operazioni_Post_Commento_GUI(String NU, String NG, Gruppi_GUI gruppiView) {
 
-		Contenuti_DAO C = new Contenuti_DAO();
 		gView = gruppiView;
 		// PANELLI
 		setBounds(100, 100, 556, 334);
@@ -42,45 +48,17 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JTextArea textArea = new JTextArea();
-		textArea.setEditable(false);
-		textArea.setBounds(114, 10, 396, 194);
+		JPanel panelContenuti = new JPanel();
+		panelContenuti.setLayout(new BoxLayout(panelContenuti, BoxLayout.Y_AXIS)); // Disposizione verticale
 
-		Res_Contenuti_Gruppi = C.SelContenutiUtenteGruppo(NG, NU);
+		AggiungiPost(NG, NU, panelContenuti); // aggiunta post nel panel
 
-		for (int i = 0; i < Res_Contenuti_Gruppi.size(); i++) {
-			textArea.append(Res_Contenuti_Gruppi.get(i).getId_Contenuto() + " - "
-					+ Res_Contenuti_Gruppi.get(i).getTesto() + "\n");
-		}
-
-		JScrollPane scrollPane = new JScrollPane(textArea, // mette un scroll panel con i contenuti della text Area
-				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		// Metti il pannello principale in uno JScrollPane
+		JScrollPane scrollPane = new JScrollPane(panelContenuti, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBounds(10, 56, 522, 190);
 		contentPane.add(scrollPane);
 
-		// BOTTONI
-		JButton Button_Elimina = new JButton("Elimina");
-		Button_Elimina.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				OPC.ActionEliminaPost(Button_Elimina, NU, NG);
-				gView.setVisible(false);
-			}
-		});
-		Button_Elimina.setBounds(462, 10, 70, 40);
-		contentPane.add(Button_Elimina);
-
-		JButton Button_Modifica = new JButton("Modifica");
-		Button_Modifica.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				OPC.ActionModificaPost(Button_Modifica, NU, NG);
-				gView.setVisible(false);
-			}
-		});
-		Button_Modifica.setActionCommand("Modifica");
-		Button_Modifica.setBounds(386, 10, 70, 40);
-		contentPane.add(Button_Modifica);
-        
-		
 		JButton Button_Annulla = new JButton("Annulla");
 		Button_Annulla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -89,7 +67,7 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 			}
 		});
 		Button_Annulla.setActionCommand("Modifica");
-		Button_Annulla.setBounds(310, 10, 70, 40);
+		Button_Annulla.setBounds(438, 11, 94, 40);
 		contentPane.add(Button_Annulla);
 
 		// LABEL
@@ -101,18 +79,14 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 		contentPane.add(lblNewLabel);
 
 	}
-	
-	
-	
-	//-----------------------------------------
+
+	// -----------------------------------------
 	// Schermata commento
 	public Operazioni_Post_Commento_GUI(String NU, String NG, int Id_Contenuto) {
 		setTitle("Modifica/Elimina commento");
 
-		Commenti_DAO C = new Commenti_DAO();
-
 		// PANELLI
-		
+
 		setBounds(100, 100, 556, 334);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -120,42 +94,16 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		// COMPONENTI
-		JTextArea textAreaCommenti = new JTextArea();
-		textAreaCommenti.setBounds(114, 10, 396, 194);
+		JPanel panelCommenti = new JPanel();
+		panelCommenti.setLayout(new BoxLayout(panelCommenti, BoxLayout.Y_AXIS)); // Disposizione verticale
 
-		Res_Commenti = C.SelCommentiUtentePost(NU, Id_Contenuto);
+		AggiungiCommenti(NG, NU, panelCommenti, Id_Contenuto); // aggiunta commenti nel panel
 
-		for (int i = 0; i < Res_Commenti.size(); i++) {
-			textAreaCommenti
-					.append(Res_Commenti.get(i).getId_Commento() + " - " + Res_Commenti.get(i).getTesto() + "\n");
-		}
-
-		JScrollPane scrollPane = new JScrollPane(textAreaCommenti, // mette un scroll panel con i commenti della text
-																	// Area
-				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		// Metti il pannello principale in uno JScrollPane
+		JScrollPane scrollPane = new JScrollPane(panelCommenti, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBounds(10, 56, 522, 190);
 		contentPane.add(scrollPane);
-
-		// BOTTONI
-		JButton Button_Elimina = new JButton("Elimina");
-		Button_Elimina.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				OPC.ActionEliminaCommento(Button_Elimina, NU, NG, Id_Contenuto);
-			}
-		});
-		Button_Elimina.setBounds(462, 10, 70, 40);
-		contentPane.add(Button_Elimina);
-
-		JButton Button_Modifica = new JButton("Modifica");
-		Button_Modifica.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				OPC.ActionModificaCommento(Button_Modifica, NU, NG, Id_Contenuto);
-			}
-		});
-		Button_Modifica.setActionCommand("Modifica");
-		Button_Modifica.setBounds(386, 10, 70, 40);
-		contentPane.add(Button_Modifica);
 
 		JButton Button_Annulla = new JButton("Annulla");
 		Button_Annulla.addActionListener(new ActionListener() {
@@ -164,7 +112,7 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 			}
 		});
 		Button_Annulla.setActionCommand("Modifica");
-		Button_Annulla.setBounds(310, 10, 70, 40);
+		Button_Annulla.setBounds(438, 11, 94, 40);
 		contentPane.add(Button_Annulla);
 
 		// LABEL
@@ -174,8 +122,104 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblNewLabel.setBounds(10, 10, 186, 22);
 		contentPane.add(lblNewLabel);
-		
 
 	}
-	
+
+	// Aggiunge i post nel JPanel insieme ai bottoni
+	private void AggiungiPost(String NG, String NU, JPanel panelContenuti) {
+
+		Contenuti_DAO C = new Contenuti_DAO();
+		Res_Contenuti_Gruppi = C.SelContenutiUtenteGruppo(NG, NU);
+
+		for (int i = 0; i < Res_Contenuti_Gruppi.size(); i++) {
+
+			final int IdexPost = i;
+			JPanel postPanel = new JPanel(new BorderLayout()); // Layout principale per allineare i bottoni a destra
+
+			JTextArea textArea = new JTextArea();
+			textArea.setEditable(false);
+			textArea.setText(i + "): " + Res_Contenuti_Gruppi.get(i).getTesto()); // Testo del post
+			textArea.setLineWrap(true);
+			textArea.setWrapStyleWord(true);
+
+			textArea.setBorder(BorderFactory.createEmptyBorder());
+
+			JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT)); // Allinea i bottoni a destra
+
+			JButton Modifica = new JButton("Modifica");
+			Modifica.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					OPC.ActionModificaPost(Modifica, NU, NG, Res_Contenuti_Gruppi.get(IdexPost).getId_Contenuto());
+					gView.setVisible(false);
+				}
+			});
+			JButton Elimina = new JButton("Elimina");
+
+			Elimina.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					OPC.ActionEliminaPost(Elimina, NU, NG, Res_Contenuti_Gruppi.get(IdexPost).getId_Contenuto());
+					gView.setVisible(false);
+				}
+			});
+			buttonsPanel.add(Modifica);
+			buttonsPanel.add(Elimina);
+
+			postPanel.add(textArea, BorderLayout.CENTER); // Aggiungi il testo al centro
+			postPanel.add(buttonsPanel, BorderLayout.EAST); // Aggiungi i bottoni a destra
+
+			panelContenuti.add(postPanel);
+
+			panelContenuti.add(Box.createRigidArea(new Dimension(0, 3)));
+		}
+
+	}
+
+	// Aggiunge i post nel JPanel insieme ai bottoni
+	private void AggiungiCommenti(String NG, String NU, JPanel panelCommenti, int IdContenuto) {
+
+		Commenti_DAO C = new Commenti_DAO();
+		Res_Commenti = C.SelCommentiUtentePost(NU, IdContenuto);
+
+		for (int i = 0; i < Res_Commenti.size(); i++) {
+
+			final int IndexCommenti = i;
+			JPanel postPanel = new JPanel(new BorderLayout()); // Layout principale per allineare i bottoni a destra
+
+			JTextArea textArea = new JTextArea();
+			textArea.setEditable(false);
+			textArea.setText(i + "): " + Res_Commenti.get(i).getTesto()); // Testo del commento
+			textArea.setLineWrap(true);
+			textArea.setWrapStyleWord(true);
+
+			textArea.setBorder(BorderFactory.createEmptyBorder());
+
+			JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT)); // Allinea i bottoni a destra
+
+			JButton Modifica = new JButton("Modifica");
+			Modifica.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					OPC.ActionModificaCommento(Modifica, NU, NG, IdContenuto,
+							Res_Commenti.get(IndexCommenti).getId_Commento());
+				}
+			});
+			JButton Elimina = new JButton("Elimina");
+
+			Elimina.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					OPC.ActionEliminaCommento(Elimina, NU, NG, IdContenuto,
+							Res_Commenti.get(IndexCommenti).getId_Commento());
+				}
+			});
+			buttonsPanel.add(Modifica);
+			buttonsPanel.add(Elimina);
+
+			postPanel.add(textArea, BorderLayout.CENTER);
+			postPanel.add(buttonsPanel, BorderLayout.EAST);
+
+			panelCommenti.add(postPanel);
+
+			panelCommenti.add(Box.createRigidArea(new Dimension(0, 3)));
+		}
+
+	}
 }
