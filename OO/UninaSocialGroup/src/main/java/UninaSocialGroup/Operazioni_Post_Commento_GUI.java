@@ -62,7 +62,7 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 		JButton Button_Annulla = new JButton("Annulla");
 		Button_Annulla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				OPC.ActionAnnulla(NU, NG, 0, 0, 0);
+				OPC.ActionAnnulla(NU, NG, 0, 0, 0 );
 				gView.setVisible(false);
 			}
 		});
