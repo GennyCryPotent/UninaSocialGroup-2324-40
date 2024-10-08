@@ -43,7 +43,7 @@ public class Registrazione_GUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
-		JLabel lblNewLabel = new JLabel("Inserisci gli elementi");
+		JLabel lblNewLabel = new JLabel("Inserisci i dati");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setForeground(new Color(0, 128, 255));
 		lblNewLabel.setBackground(new Color(255, 255, 255));
