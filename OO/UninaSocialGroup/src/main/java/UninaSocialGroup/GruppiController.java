@@ -6,11 +6,16 @@ public class GruppiController {
 
 	private Gestione_Finestre GF = new Gestione_Finestre();
 	private Gruppi_GUI gruppiView;
+	private EliminaPartecipante_GUI eliminaPartecipanteView;
 	private Contenuti_DAO C = new Contenuti_DAO();
 	private Partecipano_DAO partecipano_DAO = new Partecipano_DAO();
 
 	public GruppiController(Gruppi_GUI gruppiView) {
 		this.gruppiView = gruppiView;
+	}
+	
+	public GruppiController(EliminaPartecipante_GUI eliminaPartecipanteView) {
+		this.eliminaPartecipanteView = eliminaPartecipanteView;
 	}
 
 	public void ActionHome(String NU) {
@@ -53,6 +58,21 @@ public class GruppiController {
 			gruppiView.setVisible(false);
 		}
 
+	}
+	
+	public void ActionRimuoviUtente(Partecipano p, String NG) {
+		
+		int scelta = JOptionPane.showConfirmDialog(null, "Sicuro di voler eliminare questo utente?", "Elimina", JOptionPane.YES_NO_OPTION);
+
+        if (scelta == JOptionPane.YES_OPTION) {
+            partecipano_DAO.DelPartecipante(p.getNome_Partecipante(), NG);
+            JOptionPane.showMessageDialog(null, "Partecipante " + p.getNome_Partecipante() + " eliminato", "Eliminato", JOptionPane.INFORMATION_MESSAGE);
+            eliminaPartecipanteView.setVisible(false);
+        } else if (scelta == JOptionPane.NO_OPTION) {
+        	JOptionPane.showMessageDialog(null, "Partecipante " + p.getNome_Partecipante() + " non eliminato", "Eliminato", JOptionPane.INFORMATION_MESSAGE);
+        	eliminaPartecipanteView.setVisible(false);
+        }
+		
 	}
 
 }

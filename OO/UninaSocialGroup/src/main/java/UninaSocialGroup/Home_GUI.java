@@ -34,10 +34,6 @@ public class Home_GUI extends JFrame {
 	private Color AcctualColorFont = lightColorFont;
 	private Color AcctualtColorInternalArea = lightColorInternalArea;
 
-	private GruppiController CreaG;
-	// bottoni
-	private JButton ricercaButton;
-	
 	public Home_GUI(String NU) {
 		setTitle("Home");
 		setForeground(new Color(0, 128, 255));
@@ -64,7 +60,6 @@ public class Home_GUI extends JFrame {
 		contentPaneNorth.add(contentPaneNorthWest, BorderLayout.WEST);
 		contentPaneNorth.add(contentPaneNorthCenter, BorderLayout.CENTER);
 
-				
 		JLabel lblNewLabel = new JLabel("Bentornato");
 		lblNewLabel.setForeground(new Color(0, 128, 255));
 		lblNewLabel.setBackground(new Color(255, 255, 255));
@@ -77,18 +72,6 @@ public class Home_GUI extends JFrame {
 		NomeUtente.setFont(new Font("Tahoma", Font.BOLD, 18));
 		contentPaneNorthNorth.add(NomeUtente);
 
-		ricercaButton = new JButton("🔍");
-		ricercaButton.setForeground(new Color(0, 128, 255));
-		ricercaButton.setBackground(AcctualColorBG);
-
-		ricercaButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				HC.ActionRicerca(NU);
-			}
-		});
-
-		ricercaButton.setFont(new Font(null, Font.PLAIN, 12));
-
 		JScrollPane GruppiGUIV = new JScrollPane();
 		GruppiGUIV.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		contentPane.add(GruppiGUIV, BorderLayout.WEST);
@@ -100,7 +83,7 @@ public class Home_GUI extends JFrame {
 
 		// Popolazione dei bottoni dei gruppi
 		creaBottoniGruppi(NU, GroupPane);
-	
+
 		JButton Notifiche = new JButton("🔔");
 		Notifiche.setContentAreaFilled(false);
 		Notifiche.setBorderPainted(false);
@@ -114,6 +97,19 @@ public class Home_GUI extends JFrame {
 		Notifiche.setFont(new Font(null, Font.PLAIN, 18));
 		// Notifiche.setBounds(27, 22, 60, 53);
 		contentPaneNorthWest.add(Notifiche, BorderLayout.WEST);
+
+		JButton btnLogout = new JButton("➡️🚪");
+		btnLogout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				HC.ActionLogout();
+			}
+		});
+		btnLogout.setContentAreaFilled(false);
+		btnLogout.setBorderPainted(false);
+		btnLogout.setBackground(new Color(255, 255, 255));
+		btnLogout.setForeground(new Color(0, 128, 255));
+		btnLogout.setFont(new Font(null, Font.PLAIN, 18));
+		contentPaneNorthCenter.add(btnLogout);
 
 		JButton Report = new JButton("📈");
 		Report.setContentAreaFilled(false);
@@ -133,16 +129,16 @@ public class Home_GUI extends JFrame {
 		postsArea.setBackground(AcctualtColorInternalArea);
 		postsArea.setLayout(null);
 
-		
-		contentPaneNorthCenter.add(ricercaButton);
-		
-		JButton btnLogout = new JButton("Logout");
-		btnLogout.addActionListener(new ActionListener() {
+		JButton ricercaButton = new JButton("🔍");
+		ricercaButton.setForeground(new Color(0, 128, 255));
+		ricercaButton.setBackground(AcctualColorBG);
+		ricercaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				HC.ActionLogout();
+				HC.ActionRicerca(NU);
 			}
 		});
-		contentPaneNorthCenter.add(btnLogout);
+		ricercaButton.setFont(new Font(null, Font.PLAIN, 12));
+		contentPaneNorthCenter.add(ricercaButton);
 
 		JScrollPane PostsScrollPane = new JScrollPane(postsArea);
 		PostsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -162,31 +158,30 @@ public class Home_GUI extends JFrame {
 	private void creaBottoniGruppi(String NU, JPanel GroupPane) {
 		Partecipano_DAO partecipano_DAO = new Partecipano_DAO();
 		List<Partecipano> partecipano = partecipano_DAO.SelSigPartecipanoGruppo(NU);
-        
+
 		JButton btnCreaG = new JButton("     ➕     ");
-		btnCreaG .addActionListener(e -> {
-			
+		btnCreaG.addActionListener(e -> {
+
 			HC.ActionCrea(NU);
-		
+
 		});
-		
 
 		modificaButtonGruppi(btnCreaG);
-		
+
 		GroupPane.add(btnCreaG);
-		
+
 		for (Partecipano p : partecipano) {
-			
+
 			JButton btnNewButton = new JButton(p.getNome_Gruppo());
 			btnNewButton.addActionListener(e -> {
 				NG = btnNewButton.getText();
 				HC.ActionGruppi(NU, NG);
 			});
-			
+
 			modificaButtonGruppi(btnNewButton);
 
 			GroupPane.add(btnNewButton);
-			
+
 		}
 	}
 
@@ -272,7 +267,7 @@ public class Home_GUI extends JFrame {
 			}
 		});
 	}
-	
+
 	void modificaButtonGruppi(JButton button) {
 		button.setForeground(new Color(0, 128, 255));
 		button.setBackground(new Color(255, 255, 255));
@@ -283,8 +278,8 @@ public class Home_GUI extends JFrame {
 		Border compoundBorder = new CompoundBorder(emptyBorder, lineBorder);
 
 		button.setBorder(compoundBorder);
-		
-		//return button;
-	
+
+		// return button;
+
 	}
 }

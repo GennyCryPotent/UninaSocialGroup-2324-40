@@ -1,7 +1,5 @@
 package UninaSocialGroup;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -10,7 +8,6 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.GroupLayout.Alignment;
@@ -23,13 +20,11 @@ import java.awt.Component;
 import java.awt.Font;
 import java.util.List;
 
-import javax.swing.LayoutStyle.ComponentPlacement;
-
 public class EliminaPartecipante_GUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private Gestione_Finestre GF = new Gestione_Finestre();
+	private GruppiController GC = new GruppiController (EliminaPartecipante_GUI.this);
 	String Ruolo;
 	
 	public EliminaPartecipante_GUI(String NU, String NG, String Ruolo) {
@@ -92,18 +87,7 @@ public class EliminaPartecipante_GUI extends JFrame {
 				JButton btnNewButton = new JButton(p.getNome_Partecipante());
 				btnNewButton.addActionListener(e -> {
 					
-			        int scelta = JOptionPane.showConfirmDialog(null, "Sicuro di voler eliminare questo utente?", "Elimina", JOptionPane.YES_NO_OPTION);
-
-			        if (scelta == JOptionPane.YES_OPTION) {
-			            partecipano_DAO.DelPartecipante(p.getNome_Partecipante(), NG);
-			            JOptionPane.showMessageDialog(null, "Partecipante " + p.getNome_Partecipante() + " eliminato", "Eliminato", JOptionPane.INFORMATION_MESSAGE);
-			            EliminaPartecipante_GUI.this.setVisible(false);
-			        } else if (scelta == JOptionPane.NO_OPTION) {
-			        	JOptionPane.showMessageDialog(null, "Partecipante " + p.getNome_Partecipante() + " non eliminato", "Eliminato", JOptionPane.INFORMATION_MESSAGE);
-			        	EliminaPartecipante_GUI.this.setVisible(false);
-			        }
-
-			        System.out.println("scelta : " + scelta);
+			         GC.ActionRimuoviUtente(p, NG);
 				
 				});
 				
