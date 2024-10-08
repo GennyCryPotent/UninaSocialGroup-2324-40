@@ -135,6 +135,14 @@ public class Home_GUI extends JFrame {
 
 		
 		contentPaneNorthCenter.add(ricercaButton);
+		
+		JButton btnLogout = new JButton("Logout");
+		btnLogout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				HC.ActionLogout();
+			}
+		});
+		contentPaneNorthCenter.add(btnLogout);
 
 		JScrollPane PostsScrollPane = new JScrollPane(postsArea);
 		PostsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);

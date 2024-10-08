@@ -37,4 +37,9 @@ public class HomeController {
 		GF.CreaGruppo(NU);
 		
 	}
-   }
+    
+    public void ActionLogout() {
+    	homeView.setVisible(false);
+    	GF.LoginGUI();
+    }
+ }
