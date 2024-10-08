@@ -141,18 +141,18 @@ public class InfoPost_GUI extends JFrame {
 				IC.ActionModCommento(Id_Contenuto, NU, NG);
 			}
 		});
+		
+				JButton btnAddCommento = new JButton("Commenta");
+				btnAddCommento.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+				btnAddCommento.setHorizontalAlignment(SwingConstants.LEFT);
+				btnAddCommento.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						IC.ActionAddCommento(textAddCommento, panelCommenti, Id_Contenuto, NU, NG, check);
+					}
+				});
+				panelCommento.add(btnAddCommento);
 
 		panelCommento.add(btnRimCommento);
-
-		JButton btnAddCommento = new JButton("Commenta");
-		btnAddCommento.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-		btnAddCommento.setHorizontalAlignment(SwingConstants.LEFT);
-		btnAddCommento.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				IC.ActionAddCommento(textAddCommento, panelCommenti, Id_Contenuto, NU, NG);
-			}
-		});
-		panelCommento.add(btnAddCommento);
 
 	}
 

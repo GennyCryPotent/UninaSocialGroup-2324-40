@@ -23,7 +23,7 @@ public class InfoPostController {
 		}
 	}
 
-	public void ActionAddCommento(JTextArea textAddCommento, JPanel panelCommenti, int Id_Contenuto, String NU, String NG) {
+	public void ActionAddCommento(JTextArea textAddCommento, JPanel panelCommenti, int Id_Contenuto, String NU, String NG, int check) {
 		
 		if (!textAddCommento.getText().isEmpty()) {
 			JTextArea text = new JTextArea();
@@ -32,7 +32,7 @@ public class InfoPostController {
 			panelCommenti.add(text);
 			textAddCommento.setText("");
 			infoView.setVisible(false);
-			GF.Info_Post(Id_Contenuto, NU, NG, Id_Contenuto);
+			GF.Info_Post(Id_Contenuto, NU, NG, check);
 		}
 
 	}
