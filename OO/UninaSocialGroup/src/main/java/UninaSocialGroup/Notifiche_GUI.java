@@ -42,6 +42,7 @@ public class Notifiche_GUI extends JFrame {
         NomeGruppo.setFont(new Font("Tahoma", Font.BOLD, 18));
 
         JButton Indietro = new JButton("◀️");
+        Indietro.setToolTipText("Torna alla Home");
 		Indietro.setBorderPainted(false);
         Indietro.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

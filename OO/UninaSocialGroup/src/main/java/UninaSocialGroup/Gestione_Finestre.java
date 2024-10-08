@@ -81,8 +81,8 @@ public class Gestione_Finestre {
 		
 	  }
 	  
-	  public void Elimina_Commento(String NG, String NU, int Id_Contenuto) {
-		  Elimina = new Operazioni_Post_Commento_GUI(NG, NU, Id_Contenuto); 
+	  public void Elimina_Commento(String NG, String NU, int Id_Contenuto, int checkSchermata) {
+		  Elimina = new Operazioni_Post_Commento_GUI(NG, NU, Id_Contenuto, checkSchermata); 
 		  Elimina.setVisible(true);
 		
 	  }

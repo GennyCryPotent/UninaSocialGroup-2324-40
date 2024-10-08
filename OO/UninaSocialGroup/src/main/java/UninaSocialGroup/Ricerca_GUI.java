@@ -125,6 +125,7 @@ public class Ricerca_GUI extends JFrame {
       
         
         JButton ricercaButton = new JButton("🔍");
+        ricercaButton.setToolTipText("Cerca");
 		ricercaButton.setForeground(blueColor);
 		ricercaButton.setBackground(lightColorBG);
 		ricercaButton.addActionListener(new ActionListener() {

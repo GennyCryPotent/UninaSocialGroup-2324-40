@@ -138,7 +138,7 @@ public class InfoPost_GUI extends JFrame {
 		btnRimCommento.setHorizontalAlignment(SwingConstants.LEFT);
 		btnRimCommento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				IC.ActionModCommento(Id_Contenuto, NU, NG);
+				IC.ActionModCommento(Id_Contenuto, NU, NG, check);
 			}
 		});
 		

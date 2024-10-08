@@ -57,9 +57,14 @@ public class OperazioniPostCommentoController {
 
 	
 	
-	public void ActionAnnulla(String NU, String NG) {
+	public void ActionAnnulla(String NU, String NG, int checkSchermata, int IdContenuto, int checkInfoPost ) {
 		OperazioniPostCommentoView.setVisible(false);
-		GF.GruppiGUI(NU, NG);
+		
+		if(checkSchermata==0) {	//0 GruppiGUI; 1 InfoPostGUI
+			GF.GruppiGUI(NU, NG);
+		}else {
+			GF.Info_Post(IdContenuto, NU, NG, checkInfoPost);
+		}
 	}
 
 }

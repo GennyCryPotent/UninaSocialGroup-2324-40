@@ -71,6 +71,7 @@ public class Gruppi_GUI extends JFrame {
 
 		// BOTTONI
 		JButton Home = new JButton("🏠");
+		Home.setToolTipText("Home");
 		Home.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GC.ActionHome(NU);
@@ -83,6 +84,7 @@ public class Gruppi_GUI extends JFrame {
 
 
 		JButton AggiungiPost = new JButton("➕");
+		AggiungiPost.setToolTipText("Aggiungi post");
 		AggiungiPost.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -100,6 +102,7 @@ public class Gruppi_GUI extends JFrame {
 
 
 		JButton Rimuovi_Post = new JButton("🖍️");
+		Rimuovi_Post.setToolTipText("Modifica post");
 		Rimuovi_Post.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GC.ActionModifica(NU, NG);
@@ -129,6 +132,7 @@ public class Gruppi_GUI extends JFrame {
 		
 		
 		JButton EliminaPartecipante = new JButton("🚷");
+		EliminaPartecipante.setToolTipText("Rimuovi partecipante");
 		EliminaPartecipante.setBorderPainted(false);
 		EliminaPartecipante.setBackground(new Color(255, 255, 255));
 		EliminaPartecipante.setForeground(new Color(0, 128, 255));
@@ -141,6 +145,7 @@ public class Gruppi_GUI extends JFrame {
 		});
 		
 		JButton Abbandona = new JButton("❌");
+		Abbandona.setToolTipText("Abbandona gruppo");
 		Abbandona.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GC.ActionAbbandona(NU, NG);

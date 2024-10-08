@@ -85,6 +85,7 @@ public class Home_GUI extends JFrame {
 		creaBottoniGruppi(NU, GroupPane);
 
 		JButton Notifiche = new JButton("🔔");
+		Notifiche.setToolTipText("Notifiche");
 		Notifiche.setContentAreaFilled(false);
 		Notifiche.setBorderPainted(false);
 		Notifiche.addActionListener(new ActionListener() {
@@ -99,6 +100,7 @@ public class Home_GUI extends JFrame {
 		contentPaneNorthWest.add(Notifiche, BorderLayout.WEST);
 
 		JButton btnLogout = new JButton("➡️🚪");
+		btnLogout.setToolTipText("Logout");
 		btnLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				HC.ActionLogout();
@@ -112,6 +114,7 @@ public class Home_GUI extends JFrame {
 		contentPaneNorthCenter.add(btnLogout);
 
 		JButton Report = new JButton("📈");
+		Report.setToolTipText("Report Statistico");
 		Report.setContentAreaFilled(false);
 		Report.setBorderPainted(false);
 		Report.addActionListener(new ActionListener() {
@@ -130,6 +133,7 @@ public class Home_GUI extends JFrame {
 		postsArea.setLayout(null);
 
 		JButton ricercaButton = new JButton("🔍");
+		ricercaButton.setToolTipText("Ricerca gruppi");
 		ricercaButton.setForeground(new Color(0, 128, 255));
 		ricercaButton.setBackground(AcctualColorBG);
 		ricercaButton.addActionListener(new ActionListener() {
@@ -160,6 +164,7 @@ public class Home_GUI extends JFrame {
 		List<Partecipano> partecipano = partecipano_DAO.SelSigPartecipanoGruppo(NU);
 
 		JButton btnCreaG = new JButton("     ➕     ");
+		btnCreaG.setToolTipText("Crea gruppo");
 		btnCreaG.addActionListener(e -> {
 
 			HC.ActionCrea(NU);

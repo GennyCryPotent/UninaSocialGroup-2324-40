@@ -62,7 +62,7 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 		JButton Button_Annulla = new JButton("Annulla");
 		Button_Annulla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				OPC.ActionAnnulla(NU, NG);
+				OPC.ActionAnnulla(NU, NG, 0, 0, 0);
 				gView.setVisible(false);
 			}
 		});
@@ -82,7 +82,7 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 
 	// -----------------------------------------
 	// Schermata commento
-	public Operazioni_Post_Commento_GUI(String NU, String NG, int Id_Contenuto) {
+	public Operazioni_Post_Commento_GUI(String NU, String NG, int Id_Contenuto, int checkSchermata) {
 		setTitle("Modifica/Elimina commento");
 
 		// PANELLI
@@ -108,7 +108,7 @@ public class Operazioni_Post_Commento_GUI extends JFrame {
 		JButton Button_Annulla = new JButton("Annulla");
 		Button_Annulla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				OPC.ActionAnnulla(NU, NG);
+				OPC.ActionAnnulla(NU, NG, 1, Id_Contenuto, checkSchermata); //con 1 passa alla schermata delle infoPost
 			}
 		});
 		Button_Annulla.setActionCommand("Modifica");

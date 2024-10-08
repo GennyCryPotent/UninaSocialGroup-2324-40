@@ -37,9 +37,9 @@ public class InfoPostController {
 
 	}
 
-	public void ActionModCommento(int Id_Contenuto, String NU, String NG) {
+	public void ActionModCommento(int Id_Contenuto, String NU, String NG, int check) {
 		infoView.setVisible(false);
-		GF.Elimina_Commento(NU, NG, Id_Contenuto);
+		GF.Elimina_Commento(NU, NG, Id_Contenuto, check);
 	}
 
 }

@@ -46,13 +46,17 @@ public class Report_Statistico_GUI extends JFrame {
 
 		// BOTTONI
 		JButton Indietro = new JButton("<");
+		Indietro.setToolTipText("Torna alla home");
 		Indietro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RSC.ActionIndietro(NU);
 			}
 		});
 		Indietro.setForeground(new Color(0, 128, 255));
-		Indietro.setFont(new Font("Arial Black", Font.BOLD, 17));
+		Indietro.setFont(new Font("Dialog", Font.PLAIN, 18));
+		Indietro.setBackground(Color.WHITE);
+		Indietro.setContentAreaFilled(false);
+		Indietro.setBorderPainted(false);
 		Indietro.setBackground(Color.WHITE);
 
 		// JCOMBOBOX
