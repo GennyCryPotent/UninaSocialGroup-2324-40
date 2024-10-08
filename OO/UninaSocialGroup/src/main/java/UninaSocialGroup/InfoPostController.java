@@ -1,5 +1,6 @@
 package UninaSocialGroup;
 
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 public class InfoPostController {
@@ -22,11 +23,16 @@ public class InfoPostController {
 		}
 	}
 
-	public void ActionAddCommento(JTextArea textAddCommento, JTextArea textCommenti, int Id_Contenuto, String NU) {
+	public void ActionAddCommento(JTextArea textAddCommento, JPanel panelCommenti, int Id_Contenuto, String NU, String NG) {
+		
 		if (!textAddCommento.getText().isEmpty()) {
+			JTextArea text = new JTextArea();
 			CO.InsCommento(textAddCommento.getText(), Id_Contenuto, NU);
-			textCommenti.append(NU + " :" + textAddCommento.getText() + "\n");
+			text.append(NU + " :" + textAddCommento.getText() + "\n");
+			panelCommenti.add(text);
 			textAddCommento.setText("");
+			infoView.setVisible(false);
+			GF.Info_Post(Id_Contenuto, NU, NG, Id_Contenuto);
 		}
 
 	}
