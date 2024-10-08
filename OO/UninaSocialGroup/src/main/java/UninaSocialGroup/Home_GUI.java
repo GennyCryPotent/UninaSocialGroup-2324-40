@@ -34,6 +34,7 @@ public class Home_GUI extends JFrame {
 	private Color AcctualColorFont = lightColorFont;
 	private Color AcctualtColorInternalArea = lightColorInternalArea;
 
+	private GruppiController CreaG;
 	// bottoni
 	private JButton ricercaButton;
 	
@@ -153,24 +154,31 @@ public class Home_GUI extends JFrame {
 	private void creaBottoniGruppi(String NU, JPanel GroupPane) {
 		Partecipano_DAO partecipano_DAO = new Partecipano_DAO();
 		List<Partecipano> partecipano = partecipano_DAO.SelSigPartecipanoGruppo(NU);
+        
+		JButton btnCreaG = new JButton("     ➕     ");
+		btnCreaG .addActionListener(e -> {
+			
+			HC.ActionCrea(NU);
+		
+		});
+		
 
+		modificaButtonGruppi(btnCreaG);
+		
+		GroupPane.add(btnCreaG);
+		
 		for (Partecipano p : partecipano) {
+			
 			JButton btnNewButton = new JButton(p.getNome_Gruppo());
 			btnNewButton.addActionListener(e -> {
 				NG = btnNewButton.getText();
 				HC.ActionGruppi(NU, NG);
 			});
+			
+			modificaButtonGruppi(btnNewButton);
 
-			btnNewButton.setForeground(new Color(0, 128, 255));
-			btnNewButton.setBackground(new Color(255, 255, 255));
-			btnNewButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-			Border lineBorder = BorderFactory.createLineBorder(new Color(0, 128, 255));
-			Border emptyBorder = new EmptyBorder(3, 2, 3, 2);
-			Border compoundBorder = new CompoundBorder(emptyBorder, lineBorder);
-
-			btnNewButton.setBorder(compoundBorder);
 			GroupPane.add(btnNewButton);
+			
 		}
 	}
 
@@ -255,5 +263,20 @@ public class Home_GUI extends JFrame {
 				contentPane.repaint();
 			}
 		});
+	}
+	
+	void modificaButtonGruppi(JButton button) {
+		button.setForeground(new Color(0, 128, 255));
+		button.setBackground(new Color(255, 255, 255));
+		button.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+		Border lineBorder = BorderFactory.createLineBorder(new Color(0, 128, 255));
+		Border emptyBorder = new EmptyBorder(3, 2, 3, 2);
+		Border compoundBorder = new CompoundBorder(emptyBorder, lineBorder);
+
+		button.setBorder(compoundBorder);
+		
+		//return button;
+	
 	}
 }

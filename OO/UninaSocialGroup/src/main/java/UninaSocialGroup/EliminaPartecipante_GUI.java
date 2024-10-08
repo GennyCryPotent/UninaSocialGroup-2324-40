@@ -30,8 +30,9 @@ public class EliminaPartecipante_GUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private Gestione_Finestre GF = new Gestione_Finestre();
+	String Ruolo;
 	
-	public EliminaPartecipante_GUI(String NU, String NG) {
+	public EliminaPartecipante_GUI(String NU, String NG, String Ruolo) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -47,9 +48,10 @@ public class EliminaPartecipante_GUI extends JFrame {
 		
 		JPanel ParteciPanel = new JPanel();
 		ScrollPartecipanti.setViewportView(ParteciPanel);
+		ScrollPartecipanti.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		// Popolazione dei bottoni dei gruppi
-				creaBottoniPartecipanti(NU, ParteciPanel, NG);
+				creaBottoniPartecipanti(NU, ParteciPanel, NG, Ruolo);
 		
 		JLabel Label = new JLabel("Quale partecipante vuoi eliminare?");
 		Label.setForeground(new Color(0, 128, 255));
@@ -74,12 +76,19 @@ public class EliminaPartecipante_GUI extends JFrame {
 	}
 	
 	// crea dinamicamente tutti i bottoni per accedere ai gruppi
-		private void creaBottoniPartecipanti(String NU, JPanel ParteciPanel, String NG) {
+		private void creaBottoniPartecipanti(String NU, JPanel ParteciPanel, String NG, String Ruolo) {
 			Partecipano_DAO partecipano_DAO = new Partecipano_DAO();
 			List<Partecipano> partecipano = partecipano_DAO. SelAllPartecipanoGruppo(NG);
-
+			Gruppi_DAO Creatore = new Gruppi_DAO();
+			
+			String GCreator = Creatore.SelSigGruppo(NG).getCreatore();
+			
 			for (Partecipano p : partecipano) {
-				if(NU.compareTo(p.getNome_Partecipante())!=0) {  
+				if(NU.compareTo(p.getNome_Partecipante())!=0) { 
+					if(GCreator.compareTo(p.getNome_Partecipante())==0) {
+						//NO BUTTON CREATORE
+						System.out.print("Creatore: " + GCreator);
+					}else {
 				JButton btnNewButton = new JButton(p.getNome_Partecipante());
 				btnNewButton.addActionListener(e -> {
 					
@@ -108,7 +117,8 @@ public class EliminaPartecipante_GUI extends JFrame {
 
 				btnNewButton.setBorder(compoundBorder);
 				ParteciPanel.add(btnNewButton);
-				}	
+				}
+				}
 			}
 		}
 }

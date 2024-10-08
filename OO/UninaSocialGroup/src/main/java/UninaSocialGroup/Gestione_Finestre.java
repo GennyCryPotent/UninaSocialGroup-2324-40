@@ -19,6 +19,7 @@ public class Gestione_Finestre {
 	private Login_GUI Login;
 	private Ricerca_GUI Ricerca;
 	private EliminaPartecipante_GUI EliminaP;
+	private CreaGruppo_GUI CreaG;
 	
 	//public static DB_Connection DB = new DB_Connection("jdbc:oracle:thin:@localhost:1521:ORCL", "system", "Unina@03"); //portatile genny
 	//public static DB_Connection DB = new DB_Connection("jdbc:oracle:thin:@Gennaro.homenet.telecomitalia.it:1521:xe", "system", "Database@03"); //Fisso Genny
@@ -120,9 +121,14 @@ public class Gestione_Finestre {
 		  Ricerca.setVisible(true);
 	  }
 	  
-	  public void EliminaPartecipante(String NU, String NG) {
-		  EliminaP = new EliminaPartecipante_GUI(NU, NG);
+	  public void EliminaPartecipante(String NU, String NG, String Ruolo) {
+		  EliminaP = new EliminaPartecipante_GUI(NU, NG, Ruolo);
 		  EliminaP.setVisible(true);
+	  }
+	  
+	  public void CreaGruppo(String NU) {
+		  CreaG = new CreaGruppo_GUI(NU);
+		  CreaG.setVisible(true);
 	  }
 	  
 }

@@ -32,5 +32,9 @@ public class HomeController {
     	GF.RicercaGUI(NU, homeView);
     }
   
-
+    public void ActionCrea(String NU) {
+		
+		GF.CreaGruppo(NU);
+		
+	}
    }

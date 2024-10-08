@@ -39,6 +39,7 @@ public class Gruppi_GUI extends JFrame {
 	private boolean checkAmm;
 	private Color lightColorFont = new Color(0, 0, 0);
 	private Color lightColorInternalArea = new Color(244, 244, 244);
+	private String Ruolo;
 
 	private Color AcctualColorFont = lightColorFont;
 	private Color AcctualtColorInternalArea = lightColorInternalArea;
@@ -98,7 +99,7 @@ public class Gruppi_GUI extends JFrame {
 		AggiungiPost.setFont(new Font(null, Font.PLAIN, 18));
 
 
-		JButton Rimuovi_Post = new JButton("🔃");
+		JButton Rimuovi_Post = new JButton("🖍️");
 		Rimuovi_Post.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GC.ActionModifica(NU, NG);
@@ -107,7 +108,7 @@ public class Gruppi_GUI extends JFrame {
 		Rimuovi_Post.setBorderPainted(false);
 		Rimuovi_Post.setBackground(new Color(255, 255, 255));
 		Rimuovi_Post.setForeground(new Color(0, 128, 255));
-		Rimuovi_Post.setFont(new Font(null, Font.PLAIN, 18));
+		Rimuovi_Post.setFont(new Font(null, Font.PLAIN, 20));
 
 		// SCROLLPANE PER OSPITARE TUTTI I CONTENUTI
 		JScrollPane scrollPane = new JScrollPane(postsArea);
@@ -135,7 +136,7 @@ public class Gruppi_GUI extends JFrame {
 		EliminaPartecipante.setVisible(false);
 		EliminaPartecipante.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GC.ActionElimina(NU, NG);
+				GC.ActionElimina(NU, NG, Ruolo);
 			}
 		});
 		
@@ -200,11 +201,13 @@ public class Gruppi_GUI extends JFrame {
 			labelRuolo.setVisible(true);
 			EliminaPartecipante.setVisible(true);
 			EliminaPartecipante.setEnabled(true);
+			Ruolo="Creatore";
 		} else if (checkAmm) {
 			labelRuolo.setText("Amministratore");
 			labelRuolo.setVisible(true);
 			EliminaPartecipante.setVisible(true);
 			EliminaPartecipante.setEnabled(true);
+			Ruolo="Amministratore";
 		}
 		
 		
