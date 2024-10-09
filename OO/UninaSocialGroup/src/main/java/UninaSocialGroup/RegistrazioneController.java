@@ -1,6 +1,8 @@
 package UninaSocialGroup;
 
 import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -45,9 +47,16 @@ public class RegistrazioneController {
 			} else {
 				JOptionPane.showMessageDialog(btnRegistrati, "Inserisci tutti i campi");
 			}
-		} catch (Exception e) {
+		} catch (SQLIntegrityConstraintViolationException SQLError) {
 			JOptionPane.showMessageDialog(btnRegistrati, "Questo nome utente già esiste");
-		}
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(btnRegistrati, "La data deve essere minore di quella odierna");
+		} 
+	}
+	
+	public void ActionIndietro() {
+		registrazioneView.setVisible(false);
+		GF.LoginGUI();
 	}
 
 }
