@@ -17,6 +17,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.util.List;
+import javax.swing.BoxLayout;
 
 public class EliminaPartecipante_GUI extends JFrame {
 
@@ -35,6 +36,7 @@ public class EliminaPartecipante_GUI extends JFrame {
 		setContentPane(contentPane);
 		
 		JScrollPane ScrollPartecipanti = new JScrollPane();
+		ScrollPartecipanti.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		ScrollPartecipanti.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		ScrollPartecipanti.setBounds(20, 50, 390, 190);
 		contentPane.add(ScrollPartecipanti, BorderLayout.WEST);
@@ -45,6 +47,7 @@ public class EliminaPartecipante_GUI extends JFrame {
 		
 		// Popolazione dei bottoni dei gruppi
 				creaBottoniPartecipanti(NU, ParteciPanel, NG, Ruolo);
+				ParteciPanel.setLayout(new BoxLayout(ParteciPanel, BoxLayout.Y_AXIS));
 		
 		JLabel Label = new JLabel("Quale partecipante vuoi eliminare?");
 		Label.setForeground(new Color(0, 128, 255));
@@ -68,7 +71,7 @@ public class EliminaPartecipante_GUI extends JFrame {
 		contentPane.setLayout(gl_contentPane);
 	}
 	
-	// crea dinamicamente tutti i bottoni per accedere ai gruppi
+	// crea dinamicamente tutti i bottoni per eliminare i partecipanti
 		private void creaBottoniPartecipanti(String NU, JPanel ParteciPanel, String NG, String Ruolo) {
 			Partecipano_DAO partecipano_DAO = new Partecipano_DAO();
 			List<Partecipano> partecipano = partecipano_DAO. SelAllPartecipanoGruppo(NG);
@@ -99,6 +102,7 @@ public class EliminaPartecipante_GUI extends JFrame {
 
 				btnNewButton.setBorder(compoundBorder);
 				ParteciPanel.add(btnNewButton);
+				
 				}
 				}
 			}
