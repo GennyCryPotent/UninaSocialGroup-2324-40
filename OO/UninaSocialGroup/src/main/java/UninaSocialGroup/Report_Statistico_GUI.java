@@ -45,19 +45,17 @@ public class Report_Statistico_GUI extends JFrame {
 		Label.setFont(new Font("Tahoma", Font.BOLD, 18));
 
 		// BOTTONI
-		JButton Indietro = new JButton("<");
+		JButton Indietro = new JButton("◀️");
 		Indietro.setToolTipText("Torna alla home");
 		Indietro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RSC.ActionIndietro(NU);
 			}
 		});
+		Indietro.setBackground(new Color(255, 255, 255));
 		Indietro.setForeground(new Color(0, 128, 255));
-		Indietro.setFont(new Font("Dialog", Font.PLAIN, 18));
-		Indietro.setBackground(Color.WHITE);
-		Indietro.setContentAreaFilled(false);
+		Indietro.setFont(new Font(null, Font.PLAIN, 18));
 		Indietro.setBorderPainted(false);
-		Indietro.setBackground(Color.WHITE);
 
 		// JCOMBOBOX
 		// inserimento di tutti i mesi dell'anno
@@ -102,5 +100,4 @@ public class Report_Statistico_GUI extends JFrame {
 
 	}
 
-	
 }

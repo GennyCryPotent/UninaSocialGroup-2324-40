@@ -1,11 +1,19 @@
 package UninaSocialGroup;
 
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 public class HomeController {
 
 	private Gestione_Finestre GF = new Gestione_Finestre();
     private Home_GUI homeView;
+    private CreaGruppo_GUI creaGruppoView;
     
-    public HomeController(Home_GUI homeView) {
+    public HomeController(CreaGruppo_GUI creaGruppoView) {
+		this.creaGruppoView = creaGruppoView;
+	}
+
+	public HomeController(Home_GUI homeView) {
         this.homeView = homeView;
     }
     
@@ -34,12 +42,35 @@ public class HomeController {
   
     public void ActionCrea(String NU) {
 		
-		GF.CreaGruppo(NU);
+		GF.CreaGruppo(NU, homeView);
 		
 	}
     
     public void ActionLogout() {
     	homeView.setVisible(false);
     	GF.LoginGUI();
+    }
+    
+    public void ActionCreaGruppo(JTextField NGruppo, JTextField Descrizione, String NU, Home_GUI home) {
+    	String NG;
+	    String DescrG;
+	    Gruppi_DAO CreaG = new Gruppi_DAO();
+	    
+	   NG=NGruppo.getText();
+	   DescrG=Descrizione.getText();
+	   
+	   
+	   
+	   if(NG.isEmpty() || DescrG.isEmpty()) {
+		   JOptionPane.showMessageDialog(null, "Tutti i campi devono essere compilati", "Credenziali errate",
+					JOptionPane.WARNING_MESSAGE);
+	    }else {
+	   
+		CreaG.InsGruppo(NG ,DescrG , NU);
+		creaGruppoView.setVisible(false);
+		home.setVisible(false);
+		GF.AccessoHome(NU);
+		
+	   }
     }
  }

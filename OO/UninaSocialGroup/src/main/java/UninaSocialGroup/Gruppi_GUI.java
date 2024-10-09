@@ -140,7 +140,7 @@ public class Gruppi_GUI extends JFrame {
 		EliminaPartecipante.setVisible(false);
 		EliminaPartecipante.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GC.ActionElimina(NU, NG, Ruolo);
+				GC.ActionElimina(NU, NG, Ruolo, 0); //operazione elimina
 			}
 		});
 		
@@ -148,7 +148,7 @@ public class Gruppi_GUI extends JFrame {
 		Abbandona.setToolTipText("Abbandona gruppo");
 		Abbandona.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GC.ActionAbbandona(NU, NG);
+				GC.ActionAbbandona(NU, NG, CkeckCreatore);
 			}
 		});
 		Abbandona.setBorderPainted(false);
@@ -156,13 +156,26 @@ public class Gruppi_GUI extends JFrame {
 		Abbandona.setForeground(new Color(0, 128, 255));
 		Abbandona.setFont(new Font(null, Font.PLAIN, 18));
 		
+		JButton AggiungiAmm = new JButton("🆙");
+		AggiungiAmm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GC.ActionElimina(NU, NG, Ruolo, 1); //operazione aggiungi amministratore
+			}
+		});
+		AggiungiAmm.setToolTipText("Aggiungi amministratore");
+		AggiungiAmm.setForeground(new Color(0, 128, 255));
+		AggiungiAmm.setFont(new Font("Dialog", Font.PLAIN, 18));
+		AggiungiAmm.setBorderPainted(false);
+		AggiungiAmm.setBackground(Color.WHITE);
+		AggiungiAmm.setVisible(false);
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(22)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 691, GroupLayout.DEFAULT_SIZE)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 749, GroupLayout.DEFAULT_SIZE)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(4)
 							.addComponent(Home, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
@@ -174,10 +187,12 @@ public class Gruppi_GUI extends JFrame {
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addComponent(NomeGruppo, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
-									.addComponent(Abbandona, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
+									.addComponent(EliminaPartecipante, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(EliminaPartecipante, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
+									.addComponent(AggiungiAmm, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(Abbandona, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE))
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addGap(10)
 									.addComponent(labelRuolo, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)))
@@ -189,11 +204,12 @@ public class Gruppi_GUI extends JFrame {
 					.addGap(17)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(NomeGruppo, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-						.addComponent(Abbandona, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
-						.addComponent(EliminaPartecipante, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
 						.addComponent(Rimuovi_Post, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
 						.addComponent(AggiungiPost, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
-						.addComponent(Home, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE))
+						.addComponent(Home, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+						.addComponent(AggiungiAmm, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+						.addComponent(Abbandona, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+						.addComponent(EliminaPartecipante, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE))
 					.addGap(1)
 					.addComponent(labelRuolo, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
@@ -206,6 +222,8 @@ public class Gruppi_GUI extends JFrame {
 			labelRuolo.setVisible(true);
 			EliminaPartecipante.setVisible(true);
 			EliminaPartecipante.setEnabled(true);
+			AggiungiAmm.setVisible(true);
+			AggiungiAmm.setEnabled(true);
 			Ruolo="Creatore";
 		} else if (checkAmm) {
 			labelRuolo.setText("Amministratore");

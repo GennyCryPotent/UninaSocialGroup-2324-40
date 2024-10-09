@@ -18,7 +18,7 @@ public class Gestione_Finestre {
 	private Registrazione_GUI Registrazione;
 	private Login_GUI Login;
 	private Ricerca_GUI Ricerca;
-	private EliminaPartecipante_GUI EliminaP;
+	private OperazioniPartecipante_GUI EliminaP;
 	private CreaGruppo_GUI CreaG;
 	
 	//public static DB_Connection DB = new DB_Connection("jdbc:oracle:thin:@localhost:1521:ORCL", "system", "Unina@03"); //portatile genny
@@ -121,13 +121,13 @@ public class Gestione_Finestre {
 		  Ricerca.setVisible(true);
 	  }
 	  
-	  public void EliminaPartecipante(String NU, String NG, String Ruolo) {
-		  EliminaP = new EliminaPartecipante_GUI(NU, NG, Ruolo);
+	  public void EliminaPartecipante(String NU, String NG, String Ruolo, int checkOp) {
+		  EliminaP = new OperazioniPartecipante_GUI(NU, NG, Ruolo, checkOp);
 		  EliminaP.setVisible(true);
 	  }
 	  
-	  public void CreaGruppo(String NU) {
-		  CreaG = new CreaGruppo_GUI(NU);
+	  public void CreaGruppo(String NU, Home_GUI home) {
+		  CreaG = new CreaGruppo_GUI(NU, home);
 		  CreaG.setVisible(true);
 	  }
 	  

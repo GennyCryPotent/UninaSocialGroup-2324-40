@@ -24,13 +24,14 @@ public class CreaGruppo_GUI extends JFrame {
 	private JPanel contentPane;
 	private JTextField NGruppo;
 	private JTextField Descrizione;
+	private HomeController HC = new HomeController(CreaGruppo_GUI.this);
 
 	
 
 	/**
 	 * Create the frame.
 	 */
-	public CreaGruppo_GUI(String NU) {
+	public CreaGruppo_GUI(String NU, Home_GUI home) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 431, 300);
@@ -56,28 +57,13 @@ public class CreaGruppo_GUI extends JFrame {
 		JLabel lblDescrizione = new JLabel("Descrizione:");
 
 		
-	    Gruppi_DAO CreaG = new Gruppi_DAO();
+	    
 		
 		JButton btnCrea = new JButton("Crea");
 		btnCrea.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			    String NG;
-			    String DescrG;
-			    
-			   NG=NGruppo.getText();
-			   DescrG=Descrizione.getText();
-			   
-			   
-			   
-			   if(NG.isEmpty() || DescrG.isEmpty()) {
-				   JOptionPane.showMessageDialog(null, "Tutti i campi devono essere compilati", "Credenziali errate",
-							JOptionPane.WARNING_MESSAGE);
-			    }else {
-			   
-				CreaG.InsGruppo(NG ,DescrG , NU);
-				
-			   }
+			public void actionPerformed(ActionEvent e) {		
+			   HC.ActionCreaGruppo(NGruppo, Descrizione, NU, home);
+			   home.setVisible(false);
 			}
 		});
 		btnCrea.setForeground(new Color(0, 128, 255));

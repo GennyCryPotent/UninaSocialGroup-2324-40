@@ -43,13 +43,28 @@ public class Registrazione_GUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
+		// Creazione del pannello in alto per il titolo e il pulsante Indietro
+		JPanel topPanel = new JPanel(new BorderLayout());
+		contentPane.add(topPanel, BorderLayout.NORTH);
+
+		// Label titolo
 		JLabel lblNewLabel = new JLabel("Inserisci i dati");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setForeground(new Color(0, 128, 255));
 		lblNewLabel.setBackground(new Color(255, 255, 255));
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblNewLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
-		contentPane.add(lblNewLabel, BorderLayout.NORTH);
+		topPanel.add(lblNewLabel, BorderLayout.CENTER);
+
+		// Pulsante Indietro
+		JButton btnIndietro = new JButton("Indietro");
+		btnIndietro.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnIndietro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RC.ActionIndietro();
+			}
+		});
+		topPanel.add(btnIndietro, BorderLayout.EAST);  // Posizionamento in alto a destra
 
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.CENTER);
@@ -92,7 +107,7 @@ public class Registrazione_GUI extends JFrame {
 		JLabel LabelData = new JLabel("Data di nascita:");
 		panel.add(LabelData);
 
-		//pannello per selezionare la data
+		// Pannello per selezionare la data
 		SqlDateModel model = new SqlDateModel();
 		Properties p = new Properties();
 		p.put("text.today", "Today");
