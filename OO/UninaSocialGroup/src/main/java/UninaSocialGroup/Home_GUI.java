@@ -26,23 +26,20 @@ public class Home_GUI extends JFrame {
 
 	private String NG; // Nome Gruppo
 
-	private Color lightColorBG = new Color(255, 255, 255);
-	private Color lightColorFont = new Color(0, 0, 0);
-	private Color lightColorInternalArea = new Color(244, 244, 244);
-
-	private Color AcctualColorBG = lightColorBG;
-	private Color AcctualColorFont = lightColorFont;
-	private Color AcctualtColorInternalArea = lightColorInternalArea;
+	private Color lightModeColorBG = new Color(255, 255, 255);
+	private Color lightModeColorFont = new Color(0, 0, 0);
+	private Color lightModeColorInternalArea = new Color(244, 244, 244);
+	private Color blueColorFont = new Color(0, 128, 255);
 
 	public Home_GUI(String NU) {
 		setTitle("Home");
-		setForeground(new Color(0, 128, 255));
+		setForeground(blueColorFont);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 737, 484);
 
 		contentPane = new JPanel(new BorderLayout());
 		contentPane.setForeground(new Color(31, 31, 31));
-		contentPane.setBackground(AcctualColorBG);
+		contentPane.setBackground(lightModeColorBG);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
@@ -61,14 +58,14 @@ public class Home_GUI extends JFrame {
 		contentPaneNorth.add(contentPaneNorthCenter, BorderLayout.CENTER);
 
 		JLabel lblNewLabel = new JLabel("Bentornato");
-		lblNewLabel.setForeground(new Color(0, 128, 255));
+		lblNewLabel.setForeground(blueColorFont);
 		lblNewLabel.setBackground(new Color(255, 255, 255));
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblNewLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		contentPaneNorthNorth.add(lblNewLabel);
 
 		JLabel NomeUtente = new JLabel(NU);
-		NomeUtente.setForeground(new Color(0, 128, 255));
+		NomeUtente.setForeground(blueColorFont);
 		NomeUtente.setFont(new Font("Tahoma", Font.BOLD, 18));
 		contentPaneNorthNorth.add(NomeUtente);
 
@@ -78,7 +75,7 @@ public class Home_GUI extends JFrame {
 
 		JPanel GroupPane = new JPanel();
 		GroupPane.setLayout(new BoxLayout(GroupPane, BoxLayout.Y_AXIS));
-		GroupPane.setBackground(AcctualtColorInternalArea);
+		GroupPane.setBackground(lightModeColorInternalArea);
 		GruppiGUIV.setViewportView(GroupPane);
 
 		// Popolazione dei bottoni dei gruppi
@@ -94,7 +91,7 @@ public class Home_GUI extends JFrame {
 			}
 		});
 		Notifiche.setBackground(new Color(255, 255, 255));
-		Notifiche.setForeground(new Color(0, 128, 255));
+		Notifiche.setForeground(blueColorFont);
 		Notifiche.setFont(new Font(null, Font.PLAIN, 18));
 		// Notifiche.setBounds(27, 22, 60, 53);
 		contentPaneNorthWest.add(Notifiche, BorderLayout.WEST);
@@ -109,9 +106,9 @@ public class Home_GUI extends JFrame {
 		btnLogout.setContentAreaFilled(false);
 		btnLogout.setBorderPainted(false);
 		btnLogout.setBackground(new Color(255, 255, 255));
-		btnLogout.setForeground(new Color(0, 128, 255));
+		btnLogout.setForeground(blueColorFont);
 		btnLogout.setFont(new Font(null, Font.PLAIN, 18));
-		contentPaneNorthCenter.add(btnLogout);
+		contentPaneNorth.add(btnLogout, BorderLayout.EAST);
 
 		JButton Report = new JButton("📈");
 		Report.setToolTipText("Report Statistico");
@@ -122,20 +119,20 @@ public class Home_GUI extends JFrame {
 				HC.ActionReport(NU);
 			}
 		});
-		Report.setForeground(new Color(0, 128, 255));
+		Report.setForeground(blueColorFont);
 		Report.setFont(new Font("Dialog", Font.PLAIN, 18));
 		Report.setBackground(Color.WHITE);
 		// Report.setBounds(109, 22, 60, 53);
 		contentPaneNorthWest.add(Report, BorderLayout.WEST);
 
 		JPanel postsArea = new JPanel();
-		postsArea.setBackground(AcctualtColorInternalArea);
+		postsArea.setBackground(lightModeColorInternalArea);
 		postsArea.setLayout(null);
 
 		JButton ricercaButton = new JButton("🔍");
 		ricercaButton.setToolTipText("Ricerca gruppi");
-		ricercaButton.setForeground(new Color(0, 128, 255));
-		ricercaButton.setBackground(AcctualColorBG);
+		ricercaButton.setForeground(blueColorFont);
+		ricercaButton.setBackground(lightModeColorBG);
 		ricercaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				HC.ActionRicerca(NU);
@@ -259,7 +256,7 @@ public class Home_GUI extends JFrame {
 								(int) postPanel.getPreferredSize().width, postPanel.getPreferredSize().height);
 					}
 					contentHeight += (postPanel.getHeight() + 10);
-					postPanel.setColors(AcctualtColorInternalArea, AcctualColorFont);
+					postPanel.setColors(lightModeColorInternalArea, lightModeColorFont);
 				}
 
 				postsArea.setPreferredSize(new Dimension(PostsScrollPane.getWidth() - 27, contentHeight));
@@ -274,11 +271,11 @@ public class Home_GUI extends JFrame {
 	}
 
 	void modificaButtonGruppi(JButton button) {
-		button.setForeground(new Color(0, 128, 255));
+		button.setForeground(blueColorFont);
 		button.setBackground(new Color(255, 255, 255));
 		button.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		Border lineBorder = BorderFactory.createLineBorder(new Color(0, 128, 255));
+		Border lineBorder = BorderFactory.createLineBorder(blueColorFont);
 		Border emptyBorder = new EmptyBorder(3, 2, 3, 2);
 		Border compoundBorder = new CompoundBorder(emptyBorder, lineBorder);
 

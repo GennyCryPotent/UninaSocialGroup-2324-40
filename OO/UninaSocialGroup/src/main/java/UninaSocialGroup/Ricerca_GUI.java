@@ -32,13 +32,13 @@ public class Ricerca_GUI extends JFrame {
     
     
 
-    private Color lightColorBG = new Color(255, 255, 255);
-    private Color lightColorButton = new Color(255, 255, 255);
-    private Color lightColorFont = new Color(0, 0, 0);
-    private Color lightColorInternalArea = new Color(244, 244, 244);
+    private Color lightModeColorBG = new Color(255, 255, 255);
+    private Color lightModeColorButton = new Color(255, 255, 255);
+    private Color lightModeColorFont = new Color(0, 0, 0);
+    private Color lightModeColorInternalArea = new Color(244, 244, 244);
     
     private Color blueColor = new Color(0, 128, 255);
-    private Color darkColorFont = new Color(255, 255, 255);
+    private Color darkModeColorFont = new Color(255, 255, 255);
 
     public Ricerca_GUI(String NU, Home_GUI HomeView) {
     	
@@ -50,11 +50,12 @@ public class Ricerca_GUI extends JFrame {
         setBounds(100, 100, 400, 200);
         contentPane = new JPanel(new BorderLayout());
         contentPane.setForeground(new Color(31, 31, 31));
-        contentPane.setBackground(lightColorBG);
+        contentPane.setBackground(lightModeColorBG);
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         
         
         ParametresArea = new JPanel();
+        ParametresArea.setBackground(lightModeColorBG);
         ParametresArea.setLayout(new BoxLayout(ParametresArea, BoxLayout.Y_AXIS));
         
         labelSearchText = new JLabel("Search Bar:");
@@ -74,13 +75,13 @@ public class Ricerca_GUI extends JFrame {
         popUpMenu = new JPopupMenu();
         popUpMenu.setFocusable(false);
         panelOfSearch = new JPanel();
-        panelOfSearch.setBackground(lightColorInternalArea);
+        panelOfSearch.setBackground(lightModeColorInternalArea);
         //panelOfSearch.setPreferredSize(new Dimension(300, 100)); // Imposta la dimensione preferita
         popUpMenu.add(panelOfSearch);
 
         
         panelOfRicercaResoult = new JPanel();
-        panelOfRicercaResoult.setBackground(lightColorInternalArea);
+        panelOfRicercaResoult.setBackground(lightModeColorBG);
         
         List<String> tags = new ArrayList<String>();
         
@@ -96,26 +97,20 @@ public class Ricerca_GUI extends JFrame {
         SearchText = new JTextArea();
         
 
-		
         TagsBox = new JComboBox(tags.toArray(new String[0]));
         
-
-        
         SearchText.setPreferredSize(new Dimension(0,20));
-        
-        
-        
-        
-        
-        
+
         
         //-------- Tasto Ricerca 
         
         
         ResoultRicercaArea = new JPanel();
+        ResoultRicercaArea.setBackground(lightModeColorBG);
         ResoultRicercaArea.setLayout(new BoxLayout(ResoultRicercaArea, BoxLayout.Y_AXIS));
 		
         ScrollRicercaResoult = new JScrollPane(ResoultRicercaArea);
+        ScrollRicercaResoult.setBackground(lightModeColorBG);
         ScrollRicercaResoult.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         ScrollRicercaResoult.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         
@@ -127,7 +122,7 @@ public class Ricerca_GUI extends JFrame {
         JButton ricercaButton = new JButton("🔍");
         ricercaButton.setToolTipText("Cerca");
 		ricercaButton.setForeground(blueColor);
-		ricercaButton.setBackground(lightColorBG);
+		ricercaButton.setBackground(lightModeColorBG);
 		ricercaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SearchText.setText("");
@@ -167,11 +162,15 @@ public class Ricerca_GUI extends JFrame {
         
         
 		ResoultArea = new JPanel();
+		ResoultArea.setBackground(lightModeColorBG);
 		ResoultArea.setLayout(new BoxLayout(ResoultArea, BoxLayout.Y_AXIS));
 		
 	    ScrollResoult = new JScrollPane(ResoultArea);
+	    ScrollResoult.setBackground(lightModeColorBG);
 	    ScrollResoult.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         ScrollResoult.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        
+        
 		
         panelOfSearch.add(ScrollResoult,  BorderLayout.CENTER);
 
@@ -199,10 +198,6 @@ public class Ricerca_GUI extends JFrame {
             	gruppi = gruppi_DAO.SelAllGruppoFromNome(SearchText.getText());
             	
             	
-            	
-            	List<JTextArea> ResoultText = new ArrayList<>();
-    			
-            	
     			
             	ResoultArea.removeAll();
             	
@@ -221,14 +216,14 @@ public class Ricerca_GUI extends JFrame {
             				textArea.addMouseListener(new MouseAdapter() {
             	                @Override
             	                public void mouseEntered(MouseEvent e) {
-            	                	textAreaSetColor(textArea,blueColor, darkColorFont);
+            	                	textAreaSetColor(textArea,blueColor, darkModeColorFont);
             	                    // Puoi usare un JToolTip personalizzato
             	                	textArea.setToolTipText(textArea.getText());
             	                }
 
             	                @Override
             	                public void mouseExited(MouseEvent e) {
-            	                	textAreaSetColor(textArea,lightColorInternalArea, lightColorFont);
+            	                	textAreaSetColor(textArea,lightModeColorInternalArea, lightModeColorFont);
             	                	// Nascondi il tooltip quando il mouse esce
             	                	textArea.setToolTipText(null);
             	                }
@@ -246,17 +241,16 @@ public class Ricerca_GUI extends JFrame {
             	            });
             			
 
-        				ResoultText.add(textArea);
-        				ResoultArea.add(ResoultText.get(i));
-        			
-        				ResoultArea.setPreferredSize(new Dimension(200, gruppi.size() * 20));
+        				ResoultArea.add(textArea);
             			
-        				
-        				RefreshSearchPopUp();
             	}
-            	
+    			
+    		
+				ResoultArea.setPreferredSize(new Dimension(200, gruppi.size() * 20));
+        				
+				RefreshSearchPopUp();
             	popUpMenu.pack();  // Questo forzerà il JPopupMenu a ridimensionarsi correttamente.
-            	// Point location = SearchText.getLocationOnScreen();
+
                 popUpMenu.show(SearchText, 0, SearchText.getHeight());
                 
             }else {
@@ -284,12 +278,23 @@ public class Ricerca_GUI extends JFrame {
     }
     
 	private void RefreshSearchPopUp() {
+		
+		//ResoultArea.setPreferredSize(new Dimension(0,0));
+		//panelOfSearch.setPreferredSize(new Dimension(100,200));
+		//max size in that case use the scrollbar
+		
+		ScrollResoult.setPreferredSize(new Dimension(250,150));
+		
+		ScrollResoult.revalidate();
+		ScrollResoult.repaint();
+		
+		
 		ResoultArea.revalidate();
 		ResoultArea.repaint();
 		
 		popUpMenu.revalidate();
 		popUpMenu.repaint();
-
+		
 		panelOfSearch.revalidate();
 		panelOfSearch.repaint();
 	}
@@ -298,9 +303,10 @@ public class Ricerca_GUI extends JFrame {
 	private void RefreshSearch() {
 		ResoultRicercaArea.revalidate();
 		ResoultRicercaArea.repaint();
-		
+
 		panelOfRicercaResoult.revalidate();
 		panelOfRicercaResoult.repaint();
+		
 	}
 	
 	private boolean GruppiIsNotEmpty(List<Gruppi> g) {
@@ -355,28 +361,15 @@ public class Ricerca_GUI extends JFrame {
     	
 		Possiedono_DAO possiedono_DAO = new Possiedono_DAO();
     	
-    	
     	possiedono = possiedono_DAO.SelGruppiConTag((String)TagsBox.getSelectedItem());
-    	
-    	//System.out.println(TagsBox.getSelectedItem()); 
-    	
-		
 		
 		for(int i=0; i<possiedono.size(); i++) {
     		
-			
-			//System.out.println(possiedono.get(i).Nome_Gruppo);
-    		
-    		
     		listaDellaRicerca.add(creazionePanelPerResultRicerca( possiedono.get(i).Nome_Gruppo, NU) );
-    		//listaDellaRicerca.get(i).setEditable(false);
-    		
+
     		ResoultRicercaArea.add(listaDellaRicerca.get(i));
     		panelOfRicercaResoult.add(ResoultRicercaArea);				
-			
-    		//RefreshSearch();
 		}
-		
 		
 		RefreshSearch();
 		
@@ -398,11 +391,11 @@ public class Ricerca_GUI extends JFrame {
 	
 	private JPanel creazionePanelPerResultRicerca(String Nome_Gruppo, String NU) {
 		JPanel panel = new JPanel();
-		panel.setBackground(lightColorInternalArea);
+		panel.setBackground(lightModeColorInternalArea);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 		
 		
-		panel.add(new JTextArea(Nome_Gruppo));
+		panel.add(new JLabel(Nome_Gruppo + "  "));
 		panel.add(CreazioneTastoInterazioneGruppoCercato(NU, Nome_Gruppo));
 		
 		return panel;
