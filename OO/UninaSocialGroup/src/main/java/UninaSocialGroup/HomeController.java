@@ -1,6 +1,9 @@
 package UninaSocialGroup;
 
+import java.util.List;
+
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class HomeController {
@@ -51,13 +54,16 @@ public class HomeController {
     	GF.LoginGUI();
     }
     
-    public void ActionCreaGruppo(JTextField NGruppo, JTextField Descrizione, String NU, Home_GUI home) {
+    public void ActionCreaGruppo(JTextField NGruppo, JTextArea Descrizione, String NU, Home_GUI home, List<String> listOfTags) {
     	String NG;
 	    String DescrG;
 	    Gruppi_DAO CreaG = new Gruppi_DAO();
-	    
+		Possiedono_DAO possiedonoDAO = new Possiedono_DAO();
+
 	   NG=NGruppo.getText();
 	   DescrG=Descrizione.getText();
+	   
+
 	   
 	   
 	   
@@ -66,7 +72,11 @@ public class HomeController {
 					JOptionPane.WARNING_MESSAGE);
 	    }else {
 	   
-		CreaG.InsGruppo(NG ,DescrG , NU);
+	    CreaG.InsGruppo(NG ,DescrG , NU);
+			
+	    for(String tag : listOfTags) {
+	    	possiedonoDAO.InsTagGruppo(NG, tag);
+	    }
 		creaGruppoView.setVisible(false);
 		home.setVisible(false);
 		GF.AccessoHome(NU);

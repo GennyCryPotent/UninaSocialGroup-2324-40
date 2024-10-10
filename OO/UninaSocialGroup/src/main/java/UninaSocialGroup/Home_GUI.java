@@ -196,6 +196,7 @@ public class Home_GUI extends JFrame {
 		List<Contenuti> contenuti = contenuto_DAO.SelContenutiGruppiUtente(NU);
 		ArrayList<JPannelloContenuti> TestiLabel = new ArrayList<>();
 
+		
 		for (Contenuti contenuto : contenuti) {
 			JPannelloContenuti postPanel = new JPannelloContenuti(contenuto.getPubblicatore(), NU,
 					contenuto.getNome_Gruppo(), contenuto.getTesto(), like_DAO.SelNumLike(contenuto.getId_Contenuto()),

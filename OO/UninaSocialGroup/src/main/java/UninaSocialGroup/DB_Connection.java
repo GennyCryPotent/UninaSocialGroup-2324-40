@@ -18,7 +18,7 @@ public class DB_Connection {
     	PSW = psw;
     	
     }
-
+    
     public Connection getC() {
         return c;
     }

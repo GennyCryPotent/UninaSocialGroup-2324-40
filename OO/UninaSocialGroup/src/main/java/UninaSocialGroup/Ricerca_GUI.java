@@ -45,7 +45,7 @@ public class Ricerca_GUI extends JFrame {
     	homeView = HomeView;
     	
         setTitle("Ricerca");
-        setForeground(new Color(0, 128, 255));
+        setForeground(blueColor);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setBounds(100, 100, 400, 200);
         contentPane = new JPanel(new BorderLayout());
@@ -59,12 +59,12 @@ public class Ricerca_GUI extends JFrame {
         ParametresArea.setLayout(new BoxLayout(ParametresArea, BoxLayout.Y_AXIS));
         
         labelSearchText = new JLabel("Search Bar:");
-        labelSearchText.setForeground(new Color(0, 128, 255));
+        labelSearchText.setForeground(blueColor);
 		labelSearchText.setFont(new Font("Tahoma", Font.BOLD, 12));
 		labelSearchText.setAlignmentX(Component.LEFT_ALIGNMENT);
 	
 		labelTagsText = new JLabel("Tags:");
-        labelTagsText.setForeground(new Color(0, 128, 255));
+        labelTagsText.setForeground(blueColor);
 		labelTagsText.setFont(new Font("Tahoma", Font.BOLD, 12));
 		labelTagsText.setAlignmentX(Component.LEFT_ALIGNMENT);
 	
@@ -283,7 +283,11 @@ public class Ricerca_GUI extends JFrame {
 		//panelOfSearch.setPreferredSize(new Dimension(100,200));
 		//max size in that case use the scrollbar
 		
-		ScrollResoult.setPreferredSize(new Dimension(250,150));
+		if(ResoultArea.getComponentCount()>15) {
+			ScrollResoult.setPreferredSize(new Dimension(250,150));
+		}else {
+			ScrollResoult.setSize(ResoultArea.getPreferredSize());
+		}
 		
 		ScrollResoult.revalidate();
 		ScrollResoult.repaint();
