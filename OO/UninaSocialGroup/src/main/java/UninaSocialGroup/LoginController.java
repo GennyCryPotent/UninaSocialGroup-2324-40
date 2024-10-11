@@ -8,7 +8,7 @@ public class LoginController {
 	private Login_GUI LoginView;
 	private String NU;
 	private String PSW;
-	private Profili_DAO Pass = new Profili_DAO();
+	private Profili_DAO ProfiliDao = new Profili_DAO();
 
 	public LoginController(Login_GUI loginView) {
 		this.LoginView = loginView;
@@ -20,10 +20,10 @@ public class LoginController {
 		PSW = new String(LoginView.passwordField.getPassword());
 
 		try {
-			String passaggio = Pass.SelSigProfilo(NU).getPassword();
-			String NomeU = Pass.SelSigProfilo(NU).getNome_Utente();
+			String Password = ProfiliDao.SelSigProfilo(NU).getPassword();
+			String NomeUtente = ProfiliDao.SelSigProfilo(NU).getNome_Utente();
 
-			if (PSW.compareTo(passaggio) == 0 && NU.compareTo(NomeU) == 0) {
+			if (PSW.compareTo(Password) == 0 && NU.compareTo(NomeUtente) == 0) {
 
 				LoginView.setVisible(false);
 				GF.AccessoHome(NU);
