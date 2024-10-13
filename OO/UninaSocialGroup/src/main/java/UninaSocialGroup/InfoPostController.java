@@ -25,7 +25,7 @@ public class InfoPostController {
 
 	public void ActionAddCommento(JTextArea textAddCommento, JPanel panelCommenti, int Id_Contenuto, String NU, String NG, int check) {
 		
-		if (!textAddCommento.getText().isEmpty() && textAddCommento.getText() == "Aggiungi un commento...") {
+		if (!textAddCommento.getText().isEmpty() && !textAddCommento.getText().equals("Aggiungi un commento...")) {
 			JTextArea text = new JTextArea();
 			CO.InsCommento(textAddCommento.getText(), Id_Contenuto, NU);
 			text.append(NU + " :" + textAddCommento.getText() + "\n");
