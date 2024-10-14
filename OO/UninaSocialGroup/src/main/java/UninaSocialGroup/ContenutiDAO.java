@@ -2,6 +2,7 @@ package UninaSocialGroup;
 
 import java.sql.CallableStatement;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -85,8 +86,7 @@ public class ContenutiDAO {
 
 		try {
 
-			ResultSet rs = GestioneFinestre.DB
-					.ExeQuery("SELECT * FROM CONTENUTI WHERE ID_CONTENUTO = " + idContenuto);
+			ResultSet rs = GestioneFinestre.DB.ExeQuery("SELECT * FROM CONTENUTI WHERE ID_CONTENUTO = " + idContenuto);
 
 			try {
 
@@ -106,7 +106,6 @@ public class ContenutiDAO {
 				rs.close(); // chiude sempre il cursore
 			}
 
-
 		} catch (Exception e) {
 			System.out.println("Errore");
 
@@ -119,8 +118,8 @@ public class ContenutiDAO {
 
 		try {
 
-			ResultSet rs = GestioneFinestre.DB.ExeQuery("SELECT * FROM CONTENUTI WHERE FK_NOME_GRUPPO = '"
-					+ nomeGruppo + "' ORDER BY DATA_CREAZIONE DESC");
+			ResultSet rs = GestioneFinestre.DB.ExeQuery(
+					"SELECT * FROM CONTENUTI WHERE FK_NOME_GRUPPO = '" + nomeGruppo + "' ORDER BY DATA_CREAZIONE DESC");
 
 			try {
 				List<Contenuti> Rec_Contenuti = new ArrayList<Contenuti>();
@@ -145,7 +144,6 @@ public class ContenutiDAO {
 				rs.close(); // chiude sempre il cursore
 			}
 
-
 		} catch (Exception e) {
 			System.out.println("Errore");
 
@@ -153,59 +151,34 @@ public class ContenutiDAO {
 		}
 	}
 
-	// Select tutti i contenuti dei gruppi a cui un utente partecipa
-	public List<Contenuti> SelContenutiGruppiUtente(String nomeUtente) {
-
-		String TMP_Nome_Gruppo;
-
+	// Seleziona tutti i contenuti di tutti i gruppi dove partecipa l'utente
+	public List<Contenuti> SelContenutiGruppiUtente(String Nome_Utente) {
 		try {
+			// con questa query trovo tutti i post che visualizza un utente messi in ordine
+			// di data
+			String query = "SELECT * FROM Contenuti "
+					+ "WHERE FK_Nome_Gruppo IN (SELECT FK_NOME_GRUPPO FROM Partecipano WHERE FK_Nome_Utente = ?) "
+					+ "ORDER BY Data_Creazione DESC";
 
-			ResultSet rsNome_Gruppo = GestioneFinestre.DB
-					.ExeQuery("SELECT FK_NOME_GRUPPO From Partecipano Where FK_Nome_Utente = '" + nomeUtente + "'"); // Prende
-			// i nomi
-			// dei gruppi
-			// dove l'utente
-			// è creatore
+			PreparedStatement preparedStatement = GestioneFinestre.DB.getC().prepareStatement(query);
+			preparedStatement.setString(1, Nome_Utente); // Imposta il nome utente come parametro
 
-			try {
+			ResultSet rs = preparedStatement.executeQuery();
 
-				List<Contenuti> Rec_Contenuti = new ArrayList<Contenuti>();
+			List<Contenuti> Rec_Contenuti = new ArrayList<>();
 
-				Contenuti Stampa;
+			while (rs.next()) {
+				Contenuti Stampa = new Contenuti(rs.getInt("Id_Contenuto"), rs.getDate("Data_Creazione"),
+						rs.getString("Testo"), rs.getString("FK_Nome_Gruppo"), rs.getString("FK_Nome_Utente"));
 
-				while (rsNome_Gruppo.next()) {
-
-					TMP_Nome_Gruppo = rsNome_Gruppo.getString("FK_NOME_GRUPPO");
-
-					ResultSet rsF = GestioneFinestre.DB.ExeQuery("SELECT * FROM Contenuti WHERE FK_Nome_Gruppo = '"
-							+ TMP_Nome_Gruppo + "' ORDER BY DATA_CREAZIONE DESC");
-
-					while (rsF.next()) {
-						Stampa = new Contenuti(rsF.getInt("Id_Contenuto"), rsF.getDate("Data_Creazione"),
-								rsF.getString("Testo"), rsF.getString("FK_Nome_Gruppo"),
-								rsF.getString("FK_Nome_Utente"));
-
-						Rec_Contenuti.add(Stampa);
-
-						Stampa = null;
-					}
-					rsF.close();
-				}
-				
-				return Rec_Contenuti;
-
-			} catch (SQLException e) {
-				System.out.println("query fallita: " + e.getMessage());
-
-				return null;
-			} finally {
-				rsNome_Gruppo.close(); // chiude sempre il cursore
+				Rec_Contenuti.add(Stampa);
 			}
 
+			preparedStatement.close();
+			return Rec_Contenuti;
 
-		} catch (Exception e) {
-			System.out.println("Errore");
-
+		} catch (SQLException e) {
+			System.out.println("Errore nella query: " + e.getMessage());
 			return null;
 		}
 	}
@@ -241,7 +214,6 @@ public class ContenutiDAO {
 				rs.close(); // chiude sempre il cursore
 			}
 
-
 		} catch (Exception e) {
 			System.out.println("Errore");
 
@@ -254,8 +226,8 @@ public class ContenutiDAO {
 
 		try {
 
-			ResultSet rs = GestioneFinestre.DB.ExeQuery("SELECT * FROM CONTENUTI WHERE FK_NOME_GRUPPO = '"
-					+ nomeGruppo + "' AND FK_NOME_UTENTE = '" + nomeUtente + "'");
+			ResultSet rs = GestioneFinestre.DB.ExeQuery("SELECT * FROM CONTENUTI WHERE FK_NOME_GRUPPO = '" + nomeGruppo
+					+ "' AND FK_NOME_UTENTE = '" + nomeUtente + "'");
 
 			try {
 				List<Contenuti> Rec_Contenuti = new ArrayList<Contenuti>();
@@ -280,7 +252,6 @@ public class ContenutiDAO {
 				rs.close(); // chiude sempre il cursore
 			}
 
-
 		} catch (Exception e) {
 			System.out.println("Errore");
 
@@ -293,8 +264,8 @@ public class ContenutiDAO {
 
 		try {
 
-			ResultSet rs = GestioneFinestre.DB.ExeQuery("SELECT * FROM CONTENUTI WHERE FK_NOME_GRUPPO = '"
-					+ nomeGruppo + "' AND EXTRACT(MONTH from DATA_CREAZIONE) =  " + Mese);
+			ResultSet rs = GestioneFinestre.DB.ExeQuery("SELECT * FROM CONTENUTI WHERE FK_NOME_GRUPPO = '" + nomeGruppo
+					+ "' AND EXTRACT(MONTH from DATA_CREAZIONE) =  " + Mese);
 
 			try {
 				List<Contenuti> Rec_Contenuti = new ArrayList<Contenuti>();
@@ -319,7 +290,6 @@ public class ContenutiDAO {
 			} finally {
 				rs.close(); // chiude sempre il cursore
 			}
-
 
 		} catch (Exception e) {
 			System.out.println("Errore : " + e.getMessage());

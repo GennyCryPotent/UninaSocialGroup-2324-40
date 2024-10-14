@@ -20,10 +20,10 @@ public class GestioneFinestre {
 	private OperazioniPartecipanteGUI EliminaP;
 	private CreaGruppoGUI CreaG;
 	
-	//public static DBConnection DB = new DBConnection("jdbc:oracle:thin:@localhost:1521:ORCL", "system", "Unina@03"); //portatile genny
+	public static DBConnection DB = new DBConnection("jdbc:oracle:thin:@localhost:1521:ORCL", "system", "Unina@03"); //portatile genny
 	//public static DB_Connection DB = new DBConnection("jdbc:oracle:thin:@Gennaro.homenet.telecomitalia.it:1521:xe", "system", "Database@03"); //Fisso Genny
 
-	public static DBConnection DB = new DBConnection("jdbc:oracle:thin:@DESKTOP-MLJV8GK:1521:xe", "system", "Caruso"); //Caruso
+	//public static DBConnection DB = new DBConnection("jdbc:oracle:thin:@DESKTOP-MLJV8GK:1521:xe", "system", "Caruso"); //Caruso
 
 	//public static DB_Connection DB = new DBConnection("jdbc:oracle:thin:@errore31:1521:xe", "SYSTEM", "Caruso"); //Caruso Portatile
 	
