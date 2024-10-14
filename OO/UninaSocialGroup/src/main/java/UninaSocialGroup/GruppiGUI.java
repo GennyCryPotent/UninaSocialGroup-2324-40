@@ -23,288 +23,302 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class GruppiGUI extends JFrame {
 
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
+    private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
 
-	private String NewPost;
-	private GruppiController GC = new GruppiController(GruppiGUI.this);
+    private String newPost;
+    private GruppiController gruppiController = new GruppiController(GruppiGUI.this);
 
-	private List<Contenuti> Res_Contenuti_Gruppi = new ArrayList<Contenuti>();
-	private ContenutiDAO C = new ContenutiDAO();
-	private ArrayList<JPannelloContenuti> ContenutiPanel = new ArrayList<>();
-	private Regolano_DAO P = new Regolano_DAO();
-	private GruppiDAO G = new GruppiDAO();
-	private Gruppi Gruppo;
-	private boolean CkeckCreatore;
-	private boolean checkAmm;
-	private Color lightColorFont = new Color(0, 0, 0);
-	private Color lightColorInternalArea = new Color(244, 244, 244);
-	private String Ruolo;
-
-	private Color AcctualColorFont = lightColorFont;
-	private Color AcctualtColorInternalArea = lightColorInternalArea;
-
-	public GruppiGUI(String NU, String NG) {
-
-		Gruppo = G.SelSigGruppo(NG);
-
-		checkAmm = P.CheckRegola(NG, NU);
-		CkeckCreatore = Gruppo.getCreatore().equals(NU);
-
-		// PANNELLI
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 737, 484);
-		contentPane = new JPanel();
-		contentPane.setBackground(new Color(255, 255, 255));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-
-		JLabel NomeGruppo = new JLabel();
-		NomeGruppo.setForeground(new Color(0, 128, 255));
-		NomeGruppo.setText(NG);
-		NomeGruppo.setFont(new Font("Tahoma", Font.BOLD, 18));
-
-		JPanel postsArea = new JPanel();
-		postsArea.setBackground(new Color(244, 244, 244));
-		postsArea.setBounds(140, 97, 573, 291);
-		postsArea.setLayout(null);
-
-		// BOTTONI
-		JButton Home = new JButton("🏠");
-		Home.setToolTipText("Home");
-		Home.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				GC.ActionHome(NU);
-			}
-		});
-		Home.setBorderPainted(false);
-		Home.setBackground(new Color(255, 255, 255));
-		Home.setForeground(new Color(0, 128, 255));
-		Home.setFont(new Font(null, Font.PLAIN, 18));
+    private List<Contenuti> resContenutiGruppi = new ArrayList<Contenuti>();
+    private ContenutiDAO contenutiDao = new ContenutiDAO();
+    private ArrayList<JPannelloContenuti> contenutiPanel = new ArrayList<>();
+    private Regolano_DAO regolanoDao = new Regolano_DAO();
+    private GruppiDAO gruppiDao = new GruppiDAO();
+    private Gruppi gruppo;
+    private boolean checkCreatore;
+    private boolean checkAmministratore;
+    
+    private Color lightColorFont = new Color(0, 0, 0);
+    private Color lightColorInternalArea = new Color(244, 244, 244);
+    private String ruolo;
 
 
-		JButton AggiungiPost = new JButton("➕");
-		AggiungiPost.setToolTipText("Aggiungi post");
-		AggiungiPost.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+    // Costruttore della classe GruppiGUI
+    public GruppiGUI(String nu, String ng) {
 
-				NewPost = JOptionPane.showInputDialog(AggiungiPost, "Cosa c'è di nuovo?", "Aggiungi un post",
-						JOptionPane.QUESTION_MESSAGE);
-				
-				GC.ActionPost(NU, NG, NewPost);
-			}
+        // Recupera i dettagli del gruppo dal database
+        gruppo = gruppiDao.SelSigGruppo(ng);
 
-		});
-		AggiungiPost.setBorderPainted(false);
-		AggiungiPost.setBackground(new Color(255, 255, 255));
-		AggiungiPost.setForeground(new Color(0, 128, 255));
-		AggiungiPost.setFont(new Font(null, Font.PLAIN, 18));
+        // Controlla se l'utente è un amministratore o il creatore del gruppo
+        checkAmministratore = regolanoDao.CheckRegola(ng, nu);
+        checkCreatore = gruppo.getCreatore().equals(nu);
 
+        // IMPOSTAZIONI DEL PANNELLO
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 737, 484);
+        contentPane = new JPanel();
+        contentPane.setBackground(new Color(255, 255, 255));
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
 
-		JButton Rimuovi_Post = new JButton("🖍️");
-		Rimuovi_Post.setToolTipText("Modifica post");
-		Rimuovi_Post.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				GC.ActionModifica(NU, NG);
-			}
-		});
-		Rimuovi_Post.setBorderPainted(false);
-		Rimuovi_Post.setBackground(new Color(255, 255, 255));
-		Rimuovi_Post.setForeground(new Color(0, 128, 255));
-		Rimuovi_Post.setFont(new Font(null, Font.PLAIN, 20));
+        // Etichetta per il nome del gruppo
+        JLabel nomeGruppo = new JLabel();
+        nomeGruppo.setForeground(new Color(0, 128, 255));
+        nomeGruppo.setText(ng);
+        nomeGruppo.setFont(new Font("Tahoma", Font.BOLD, 18));
 
-		// SCROLLPANE PER OSPITARE TUTTI I CONTENUTI
-		JScrollPane scrollPane = new JScrollPane(postsArea);
-		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		scrollPane.setBounds(27, 97, 686, 291);
-		scrollPane.setVisible(true);
-		contentPane.add(scrollPane);
+        // Pannello per visualizzare i post
+        JPanel postsArea = new JPanel();
+        postsArea.setBackground(new Color(244, 244, 244));
+        postsArea.setBounds(140, 97, 573, 291);
+        postsArea.setLayout(null);
 
-		recuperaPostGruppo(NG, NU, postsArea, scrollPane); //Recupera tutti  i post
+        // BOTTONI
+        // Bottone Home per tornare alla schermata principale
+        JButton home = new JButton("\uD83C\uDFE0");
+        home.setToolTipText("Home");
+        home.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                gruppiController.ActionHome(nu);
+            }
+        });
+        home.setBorderPainted(false);
+        home.setBackground(new Color(255, 255, 255));
+        home.setForeground(new Color(0, 128, 255));
+        home.setFont(new Font(null, Font.PLAIN, 18));
 
-		JLabel labelRuolo = new JLabel();
-		labelRuolo.setVisible(false);
-		
-		labelRuolo.getText();
-		
-		
-		
-		JButton EliminaPartecipante = new JButton("🚷");
-		EliminaPartecipante.setToolTipText("Rimuovi partecipante");
-		EliminaPartecipante.setBorderPainted(false);
-		EliminaPartecipante.setBackground(new Color(255, 255, 255));
-		EliminaPartecipante.setForeground(new Color(0, 128, 255));
-		EliminaPartecipante.setFont(new Font(null, Font.PLAIN, 18));
-		EliminaPartecipante.setVisible(false);
-		EliminaPartecipante.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				GC.ActionElimina(NU, NG, Ruolo, 0); //operazione elimina
-			}
-		});
-		
-		JButton Abbandona = new JButton("❌");
-		Abbandona.setToolTipText("Abbandona gruppo");
-		Abbandona.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				GC.ActionAbbandona(NU, NG, CkeckCreatore);
-			}
-		});
-		Abbandona.setBorderPainted(false);
-		Abbandona.setBackground(new Color(255, 255, 255));
-		Abbandona.setForeground(new Color(0, 128, 255));
-		Abbandona.setFont(new Font(null, Font.PLAIN, 18));
-		
-		JButton AggiungiAmm = new JButton("🆙");
-		AggiungiAmm.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				GC.ActionElimina(NU, NG, Ruolo, 1); //operazione aggiungi amministratore
-			}
-		});
-		AggiungiAmm.setToolTipText("Aggiungi amministratore");
-		AggiungiAmm.setForeground(new Color(0, 128, 255));
-		AggiungiAmm.setFont(new Font("Dialog", Font.PLAIN, 18));
-		AggiungiAmm.setBorderPainted(false);
-		AggiungiAmm.setBackground(Color.WHITE);
-		AggiungiAmm.setVisible(false);
-		
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(22)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 749, GroupLayout.DEFAULT_SIZE)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(4)
-							.addComponent(Home, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(AggiungiPost, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(Rimuovi_Post, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-							.addGap(23)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(NomeGruppo, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
-									.addComponent(EliminaPartecipante, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(AggiungiAmm, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(Abbandona, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGap(10)
-									.addComponent(labelRuolo, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)))
-							.addContainerGap())))
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(17)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(NomeGruppo, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-						.addComponent(Rimuovi_Post, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
-						.addComponent(AggiungiPost, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
-						.addComponent(Home, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
-						.addComponent(AggiungiAmm, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
-						.addComponent(Abbandona, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
-						.addComponent(EliminaPartecipante, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE))
-					.addGap(1)
-					.addComponent(labelRuolo, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE))
-		);
-		contentPane.setLayout(gl_contentPane);
+        // Bottone per aggiungere un nuovo post
+        JButton aggiungiPost = new JButton("\u2795");
+        aggiungiPost.setToolTipText("Aggiungi post");
+        aggiungiPost.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Mostra una finestra di dialogo per aggiungere un nuovo post
+                newPost = JOptionPane.showInputDialog(aggiungiPost, "Cosa c'\u00e8 di nuovo?", "Aggiungi un post",
+                        JOptionPane.QUESTION_MESSAGE);
+                
+                // Chiama il controller per gestire l'azione di aggiunta del nuovo post
+                gruppiController.ActionPost(nu, ng, newPost);
+            }
+        });
+        aggiungiPost.setBorderPainted(false);
+        aggiungiPost.setBackground(new Color(255, 255, 255));
+        aggiungiPost.setForeground(new Color(0, 128, 255));
+        aggiungiPost.setFont(new Font(null, Font.PLAIN, 18));
 
-		if (CkeckCreatore) {
-			labelRuolo.setText("Creatore");
-			labelRuolo.setVisible(true);
-			EliminaPartecipante.setVisible(true);
-			EliminaPartecipante.setEnabled(true);
-			AggiungiAmm.setVisible(true);
-			AggiungiAmm.setEnabled(true);
-			Ruolo="Creatore";
-		} else if (checkAmm) {
-			labelRuolo.setText("Amministratore");
-			labelRuolo.setVisible(true);
-			EliminaPartecipante.setVisible(true);
-			EliminaPartecipante.setEnabled(true);
-			Ruolo="Amministratore";
-		}
-		
-		
-		
-		// ---------------
+        // Bottone per modificare i post
+        JButton rimuoviPost = new JButton("\uD83D\uDCDD");
+        rimuoviPost.setToolTipText("Modifica post");
+        rimuoviPost.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Chiama il controller per gestire la modifica del post
+                gruppiController.ActionModifica(nu, ng);
+            }
+        });
+        rimuoviPost.setBorderPainted(false);
+        rimuoviPost.setBackground(new Color(255, 255, 255));
+        rimuoviPost.setForeground(new Color(0, 128, 255));
+        rimuoviPost.setFont(new Font(null, Font.PLAIN, 20));
 
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
+        // SCROLLPANE PER CONTENERE TUTTI I POST
+        JScrollPane scrollPane = new JScrollPane(postsArea);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        scrollPane.setBounds(27, 97, 686, 291);
+        scrollPane.setVisible(true);
+        contentPane.add(scrollPane);
 
-				int contentHeight = 0;
-				// Posiziona correttamente le notifiche
-				for (int i = 0; i < ContenutiPanel.size(); i++) {
-					if (i == 0) {
+        // Recupera tutti i post del gruppo
+        recuperaPostGruppo(ng, nu, postsArea, scrollPane);
 
-						ContenutiPanel.get(i).setBounds(10, 10, (int) ContenutiPanel.get(i).getPreferredSize().width,
-								ContenutiPanel.get(i).getPreferredSize().height); // Imposta le dimensioni desiderate
-					} else {
-						System.out.println(ContenutiPanel.get(i).getBounds());
-						ContenutiPanel.get(i).setBounds(10,
-								(int) (ContenutiPanel.get(i - 1).getBounds().getY()
-										+ ContenutiPanel.get(i - 1).getPreferredSize().getHeight() + 10),
-								(int) ContenutiPanel.get(i).getPreferredSize().width,
-								ContenutiPanel.get(i).getPreferredSize().height); // Imposta le dimensioni desiderate
-					}
-					// crea la giusta dimensione per ContentPaneForContent che permette di fare lo
-					// scrollbar delle giuste dimensioni
-					contentHeight += (ContenutiPanel.get(i).getHeight() + 10);
-				}
+        JLabel labelRuolo = new JLabel();
+        labelRuolo.setVisible(false);
+        
+        labelRuolo.getText();
+        
+        // Bottone per rimuovere un partecipante dal gruppo
+        JButton eliminaPartecipante = new JButton("\uD83D\uDEB7");
+        eliminaPartecipante.setToolTipText("Rimuovi partecipante");
+        eliminaPartecipante.setBorderPainted(false);
+        eliminaPartecipante.setBackground(new Color(255, 255, 255));
+        eliminaPartecipante.setForeground(new Color(0, 128, 255));
+        eliminaPartecipante.setFont(new Font(null, Font.PLAIN, 18));
+        eliminaPartecipante.setVisible(false);
+        eliminaPartecipante.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Chiama il controller per gestire la rimozione del partecipante
+                gruppiController.ActionElimina(nu, ng, ruolo, 0);
+            }
+        });
+        
+        // Bottone per abbandonare il gruppo
+        JButton abbandona = new JButton("\u274C");
+        abbandona.setToolTipText("Abbandona gruppo");
+        abbandona.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Chiama il controller per gestire l'azione di abbandono del gruppo
+                gruppiController.ActionAbbandona(nu, ng, checkCreatore);
+            }
+        });
+        abbandona.setBorderPainted(false);
+        abbandona.setBackground(new Color(255, 255, 255));
+        abbandona.setForeground(new Color(0, 128, 255));
+        abbandona.setFont(new Font(null, Font.PLAIN, 18));
+        
+        // Bottone per aggiungere un amministratore
+        JButton aggiungiAmm = new JButton("\uD83C\uDD99");
+        aggiungiAmm.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Chiama il controller per gestire l'azione di aggiunta di un amministratore
+                gruppiController.ActionElimina(nu, ng, ruolo, 1);
+            }
+        });
+        aggiungiAmm.setToolTipText("Aggiungi amministratore");
+        aggiungiAmm.setForeground(new Color(0, 128, 255));
+        aggiungiAmm.setFont(new Font("Dialog", Font.PLAIN, 18));
+        aggiungiAmm.setBorderPainted(false);
+        aggiungiAmm.setBackground(Color.WHITE);
+        aggiungiAmm.setVisible(false);
+        
+        // Impostazioni di layout per il content pane
+        GroupLayout gl_contentPane = new GroupLayout(contentPane);
+        gl_contentPane.setHorizontalGroup(
+            gl_contentPane.createParallelGroup(Alignment.LEADING)
+                .addGroup(gl_contentPane.createSequentialGroup()
+                    .addGap(22)
+                    .addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+                        .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 749, GroupLayout.DEFAULT_SIZE)
+                        .addGroup(gl_contentPane.createSequentialGroup()
+                            .addGap(4)
+                            .addComponent(home, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+                            .addGap(18)
+                            .addComponent(aggiungiPost, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+                            .addGap(18)
+                            .addComponent(rimuoviPost, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+                            .addGap(23)
+                            .addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+                                .addGroup(gl_contentPane.createSequentialGroup()
+                                    .addComponent(nomeGruppo, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
+                                    .addComponent(eliminaPartecipante, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(ComponentPlacement.RELATED)
+                                    .addComponent(aggiungiAmm, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(ComponentPlacement.RELATED)
+                                    .addComponent(abbandona, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE))
+                                .addGroup(gl_contentPane.createSequentialGroup()
+                                    .addGap(10)
+                                    .addComponent(labelRuolo, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)))
+                            .addContainerGap())))
+        );
+        gl_contentPane.setVerticalGroup(
+            gl_contentPane.createParallelGroup(Alignment.LEADING)
+                .addGroup(gl_contentPane.createSequentialGroup()
+                    .addGap(17)
+                    .addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+                        .addComponent(nomeGruppo, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(rimuoviPost, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+                        .addComponent(aggiungiPost, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+                        .addComponent(home, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+                        .addComponent(aggiungiAmm, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(abbandona, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+                        .addComponent(eliminaPartecipante, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE))
+                    .addGap(1)
+                    .addComponent(labelRuolo, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE))
+        );
+        contentPane.setLayout(gl_contentPane);
 
-				// Aggiorna la dimensione preferita del contenitore in base all'effettiva
-				// altezza di tutti gli elementi
-				postsArea.setPreferredSize(new Dimension(scrollPane.getWidth() - 27, contentHeight));
+        // Imposta la visibilità e le proprietà dei componenti in base al ruolo dell'utente
+        if (checkCreatore) {
+            labelRuolo.setText("Creatore");
+            labelRuolo.setVisible(true);
+            eliminaPartecipante.setVisible(true);
+            eliminaPartecipante.setEnabled(true);
+            aggiungiAmm.setVisible(true);
+            aggiungiAmm.setEnabled(true);
+            ruolo = "Creatore";
+        } else if (checkAmministratore) {
+            labelRuolo.setText("Amministratore");
+            labelRuolo.setVisible(true);
+            eliminaPartecipante.setVisible(true);
+            eliminaPartecipante.setEnabled(true);
+            ruolo = "Amministratore";
+        }
+        
+        // Aggiungi listener per gestire il ridimensionamento dei componenti
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
 
-				postsArea.revalidate();
-				postsArea.repaint();
+                int contentHeight = 0;
+                // Posiziona correttamente le notifiche
+                for (int i = 0; i < contenutiPanel.size(); i++) {
+                    if (i == 0) {
+                        // Imposta i confini della prima notifica
+                        contenutiPanel.get(i).setBounds(10, 10, (int) contenutiPanel.get(i).getPreferredSize().width,
+                                contenutiPanel.get(i).getPreferredSize().height);
+                    } else {
+                        // Imposta i confini delle notifiche successive in base a quella precedente
+                        contenutiPanel.get(i).setBounds(10,
+                                (int) (contenutiPanel.get(i - 1).getBounds().getY()
+                                        + contenutiPanel.get(i - 1).getPreferredSize().getHeight() + 10),
+                                (int) contenutiPanel.get(i).getPreferredSize().width,
+                                contenutiPanel.get(i).getPreferredSize().height);
+                    }
+                    // Calcola l'altezza totale per l'area di contenuto scrollabile
+                    contentHeight += (contenutiPanel.get(i).getHeight() + 10);
+                }
 
-				scrollPane.revalidate();
-				scrollPane.repaint();
+                // Aggiorna la dimensione preferita del contenitore in base all'altezza di tutti gli elementi
+                postsArea.setPreferredSize(new Dimension(scrollPane.getWidth() - 27, contentHeight));
 
-				contentPane.revalidate();
-				contentPane.repaint();
-			}
+                // Riconvalida e ridisegna per riflettere i cambiamenti
+                postsArea.revalidate();
+                postsArea.repaint();
 
-		});
+                scrollPane.revalidate();
+                scrollPane.repaint();
 
-	}
+                contentPane.revalidate();
+                contentPane.repaint();
+            }
 
-	// Funzione per recuperare i post del gruppo
-	private void recuperaPostGruppo(String NG, String NU, JPanel postsArea, JScrollPane scrollPane) {
-		Res_Contenuti_Gruppi = C.SelAllContenutiGruppo(NG);
+        });
 
-		LikesDAO like_DAO = new LikesDAO();
-		CommentiDAO commento_DAO = new CommentiDAO();
+    }
 
-		int numbOfTxt = Res_Contenuti_Gruppi.size();
+    // Funzione per recuperare i post del gruppo
+    private void recuperaPostGruppo(String ng, String nu, JPanel postsArea, JScrollPane scrollPane) {
+        // Ottieni tutti i post relativi al gruppo dal database
+        resContenutiGruppi = contenutiDao.SelAllContenutiGruppo(ng);
 
-		for (int i = 0; i < numbOfTxt; i++) {
+        LikesDAO likesDao = new LikesDAO();
+        CommentiDAO commentiDao = new CommentiDAO();
 
-			JPannelloContenuti NewPostPanel = new JPannelloContenuti(Res_Contenuti_Gruppi.get(i).getPubblicatore(), NU,
-					Res_Contenuti_Gruppi.get(i).getNome_Gruppo(), Res_Contenuti_Gruppi.get(i).getTesto(),
-					like_DAO.SelNumLike(Res_Contenuti_Gruppi.get(i).getId_Contenuto()),
-					commento_DAO.SelNumCommenti(Res_Contenuti_Gruppi.get(i).getId_Contenuto()),
-					Res_Contenuti_Gruppi.get(i).getId_Contenuto());
+        int numbOfTxt = resContenutiGruppi.size();
 
-			NewPostPanel.textArea.setWrapStyleWord(false);
-			NewPostPanel.textArea.setEditable(false);
+        for (int i = 0; i < numbOfTxt; i++) {
+            // Crea un nuovo pannello per ogni post
+            JPannelloContenuti newPostPanel = new JPannelloContenuti(resContenutiGruppi.get(i).getPubblicatore(), nu,
+                    resContenutiGruppi.get(i).getNome_Gruppo(), resContenutiGruppi.get(i).getTesto(),
+                    likesDao.SelNumLike(resContenutiGruppi.get(i).getId_Contenuto()),
+                    commentiDao.SelNumCommenti(resContenutiGruppi.get(i).getId_Contenuto()),
+                    resContenutiGruppi.get(i).getId_Contenuto());
 
-			ContenutiPanel.add(NewPostPanel);
+            // Imposta le proprietà per l'area di testo nel pannello del post
+            newPostPanel.textArea.setWrapStyleWord(false);
+            newPostPanel.textArea.setEditable(false);
 
-			ContenutiPanel.get(i).setColors(AcctualtColorInternalArea, AcctualColorFont);
+            // Aggiungi il pannello del post alla lista dei pannelli
+            contenutiPanel.add(newPostPanel);
 
-			postsArea.add(Box.createRigidArea(new Dimension(0, 10)));
-			postsArea.add(ContenutiPanel.get(i));
-		}
-	}
+            // Imposta i colori per il pannello del post
+            contenutiPanel.get(i).setColors(lightColorInternalArea, lightColorFont);
+
+            // Aggiungi spaziatura e il pannello del post all'area dei post
+            postsArea.add(Box.createRigidArea(new Dimension(0, 10)));
+            postsArea.add(contenutiPanel.get(i));
+        }
+    }
 }
