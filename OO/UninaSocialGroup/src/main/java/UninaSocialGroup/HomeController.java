@@ -8,7 +8,7 @@ import javax.swing.JTextField;
 
 public class HomeController {
 
-	private GestioneFinestre GF = new GestioneFinestre();
+	private GestioneFinestre gestioneFinestre = new GestioneFinestre();
     private HomeGUI homeView;
     private CreaGruppoGUI creaGruppoView;
     
@@ -20,66 +20,66 @@ public class HomeController {
         this.homeView = homeView;
     }
     
-    public void ActionReport(String NU) {
+    public void ActionReport(String nomeUtente) {
     	homeView.setVisible(false);
-		GF.ReportS(NU);
+		gestioneFinestre.ReportS(nomeUtente);
     	
     }
    
-    public void ActionNotifiche(String NU) {
+    public void ActionNotifiche(String nomeUtente) {
     	homeView.setVisible(false);
-		GF.MostraNotifiche(NU);
+		gestioneFinestre.MostraNotifiche(nomeUtente);
     	
     }
     
-    public void ActionGruppi(String NU, String NG) {
+    public void ActionGruppi(String nomeUtente, String nomeGruppo) {
     	homeView.setVisible(false);
-		GF.MostraGruppi(NU, NG);
+		gestioneFinestre.MostraGruppi(nomeUtente, nomeGruppo);
     	
     }
     
-    public void ActionRicerca(String NU) {
+    public void ActionRicerca(String nomeUtente) {
     	homeView.setVisible(true);
-    	GF.MostraRicerca(NU, homeView);
+    	gestioneFinestre.MostraRicerca(nomeUtente, homeView);
     }
   
-    public void ActionCrea(String NU) {
+    public void ActionCrea(String nomeUtente) {
 		
-		GF.CreaGruppo(NU, homeView);
+		gestioneFinestre.CreaGruppo(nomeUtente, homeView);
 		
 	}
     
     public void ActionLogout() {
     	homeView.setVisible(false);
-    	GF.MostraLogin();
+    	gestioneFinestre.MostraLogin();
     }
     
-    public void ActionCreaGruppo(JTextField NGruppo, JTextArea Descrizione, String NU, HomeGUI home, List<String> listOfTags) {
-    	String NG;
-	    String DescrG;
-	    GruppiDAO CreaG = new GruppiDAO();
+    public void ActionCreaGruppo(JTextField NGruppoTxt, JTextArea descrizioneTxt, String nomeUtente, HomeGUI home, List<String> listOfTags) {
+    	String nomeGruppo;
+	    String descrGruppo;
+	    GruppiDAO CreaGruppo = new GruppiDAO();
 		PossiedonoDAO possiedonoDAO = new PossiedonoDAO();
 
-	   NG=NGruppo.getText();
-	   DescrG=Descrizione.getText();
+	   nomeGruppo=NGruppoTxt.getText();
+	   descrGruppo=descrizioneTxt.getText();
 	   
 
 	   
 	   
 	   
-	   if(NG.isEmpty() || DescrG.isEmpty()) {
+	   if(nomeGruppo.isEmpty() || descrGruppo.isEmpty()) {
 		   JOptionPane.showMessageDialog(null, "Tutti i campi devono essere compilati", "Credenziali errate",
 					JOptionPane.WARNING_MESSAGE);
 	    }else {
 	   
-	    CreaG.InsGruppo(NG ,DescrG , NU);
+	    CreaGruppo.InsGruppo(nomeGruppo ,descrGruppo , nomeUtente);
 			
 	    for(String tag : listOfTags) {
-	    	possiedonoDAO.InsTagGruppo(NG, tag);
+	    	possiedonoDAO.InsTagGruppo(nomeGruppo, tag);
 	    }
 		creaGruppoView.setVisible(false);
 		home.setVisible(false);
-		GF.AccessoHome(NU);
+		gestioneFinestre.AccessoHome(nomeUtente);
 		
 	   }
     }

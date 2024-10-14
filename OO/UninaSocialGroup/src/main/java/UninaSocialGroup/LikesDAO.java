@@ -9,15 +9,15 @@ import java.util.List;
 public class LikesDAO {
 
 	// Insert di un Like
-	public void InsLike(int Id_Contenuto, String Nome_Utente) {
+	public void InsLike(int idContenuto, String nomeUtente) {
 
 		try {
-			CallableStatement Call = GestioneFinestre.DB.getC().prepareCall("CALL CREA_Like(?, ?)");
-			Call.setString(1, Nome_Utente);
-			Call.setInt(2, Id_Contenuto);
-			Call.execute();
+			CallableStatement call = GestioneFinestre.DB.getC().prepareCall("CALL CREA_Like(?, ?)");
+			call.setString(1, nomeUtente);
+			call.setInt(2, idContenuto);
+			call.execute();
 			System.out.println("Like Inserito");
-			Call.close();
+			call.close();
 
 		} catch (Exception e) {
 			System.out.println("Errore: " + e.getMessage());
@@ -27,15 +27,15 @@ public class LikesDAO {
 	}
 
 	// Delete di un Like
-	public void DelLike(int Id_Contenuto, String Nome_Utente) {
+	public void DelLike(int idContenuto, String nomeUtente) {
 
 		try {
-			CallableStatement Call = GestioneFinestre.DB.getC().prepareCall("CALL RIMOZIONE_Like(?, ?)");
-			Call.setString(1, Nome_Utente);
-			Call.setInt(2, Id_Contenuto);
-			Call.execute();
+			CallableStatement call = GestioneFinestre.DB.getC().prepareCall("CALL RIMOZIONE_Like(?, ?)");
+			call.setString(1, nomeUtente);
+			call.setInt(2, idContenuto);
+			call.execute();
 			System.out.println("Like eliminato");
-			Call.close();
+			call.close();
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -45,15 +45,15 @@ public class LikesDAO {
 	}
 
 	// Delete di tutti i like di un profilo su un gruppo
-	public void DelLikeProfilo(String Nome_Utente, String Nome_Gruppo) {
+	public void DelLikeProfilo(String nomeUtente, String NomeGruppo) {
 
 		try {
-			CallableStatement Call = GestioneFinestre.DB.getC().prepareCall("CALL RIMOZIONE_LIKE_PROFILO(?, ?)");
-			Call.setString(1, Nome_Utente);
-			Call.setString(2, Nome_Gruppo);
-			Call.execute();
+			CallableStatement call = GestioneFinestre.DB.getC().prepareCall("CALL RIMOZIONE_LIKE_PROFILO(?, ?)");
+			call.setString(1, nomeUtente);
+			call.setString(2, NomeGruppo);
+			call.execute();
 			System.out.println("Likes eliminati");
-			Call.close();
+			call.close();
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -64,12 +64,12 @@ public class LikesDAO {
 	
 	
 	// Controlla se l'utente ha gi� messo like al post
-	public boolean SelLikeProfilo(String Nome_Utente, int Id_Contenuto) {
+	public boolean SelLikeProfilo(String nomeUtente, int idContenuto) {
 
 		try {
 			
 			
-			ResultSet rs = GestioneFinestre.DB.ExeQuery("SELECT COUNT(*) FROM LIKES WHERE FK_NOME_UTENTE = '" + Nome_Utente + "' AND FK_ID_CONTENUTO =" + Id_Contenuto);
+			ResultSet rs = GestioneFinestre.DB.ExeQuery("SELECT COUNT(*) FROM LIKES WHERE FK_NOME_UTENTE = '" + nomeUtente + "' AND FK_ID_CONTENUTO =" + idContenuto);
 			
 			rs.next();
 			
@@ -90,26 +90,26 @@ public class LikesDAO {
 	}
 
 	// Select Likes per post
-	public List<Likes> SelLikesPost(int Id_Contenuto) {
+	public List<Likes> SelLikesPost(int idContenuto) {
 
 		try {
 
-			ResultSet rs = GestioneFinestre.DB.ExeQuery("SELECT * FROM LIKES WHERE FK_ID_CONTENUTO = " + Id_Contenuto);
+			ResultSet rs = GestioneFinestre.DB.ExeQuery("SELECT * FROM LIKES WHERE FK_ID_CONTENUTO = " + idContenuto);
 
 			try {
 
-				List<Likes> Rec_Likes = new ArrayList<Likes>();
+				List<Likes> recLikes = new ArrayList<Likes>();
 
-				Likes Stampa;
+				Likes stampa;
 
 				while (rs.next()) {
-					Stampa = new Likes(rs.getString("FK_Nome_Utente"), rs.getInt("FK_Id_Contenuto"));
+					stampa = new Likes(rs.getString("FK_Nome_Utente"), rs.getInt("FK_Id_Contenuto"));
 
-					Rec_Likes.add(Stampa);
-					Stampa = null;
+					recLikes.add(stampa);
+					stampa = null;
 				}
 
-				return Rec_Likes;
+				return recLikes;
 
 			} catch (SQLException e) {
 				System.out.println("query fallita");
@@ -128,24 +128,24 @@ public class LikesDAO {
 	}
 
 	// Select numeri di Like di un post
-	public int SelNumLike(int Id_Contenuto) {
+	public int SelNumLike(int idContenuto) {
 
 		try {
 
 			ResultSet rs = GestioneFinestre.DB
-					.ExeQuery("SELECT COUNT(*) FROM LIKES WHERE FK_ID_CONTENUTO = " + Id_Contenuto);
+					.ExeQuery("SELECT COUNT(*) FROM LIKES WHERE FK_ID_CONTENUTO = " + idContenuto);
 
 			try {
 
-				int N_Like = 0;
+				int nLike = 0;
 
 				if (rs.next()) {
 
-					N_Like = rs.getInt(1); // 1 corrisponde all'elemento "COUNT(*)"
+					nLike = rs.getInt(1); // 1 corrisponde all'elemento "COUNT(*)"
 
 				}
 
-				return N_Like;
+				return nLike;
 
 			} catch (SQLException e) {
 				System.out.println("query fallita: " + e.getMessage());

@@ -1,63 +1,60 @@
 package UninaSocialGroup;
 
-
 import java.sql.*;
 
 public class Gruppi {
 
-	
-	private String Nome;
-	private Date Data_Creazione;
-	private String Descrizone;
-	private int OnlineC;
-	private String Creatore; //FK_NOME_UTENTE
-	
-	public Gruppi(String nome, Date data_Creazione, String descrizone, int onlineC, String creatore) {
-		Nome = nome;
-		Data_Creazione = data_Creazione;
-		Descrizone = descrizone;
-		OnlineC = onlineC;
-		Creatore = creatore;
-	}
+    private String nome;
+    private Date dataCreazione;
+    private String descrizione;
+    private int onlineC;
+    private String creatore; //FKNOMEUTENTE
 
-	public String getNome() {
-		return Nome;
-	}
+    public Gruppi(String nome, Date dataCreazione, String descrizione, int onlineC, String creatore) {
+        this.nome = nome;
+        this.dataCreazione = dataCreazione;
+        this.descrizione = descrizione;
+        this.onlineC = onlineC;
+        this.creatore = creatore;
+    }
 
-	public void setNome(String nome) {
-		Nome = nome;
-	}
+    public String GetNome() {
+        return nome;
+    }
 
-	public Date getData_Creazione() {
-		return Data_Creazione;
-	}
+    public void SetNome(String nome) {
+        this.nome = nome;
+    }
 
-	public void setData_Creazione(Date data_Creazione) {
-		Data_Creazione = data_Creazione;
-	}
+    public Date GetDataCreazione() {
+        return dataCreazione;
+    }
 
-	public String getDescrizone() {
-		return Descrizone;
-	}
+    public void SetDataCreazione(Date dataCreazione) {
+        this.dataCreazione = dataCreazione;
+    }
 
-	public void setDescrizone(String descrizone) {
-		Descrizone = descrizone;
-	}
+    public String GetDescrizione() {
+        return descrizione;
+    }
 
-	public int getOnlineC() {
-		return OnlineC;
-	}
+    public void SetDescrizione(String descrizione) {
+        this.descrizione = descrizione;
+    }
 
-	public void setOnlineC(int onlineC) {
-		OnlineC = onlineC;
-	}
+    public int GetOnlineC() {
+        return onlineC;
+    }
 
-	public String getCreatore() {
-		return Creatore;
-	}
+    public void SetOnlineC(int onlineC) {
+        this.onlineC = onlineC;
+    }
 
-	public void setCreatore(String creatore) {
-		Creatore = creatore;
-	}
-	
+    public String GetCreatore() {
+        return creatore;
+    }
+
+    public void SetCreatore(String creatore) {
+        this.creatore = creatore;
+    }
 }

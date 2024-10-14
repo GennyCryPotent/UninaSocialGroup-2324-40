@@ -3,24 +3,24 @@ import java.sql.*;
 
 public class DBConnection {
 
-    public Connection c;
+    public Connection connection;
 
     private String driver;
-    private String URL;
-    private String User;
-    private String PSW;
+    private String url;
+    private String user;
+    private String psw;
 
     public DBConnection(String uRL, String user, String psw) {
         
     	driver = "oracle.jdbc.OracleDriver";
-    	URL = uRL;
-    	User = user;
-    	PSW = psw;
+    	this.url = uRL;
+    	this.user = user;
+    	this.psw = psw;
     	
     }
     
     public Connection getC() {
-        return c;
+        return connection;
     }
 
     public void connect() {
@@ -29,7 +29,7 @@ public class DBConnection {
             Class.forName(driver);    
             
             // CONNESSIONE        
-            c = DriverManager.getConnection(URL, User, PSW);
+            connection = DriverManager.getConnection(url, user, psw);
             System.out.println("Connessione riuscita");
         } catch (ClassNotFoundException e) {
             System.out.println("Driver non trovato");
@@ -43,7 +43,7 @@ public class DBConnection {
     public ResultSet ExeQuery(String query) {
         try {
             // ESEGUIRE UNA QUERY
-            Statement st = c.createStatement();
+            Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
             return rs;
         } catch (SQLException se) {
@@ -56,7 +56,7 @@ public class DBConnection {
     public void ExeUpdate(String comando) {
         try {
             // ESEGUIRE UN UPDATE
-            PreparedStatement update = c.prepareStatement(comando); 
+            PreparedStatement update = connection.prepareStatement(comando); 
             update.executeUpdate(comando); 
             update.close();
         } catch (SQLException se) {
@@ -67,7 +67,7 @@ public class DBConnection {
 
     public void ExeUpdatePreparedeStatement(String comando) {
         try {
-            PreparedStatement update = c.prepareStatement(comando); 
+            PreparedStatement update = connection.prepareStatement(comando); 
             update.setString(1, "giuseppe");
             update.executeUpdate(); 
             update.close();
@@ -79,7 +79,7 @@ public class DBConnection {
 
     public void close() {
         try {
-            c.close();
+            connection.close();
         } catch (SQLException e) {
             System.out.println("Connessione fallita");
             e.printStackTrace();

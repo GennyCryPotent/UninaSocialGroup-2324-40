@@ -4,59 +4,59 @@ import java.sql.*;
 
 public class Commenti {
 
-	private int Id_Commento;
-	private Date Data_Creazione;
-	private String Testo;
-	private int FK_Id_Contenuto;
-	private String Pubblicatore; //FK_NOME_UTENTE
+	private int idCommento;
+	private Date dataCreazione;
+	private String testo;
+	private int fKIdContenuto;
+	private String pubblicatore; //FK_NOME_UTENTE
 	
 	public Commenti(int id_Commento, Date data_Creazione, String testo, int fK_Id_Contenuto, String pubblicatore) {
 		super();
-		Id_Commento = id_Commento;
-		Data_Creazione = data_Creazione;
-		Testo = testo;
-		FK_Id_Contenuto = fK_Id_Contenuto;
-		Pubblicatore = pubblicatore;
+		this.idCommento = id_Commento;
+		this.dataCreazione = data_Creazione;
+		this.testo = testo;
+		this.fKIdContenuto = fK_Id_Contenuto;
+		this.pubblicatore = pubblicatore;
 	}
 
 	public int getId_Commento() {
-		return Id_Commento;
+		return idCommento;
 	}
 
 	public void setId_Commento(int id_Commento) {
-		Id_Commento = id_Commento;
+		this.idCommento = id_Commento;
 	}
 
 	public Date getData_Creazione() {
-		return Data_Creazione;
+		return dataCreazione;
 	}
 
 	public void setData_Creazione(Date data_Creazione) {
-		Data_Creazione = data_Creazione;
+		this.dataCreazione = data_Creazione;
 	}
 
 	public String getTesto() {
-		return Testo;
+		return testo;
 	}
 
 	public void setTesto(String testo) {
-		Testo = testo;
+		this.testo = testo;
 	}
 
 	public int getFK_Id_Contenuto() {
-		return FK_Id_Contenuto;
+		return fKIdContenuto;
 	}
 
 	public void setFK_Id_Contenuto(int fK_Id_Contenuto) {
-		FK_Id_Contenuto = fK_Id_Contenuto;
+		this.fKIdContenuto = fK_Id_Contenuto;
 	}
 
 	public String getPubblicatore() {
-		return Pubblicatore;
+		return pubblicatore;
 	}
 
 	public void setPubblicatore(String pubblicatore) {
-		Pubblicatore = pubblicatore;
+		this.pubblicatore = pubblicatore;
 	}
 	
 	

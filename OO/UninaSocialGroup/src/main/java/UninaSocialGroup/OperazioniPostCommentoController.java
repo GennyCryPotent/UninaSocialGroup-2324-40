@@ -5,65 +5,65 @@ import javax.swing.JOptionPane;
 
 public class OperazioniPostCommentoController {
 
-	private GestioneFinestre GF = new GestioneFinestre();
+	private GestioneFinestre gestioneFinestre = new GestioneFinestre();
 	private OperazioniPostCommentoGUI OperazioniPostCommentoView;
-	private ContenutiDAO C = new ContenutiDAO();
-	private CommentiDAO CO = new CommentiDAO();
+	private ContenutiDAO contenutiDAO = new ContenutiDAO();
+	private CommentiDAO commentiDAO = new CommentiDAO();
 
 	public OperazioniPostCommentoController(OperazioniPostCommentoGUI operazioniPostCommentoView) {
 		OperazioniPostCommentoView = operazioniPostCommentoView;
 	}
 
-	public void ActionEliminaPost(JButton Button_Elimina, String NU, String NG, int IdPost) {
+	public void ActionEliminaPost(JButton buttonElimina, String nomeUtente, String nomeGruppo, int idPost) {
 
-			C.DelContenuto(IdPost);
+			contenutiDAO.DelContenuto(idPost);
 			OperazioniPostCommentoView.setVisible(false);
 			
-			GF.MostraGruppi(NU, NG);
+			gestioneFinestre.MostraGruppi(nomeUtente, nomeGruppo);
 		
 
 	}
 
-	public void ActionModificaPost(JButton Button_Modifica, String NU, String NG, int IdPost) {
+	public void ActionModificaPost(JButton buttonModifica, String nomeUtente, String nomeGruppo, int idPost) {
 		
-			String NewPost = JOptionPane.showInputDialog(Button_Modifica, "Cosa vuoi scrivere?", "Modifica un commento",
+			String NewPost = JOptionPane.showInputDialog(buttonModifica, "Cosa vuoi scrivere?", "Modifica un commento",
 					JOptionPane.QUESTION_MESSAGE);
 
-			C.UpContenuto(NU, NewPost, IdPost);
+			contenutiDAO.UpContenuto(nomeUtente, NewPost, idPost);
 			OperazioniPostCommentoView.setVisible(false);
 			
-			GF.MostraGruppi(NU, NG);
+			gestioneFinestre.MostraGruppi(nomeUtente, nomeGruppo);
 
 	}
 	
-	public void ActionEliminaCommento(JButton Button_Elimina, String NU, String NG, int IdContenuto, int IdCommento) {
+	public void ActionEliminaCommento(JButton buttonElimina, String nomeUtente, String nomeGruppo, int IdContenuto, int idCommento) {
 
-			CO.DelCommento(IdCommento);
-			GF.InfoPost(IdContenuto, NU, NG, 1);
+			commentiDAO.DelCommento(idCommento);
+			gestioneFinestre.InfoPost(IdContenuto, nomeUtente, nomeGruppo, 1);
 			OperazioniPostCommentoView.setVisible(false);
 		
 	}
 	
-	public void ActionModificaCommento(JButton Button_Modifica, String NU, String NG, int IdContenuto, int IdCommento) {
+	public void ActionModificaCommento(JButton buttonModifica, String nomeUtente, String nomeGruppo, int IdContenuto, int idCommento) {
 
-			String NewCommento = JOptionPane.showInputDialog(Button_Modifica, "Cosa vuoi scrivere?",
+			String newCommento = JOptionPane.showInputDialog(buttonModifica, "Cosa vuoi scrivere?",
 					"Modifica un commento", JOptionPane.QUESTION_MESSAGE);
 
-			CO.UpCommento(NU, IdCommento, NewCommento);
-			GF.InfoPost(IdContenuto, NU, NG, 1);
+			commentiDAO.UpCommento(nomeUtente, idCommento, newCommento);
+			gestioneFinestre.InfoPost(IdContenuto, nomeUtente, nomeGruppo, 1);
 			OperazioniPostCommentoView.setVisible(false);
 		
 	}
 
 	
 	
-	public void ActionAnnulla(String NU, String NG, int checkSchermata, int IdContenuto, int checkInfoPost ) {
+	public void ActionAnnulla(String nomeUtente, String nomeGruppo, int checkSchermata, int IdContenuto, int checkInfoPost ) {
 		OperazioniPostCommentoView.setVisible(false);
 		
 		if(checkSchermata==0) {	//0 GruppiGUI; 1 InfoPostGUI
-			GF.MostraGruppi(NU, NG);
+			gestioneFinestre.MostraGruppi(nomeUtente, nomeGruppo);
 		}else {
-			GF.InfoPost(IdContenuto, NU, NG, checkInfoPost);
+			gestioneFinestre.InfoPost(IdContenuto, nomeUtente, nomeGruppo, checkInfoPost);
 		}
 	}
 

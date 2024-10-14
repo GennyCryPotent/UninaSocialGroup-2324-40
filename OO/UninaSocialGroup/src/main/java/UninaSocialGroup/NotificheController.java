@@ -2,10 +2,10 @@ package UninaSocialGroup;
 
 public class NotificheController {
 
-	private GestioneFinestre GF = new GestioneFinestre();
+	private GestioneFinestre gestioneFinestre = new GestioneFinestre();
 	private NotificheGUI notificheView;
 	private JPannelloRichieste richiesteView;
-	private NotificheRichiesteDAO Esitato = new NotificheRichiesteDAO();
+	private NotificheRichiesteDAO esitato = new NotificheRichiesteDAO();
 	
 	//Costruttore Notifiche
 	public NotificheController(NotificheGUI notificheView) {
@@ -21,19 +21,19 @@ public class NotificheController {
 	
 	public void ActionInditero(String NU) {
 		notificheView.setVisible(false);
-		GF.AccessoHome(NU);
+		gestioneFinestre.AccessoHome(NU);
 	}
 	
 	public void ActionAccetta(String NG, Notifiche N) {
 		
-		Esitato.Accetta_Richiesta(NG, N.getRicevente()); //Nome utente che manda la richiesta
+		esitato.Accetta_Richiesta(NG, N.getRicevente()); //Nome utente che manda la richiesta
 		richiesteView.setVisible(false);
 		
 	}
 	
 	public void ActionRifiuta(String NG, Notifiche N) {
 		
-		Esitato.Rifiuta_Richiesta(NG, N.getRicevente()); //
+		esitato.Rifiuta_Richiesta(NG, N.getRicevente()); //
 		richiesteView.setVisible(false);
 	}
 	

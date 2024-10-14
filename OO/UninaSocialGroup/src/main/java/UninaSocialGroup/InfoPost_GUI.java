@@ -23,19 +23,20 @@ public class InfoPost_GUI extends JFrame {
 	private JPanel contentPaneNorthCenter;
 	private JPanel contentPaneCenter;
 
-	private List<Commenti> Res_Commenti = new ArrayList<Commenti>();
+	private List<Commenti> resCommenti = new ArrayList<Commenti>();
 
-	private CommentiDAO CO = new CommentiDAO();
-	private ContenutiDAO C = new ContenutiDAO();
-	private Contenuti Res_Contenuto;
-	private InfoPostController IC = new InfoPostController(InfoPost_GUI.this);
+	private CommentiDAO commentiDAO = new CommentiDAO();
+	private ContenutiDAO contenutoDAO = new ContenutiDAO();
+	private Contenuti resContenuto;
+	private InfoPostController infoPostController = new InfoPostController(InfoPost_GUI.this);
+	
+	
+	public InfoPost_GUI(int id_Contenuto, String nomeUtente, String nomeGruppo, int check) {
 
-	public InfoPost_GUI(int Id_Contenuto, String NU, String NG, int check) {
-
-		Res_Contenuto = C.SelSigContenuto(Id_Contenuto);
-
+		resContenuto = contenutoDAO.SelSigContenuto(id_Contenuto);
+		
 		setTitle("Info Post");
-		setForeground(new Color(0, 128, 255));
+		setForeground(PaletteColori.blueColor);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 737, 484);
 
@@ -43,7 +44,6 @@ public class InfoPost_GUI extends JFrame {
 		bl_contentPane.setHgap(10);
 		bl_contentPane.setVgap(20);
 		contentPane = new JPanel(bl_contentPane);
-		contentPane.setForeground(new Color(31, 31, 31));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -61,22 +61,22 @@ public class InfoPost_GUI extends JFrame {
 		contentPaneNorth.add(contentPaneNorthNorth, BorderLayout.NORTH);
 		contentPaneNorth.add(contentPaneNorthCenter, BorderLayout.CENTER);
 
-		JLabel LabelPost = new JLabel();
-		LabelPost.setText(Res_Contenuto.getPubblicatore());
-		LabelPost.setForeground(new Color(0, 128, 255));
-		LabelPost.setFont(new Font("Tahoma", Font.BOLD, 18));
-		contentPaneNorthNorth.add(LabelPost);
+		JLabel labelPost = new JLabel();
+		labelPost.setText(resContenuto.getPubblicatore());
+		labelPost.setForeground(PaletteColori.blueColor);
+		labelPost.setFont(new Font("Tahoma", Font.BOLD, 18));
+		contentPaneNorthNorth.add(labelPost);
 
 		JButton btnIndietro = new JButton("Indietro");
 		contentPaneNorthNorth.add(Box.createHorizontalGlue()); // sposta il pulsante a destra
 		btnIndietro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				IC.ActionIndietro(check, NU, NG);
+				infoPostController.ActionIndietro(check, nomeUtente, nomeGruppo);
 			}
 		});
 		contentPaneNorthNorth.add(btnIndietro);
 
-		JTextArea textAreaPost = new JTextArea(Res_Contenuto.getTesto());
+		JTextArea textAreaPost = new JTextArea(resContenuto.getTesto());
 		textAreaPost.setEditable(false);
 		textAreaPost.setPreferredSize(new Dimension(0, 40));
 		textAreaPost.setBackground(UIManager.getColor("TextArea.background"));
@@ -85,24 +85,24 @@ public class InfoPost_GUI extends JFrame {
 		contentPaneNorthCenter.add(textAreaPost);
 
 		// CENTRO
-		JLabel LabelCommenti = new JLabel();
-		LabelCommenti.setHorizontalAlignment(SwingConstants.LEFT);
-		LabelCommenti.setText("Commenti");
-		LabelCommenti.setForeground(new Color(0, 128, 255));
-		LabelCommenti.setFont(new Font("Tahoma", Font.BOLD, 18));
-		contentPaneCenter.add(LabelCommenti, BorderLayout.NORTH);
+		JLabel labelCommenti = new JLabel();
+		labelCommenti.setHorizontalAlignment(SwingConstants.LEFT);
+		labelCommenti.setText("Commenti");
+		labelCommenti.setForeground(PaletteColori.blueColor);
+		labelCommenti.setFont(new Font("Tahoma", Font.BOLD, 18));
+		contentPaneCenter.add(labelCommenti, BorderLayout.NORTH);
 
 		JPanel panelCommenti = new JPanel();
 		panelCommenti.setBackground(Color.WHITE);
-		createTextAreaCommenti(Id_Contenuto, panelCommenti);
+		createTextAreaCommenti(id_Contenuto, panelCommenti);
 
-		JScrollPane PostsScrollPane = new JScrollPane(panelCommenti);
+		JScrollPane postsScrollPane = new JScrollPane(panelCommenti);
 		panelCommenti.setLayout(new BoxLayout(panelCommenti, BoxLayout.Y_AXIS));
-		PostsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		PostsScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		postsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		postsScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-		PostsScrollPane.setVisible(true);
-		contentPaneCenter.add(PostsScrollPane, BorderLayout.CENTER);
+		postsScrollPane.setVisible(true);
+		contentPaneCenter.add(postsScrollPane, BorderLayout.CENTER);
 
 		JPanel panelCommento = new JPanel();
 		panelCommento.setBorder(new EmptyBorder(5, 0, 0, 0)); // aggiunge 10 pixel di spazio verticale sopra il pannello
@@ -129,7 +129,7 @@ public class InfoPost_GUI extends JFrame {
 				}
 			}
 		});
-		textAddCommento.setBackground(new Color(255, 255, 255));
+		textAddCommento.setBackground(PaletteColori.lightModeColorBG);
 		textAddCommento.setLineWrap(true);
 		panelCommento.add(textAddCommento);
 
@@ -138,7 +138,7 @@ public class InfoPost_GUI extends JFrame {
 		btnRimCommento.setHorizontalAlignment(SwingConstants.LEFT);
 		btnRimCommento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				IC.ActionModCommento(Id_Contenuto, NU, NG, check);
+				infoPostController.ActionModCommento(id_Contenuto, nomeUtente, nomeGruppo, check);
 			}
 		});
 		
@@ -147,7 +147,7 @@ public class InfoPost_GUI extends JFrame {
 				btnAddCommento.setHorizontalAlignment(SwingConstants.LEFT);
 				btnAddCommento.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						IC.ActionAddCommento(textAddCommento, panelCommenti, Id_Contenuto, NU, NG, check);
+						infoPostController.ActionAddCommento(textAddCommento, panelCommenti, id_Contenuto, nomeUtente, nomeGruppo, check);
 					}
 				});
 				panelCommento.add(btnAddCommento);
@@ -157,12 +157,12 @@ public class InfoPost_GUI extends JFrame {
 	}
 
 	// restutuisce una textArea che contine tutti i commenti del post
-	private void createTextAreaCommenti(int Id_Contenuto, JPanel panelCommenti) {
+	private void createTextAreaCommenti(int id_Contenuto, JPanel panelCommenti) {
 
-		Res_Commenti = CO.SelCommentiPost(Id_Contenuto);
+		resCommenti = commentiDAO.SelCommentiPost(id_Contenuto);
 
 		// For speciale
-		for (Commenti commento : Res_Commenti) {
+		for (Commenti commento : resCommenti) {
 			JTextArea text = new JTextArea();
 			text.setEditable(false);
 			text.append(commento.getPubblicatore() + ": " + commento.getTesto() + "\n");

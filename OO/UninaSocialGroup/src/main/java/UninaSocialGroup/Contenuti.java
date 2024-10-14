@@ -4,59 +4,59 @@ import java.sql.Date;
 
 public class Contenuti {
 
-	private int Id_Contenuto; //PK
-	private Date Data_Creazione;
-	private String Testo;
-	private String Nome_Gruppo; //FK_NOME_GRUPPO
-	private String Pubblicatore; //FK_NOME_UTENTE
+	private int idContenuto; //PK
+	private Date dataCreazione;
+	private String testo;
+	private String nomeGruppo; //FKNOMEGRUPPO
+	private String pubblicatore; //FKNOMEUTENTE
 	
-	public Contenuti(int id_Contenuto, Date data_Creazione, String testo, String nome_Gruppo, String pubblicatore) {
+	public Contenuti(int idContenuto, Date dataCreazione, String testo, String nomeGruppo, String pubblicatore) {
 		super();
-		Id_Contenuto = id_Contenuto;
-		Data_Creazione = data_Creazione;
-		Testo = testo;
-		Nome_Gruppo = nome_Gruppo;
-		Pubblicatore = pubblicatore;
+		this.idContenuto = idContenuto;
+		this.dataCreazione = dataCreazione;
+		this.testo = testo;
+		this.nomeGruppo = nomeGruppo;
+		this.pubblicatore = pubblicatore;
 	}
 
-	public int getId_Contenuto() {
-		return Id_Contenuto;
+	public int getIdContenuto() {
+		return idContenuto;
 	}
 
-	public void setId_Contenuto(int id_Contenuto) {
-		Id_Contenuto = id_Contenuto;
+	public void setIdContenuto(int idContenuto) {
+		this.idContenuto = idContenuto;
 	}
 
-	public Date getData_Creazione() {
-		return Data_Creazione;
+	public Date getDataCreazione() {
+		return dataCreazione;
 	}
 
-	public void setData_Creazione(Date data_Creazione) {
-		Data_Creazione = data_Creazione;
+	public void setDataCreazione(Date dataCreazione) {
+		this.dataCreazione = dataCreazione;
 	}
 
 	public String getTesto() {
-		return Testo;
+		return testo;
 	}
 
 	public void setTesto(String testo) {
-		Testo = testo;
+		this.testo = testo;
 	}
 
-	public String getNome_Gruppo() {
-		return Nome_Gruppo;
+	public String getNomeGruppo() {
+		return nomeGruppo;
 	}
 
-	public void setNome_Gruppo(String nome_Gruppo) {
-		Nome_Gruppo = nome_Gruppo;
+	public void setNomeGruppo(String nomeGruppo) {
+		this.nomeGruppo = nomeGruppo;
 	}
 
 	public String getPubblicatore() {
-		return Pubblicatore;
+		return pubblicatore;
 	}
 
 	public void setPubblicatore(String pubblicatore) {
-		Pubblicatore = pubblicatore;
+		this.pubblicatore = pubblicatore;
 	}
 	
 	

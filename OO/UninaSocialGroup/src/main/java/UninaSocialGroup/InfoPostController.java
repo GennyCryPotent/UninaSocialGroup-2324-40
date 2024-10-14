@@ -5,41 +5,41 @@ import javax.swing.JTextArea;
 
 public class InfoPostController {
 
-	private GestioneFinestre GF = new GestioneFinestre();
+	private GestioneFinestre gestioneFinestre = new GestioneFinestre();
 	private InfoPost_GUI infoView;
-	private CommentiDAO CO = new CommentiDAO();
+	private CommentiDAO commentiDAO = new CommentiDAO();
 
 	public InfoPostController(InfoPost_GUI infoView) {
 		this.infoView = infoView;
 	}
 
-	public void ActionIndietro(int check, String NU, String NG) {
+	public void ActionIndietro(int check, String nomeUtente, String nomeGruppo) {
 		infoView.setVisible(false);
 
 		if (check == 0) { // ritorna nella schermata che ha invocato InfoPost (0 = Home ; 1 = Gruppi)
-			GF.AccessoHome(NU);
+			gestioneFinestre.AccessoHome(nomeUtente);
 		} else {
-			GF.MostraGruppi(NU, NG);
+			gestioneFinestre.MostraGruppi(nomeUtente, nomeGruppo);
 		}
 	}
 
-	public void ActionAddCommento(JTextArea textAddCommento, JPanel panelCommenti, int Id_Contenuto, String NU, String NG, int check) {
+	public void ActionAddCommento(JTextArea textAddCommento, JPanel panelCommenti, int id_Contenuto, String nomeUtente, String nomeGruppo, int check) {
 		
 		if (!textAddCommento.getText().isEmpty() && !textAddCommento.getText().equals("Aggiungi un commento...")) {
 			JTextArea text = new JTextArea();
-			CO.InsCommento(textAddCommento.getText(), Id_Contenuto, NU);
-			text.append(NU + " :" + textAddCommento.getText() + "\n");
+			commentiDAO.InsCommento(textAddCommento.getText(), id_Contenuto, nomeUtente);
+			text.append(nomeUtente + " :" + textAddCommento.getText() + "\n");
 			panelCommenti.add(text);
 			textAddCommento.setText("");
 			infoView.setVisible(false);
-			GF.InfoPost(Id_Contenuto, NU, NG, check);
+			gestioneFinestre.InfoPost(id_Contenuto, nomeUtente, nomeGruppo, check);
 		}
 
 	}
 
-	public void ActionModCommento(int Id_Contenuto, String NU, String NG, int check) {
+	public void ActionModCommento(int id_Contenuto, String nomeUtente, String nomeGruppo, int check) {
 		infoView.setVisible(false);
-		GF.EliminaCommento(NU, NG, Id_Contenuto, check);
+		gestioneFinestre.EliminaCommento(nomeUtente, nomeGruppo, id_Contenuto, check);
 	}
 
 }

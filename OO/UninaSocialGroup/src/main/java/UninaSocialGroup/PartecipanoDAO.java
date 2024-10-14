@@ -12,12 +12,12 @@ public class PartecipanoDAO {
 	public void InsPartecipante(String Nome_Utente, String Nome_Gruppo) {
 
 		try {
-			CallableStatement Call = GestioneFinestre.DB.getC().prepareCall("CALL CREA_PARTECIPANO(?, ?)");
-			Call.setString(1, Nome_Utente);
-			Call.setString(2, Nome_Gruppo);
-			Call.execute();
+			CallableStatement call = GestioneFinestre.DB.getC().prepareCall("CALL CREA_PARTECIPANO(?, ?)");
+			call.setString(1, Nome_Utente);
+			call.setString(2, Nome_Gruppo);
+			call.execute();
 			System.out.println("Utente aggiunto al gruppo");
-			Call.close();
+			call.close();
 			
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -29,12 +29,12 @@ public class PartecipanoDAO {
 	public void DelPartecipante(String Nome_Utente, String Nome_Gruppo) {
 
 		try {
-			CallableStatement Call = GestioneFinestre.DB.getC().prepareCall("CALL ABBANDONA_GRUPPO(?, ?)");
-			Call.setString(1, Nome_Utente);
-			Call.setString(2, Nome_Gruppo);
-			Call.execute();
+			CallableStatement call = GestioneFinestre.DB.getC().prepareCall("CALL ABBANDONA_GRUPPO(?, ?)");
+			call.setString(1, Nome_Utente);
+			call.setString(2, Nome_Gruppo);
+			call.execute();
 			System.out.println("Partecipante eliminato");
-			Call.close();
+			call.close();
 		
 		} catch (Exception e) {
 			System.out.println(e);
@@ -52,18 +52,18 @@ public class PartecipanoDAO {
 
 			try {
 
-				List<Partecipano> Rec_Partecipano = new ArrayList<Partecipano>();
+				List<Partecipano> recPartecipano = new ArrayList<Partecipano>();
 				
-				Partecipano Stampa;
+				Partecipano stampa;
 
 				while (rs.next()) {
-					Stampa =  new Partecipano(rs.getString("FK_Nome_Utente"),rs.getString("FK_Nome_Gruppo"));
+					stampa =  new Partecipano(rs.getString("FK_Nome_Utente"),rs.getString("FK_Nome_Gruppo"));
 					
-					Rec_Partecipano.add(Stampa);
-					Stampa = null;
+					recPartecipano.add(stampa);
+					stampa = null;
 				}
 				
-				return Rec_Partecipano;
+				return recPartecipano;
 
 			} catch (SQLException e) {
 				System.out.println("query fallita: " + e.getMessage());
@@ -89,19 +89,19 @@ public class PartecipanoDAO {
 			ResultSet rs = GestioneFinestre.DB.ExeQuery("SELECT * FROM Partecipano WHERE FK_NOME_GRUPPO = '" + Nome_Gruppo + "'" );
 			
 			try {
-				List<Partecipano> Rec_Partecipano = new ArrayList<Partecipano>();
+				List<Partecipano> recPartecipano = new ArrayList<Partecipano>();
 				
-				Partecipano Stampa;
+				Partecipano stampa;
 
 				while (rs.next()) {
-					Stampa =  new Partecipano(rs.getString("FK_Nome_Utente"),rs.getString("FK_Nome_Gruppo"));
+					stampa =  new Partecipano(rs.getString("FK_Nome_Utente"),rs.getString("FK_Nome_Gruppo"));
 					
-					Rec_Partecipano.add(Stampa);
-					Stampa = null;
+					recPartecipano.add(stampa);
+					stampa = null;
 				}
 				
 				
-				return Rec_Partecipano;
+				return recPartecipano;
 
 			} catch (SQLException e) {
 				System.out.println("query fallita: " + e.getMessage());

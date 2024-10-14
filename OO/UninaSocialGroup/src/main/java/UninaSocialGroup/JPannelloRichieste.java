@@ -18,60 +18,62 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class JPannelloRichieste extends JPanel {
-    private NotificheRichiesteDAO Esitato = new NotificheRichiesteDAO();
+    private NotificheRichiesteDAO esitato = new NotificheRichiesteDAO();
     private JPanel secondPanel = new JPanel();
     private JPanel thirdPanel = new JPanel();
-    public JTextArea NotificationText = new JTextArea();
-    public JTextArea GroupText = new JTextArea();
-    private JButton Accetta = new JButton("Accetta");
-    private JButton Rifiuta = new JButton("Rifiuta");
-    private NotificheController NC = new NotificheController(JPannelloRichieste.this);
-
-    public JPannelloRichieste(String NU, String NG, Notifiche N) { //Passa la singola notifica
+    public JTextArea notificationText = new JTextArea();
+    public JTextArea groupText = new JTextArea();
+    private JButton accettaButton = new JButton("Accetta");
+    private JButton rifiutaButton = new JButton("Rifiuta");
+    private NotificheController notificheController = new NotificheController(JPannelloRichieste.this);
+    
+    private PaletteColori paletteColori;
+    
+    public JPannelloRichieste(String nomeUtente, String nomeGruppo, Notifiche notifiche) { //Passa la singola notifica
         super(new BorderLayout());
 
-        List<Notifiche> notificheR = Esitato.SelNoitificheRichiesteDiUnCreatore(NU);
+        List<Notifiche> notificheR = esitato.SelNoitificheRichiesteDiUnCreatore(nomeUtente);
 
         if (notificheR != null) {
             
-                NotificationText.append(N.getTesto() + "\n"); //prende testo della notifica
+                notificationText.append(notifiche.getTesto() + "\n"); //prende testo della notifica
             
         } else {
-            NotificationText.append("Nessuna notifica trovata.\n");
+            notificationText.append("Nessuna notifica trovata.\n");
         }
-        NotificationText.setEditable(false);
-        GroupText.setEditable(false);
+        notificationText.setEditable(false);
+        groupText.setEditable(false);
         thirdPanel.setForeground(new Color(192, 192, 192));
 
         this.add(thirdPanel, BorderLayout.NORTH);
-                Accetta.setForeground(new Color(0, 128, 255));
+                accettaButton.setForeground(paletteColori.blueColor);
         
-                Accetta.addActionListener(new ActionListener() {
+                accettaButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                    	NC.ActionAccetta(NG, N);
+                    	notificheController.ActionAccetta(nomeGruppo, notifiche);
                     }
                 });
-                Accetta.setBackground(new Color(255, 255, 255));
+                accettaButton.setBackground(new Color(255, 255, 255));
                 
-                        Rifiuta.addActionListener(new ActionListener() {
+                        rifiutaButton.addActionListener(new ActionListener() {
                             public void actionPerformed(ActionEvent e) {
-                            	NC.ActionRifiuta(NG, N);
+                            	notificheController.ActionRifiuta(nomeGruppo, notifiche);
                             }
                         });
-                        Rifiuta.setBackground(new Color(255, 255, 255));
-                        Rifiuta.setForeground(new Color(0, 128, 255));
+                        rifiutaButton.setBackground(new Color(255, 255, 255));
+                        rifiutaButton.setForeground(new Color(0, 128, 255));
                         
                                 secondPanel.setLayout(new BoxLayout(secondPanel, BoxLayout.X_AXIS));
                                 secondPanel.setBounds(new Rectangle(21, 8, 13, 8));
-                                secondPanel.add(Accetta);
-                                secondPanel.add(Rifiuta);
+                                secondPanel.add(accettaButton);
+                                secondPanel.add(rifiutaButton);
         GroupLayout gl_thirdPanel = new GroupLayout(thirdPanel);
         gl_thirdPanel.setHorizontalGroup(
         	gl_thirdPanel.createParallelGroup(Alignment.LEADING)
         		.addGroup(gl_thirdPanel.createSequentialGroup()
         			.addGroup(gl_thirdPanel.createParallelGroup(Alignment.TRAILING)
-        				.addComponent(GroupText, GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
-        				.addComponent(NotificationText, GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE))
+        				.addComponent(groupText, GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
+        				.addComponent(notificationText, GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE))
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addComponent(secondPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         			.addContainerGap())
@@ -82,9 +84,9 @@ public class JPannelloRichieste extends JPanel {
         			.addGroup(gl_thirdPanel.createParallelGroup(Alignment.TRAILING)
         				.addComponent(secondPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         				.addGroup(gl_thirdPanel.createSequentialGroup()
-        					.addComponent(NotificationText, GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+        					.addComponent(notificationText, GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
         					.addPreferredGap(ComponentPlacement.RELATED)
-        					.addComponent(GroupText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+        					.addComponent(groupText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
         			.addGap(18))
         );
         thirdPanel.setLayout(gl_thirdPanel);

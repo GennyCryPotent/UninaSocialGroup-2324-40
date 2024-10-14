@@ -10,17 +10,17 @@ import java.util.List;
 public class ContenutiDAO {
 
 	// Insert in Contenuti
-	public void InsContenuto(String Foto, String Testo, String Nome_Gruppo, String Nome_Utente) {
+	public void InsContenuto(String foto, String testo, String nomeGruppo, String nomeUtente) {
 
 		try {
-			CallableStatement Call = GestioneFinestre.DB.getC().prepareCall("CALL CREA_CONTENUTO(?, ?, ?, ?)");
-			Call.setString(1, Foto);
-			Call.setString(2, Testo);
-			Call.setString(3, Nome_Gruppo);
-			Call.setString(4, Nome_Utente);
-			Call.execute();
+			CallableStatement call = GestioneFinestre.DB.getC().prepareCall("CALL CREA_CONTENUTO(?, ?, ?, ?)");
+			call.setString(1, foto);
+			call.setString(2, testo);
+			call.setString(3, nomeGruppo);
+			call.setString(4, nomeUtente);
+			call.execute();
 			System.out.println("Contenuto creato");
-			Call.close();
+			call.close();
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -28,14 +28,14 @@ public class ContenutiDAO {
 	}
 
 	// Delete su un Contenuto
-	public void DelContenuto(int Id_Contenuto) {
+	public void DelContenuto(int idContenuto) {
 
 		try {
-			CallableStatement Call = GestioneFinestre.DB.getC().prepareCall("CALL RIMOZIONE_CONTENUTO(?)");
-			Call.setInt(1, Id_Contenuto);
-			Call.execute();
+			CallableStatement call = GestioneFinestre.DB.getC().prepareCall("CALL RIMOZIONE_CONTENUTO(?)");
+			call.setInt(1, idContenuto);
+			call.execute();
 			System.out.println("Contenuto eliminato");
-			Call.close();
+			call.close();
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -45,15 +45,15 @@ public class ContenutiDAO {
 	}
 
 	// Delete di tutti i contenuti di un profilo su un gruppo
-	public void DelContenutoProfilo(String Nome_Utente, String Nome_Gruppo) {
+	public void DelContenutoProfilo(String nomeUtente, String nomeGruppo) {
 
 		try {
-			CallableStatement Call = GestioneFinestre.DB.getC().prepareCall("CALL RIMOZIONE_CONTENUTO_PROFILO(?, ?)");
-			Call.setString(1, Nome_Utente);
-			Call.setString(2, Nome_Gruppo);
-			Call.execute();
+			CallableStatement call = GestioneFinestre.DB.getC().prepareCall("CALL RIMOZIONE_CONTENUTO_PROFILO(?, ?)");
+			call.setString(1, nomeUtente);
+			call.setString(2, nomeGruppo);
+			call.execute();
 			System.out.println("Contenuti eliminato");
-			Call.close();
+			call.close();
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -63,16 +63,16 @@ public class ContenutiDAO {
 	}
 
 	// Update di un Contenuto
-	public void UpContenuto(String Nome_Utente, String New_Val, int Id_Contenuto) {
+	public void UpContenuto(String nomeUtente, String newVal, int idContenuto) {
 
 		try {
-			CallableStatement Call = GestioneFinestre.DB.getC().prepareCall("CALL MODIFICA_CONTENUTO(?, ?, ?)");
-			Call.setString(1, New_Val);
-			Call.setString(2, Nome_Utente);
-			Call.setInt(3, Id_Contenuto);
-			Call.execute();
+			CallableStatement call = GestioneFinestre.DB.getC().prepareCall("CALL MODIFICA_CONTENUTO(?, ?, ?)");
+			call.setString(1, newVal);
+			call.setString(2, nomeUtente);
+			call.setInt(3, idContenuto);
+			call.execute();
 			System.out.println("Contenuto aggiornato ");
-			Call.close();
+			call.close();
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -81,12 +81,12 @@ public class ContenutiDAO {
 	}
 
 	// Select singolo Contenuto
-	public Contenuti SelSigContenuto(int Id_Contenuto) {
+	public Contenuti SelSigContenuto(int idContenuto) {
 
 		try {
 
 			ResultSet rs = GestioneFinestre.DB
-					.ExeQuery("SELECT * FROM CONTENUTI WHERE ID_CONTENUTO = " + Id_Contenuto);
+					.ExeQuery("SELECT * FROM CONTENUTI WHERE ID_CONTENUTO = " + idContenuto);
 
 			try {
 
@@ -115,12 +115,12 @@ public class ContenutiDAO {
 	}
 
 	// Select tutti i contenuti di un gruppo
-	public List<Contenuti> SelAllContenutiGruppo(String Nome_Gruppo) {
+	public List<Contenuti> SelAllContenutiGruppo(String nomeGruppo) {
 
 		try {
 
 			ResultSet rs = GestioneFinestre.DB.ExeQuery("SELECT * FROM CONTENUTI WHERE FK_NOME_GRUPPO = '"
-					+ Nome_Gruppo + "' ORDER BY DATA_CREAZIONE DESC");
+					+ nomeGruppo + "' ORDER BY DATA_CREAZIONE DESC");
 
 			try {
 				List<Contenuti> Rec_Contenuti = new ArrayList<Contenuti>();
@@ -154,14 +154,14 @@ public class ContenutiDAO {
 	}
 
 	// Select tutti i contenuti dei gruppi a cui un utente partecipa
-	public List<Contenuti> SelContenutiGruppiUtente(String Nome_Utente) {
+	public List<Contenuti> SelContenutiGruppiUtente(String nomeUtente) {
 
 		String TMP_Nome_Gruppo;
 
 		try {
 
 			ResultSet rsNome_Gruppo = GestioneFinestre.DB
-					.ExeQuery("SELECT FK_NOME_GRUPPO From Partecipano Where FK_Nome_Utente = '" + Nome_Utente + "'"); // Prende
+					.ExeQuery("SELECT FK_NOME_GRUPPO From Partecipano Where FK_Nome_Utente = '" + nomeUtente + "'"); // Prende
 			// i nomi
 			// dei gruppi
 			// dove l'utente
@@ -211,12 +211,12 @@ public class ContenutiDAO {
 	}
 
 	// Select tutti i contenuti di un utente
-	public List<Contenuti> SelAllContenutiUtente(String Nome_Utente) {
+	public List<Contenuti> SelAllContenutiUtente(String nomeUtente) {
 
 		try {
 
 			ResultSet rs = GestioneFinestre.DB
-					.ExeQuery("SELECT * FROM CONTENUTI WHERE FK_NOME_UTENTE = '" + Nome_Utente + "'");
+					.ExeQuery("SELECT * FROM CONTENUTI WHERE FK_NOME_UTENTE = '" + nomeUtente + "'");
 
 			try {
 				List<Contenuti> Rec_Contenuti = new ArrayList<Contenuti>();
@@ -250,12 +250,12 @@ public class ContenutiDAO {
 	}
 
 	// Select tutti i contenuti di un utente in un gruppo
-	public List<Contenuti> SelContenutiUtenteGruppo(String Nome_Gruppo, String Nome_Utente) {
+	public List<Contenuti> SelContenutiUtenteGruppo(String nomeGruppo, String nomeUtente) {
 
 		try {
 
 			ResultSet rs = GestioneFinestre.DB.ExeQuery("SELECT * FROM CONTENUTI WHERE FK_NOME_GRUPPO = '"
-					+ Nome_Gruppo + "' AND FK_NOME_UTENTE = '" + Nome_Utente + "'");
+					+ nomeGruppo + "' AND FK_NOME_UTENTE = '" + nomeUtente + "'");
 
 			try {
 				List<Contenuti> Rec_Contenuti = new ArrayList<Contenuti>();
@@ -289,12 +289,12 @@ public class ContenutiDAO {
 	}
 
 	// Select tutti i contenuti di un gruppo
-	public List<Contenuti> SelAllContenutiMeseGruppo(String Nome_Gruppo, int Mese) {
+	public List<Contenuti> SelAllContenutiMeseGruppo(String nomeGruppo, int Mese) {
 
 		try {
 
 			ResultSet rs = GestioneFinestre.DB.ExeQuery("SELECT * FROM CONTENUTI WHERE FK_NOME_GRUPPO = '"
-					+ Nome_Gruppo + "' AND EXTRACT(MONTH from DATA_CREAZIONE) =  " + Mese);
+					+ nomeGruppo + "' AND EXTRACT(MONTH from DATA_CREAZIONE) =  " + Mese);
 
 			try {
 				List<Contenuti> Rec_Contenuti = new ArrayList<Contenuti>();

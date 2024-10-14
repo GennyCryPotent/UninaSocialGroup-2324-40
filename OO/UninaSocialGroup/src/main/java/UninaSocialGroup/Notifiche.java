@@ -4,102 +4,102 @@ import java.sql.Date;
 
 public class Notifiche {
 	
-	private int Id_Notifica; //PK
-	private String Testo;
-	private Date Data_Notifica; 
-	private String Visualizzato_Esitato; //variabile che contiene il visualizzato o l'esitato in base alla notifica
-	private int FK_Id_Contenuto; 
-	private String Ricevente; //FK_NOME_UTENTE
-	private String Nome_Gruppo; //FK_NOME_GRUPPO
+	private int idNotifica; //PK
+	private String testo;
+	private Date dataNotifica; 
+	private String visualizzatoEsitato; //variabile che contiene il visualizzato o l'esitato in base alla notifica
+	private int fKIdContenuto; 
+	private String ricevente; //FKNOMEUTENTE
+	private String nomeGruppo; //FKNOMEGRUPPO
 	
 	
-	//Costruttore per Notifiche_Contenuti
-	public Notifiche(int id_Notifica, String testo, Date data_Notifica, String visualizzato_esitato, int fK_Id_Contenuto,
+	//Costruttore per NotificheContenuti
+	public Notifiche(int idNotifica, String testo, Date dataNotifica, String visualizzatoEsitato, int fKIdContenuto,
 			String ricevente) {
-		Id_Notifica = id_Notifica;
-		Testo = testo;
-		Data_Notifica = data_Notifica;
-		Visualizzato_Esitato = visualizzato_esitato;
-		FK_Id_Contenuto = fK_Id_Contenuto;
-		Ricevente = ricevente;
+		this.idNotifica = idNotifica;
+		this.testo = testo;
+		this.dataNotifica = dataNotifica;
+		this.visualizzatoEsitato = visualizzatoEsitato;
+		this.fKIdContenuto = fKIdContenuto;
+		this.ricevente = ricevente;
 	}
 	
-	//Costruttore per Notifiche_Gruppi e Notifiche_Richieste
-	public Notifiche(int id_Notifica, String testo, Date data_Notifica, String visualizzato_esitato, String nome_Gruppo,
+	//Costruttore per NotificheGruppi e NotificheRichieste
+	public Notifiche(int idNotifica, String testo, Date dataNotifica, String visualizzatoEsitato, String nomeGruppo,
 			String ricevente) {
 		
-		Id_Notifica = id_Notifica;
-		Testo = testo;
-		Data_Notifica = data_Notifica;
-		Visualizzato_Esitato = visualizzato_esitato;
-		Nome_Gruppo = nome_Gruppo;
-		Ricevente = ricevente;
+		this.idNotifica = idNotifica;
+		this.testo = testo;
+		this.dataNotifica = dataNotifica;
+		this.visualizzatoEsitato = visualizzatoEsitato;
+		this.nomeGruppo = nomeGruppo;
+		this.ricevente = ricevente;
 	}
 	
 	
-	//Costrutture per mostrare le Notifiche_Gruppi e Notifiche_Contenuti 
-	public Notifiche(int id_Notifica, String testo, Date data_Notifica, String visualizzato_Esitato, String nome_Gruppo) {
-		Id_Notifica = id_Notifica;
-		Testo = testo;
-		Data_Notifica = data_Notifica;
-		Visualizzato_Esitato = visualizzato_Esitato;
-		Nome_Gruppo = nome_Gruppo;
+	//Costrutture per mostrare le NotificheGruppi e NotificheContenuti 
+	public Notifiche(int idNotifica, String testo, Date dataNotifica, String visualizzatoEsitato, String nomeGruppo) {
+		this.idNotifica = idNotifica;
+		this.testo = testo;
+		this.dataNotifica = dataNotifica;
+		this.visualizzatoEsitato = visualizzatoEsitato;
+		this.nomeGruppo = nomeGruppo;
 	}
 
-	public int getId_Notifica() {
-		return Id_Notifica;
+	public int getIdNotifica() {
+		return idNotifica;
 	}
 
-	public void setId_Notifica(int id_Notifica) {
-		Id_Notifica = id_Notifica;
+	public void setIdNotifica(int idNotifica) {
+		this.idNotifica = idNotifica;
 	}
 
 	public String getTesto() {
-		return Testo;
+		return testo;
 	}
 
 	public void setTesto(String testo) {
-		Testo = testo;
+		this.testo = testo;
 	}
 
-	public Date getData_Notifica() {
-		return Data_Notifica;
+	public Date getDataNotifica() {
+		return dataNotifica;
 	}
 
-	public void setData_Notifica(Date data_Notifica) {
-		Data_Notifica = data_Notifica;
+	public void setDataNotifica(Date dataNotifica) {
+		this.dataNotifica = dataNotifica;
 	}
 
-	public String getVisualizzato_Esitato() {
-		return Visualizzato_Esitato;
+	public String getvisualizzatoEsitato() {
+		return visualizzatoEsitato;
 	}
 
-	public void setVisualizzato_Esitato(String visualizzato_Esitato) {
-		Visualizzato_Esitato = visualizzato_Esitato;
+	public void setvisualizzatoEsitato(String visualizzatoEsitato) {
+		this.visualizzatoEsitato = visualizzatoEsitato;
 	}
 
-	public int getFK_Id_Contenuto() {
-		return FK_Id_Contenuto;
+	public int getFKIdContenuto() {
+		return fKIdContenuto;
 	}
 
-	public void setFK_Id_Contenuto(int fK_Id_Contenuto) {
-		FK_Id_Contenuto = fK_Id_Contenuto;
+	public void setFKIdContenuto(int fKIdContenuto) {
+		this.fKIdContenuto = fKIdContenuto;
 	}
 
 	public String getRicevente() {
-		return Ricevente;
+		return ricevente;
 	}
 
 	public void setRicevente(String ricevente) {
-		Ricevente = ricevente;
+		this.ricevente = ricevente;
 	}
 
-	public String getNome_Gruppo() {
-		return Nome_Gruppo;
+	public String getNomeGruppo() {
+		return nomeGruppo;
 	}
 
-	public void setNome_Gruppo(String nome_Gruppo) {
-		Nome_Gruppo = nome_Gruppo;
+	public void setNomeGruppo(String nomeGruppo) {
+		this.nomeGruppo = nomeGruppo;
 	}
 	
 }

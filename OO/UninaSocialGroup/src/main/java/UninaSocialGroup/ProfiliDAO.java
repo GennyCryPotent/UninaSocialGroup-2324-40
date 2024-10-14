@@ -8,20 +8,20 @@ import oracle.jdbc.OracleTypes;
 public class ProfiliDAO {
 
 	// Insert in un gruppo
-	public void InsProfilo(String Nome_Utente, String Password, String Nome, String Cognome, String Genere,
-			Date DataNascita) throws SQLException, SQLIntegrityConstraintViolationException {
+	public void InsProfilo(String nomeUtente, String password, String nome, String cognome, String genere,
+			Date dataNascita) throws SQLException, SQLIntegrityConstraintViolationException {
 
 		try {
-			CallableStatement Call = GestioneFinestre.DB.getC().prepareCall("CALL CREA_PROFILO(?, ?, ?, ?, ?, ?)");
-			Call.setString(1, Nome_Utente);
-			Call.setString(2, Password);
-			Call.setString(3, Nome);
-			Call.setString(4, Cognome);
-			Call.setString(5, Genere);
-			Call.setDate(6, DataNascita);
-			Call.execute();
+			CallableStatement call = GestioneFinestre.DB.getC().prepareCall("CALL CREA_PROFILO(?, ?, ?, ?, ?, ?)");
+			call.setString(1, nomeUtente);
+			call.setString(2, password);
+			call.setString(3, nome);
+			call.setString(4, cognome);
+			call.setString(5, genere);
+			call.setDate(6, dataNascita);
+			call.execute();
 			System.out.println("Utente creato");
-			Call.close();
+			call.close();
 
 		} catch (SQLIntegrityConstraintViolationException SQLError) {
 			throw SQLError;
@@ -37,11 +37,11 @@ public class ProfiliDAO {
 	public void DelProfilo(String Nome_Utente) {
 
 		try {
-			CallableStatement Call = GestioneFinestre.DB.getC().prepareCall("CALL RIMOZIONE_PROFILO(?)");
-			Call.setString(1, Nome_Utente);
-			Call.execute();
+			CallableStatement call = GestioneFinestre.DB.getC().prepareCall("CALL RIMOZIONE_PROFILO(?)");
+			call.setString(1, Nome_Utente);
+			call.execute();
 			System.out.println("Profilo eliminato");
-			Call.close();
+			call.close();
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -51,16 +51,16 @@ public class ProfiliDAO {
 	}
 
 	// Update di un gruppo
-	public void UpProfilo(String Nome_Utente, String Campo_Mod, String New_Val) {
+	public void UpProfilo(String nomeUtente, String campoMod, String newVal) {
 
 		try {
-			CallableStatement Call = GestioneFinestre.DB.getC().prepareCall("CALL MODIFICA_PROFILO(?, ?, ?)");
-			Call.setString(1, Campo_Mod);
-			Call.setString(2, New_Val);
-			Call.setString(3, Nome_Utente);
-			Call.execute();
+			CallableStatement call = GestioneFinestre.DB.getC().prepareCall("CALL MODIFICA_PROFILO(?, ?, ?)");
+			call.setString(1, campoMod);
+			call.setString(2, newVal);
+			call.setString(3, nomeUtente);
+			call.execute();
 			System.out.println("Profilo aggiornato ");
-			Call.close();
+			call.close();
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -69,21 +69,21 @@ public class ProfiliDAO {
 	}
 
 	// Select singolo per nome per nome
-	public Profili SelSigProfilo(String Nome) {
+	public Profili SelSigProfilo(String nome) {
 
 		try {
 
-			ResultSet rs = GestioneFinestre.DB.ExeQuery("SELECT * FROM PROFILI WHERE NOME_UTENTE = '" + Nome + "'");
+			ResultSet rs = GestioneFinestre.DB.ExeQuery("SELECT * FROM PROFILI WHERE NOME_UTENTE = '" + nome + "'");
 
 			try {
 
-				Profili Res_Profilo;
+				Profili resProfilo;
 				rs.next();
 
-				Res_Profilo = new Profili(rs.getString("Nome_Utente"), rs.getString("Password"), rs.getString("Nome"),
+				resProfilo = new Profili(rs.getString("Nome_Utente"), rs.getString("Password"), rs.getString("Nome"),
 						rs.getString("Cognome"), rs.getString("Genere"), rs.getDate("Data_Nascita"));
 
-				return Res_Profilo;
+				return resProfilo;
 
 			} catch (SQLException e) {
 				System.out.println("query fallita: " + e.getMessage());
@@ -108,19 +108,19 @@ public class ProfiliDAO {
 			ResultSet rs = GestioneFinestre.DB.ExeQuery("SELECT * FROM PROFILI");
 
 			try {
-				List<Profili> Rec_Profili = new ArrayList<Profili>();
+				List<Profili> recProfili = new ArrayList<Profili>();
 
-				Profili Stampa;
+				Profili stampa;
 
 				while (rs.next()) {
-					Stampa = new Profili(rs.getString("Nome_Utente"), rs.getString("Password"), rs.getString("Nome"),
+					stampa = new Profili(rs.getString("Nome_Utente"), rs.getString("Password"), rs.getString("Nome"),
 							rs.getString("Cognome"), rs.getString("Genere"), rs.getDate("Data_Nascita"));
 
-					Rec_Profili.add(Stampa);
-					Stampa = null;
+					recProfili.add(stampa);
+					stampa = null;
 				}
 
-				return Rec_Profili;
+				return recProfili;
 
 			} catch (SQLException e) {
 				System.out.println("query fallita: " + e.getMessage());

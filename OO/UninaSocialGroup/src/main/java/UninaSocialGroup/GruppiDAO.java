@@ -7,17 +7,17 @@ import java.util.List;
 
 public class GruppiDAO {
 	
-	// Insert in un gruppo
-	public void InsGruppo(String Nome_Gruppo, String Descrizione, String Creatore) {
+	// Inserimento di un gruppo nel database
+	public void InsGruppo(String nomeGruppo, String descrizione, String creatore) {
 
 		try {
-			CallableStatement Call = GestioneFinestre.DB.getC().prepareCall("CALL CREA_GRUPPO(?, ?, ?)");
-			Call.setString(1, Nome_Gruppo);
-			Call.setString(2, Descrizione);
-			Call.setString(3, Creatore);
-			Call.execute();
+			CallableStatement call = GestioneFinestre.DB.getC().prepareCall("CALL CREA_GRUPPO(?, ?, ?)");
+			call.setString(1, nomeGruppo);
+			call.setString(2, descrizione);
+			call.setString(3, creatore);
+			call.execute();
 			System.out.println("Gruppo Inserito");
-			Call.close();
+			call.close();
 			
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -26,15 +26,15 @@ public class GruppiDAO {
 		
 	}
 
-	// Delete su un gruppo
-	public void DelGruppo(String Nome_Gruppo) {
+	// Eliminazione di un gruppo dal database
+	public void DelGruppo(String nomeGruppo) {
 
 		try {
-			CallableStatement Call = GestioneFinestre.DB.getC().prepareCall("CALL RIMOZIONE_GRUPPO(?)");
-			Call.setString(1, Nome_Gruppo);
-			Call.execute();
+			CallableStatement call = GestioneFinestre.DB.getC().prepareCall("CALL RIMOZIONE_GRUPPO(?)");
+			call.setString(1, nomeGruppo);
+			call.execute();
 			System.out.println("Gruppo eliminato");
-			Call.close();
+			call.close();
 		
 		} catch (Exception e) {
 			System.out.println(e);
@@ -43,18 +43,18 @@ public class GruppiDAO {
 		
 	}
 
-	// Update di un gruppo
-	public void UpGruppo(String Nome_Gruppo, String Creatore, String Campo_Mod, String New_Val) {
+	// Aggiornamento di un gruppo nel database
+	public void UpGruppo(String nomeGruppo, String creatore, String campo_Mod, String new_Val) {
 
 		try {
-			CallableStatement Call = GestioneFinestre.DB.getC().prepareCall("CALL MODIFICA_GRUPPO(?, ?, ?, ?)");
-			Call.setString(1, Campo_Mod);
-			Call.setString(2, New_Val);
-			Call.setString(3, Creatore);
-			Call.setString(4, Nome_Gruppo);
-			Call.execute();
+			CallableStatement call = GestioneFinestre.DB.getC().prepareCall("CALL MODIFICA_GRUPPO(?, ?, ?, ?)");
+			call.setString(1, campo_Mod);
+			call.setString(2, new_Val);
+			call.setString(3, creatore);
+			call.setString(4, nomeGruppo);
+			call.execute();
 			System.out.println("Gruppo aggiornato ");
-			Call.close();
+			call.close();
 		
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -62,30 +62,30 @@ public class GruppiDAO {
 		}
 	}
 
-	// Select singolo gruppo per nome
-	public Gruppi SelSigGruppo(String Nome) {
+	// Selezione di un singolo gruppo dal database in base al nome
+	public Gruppi SelSigGruppo(String nome) {
 
 		try {
 
-			ResultSet rs = GestioneFinestre.DB.ExeQuery("SELECT * FROM GRUPPI WHERE NOME = '" + Nome + "'");
+			ResultSet resultSet = GestioneFinestre.DB.ExeQuery("SELECT * FROM GRUPPI WHERE NOME = '" + nome + "'");
 
 			try {
 
-				Gruppi Res_Gruppo;
-				rs.next();
+				Gruppi resGruppo;
+				resultSet.next();
 
-				Res_Gruppo = new Gruppi(rs.getString("Nome"), rs.getDate("Data_Creazione"),
-						rs.getString("Descrizione"), rs.getInt("OnlineC"), rs.getString("FK_Nome_Utente"));
+				resGruppo = new Gruppi(resultSet.getString("nome"), resultSet.getDate("Data_Creazione"),
+						resultSet.getString("descrizione"), resultSet.getInt("OnlineC"), resultSet.getString("FK_nome_Utente"));
 				
 				
-				return Res_Gruppo;
+				return resGruppo;
 
 			} catch (SQLException e) {
 				System.out.println("query fallita");
 			
 				return null;
 			} finally {
-				rs.close(); // chiude sempre il cursore
+				resultSet.close(); // chiude sempre il cursore
 			}
 
 
@@ -96,35 +96,35 @@ public class GruppiDAO {
 		}
 	}
 
-	// Select tutti i gruppi che hanno dei caratteri come in input
+	// Selezione di tutti i gruppi il cui nome contiene una determinata sequenza di caratteri
 	public List<Gruppi> SelAllGruppoFromNome(String nomeGruppo) {
 
 		try {
 
-			ResultSet rs = GestioneFinestre.DB.ExeQuery("SELECT * FROM GRUPPI WHERE UPPER(NOME) LIKE '%"+ nomeGruppo.toUpperCase() +"%'");
+			ResultSet resultSet = GestioneFinestre.DB.ExeQuery("SELECT * FROM GRUPPI WHERE UPPER(NOME) LIKE '%"+ nomeGruppo.toUpperCase() +"%'");
 			
 			try {
-				List<Gruppi> Rec_Gruppi = new ArrayList<Gruppi>();
+				List<Gruppi> recGruppi = new ArrayList<Gruppi>();
 				
-				Gruppi Stampa;
+				Gruppi stampa;
 
-				while (rs.next()) {
-					Stampa = new Gruppi(rs.getString("Nome"), rs.getDate("Data_Creazione"),
-							rs.getString("Descrizione"), rs.getInt("OnlineC"), rs.getString("FK_Nome_Utente"));
+				while (resultSet.next()) {
+					stampa = new Gruppi(resultSet.getString("nome"), resultSet.getDate("Data_Creazione"),
+							resultSet.getString("descrizione"), resultSet.getInt("OnlineC"), resultSet.getString("FK_nome_Utente"));
 					
-					Rec_Gruppi.add(Stampa);
-					Stampa = null;
+					recGruppi.add(stampa);
+					stampa = null;
 				}
 				
 				
-				return Rec_Gruppi;
+				return recGruppi;
 
 			} catch (SQLException e) {
 				System.out.println("query fallita");
 				
 				return null;
 			} finally {
-				rs.close(); // chiude sempre il cursore
+				resultSet.close(); // chiude sempre il cursore
 			}
 
 
@@ -138,35 +138,35 @@ public class GruppiDAO {
 	
 	
 	
-	// Select tutti i gruppi
+	// Selezione di tutti i gruppi dal database
 	public List<Gruppi> SelAllGruppo() {
 
 		try {
 
-			ResultSet rs = GestioneFinestre.DB.ExeQuery("SELECT * FROM GRUPPI");
+			ResultSet resultSet = GestioneFinestre.DB.ExeQuery("SELECT * FROM GRUPPI");
 			
 			try {
-				List<Gruppi> Rec_Gruppi = new ArrayList<Gruppi>();
+				List<Gruppi> recGruppi = new ArrayList<Gruppi>();
 				
-				Gruppi Stampa;
+				Gruppi stampa;
 
-				while (rs.next()) {
-					Stampa = new Gruppi(rs.getString("Nome"), rs.getDate("Data_Creazione"),
-							rs.getString("Descrizione"), rs.getInt("OnlineC"), rs.getString("FK_Nome_Utente"));
+				while (resultSet.next()) {
+					stampa = new Gruppi(resultSet.getString("nome"), resultSet.getDate("Data_Creazione"),
+							resultSet.getString("descrizione"), resultSet.getInt("OnlineC"), resultSet.getString("FK_nome_Utente"));
 					
-					Rec_Gruppi.add(Stampa);
-					Stampa = null;
+					recGruppi.add(stampa);
+					stampa = null;
 				}
 				
 				
-				return Rec_Gruppi;
+				return recGruppi;
 
 			} catch (SQLException e) {
 				System.out.println("query fallita");
 				
 				return null;
 			} finally {
-				rs.close(); // chiude sempre il cursore
+				resultSet.close(); // chiude sempre il cursore
 			}
 
 
@@ -177,35 +177,35 @@ public class GruppiDAO {
 		}
 	}
 	
-	// Select tutti i gruppi creati da un utente
-		public List<Gruppi> SelAllGruppoUtente(String Nome_Utente) {
+	// Selezione di tutti i gruppi creati da un utente specifico
+		public List<Gruppi> SelAllGruppoUtente(String nomeUtente) {
 
 			try {
 
-				ResultSet rs = GestioneFinestre.DB.ExeQuery("SELECT * FROM GRUPPI WHERE FK_NOME_UTENTE = '" + Nome_Utente + "'");
+				ResultSet resultSet = GestioneFinestre.DB.ExeQuery("SELECT * FROM GRUPPI WHERE FK_NOME_UTENTE = '" + nomeUtente + "'");
 				
 				try {
-					List<Gruppi> Rec_Gruppi = new ArrayList<Gruppi>();
+					List<Gruppi> recGruppi = new ArrayList<Gruppi>();
 					
-					Gruppi Stampa;
+					Gruppi stampa;
 
-					while (rs.next()) {
-						Stampa = new Gruppi(rs.getString("Nome"), rs.getDate("Data_Creazione"),
-								rs.getString("Descrizione"), rs.getInt("OnlineC"), rs.getString("FK_Nome_Utente"));
+					while (resultSet.next()) {
+						stampa = new Gruppi(resultSet.getString("nome"), resultSet.getDate("Data_Creazione"),
+								resultSet.getString("descrizione"), resultSet.getInt("OnlineC"), resultSet.getString("FK_nome_Utente"));
 						
-						Rec_Gruppi.add(Stampa);
-						Stampa = null;
+						recGruppi.add(stampa);
+						stampa = null;
 					}
 					
 					
-					return Rec_Gruppi;
+					return recGruppi;
 
 				} catch (SQLException e) {
 					System.out.println("query fallita");
 					
 					return null;
 				} finally {
-					rs.close(); // chiude sempre il cursore
+					resultSet.close(); // chiude sempre il cursore
 				}
 
 

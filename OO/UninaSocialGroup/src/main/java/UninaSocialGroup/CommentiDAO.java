@@ -13,16 +13,16 @@ public class CommentiDAO {
 	}
 
 	// Insert di un Commento
-	public void InsCommento(String Testo, int Id_Contenuto, String Creatore) {
+	public void InsCommento(String testo, int IdContenuto, String creatore) {
 
 		try {
-			CallableStatement Call = GestioneFinestre.DB.getC().prepareCall("CALL CREA_COMMENTO(?, ?, ?)");
-			Call.setString(1, Testo);
-			Call.setInt(2, Id_Contenuto);
-			Call.setString(3, Creatore);
-			Call.execute();
+			CallableStatement call = GestioneFinestre.DB.getC().prepareCall("CALL CREA_COMMENTO(?, ?, ?)");
+			call.setString(1, testo);
+			call.setInt(2, IdContenuto);
+			call.setString(3, creatore);
+			call.execute();
 			System.out.println("Commento Inserito");
-			Call.close();
+			call.close();
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -32,14 +32,14 @@ public class CommentiDAO {
 	}
 
 	// Delete di un Commento
-	public void DelCommento(int Id_Commento) {
+	public void DelCommento(int idCommento) {
 
 		try {
-			CallableStatement Call = GestioneFinestre.DB.getC().prepareCall("CALL RIMOZIONE_COMMENTO(?)");
-			Call.setInt(1, Id_Commento);
-			Call.execute();
+			CallableStatement call = GestioneFinestre.DB.getC().prepareCall("CALL RIMOZIONE_COMMENTO(?)");
+			call.setInt(1, idCommento);
+			call.execute();
 			System.out.println("Commento eliminato");
-			Call.close();
+			call.close();
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -49,15 +49,15 @@ public class CommentiDAO {
 	}
 
 	// Delete di tutti i contenuti di un profilo su un gruppo
-	public void DelCommentoProfilo(String Nome_Utente, String Nome_Gruppo) {
+	public void DelCommentoProfilo(String nomeUtente, String nomeGruppo) {
 
 		try {
-			CallableStatement Call = GestioneFinestre.DB.getC().prepareCall("CALL RIMOZIONE_COMMENTO_PROFILO(?, ?)");
-			Call.setString(1, Nome_Utente);
-			Call.setString(2, Nome_Gruppo);
-			Call.execute();
+			CallableStatement call = GestioneFinestre.DB.getC().prepareCall("CALL RIMOZIONE_COMMENTO_PROFILO(?, ?)");
+			call.setString(1, nomeUtente);
+			call.setString(2, nomeGruppo);
+			call.execute();
 			System.out.println("Commenti eliminati");
-			Call.close();
+			call.close();
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -67,16 +67,16 @@ public class CommentiDAO {
 	}
 
 	// Update di un Commento
-	public void UpCommento(String Creatore, int Id_Commento, String New_Val) {
+	public void UpCommento(String creatore, int idCommento, String newVal) {
 
 		try {
-			CallableStatement Call = GestioneFinestre.DB.getC().prepareCall("CALL MODIFICA_COMMENTO(?, ?, ?)");
-			Call.setString(1, New_Val);
-			Call.setString(2, Creatore);
-			Call.setInt(3, Id_Commento);
-			Call.execute();
+			CallableStatement call = GestioneFinestre.DB.getC().prepareCall("CALL MODIFICA_COMMENTO(?, ?, ?)");
+			call.setString(1, newVal);
+			call.setString(2, creatore);
+			call.setInt(3, idCommento);
+			call.execute();
 			System.out.println("Commento aggiornato ");
-			Call.close();
+			call.close();
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -85,28 +85,28 @@ public class CommentiDAO {
 	}
 
 	// Select Commenti per post
-	public List<Commenti> SelCommentiPost(int Id_Contenuto) {
+	public List<Commenti> SelCommentiPost(int idContenuto) {
 
 		try {
 
 			ResultSet rs = GestioneFinestre.DB
-					.ExeQuery("SELECT * FROM COMMENTI WHERE FK_ID_CONTENUTO = " + Id_Contenuto);
+					.ExeQuery("SELECT * FROM COMMENTI WHERE FK_ID_CONTENUTO = " + idContenuto);
 
 			try {
 
-				List<Commenti> Rec_Commenti = new ArrayList<Commenti>();
+				List<Commenti> recCommenti = new ArrayList<Commenti>();
 
-				Commenti Stampa;
+				Commenti stampa;
 
 				while (rs.next()) {
-					Stampa = new Commenti(rs.getInt("Id_Commento"), rs.getDate("Data_Creazione"), rs.getString("Testo"),
+					stampa = new Commenti(rs.getInt("Id_Commento"), rs.getDate("Data_Creazione"), rs.getString("Testo"),
 							rs.getInt("FK_Id_Contenuto"), rs.getString("FK_Nome_Utente"));
 
-					Rec_Commenti.add(Stampa);
-					Stampa = null;
+					recCommenti.add(stampa);
+					stampa = null;
 				}
 
-				return Rec_Commenti;
+				return recCommenti;
 
 			} catch (SQLException e) {
 				System.out.println("query fallita");
@@ -132,19 +132,19 @@ public class CommentiDAO {
 			ResultSet rs = GestioneFinestre.DB.ExeQuery("SELECT * FROM Commenti");
 
 			try {
-				List<Commenti> Rec_Commenti = new ArrayList<Commenti>();
+				List<Commenti> recCommenti = new ArrayList<Commenti>();
 
-				Commenti Stampa;
+				Commenti stampa;
 
 				while (rs.next()) {
-					Stampa = new Commenti(rs.getInt("Id_Commento"), rs.getDate("Data_Creazione"), rs.getString("Testo"),
+					stampa = new Commenti(rs.getInt("Id_Commento"), rs.getDate("Data_Creazione"), rs.getString("Testo"),
 							rs.getInt("FK_Id_Contenuto"), rs.getString("FK_Nome_Utente"));
 
-					Rec_Commenti.add(Stampa);
-					Stampa = null;
+					recCommenti.add(stampa);
+					stampa = null;
 				}
 
-				return Rec_Commenti;
+				return recCommenti;
 
 			} catch (SQLException e) {
 				System.out.println("query fallita");
@@ -163,12 +163,12 @@ public class CommentiDAO {
 	}
 
 	// Select numeri di commenti di un post
-	public int SelNumCommenti(int Id_Contenuto) {
+	public int SelNumCommenti(int idContenuto) {
 
 		try {
 
 			ResultSet rs = GestioneFinestre.DB
-					.ExeQuery("SELECT COUNT(*) FROM COMMENTI WHERE FK_ID_CONTENUTO = " + Id_Contenuto);
+					.ExeQuery("SELECT COUNT(*) FROM COMMENTI WHERE FK_ID_CONTENUTO = " + idContenuto);
 
 			try {
 
@@ -199,27 +199,27 @@ public class CommentiDAO {
 	}
 
 	// Select tutti i Commenti di un utente in un post
-	public List<Commenti> SelCommentiUtentePost(String Nome_Utente, int Id_Contenuto) {
+	public List<Commenti> SelCommentiUtentePost(String nomeUtente, int idContenuto) {
 
 		try {
 
 			ResultSet rs = GestioneFinestre.DB.ExeQuery("SELECT * FROM Commenti WHERE FK_ID_CONTENUTO= '"
-					+ Id_Contenuto + "' AND FK_NOME_UTENTE = '" + Nome_Utente + "'");
+					+ idContenuto + "' AND FK_NOME_UTENTE = '" + nomeUtente + "'");
 
 			try {
-				List<Commenti> Rec_Commenti = new ArrayList<Commenti>();
+				List<Commenti> recCommenti = new ArrayList<Commenti>();
 
-				Commenti Stampa;
+				Commenti stampa;
 
 				while (rs.next()) {
-					Stampa = new Commenti(rs.getInt("Id_Commento"), rs.getDate("Data_Creazione"), rs.getString("Testo"),
+					stampa = new Commenti(rs.getInt("Id_Commento"), rs.getDate("Data_Creazione"), rs.getString("Testo"),
 							rs.getInt("FK_Id_Contenuto"), rs.getString("FK_Nome_Utente"));
 
-					Rec_Commenti.add(Stampa);
-					Stampa = null;
+					recCommenti.add(stampa);
+					stampa = null;
 				}
 
-				return Rec_Commenti;
+				return recCommenti;
 
 			} catch (SQLException e) {
 				System.out.println("query fallita: " + e.getMessage());

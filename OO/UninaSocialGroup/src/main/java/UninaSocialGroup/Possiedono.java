@@ -2,29 +2,29 @@ package UninaSocialGroup;
 
 public class Possiedono {
 
-	String Tag; // FK_PAROLA
-	String Nome_Gruppo; // FK_NOME_GRUPPO
+	String tag; // FK_PAROLA
+	String nomeGruppo; // FK_NOME_GRUPPO
 	
-	public Possiedono(String tag, String nome_Gruppo) {
+	public Possiedono(String tag, String nomeGruppo) {
 		super();
-		Tag = tag;
-		Nome_Gruppo = nome_Gruppo;
+		this.tag = tag;
+		this.nomeGruppo = nomeGruppo;
 	}
 
 	public String getTag() {
-		return Tag;
+		return tag;
 	}
 
 	public void setTag(String tag) {
-		Tag = tag;
+		this.tag = tag;
 	}
 
 	public String getNome_Gruppo() {
-		return Nome_Gruppo;
+		return nomeGruppo;
 	}
 
-	public void setNome_Gruppo(String nome_Gruppo) {
-		Nome_Gruppo = nome_Gruppo;
+	public void setNome_Gruppo(String nomeGruppo) {
+		this.nomeGruppo = nomeGruppo;
 	}
 	
 	

@@ -16,12 +16,12 @@ public class NotificheRichiesteDAO {
 	public void InsNotifica_R(String Nome_Gruppo, String Nome_Utente) {
 
 		try {
-			CallableStatement Call = GestioneFinestre.DB.getC().prepareCall("CALL CREA_RICHIESTA(?, ?)");
-			Call.setString(1, Nome_Gruppo);
-			Call.setString(2, Nome_Utente);
-			Call.execute();
+			CallableStatement call = GestioneFinestre.DB.getC().prepareCall("CALL CREA_RICHIESTA(?, ?)");
+			call.setString(1, Nome_Gruppo);
+			call.setString(2, Nome_Utente);
+			call.execute();
 			System.out.println("Richiesta inviata al gruppo");
-			Call.close();
+			call.close();
 		} catch (Exception e) {
 			System.out.println("Errore");
 
@@ -33,10 +33,10 @@ public class NotificheRichiesteDAO {
 	public void DelNotifica_R(int Id_Notifica_Richieste) {
 
 		try {
-			PreparedStatement Remove = GestioneFinestre.DB.getC().prepareStatement(
+			PreparedStatement remove = GestioneFinestre.DB.getC().prepareStatement(
 					"DELETE FROM NOTIFICHE_RICHIESTE WHERE ID_NOTIFICA_RE = " + Id_Notifica_Richieste);
-			Remove.execute();
-			Remove.close();
+			remove.execute();
+			remove.close();
 			System.out.println("Notifica Eliminata");
 
 		} catch (Exception e) {
@@ -48,12 +48,12 @@ public class NotificheRichiesteDAO {
 	public void Accetta_Richiesta(String Nome_Gruppo, String Nome_Utente) {
 
 		try {
-			CallableStatement Call = GestioneFinestre.DB.getC().prepareCall("CALL ACCETTA_PROFILO(?, ?)");
-			Call.setString(1, Nome_Utente );
-			Call.setString(2, Nome_Gruppo);
-			Call.execute();
+			CallableStatement call = GestioneFinestre.DB.getC().prepareCall("CALL ACCETTA_PROFILO(?, ?)");
+			call.setString(1, Nome_Utente );
+			call.setString(2, Nome_Gruppo);
+			call.execute();
 			System.out.println("Profilo accettato");
-			Call.close();
+			call.close();
 		} catch (Exception e) {
 			System.out.println("Errore");
 
@@ -63,12 +63,12 @@ public class NotificheRichiesteDAO {
 	public void Rifiuta_Richiesta(String Nome_Gruppo, String Nome_Utente) {
 
 		try {
-			CallableStatement Call = GestioneFinestre.DB.getC().prepareCall("CALL RIFIUTA_PROFILO(?, ?)");
-			Call.setString(1, Nome_Utente );
-			Call.setString(2, Nome_Gruppo);
-			Call.execute();
+			CallableStatement call = GestioneFinestre.DB.getC().prepareCall("CALL RIFIUTA_PROFILO(?, ?)");
+			call.setString(1, Nome_Utente );
+			call.setString(2, Nome_Gruppo);
+			call.execute();
 			System.out.println("Profilo riiutato");
-			Call.close();
+			call.close();
 		} catch (Exception e) {
 			System.out.println("Errore");
 
@@ -78,7 +78,7 @@ public class NotificheRichiesteDAO {
 	// Select tutte le Notifiche che riceve un creatore
 	public List<Notifiche> SelNoitificheRichiesteDiUnCreatore(String Nome_Utente) {
 
-		String TMP_Nome_Gruppo;
+		String tmpNomeGruppo;
 
 		try {
 
@@ -90,30 +90,30 @@ public class NotificheRichiesteDAO {
 
 			try {
 
-				List<Notifiche> Rec_Notifiche = new ArrayList<Notifiche>();
+				List<Notifiche> recNotifiche = new ArrayList<Notifiche>();
 
 				Notifiche Stampa;
 
 				while (rsNome_Gruppo.next()) {
 
-					TMP_Nome_Gruppo = rsNome_Gruppo.getString("Nome");
+					tmpNomeGruppo = rsNome_Gruppo.getString("Nome");
 
 					ResultSet rsF = GestioneFinestre.DB.ExeQuery("SELECT * FROM NOTIFICHE_RICHIESTE WHERE FK_Nome_Gruppo = '"
-							+ TMP_Nome_Gruppo + "' AND Esitato = '0'");
+							+ tmpNomeGruppo + "' AND Esitato = '0'");
 
 					while (rsF.next()) {
 						Stampa = new Notifiche(rsF.getInt("Id_Notifica_RE"), rsF.getString("Testo"),
 								rsF.getDate("Data_Notifica"), rsF.getString("Esitato"), rsF.getString("FK_Nome_Gruppo"),
 								rsF.getString("FK_Nome_Utente"));
 
-						Rec_Notifiche.add(Stampa);
+						recNotifiche.add(Stampa);
 
 						Stampa = null;
 					}
 					rsF.close();
 				}
 
-				return Rec_Notifiche;
+				return recNotifiche;
 
 			} catch (SQLException e) {
 				System.out.println("query fallita: " + e.getMessage());
@@ -141,15 +141,9 @@ public class NotificheRichiesteDAO {
 				ResultSet rsF = GestioneFinestre.DB.ExeQuery("SELECT * FROM NOTIFICHE_RICHIESTE WHERE FK_Nome_Gruppo = '"
 						+ Nome_Gruppo + "' AND FK_Nome_Utente = '" + Nome_Utente  +"' AND Esitato = '0'");
 				try {
-
-					
-
 						while (rsF.next()) {
-
 							return true;
 						}
-					
-
 
 				} catch (SQLException e) {
 					System.out.println("query fallita: " + e.getMessage());
@@ -187,8 +181,7 @@ public class NotificheRichiesteDAO {
 	public List<Notifiche> SelNoitificheArchiviate(String Nome_Utente) {
 
 		int check = 0;
-		String TMP_Nome_Gruppo;
-		List<Notifiche> Rec_Notifiche = new ArrayList<Notifiche>();
+		List<Notifiche> recNotifiche = new ArrayList<Notifiche>();
 
 		try {
 
@@ -196,22 +189,22 @@ public class NotificheRichiesteDAO {
 
 			while (rsNome_Gruppo.next()) {
 
-				CallableStatement Call = GestioneFinestre.DB.getC().prepareCall("{? = CALL Mostra_Archiviata_F(?, ?)}");
+				CallableStatement call = GestioneFinestre.DB.getC().prepareCall("{? = CALL Mostra_Archiviata_F(?, ?)}");
 
 				// Registra il parametro di output (in tutti casi saranno dei cursori)
-				Call.registerOutParameter(1, OracleTypes.CURSOR);
+				call.registerOutParameter(1, OracleTypes.CURSOR);
 
 				// Imposta il parametro di input (se la function ha dei parametri)
-				Call.setString(2, Nome_Utente); // Es. nome del gruppo come parametro IN
+				call.setString(2, Nome_Utente); // Es. nome del gruppo come parametro IN
 
 				// Imposta il parametro di input (se la function ha dei parametri)
-				Call.setString(3, rsNome_Gruppo.getString("Nome")); // Es. nome del gruppo come parametro IN
+				call.setString(3, rsNome_Gruppo.getString("Nome")); // Es. nome del gruppo come parametro IN
 
 				// Esegui la chiamata alla funzione
-				Call.execute();
+				call.execute();
 
 				// Ottieni il risultato come ResultSet
-				ResultSet rs = (ResultSet) Call.getObject(1); // Restituisce l'oggeto 1 cioè il cursore
+				ResultSet rs = (ResultSet) call.getObject(1); // Restituisce l'oggeto 1 cioè il cursore
 
 				try {
 
@@ -223,7 +216,7 @@ public class NotificheRichiesteDAO {
 								rs.getDate("Data_Notifica"), rs.getString("Esitato"), rs.getString("FK_Nome_Gruppo"),
 								rs.getString("FK_Nome_Utente"));
 
-						check = NoDuplicati(check, Rec_Notifiche, Stampa, rs.getInt("Id_Notifica_RE"));
+						check = NoDuplicati(check, recNotifiche, Stampa, rs.getInt("Id_Notifica_RE"));
 
 						Stampa = null;
 					}
@@ -238,22 +231,22 @@ public class NotificheRichiesteDAO {
 			return null;
 		}
 
-		return Rec_Notifiche;
+		return recNotifiche;
 
 	}
 
 	// Non inserisce le notifiche duplicate nella lista
-	private int NoDuplicati(int check, List<Notifiche> Rec_Notifiche, Notifiche AddR,
+	private int NoDuplicati(int check, List<Notifiche> recNotifiche, Notifiche AddR,
 			int Id_Richiesta) {
 
 		if (check == 0) { // se il primo elemento della lista
 
-			Rec_Notifiche.add(AddR);
+			recNotifiche.add(AddR);
 			return check = 1;
 		} else {
 
-			for (int i = 0; i < Rec_Notifiche.size(); i++) {
-				if (Rec_Notifiche.get(i).getId_Notifica() == Id_Richiesta) { // Controllo il duplicato vedendo se esiste già
+			for (int i = 0; i < recNotifiche.size(); i++) {
+				if (recNotifiche.get(i).getIdNotifica() == Id_Richiesta) { // Controllo il duplicato vedendo se esiste già
 																						// l'identificativo della
 																						// notifica
 					check = 2;
@@ -262,7 +255,7 @@ public class NotificheRichiesteDAO {
 			}
 
 			if (check == 1) { //se non esiste un duplicato, viene aggiunto l'elemento alla lista
-				Rec_Notifiche.add(AddR);
+				recNotifiche.add(AddR);
 			}
 
 			return check = 1;

@@ -16,20 +16,20 @@ public class NotificheContenutiDAO {
 					.ExeQuery("SELECT * FROM NOTIFICHE_CONTENUTI WHERE FK_NOME_UTENTE = '" + Nome_Utente + "'");
 
 			try {
-				List<Notifiche> Rec_Notifiche = new ArrayList<Notifiche>();
+				List<Notifiche> recNotifiche = new ArrayList<Notifiche>();
 
-				Notifiche Stampa;
+				Notifiche stampa;
 
 				while (rs.next()) {
-					Stampa = new Notifiche(rs.getInt("Id_Notifica_C"), rs.getString("Testo"),
+					stampa = new Notifiche(rs.getInt("Id_Notifica_C"), rs.getString("Testo"),
 							rs.getDate("Data_Notifica"), rs.getString("Visualizzato"), rs.getInt("FK_Id_Contenuto"),
 							rs.getString("FK_Nome_Utente"));
 
-					Rec_Notifiche.add(Stampa);
-					Stampa = null;
+					recNotifiche.add(stampa);
+					stampa = null;
 				}
 
-				return Rec_Notifiche;
+				return recNotifiche;
 
 			} catch (SQLException e) {
 				System.out.println("query fallita: " + e.getMessage());

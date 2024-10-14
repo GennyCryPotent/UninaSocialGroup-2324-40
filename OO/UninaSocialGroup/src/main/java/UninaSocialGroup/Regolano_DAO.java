@@ -10,15 +10,15 @@ import java.util.List;
 public class Regolano_DAO {
 
 	// Insert in Regolano
-	public void InsAmministratore(String Nome_Utente, String Nome_Gruppo) {
+	public void InsAmministratore(String nomeUtente, String nomeGruppo) {
 
 		try {
-			CallableStatement Call = GestioneFinestre.DB.getC().prepareCall("CALL CREA_REGOLANO(?, ?)");
-			Call.setString(1, Nome_Utente);
-			Call.setString(2, Nome_Gruppo);
-			Call.execute();
+			CallableStatement call = GestioneFinestre.DB.getC().prepareCall("CALL CREA_REGOLANO(?, ?)");
+			call.setString(1, nomeUtente);
+			call.setString(2, nomeGruppo);
+			call.execute();
 			System.out.println("Amministratore aggiunto al gruppo");
-			Call.close();
+			call.close();
 
 		} catch (Exception e) {
 			System.out.println("Errore");
@@ -28,15 +28,15 @@ public class Regolano_DAO {
 	}
 
 	// Delete su un Regolano
-	public void DelAmministratore(String Nome_Utente, String Nome_Gruppo) {
+	public void DelAmministratore(String nomeUtente, String nomeGruppo) {
 
 		try {
-			CallableStatement Call = GestioneFinestre.DB.getC().prepareCall("CALL RIMOZIONE_REGOLANO(?, ?)");
-			Call.setString(1, Nome_Gruppo);
-			Call.setString(2, Nome_Utente);
-			Call.execute();
+			CallableStatement call = GestioneFinestre.DB.getC().prepareCall("CALL RIMOZIONE_REGOLANO(?, ?)");
+			call.setString(1, nomeGruppo);
+			call.setString(2, nomeUtente);
+			call.execute();
 			System.out.println("Amministratore eliminato");
-			Call.close();
+			call.close();
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -46,28 +46,28 @@ public class Regolano_DAO {
 	}
 
 	// Select tutti i gruppi dove regola l'utente
-	public List<Regolano> SelSigRegolano(String Nome_Utente) {
+	public List<Regolano> SelSigRegolano(String nomeUtente) {
 
 		try {
 
 			ResultSet rs = GestioneFinestre.DB
-					.ExeQuery("SELECT * FROM REGOLANO WHERE FK_NOME_UTENTE = '" + Nome_Utente + "'");
+					.ExeQuery("SELECT * FROM REGOLANO WHERE FK_NOME_UTENTE = '" + nomeUtente + "'");
 
 			try {
 
-				List<Regolano> Rec_Regolano = new ArrayList<Regolano>();
+				List<Regolano> recRegolano = new ArrayList<Regolano>();
 
-				Regolano Stampa;
+				Regolano stampa;
 
 				while (rs.next()) {
 
-					Stampa = new Regolano(rs.getString("FK_Nome_Utente"), rs.getString("FK_Nome_Gruppo"));
+					stampa = new Regolano(rs.getString("FK_Nome_Utente"), rs.getString("FK_Nome_Gruppo"));
 
-					Rec_Regolano.add(Stampa);
-					Stampa = null;
+					recRegolano.add(stampa);
+					stampa = null;
 				}
 
-				return Rec_Regolano;
+				return recRegolano;
 
 			} catch (SQLException e) {
 				System.out.println("query fallita: " + e.getMessage());
@@ -86,26 +86,26 @@ public class Regolano_DAO {
 	}
 
 	// Select tutti gli amministratori di un gruppo
-	public List<Regolano> SelAllRegolanoGruppo(String Nome_Gruppo) {
+	public List<Regolano> SelAllRegolanoGruppo(String nomeGruppo) {
 
 		try {
 
 			ResultSet rs = GestioneFinestre.DB
-					.ExeQuery("SELECT * FROM REGOLANO WHERE FK_NOME_GRUPPO = '" + Nome_Gruppo + "'");
+					.ExeQuery("SELECT * FROM REGOLANO WHERE FK_NOME_GRUPPO = '" + nomeGruppo + "'");
 
 			try {
-				List<Regolano> Rec_Regolano = new ArrayList<Regolano>();
+				List<Regolano> recRegolano = new ArrayList<Regolano>();
 
-				Regolano Stampa;
+				Regolano stampa;
 
 				while (rs.next()) {
-					Stampa = new Regolano(rs.getString("FK_Nome_Utente"), rs.getString("FK_Nome_Gruppo"));
+					stampa = new Regolano(rs.getString("FK_Nome_Utente"), rs.getString("FK_Nome_Gruppo"));
 
-					Rec_Regolano.add(Stampa);
-					Stampa = null;
+					recRegolano.add(stampa);
+					stampa = null;
 				}
 
-				return Rec_Regolano;
+				return recRegolano;
 
 			} catch (SQLException e) {
 				System.out.println("query fallita: " + e.getMessage());
@@ -124,12 +124,12 @@ public class Regolano_DAO {
 	}
 
 	// Select tutti gli amministratori di un gruppo
-	public boolean CheckRegola(String Nome_Gruppo, String Nome_Utente) {
+	public boolean CheckRegola(String nomeGruppo, String nomeUtente) {
 
 		try {
 
 			ResultSet rs = GestioneFinestre.DB.ExeQuery("SELECT COUNT(*) FROM REGOLANO WHERE FK_NOME_GRUPPO = '"
-					+ Nome_Gruppo + "'AND FK_NOME_UTENTE = '" + Nome_Utente + "'");
+					+ nomeGruppo + "'AND FK_NOME_UTENTE = '" + nomeUtente + "'");
 
 			try {
 

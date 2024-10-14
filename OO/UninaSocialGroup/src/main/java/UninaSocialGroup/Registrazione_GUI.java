@@ -30,9 +30,9 @@ public class Registrazione_GUI extends JFrame {
 	private JTextField textFieldPassword;
 	private JTextField textFieldNome;
 	private JTextField textFieldCognome;
-	private RegistrazioneController RC = new RegistrazioneController(Registrazione_GUI.this);
+	private RegistrazioneController registrazioneController = new RegistrazioneController(Registrazione_GUI.this);
 	private Date DataNascita;
-
+	
 	public Registrazione_GUI() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,8 +50,8 @@ public class Registrazione_GUI extends JFrame {
 		// Label titolo
 		JLabel lblNewLabel = new JLabel("Inserisci i dati");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setForeground(new Color(0, 128, 255));
-		lblNewLabel.setBackground(new Color(255, 255, 255));
+		lblNewLabel.setForeground(PaletteColori.blueColor);
+		lblNewLabel.setBackground(PaletteColori.lightModeColorBG);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblNewLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		topPanel.add(lblNewLabel, BorderLayout.CENTER);
@@ -61,7 +61,7 @@ public class Registrazione_GUI extends JFrame {
 		btnIndietro.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnIndietro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RC.ActionIndietro();
+				registrazioneController.ActionIndietro();
 			}
 		});
 		topPanel.add(btnIndietro, BorderLayout.EAST);  // Posizionamento in alto a destra
@@ -98,14 +98,14 @@ public class Registrazione_GUI extends JFrame {
 		textFieldCognome.setColumns(10);
 		panel.add(textFieldCognome);
 
-		JLabel LabelGenere = new JLabel("Genere: ");
-		panel.add(LabelGenere);
+		JLabel lblGenere = new JLabel("Genere: ");
+		panel.add(lblGenere);
 		String[] genere = new String[] { "M", "F", "N" };
 		JComboBox comboBoxGenere = new JComboBox(genere);
 		panel.add(comboBoxGenere);
 
-		JLabel LabelData = new JLabel("Data di nascita:");
-		panel.add(LabelData);
+		JLabel lblData = new JLabel("Data di nascita:");
+		panel.add(lblData);
 
 		// Pannello per selezionare la data
 		SqlDateModel model = new SqlDateModel();
@@ -127,7 +127,7 @@ public class Registrazione_GUI extends JFrame {
 		JButton btnRegistrati = new JButton("Registrati");
 		btnRegistrati.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RC.ActionRegistrati(textFieldNomeUtente, textFieldPassword, textFieldNome, textFieldCognome, datePicker, DataNascita, comboBoxGenere, btnRegistrati);
+				registrazioneController.ActionRegistrati(textFieldNomeUtente, textFieldPassword, textFieldNome, textFieldCognome, datePicker, DataNascita, comboBoxGenere, btnRegistrati);
 			}
 		});
 		contentPane.add(btnRegistrati, BorderLayout.SOUTH);

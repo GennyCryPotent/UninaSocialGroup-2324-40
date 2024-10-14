@@ -4,69 +4,69 @@ import java.sql.*;
 
 public class Profili {
 
-	private String Nome_Utente; //PK
-	private String Password;
-	private String Nome;
-	private String Cognome;
-	private String Genere;
-	private Date Data_Nascita;
+	private String nomeUtente; //PK
+	private String password;
+	private String nome;
+	private String cognome;
+	private String genere;
+	private Date dataNascita;
 	
-	public Profili(String nome_Utente, String password, String nome, String cognome, String genere, Date data_Nascita) {
+	public Profili(String nomeUtente, String password, String nome, String cognome, String genere, Date dataNascita) {
 		super();
-		Nome_Utente = nome_Utente;
-		Password = password;
-		Nome = nome;
-		Cognome = cognome;
-		Genere = genere;
-		Data_Nascita = data_Nascita;
+		this.nomeUtente = nomeUtente;
+		this.password = password;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.genere = genere;
+		this.dataNascita = dataNascita;
 	}
 
-	public String getNome_Utente() {
-		return Nome_Utente;
+	public String getNomeUtente() {
+		return nomeUtente;
 	}
 
-	public void setNome_Utente(String nome_Utente) {
-		Nome_Utente = nome_Utente;
+	public void setNomeUtente(String nomeUtente) {
+		nomeUtente = nomeUtente;
 	}
 
 	public String getPassword() {
-		return Password;
+		return password;
 	}
 
 	public void setPassword(String password) {
-		Password = password;
+		this.password = password;
 	}
 
 	public String getNome() {
-		return Nome;
+		return nome;
 	}
 
 	public void setNome(String nome) {
-		Nome = nome;
+		this.nome = nome;
 	}
 
 	public String getCognome() {
-		return Cognome;
+		return cognome;
 	}
 
 	public void setCognome(String cognome) {
-		Cognome = cognome;
+		this.cognome = cognome;
 	}
 
 	public String getGenere() {
-		return Genere;
+		return genere;
 	}
 
 	public void setGenere(String genere) {
-		Genere = genere;
+		this.genere = genere;
 	}
 
-	public Date getData_Nascita() {
-		return Data_Nascita;
+	public Date getDataNascita() {
+		return dataNascita;
 	}
 
-	public void setData_Nascita(Date data_Nascita) {
-		Data_Nascita = data_Nascita;
+	public void setDataNascita(Date dataNascita) {
+		this.dataNascita = dataNascita;
 	}
 	
 	

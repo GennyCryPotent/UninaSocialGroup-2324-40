@@ -22,13 +22,16 @@ public class JPannelloContenuti extends JPanel {
 	private JButton likeButton = new JButton("❤️");
 	private JButton commentButton = new JButton("💬");
 
-	private LikesDAO L = new LikesDAO();
+	private LikesDAO likeDAO = new LikesDAO();
 	public int likeNumDinamico;
-	private JPannelloContenutiController JPC = new JPannelloContenutiController(JPannelloContenuti.this);
+	private JPannelloContenutiController JpannelloContenutiController = new JPannelloContenutiController(JPannelloContenuti.this);
 
+	
+	PaletteColori paletteColori;
+	
 	public JPannelloContenuti() {
 		super(new BorderLayout());
-
+		
 		this.add(textArea, BorderLayout.CENTER);
 
 		likeButton.setContentAreaFilled(false);
@@ -36,7 +39,7 @@ public class JPannelloContenuti extends JPanel {
 
 		commentButton.setContentAreaFilled(false);
 		commentButton.setBorderPainted(false);
-		commentButton.setForeground(new Color(0, 0, 0));
+		commentButton.setForeground(paletteColori.lightModeColorFont);
 
 		// Imposta il layout del secondPanel prima di aggiungere i pulsanti
 		secondPanel.setLayout(new BoxLayout(secondPanel, BoxLayout.X_AXIS));
@@ -56,7 +59,7 @@ public class JPannelloContenuti extends JPanel {
 	}
 
 	public JPannelloContenuti(String creator, String nomeUtente, String nomeGruppo, String text, int likeNum,
-			int commentNum, int Id_Post) {
+			int commentNum, int idPost) {
 		this();
 		textArea.setText(text);
 		setLikeNum(likeNum);
@@ -65,11 +68,11 @@ public class JPannelloContenuti extends JPanel {
 		likeNumDinamico = likeNum; // aggiorna il numero dei like durante l'esecuzione del programma
 
 		// cambia il colore del cuore del mi piace
-		if (L.SelLikeProfilo(nomeUtente, Id_Post)) {
-			likeButton.setForeground(new Color(255, 0, 0));
+		if (likeDAO.SelLikeProfilo(nomeUtente, idPost)) {
+			likeButton.setForeground(paletteColori.redColor);
 
 		} else {
-			likeButton.setForeground(new Color(0, 0, 0));
+			likeButton.setForeground(paletteColori.lightModeColorFont);
 
 		}
 
@@ -77,19 +80,19 @@ public class JPannelloContenuti extends JPanel {
 		textArea.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JPC.ActionViewPost(Id_Post, nomeUtente, nomeGruppo);
+				JpannelloContenutiController.ActionViewPost(idPost, nomeUtente, nomeGruppo);
 			}
 		});
 
 		likeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JPC.ActionInsLike(nomeUtente, Id_Post, likeButton);
+				JpannelloContenutiController.ActionInsLike(nomeUtente, idPost, likeButton);
 			}
 		});
 
 		commentButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JPC.ActionViewPost(Id_Post, nomeUtente, nomeGruppo);
+				JpannelloContenutiController.ActionViewPost(idPost, nomeUtente, nomeGruppo);
 			}
 		});
 	}

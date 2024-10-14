@@ -2,29 +2,29 @@ package UninaSocialGroup;
 
 public class Partecipano {
 
-	String Nome_Partecipante; // FK_NOME_UTENTE
-	String Nome_Gruppo; // FK_NOME_GRUPPO
+	String nomePartecipante; // FK_NOME_UTENTE
+	String nomeGruppo; // FK_NOME_GRUPPO
 
-	public Partecipano(String nome_Partecipante, String nome_Gruppo) {
+	public Partecipano(String nomePartecipante, String nomeGruppo) {
 		super();
-		Nome_Partecipante = nome_Partecipante;
-		Nome_Gruppo = nome_Gruppo;
+		this.nomePartecipante = nomePartecipante;
+		this.nomeGruppo = nomeGruppo;
 	}
 
 	public String getNome_Partecipante() {
-		return Nome_Partecipante;
+		return nomePartecipante;
 	}
 
-	public void setNome_Partecipante(String nome_Partecipante) {
-		Nome_Partecipante = nome_Partecipante;
+	public void setNome_Partecipante(String nomePartecipante) {
+		this.nomePartecipante = nomePartecipante;
 	}
 
 	public String getNome_Gruppo() {
-		return Nome_Gruppo;
+		return nomeGruppo;
 	}
 
-	public void setNome_Gruppo(String nome_Gruppo) {
-		Nome_Gruppo = nome_Gruppo;
+	public void setNome_Gruppo(String nomeGruppo) {
+		this.nomeGruppo = nomeGruppo;
 	}
 
 }

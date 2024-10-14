@@ -13,12 +13,12 @@ public class PossiedonoDAO {
 	public void InsTagGruppo(String Nome_Gruppo, String Parola) {
 
 		try {
-			CallableStatement Call = GestioneFinestre.DB.getC().prepareCall("CALL CREA_POSSIEDONO(?, ?)");
-			Call.setString(1, Nome_Gruppo);
-			Call.setString(2, Parola);
-			Call.execute();
+			CallableStatement call = GestioneFinestre.DB.getC().prepareCall("CALL CREA_POSSIEDONO(?, ?)");
+			call.setString(1, Nome_Gruppo);
+			call.setString(2, Parola);
+			call.execute();
 			System.out.println("Tag aggiunto al gruppo");
-			Call.close();
+			call.close();
 		} catch (Exception e) {
 			System.out.println("Errore");
 
@@ -30,11 +30,11 @@ public class PossiedonoDAO {
 	public void DelTagGruppo(String Nome_Gruppo, String Parola) {
 
 		try {
-			PreparedStatement Remove = GestioneFinestre.DB.getC()
+			PreparedStatement remove = GestioneFinestre.DB.getC()
 					.prepareStatement("DELETE FROM POSSIEDONO WHERE FK_PAROLA = '" + Parola + "' AND FK_NOME_GRUPPO = '"
 							+ Nome_Gruppo + "'");
-			Remove.execute();
-			Remove.close();
+			remove.execute();
+			remove.close();
 			System.out.println("Tag eliminato dal gruppo");
 
 		} catch (Exception e) {
@@ -52,19 +52,19 @@ public class PossiedonoDAO {
 
 			try {
 
-				List<Possiedono> Rec_Possiedono = new ArrayList<Possiedono>();
+				List<Possiedono> recPossiedono = new ArrayList<Possiedono>();
 
-				Possiedono Stampa;
+				Possiedono stampa;
 
 				while (rs.next()) {
 
-					Stampa = new Possiedono(rs.getString("FK_Parola"), rs.getString("FK_Nome_Gruppo"));
+					stampa = new Possiedono(rs.getString("FK_Parola"), rs.getString("FK_Nome_Gruppo"));
 
-					Rec_Possiedono.add(Stampa);
-					Stampa = null;
+					recPossiedono.add(stampa);
+					stampa = null;
 				}
 
-				return Rec_Possiedono;
+				return recPossiedono;
 
 			} catch (SQLException e) {
 				System.out.println("query fallita: " + e.getMessage());
@@ -90,18 +90,18 @@ public class PossiedonoDAO {
 					.ExeQuery("SELECT * FROM POSSIEDONO WHERE FK_NOME_GRUPPO = '" + Nome_Gruppo + "'");
 
 			try {
-				List<Possiedono> Rec_Possiedono = new ArrayList<Possiedono>();
+				List<Possiedono> recPossiedono = new ArrayList<Possiedono>();
 
-				Possiedono Stampa;
+				Possiedono stampa;
 
 				while (rs.next()) {
-					Stampa = new Possiedono(rs.getString("FK_Parola"), rs.getString("FK_Nome_Gruppo"));
+					stampa = new Possiedono(rs.getString("FK_Parola"), rs.getString("FK_Nome_Gruppo"));
 
-					Rec_Possiedono.add(Stampa);
-					Stampa = null;
+					recPossiedono.add(stampa);
+					stampa = null;
 				}
 
-				return Rec_Possiedono;
+				return recPossiedono;
 
 			} catch (SQLException e) {
 				System.out.println("query fallita: " + e.getMessage());

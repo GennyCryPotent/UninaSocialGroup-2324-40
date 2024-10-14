@@ -4,12 +4,12 @@ import javax.swing.JOptionPane;
 
 public class GruppiController {
 
-	private GestioneFinestre GF = new GestioneFinestre();
+	private GestioneFinestre gestioneFinestre = new GestioneFinestre();
 	private GruppiGUI gruppiView;
 	private OperazioniPartecipanteGUI eliminaPartecipanteView;
-	private ContenutiDAO C = new ContenutiDAO();
-	private PartecipanoDAO partecipano_DAO = new PartecipanoDAO();
-	private Regolano_DAO regolano_DAO = new Regolano_DAO();
+	private ContenutiDAO contenutiDAO = new ContenutiDAO();
+	private PartecipanoDAO partecipanoDAO = new PartecipanoDAO();
+	private Regolano_DAO regolanoDAO = new Regolano_DAO();
 
 	public GruppiController(GruppiGUI gruppiView) {
 		this.gruppiView = gruppiView;
@@ -19,36 +19,36 @@ public class GruppiController {
 		this.eliminaPartecipanteView = eliminaPartecipanteView;
 	}
 
-	public void ActionHome(String NU) {
+	public void ActionHome(String nomeUtente) {
 		gruppiView.setVisible(false);
-		GF.AccessoHome(NU);
+		gestioneFinestre.AccessoHome(nomeUtente);
 	}
 
-	public void ActionPost(String NU, String NG, String NewPost) {
+	public void ActionPost(String nomeUtente, String nomeGruppo, String NewPost) {
 
 		if (!NewPost.isEmpty()) {
-			C.InsContenuto(null, NewPost, NG, NU);
+			contenutiDAO.InsContenuto(null, NewPost, nomeGruppo, nomeUtente);
 
 			gruppiView.setVisible(false);
-			GF.MostraGruppi(NU, NG);
+			gestioneFinestre.MostraGruppi(nomeUtente, nomeGruppo);
 		}
 
 	}
 
-	public void ActionModifica(String NU, String NG) {
+	public void ActionModifica(String nomeUtente, String nomeGruppo) {
 
-		GF.EliminaContenuto(NU, NG, gruppiView);
+		gestioneFinestre.EliminaContenuto(nomeUtente, nomeGruppo, gruppiView);
 
 	}
 
-	public void ActionElimina(String NU, String NG, String Ruolo, int checkOp) {
+	public void ActionElimina(String nomeUtente, String nomeGruppo, String Ruolo, int checkOp) {
 
-		GF.EliminaPartecipante(NU, NG, Ruolo, checkOp);
+		gestioneFinestre.EliminaPartecipante(nomeUtente, nomeGruppo, Ruolo, checkOp);
 	}
 
-	public void ActionAbbandona(String NU, String NG, boolean CkeckCreatore) {
+	public void ActionAbbandona(String nomeUtente, String nomeGruppo, boolean ckeckCreatore) {
 		int scelta;
-		if (CkeckCreatore) { // messaggio personalizzato per il creatore del gruppo
+		if (ckeckCreatore) { // messaggio personalizzato per il creatore del gruppo
 			scelta = JOptionPane.showConfirmDialog(null, "Sicuro di voler cancellare questo gruppo? "
 					+ "PS. se si cancella il gruppo, si elimineranno tutti i contenuti e tutti gli utenti del gruppo usciranno.",
 					"Abbandona", JOptionPane.YES_NO_OPTION);
@@ -59,22 +59,22 @@ public class GruppiController {
 		}
 
 		if (scelta == JOptionPane.YES_OPTION) {
-			partecipano_DAO.DelPartecipante(NU, NG);
-			JOptionPane.showMessageDialog(null, "Hai abbandonato il gruppo " + NG, "Abbandonato",
+			partecipanoDAO.DelPartecipante(nomeUtente, nomeGruppo);
+			JOptionPane.showMessageDialog(null, "Hai abbandonato il gruppo " + nomeGruppo, "Abbandonato",
 					JOptionPane.INFORMATION_MESSAGE);
-			GF.AccessoHome(NU);
+			gestioneFinestre.AccessoHome(nomeUtente);
 			gruppiView.setVisible(false);
 		}
 
 	}
 
-	public void ActionRimuoviUtente(Partecipano p, String NG) {
+	public void ActionRimuoviUtente(Partecipano p, String nomeGruppo) {
 
 		int scelta = JOptionPane.showConfirmDialog(null, "Sicuro di voler eliminare questo utente?", "Elimina",
 				JOptionPane.YES_NO_OPTION);
 
 		if (scelta == JOptionPane.YES_OPTION) {
-			partecipano_DAO.DelPartecipante(p.getNome_Partecipante(), NG);
+			partecipanoDAO.DelPartecipante(p.getNome_Partecipante(), nomeGruppo);
 			JOptionPane.showMessageDialog(null, "Partecipante " + p.getNome_Partecipante() + " eliminato", "Eliminato",
 					JOptionPane.INFORMATION_MESSAGE);
 			eliminaPartecipanteView.setVisible(false);
@@ -86,13 +86,13 @@ public class GruppiController {
 
 	}
 
-	public void ActionAggiungiAmministratore(Partecipano p, String NG) {
+	public void ActionAggiungiAmministratore(Partecipano p, String nomeGruppo) {
 
 		int scelta = JOptionPane.showConfirmDialog(null, "Sicuro di voler rendere amministratore questo utente?",
 				"Aggiungi amministratore", JOptionPane.YES_NO_OPTION);
 
 		if (scelta == JOptionPane.YES_OPTION) {
-			regolano_DAO.InsAmministratore(p.getNome_Partecipante(), NG);
+			regolanoDAO.InsAmministratore(p.getNome_Partecipante(), nomeGruppo);
 			JOptionPane.showMessageDialog(null, "Partecipante " + p.getNome_Partecipante() + " reso amministratore",
 					"Aggiungi amministratore", JOptionPane.INFORMATION_MESSAGE);
 			eliminaPartecipanteView.setVisible(false);

@@ -32,26 +32,25 @@ public class GruppiGUI extends JFrame {
     private List<Contenuti> resContenutiGruppi = new ArrayList<Contenuti>();
     private ContenutiDAO contenutiDao = new ContenutiDAO();
     private ArrayList<JPannelloContenuti> contenutiPanel = new ArrayList<>();
-    private Regolano_DAO regolanoDao = new Regolano_DAO();
-    private GruppiDAO gruppiDao = new GruppiDAO();
+    private Regolano_DAO regolanoDAO = new Regolano_DAO();
+    private GruppiDAO gruppiDAO = new GruppiDAO();
     private Gruppi gruppo;
     private boolean checkCreatore;
     private boolean checkAmministratore;
     
-    private Color lightColorFont = new Color(0, 0, 0);
-    private Color lightColorInternalArea = new Color(244, 244, 244);
     private String ruolo;
 
 
     // Costruttore della classe GruppiGUI
-    public GruppiGUI(String nu, String ng) {
+    public GruppiGUI(String nomeUtente, String ng) {
+    	
 
         // Recupera i dettagli del gruppo dal database
-        gruppo = gruppiDao.SelSigGruppo(ng);
-
+        gruppo = gruppiDAO.SelSigGruppo(ng);
+        
         // Controlla se l'utente è un amministratore o il creatore del gruppo
-        checkAmministratore = regolanoDao.CheckRegola(ng, nu);
-        checkCreatore = gruppo.getCreatore().equals(nu);
+        checkAmministratore = regolanoDAO.CheckRegola(ng, nomeUtente);
+        checkCreatore = gruppo.GetCreatore().equals(nomeUtente);
 
         // IMPOSTAZIONI DEL PANNELLO
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -79,7 +78,7 @@ public class GruppiGUI extends JFrame {
         home.setToolTipText("Home");
         home.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                gruppiController.ActionHome(nu);
+                gruppiController.ActionHome(nomeUtente);
             }
         });
         home.setBorderPainted(false);
@@ -97,7 +96,7 @@ public class GruppiGUI extends JFrame {
                         JOptionPane.QUESTION_MESSAGE);
                 
                 // Chiama il controller per gestire l'azione di aggiunta del nuovo post
-                gruppiController.ActionPost(nu, ng, newPost);
+                gruppiController.ActionPost(nomeUtente, ng, newPost);
             }
         });
         aggiungiPost.setBorderPainted(false);
@@ -111,7 +110,7 @@ public class GruppiGUI extends JFrame {
         rimuoviPost.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Chiama il controller per gestire la modifica del post
-                gruppiController.ActionModifica(nu, ng);
+                gruppiController.ActionModifica(nomeUtente, ng);
             }
         });
         rimuoviPost.setBorderPainted(false);
@@ -129,7 +128,7 @@ public class GruppiGUI extends JFrame {
         contentPane.add(scrollPane);
 
         // Recupera tutti i post del gruppo
-        recuperaPostGruppo(ng, nu, postsArea, scrollPane);
+        recuperaPostGruppo(ng, nomeUtente, postsArea, scrollPane);
 
         JLabel labelRuolo = new JLabel();
         labelRuolo.setVisible(false);
@@ -147,7 +146,7 @@ public class GruppiGUI extends JFrame {
         eliminaPartecipante.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Chiama il controller per gestire la rimozione del partecipante
-                gruppiController.ActionElimina(nu, ng, ruolo, 0);
+                gruppiController.ActionElimina(nomeUtente, ng, ruolo, 0);
             }
         });
         
@@ -157,7 +156,7 @@ public class GruppiGUI extends JFrame {
         abbandona.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Chiama il controller per gestire l'azione di abbandono del gruppo
-                gruppiController.ActionAbbandona(nu, ng, checkCreatore);
+                gruppiController.ActionAbbandona(nomeUtente, ng, checkCreatore);
             }
         });
         abbandona.setBorderPainted(false);
@@ -170,7 +169,7 @@ public class GruppiGUI extends JFrame {
         aggiungiAmm.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Chiama il controller per gestire l'azione di aggiunta di un amministratore
-                gruppiController.ActionElimina(nu, ng, ruolo, 1);
+                gruppiController.ActionElimina(nomeUtente, ng, ruolo, 1);
             }
         });
         aggiungiAmm.setToolTipText("Aggiungi amministratore");
@@ -289,22 +288,22 @@ public class GruppiGUI extends JFrame {
     }
 
     // Funzione per recuperare i post del gruppo
-    private void recuperaPostGruppo(String ng, String nu, JPanel postsArea, JScrollPane scrollPane) {
+    private void recuperaPostGruppo(String ng, String nomeUtente, JPanel postsArea, JScrollPane scrollPane) {
         // Ottieni tutti i post relativi al gruppo dal database
         resContenutiGruppi = contenutiDao.SelAllContenutiGruppo(ng);
 
-        LikesDAO likesDao = new LikesDAO();
-        CommentiDAO commentiDao = new CommentiDAO();
+        LikesDAO likesDAO = new LikesDAO();
+        CommentiDAO commentiDAO = new CommentiDAO();
 
         int numbOfTxt = resContenutiGruppi.size();
 
         for (int i = 0; i < numbOfTxt; i++) {
             // Crea un nuovo pannello per ogni post
-            JPannelloContenuti newPostPanel = new JPannelloContenuti(resContenutiGruppi.get(i).getPubblicatore(), nu,
-                    resContenutiGruppi.get(i).getNome_Gruppo(), resContenutiGruppi.get(i).getTesto(),
-                    likesDao.SelNumLike(resContenutiGruppi.get(i).getId_Contenuto()),
-                    commentiDao.SelNumCommenti(resContenutiGruppi.get(i).getId_Contenuto()),
-                    resContenutiGruppi.get(i).getId_Contenuto());
+            JPannelloContenuti newPostPanel = new JPannelloContenuti(resContenutiGruppi.get(i).getPubblicatore(), nomeUtente,
+                    resContenutiGruppi.get(i).getNomeGruppo(), resContenutiGruppi.get(i).getTesto(),
+                    likesDAO.SelNumLike(resContenutiGruppi.get(i).getIdContenuto()),
+                    commentiDAO.SelNumCommenti(resContenutiGruppi.get(i).getIdContenuto()),
+                    resContenutiGruppi.get(i).getIdContenuto());
 
             // Imposta le proprietà per l'area di testo nel pannello del post
             newPostPanel.textArea.setWrapStyleWord(false);
@@ -314,7 +313,7 @@ public class GruppiGUI extends JFrame {
             contenutiPanel.add(newPostPanel);
 
             // Imposta i colori per il pannello del post
-            contenutiPanel.get(i).setColors(lightColorInternalArea, lightColorFont);
+            contenutiPanel.get(i).setColors(PaletteColori.lightModeColorInternalArea, PaletteColori.lightModeColorFont);
 
             // Aggiungi spaziatura e il pannello del post all'area dei post
             postsArea.add(Box.createRigidArea(new Dimension(0, 10)));

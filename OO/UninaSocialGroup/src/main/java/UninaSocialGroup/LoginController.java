@@ -4,29 +4,29 @@ import javax.swing.JOptionPane;
 
 public class LoginController {
 
-	private GestioneFinestre GF = new GestioneFinestre();
-	private LoginGUI LoginView;
-	private String NU;
-	private String PSW;
-	private ProfiliDAO ProfiliDao = new ProfiliDAO();
+	private GestioneFinestre gestioneFinestre = new GestioneFinestre();
+	private LoginGUI loginView;
+	private String nomeUtente;
+	private String password;
+	private ProfiliDAO profiliDAO = new ProfiliDAO();
 
 	public LoginController(LoginGUI loginView) {
-		this.LoginView = loginView;
+		this.loginView = loginView;
 	}
 
 	public void ActionAccedi() {
 
-		NU = LoginView.NomeUtente.getText();
-		PSW = new String(LoginView.passwordField.getPassword());
+		nomeUtente = loginView.lblNomeUtente.getText();
+		password = new String(loginView.passwordField.getPassword());
 
 		try {
-			String Password = ProfiliDao.SelSigProfilo(NU).getPassword();
-			String NomeUtente = ProfiliDao.SelSigProfilo(NU).getNome_Utente();
+			String Password = profiliDAO.SelSigProfilo(nomeUtente).getPassword();
+			String NomeUtente = profiliDAO.SelSigProfilo(nomeUtente).getNomeUtente();
 
-			if (PSW.compareTo(Password) == 0 && NU.compareTo(NomeUtente) == 0) {
+			if (password.compareTo(Password) == 0 && nomeUtente.compareTo(NomeUtente) == 0) {
 
-				LoginView.setVisible(false);
-				GF.AccessoHome(NU);
+				loginView.setVisible(false);
+				gestioneFinestre.AccessoHome(nomeUtente);
 
 			} else {
 
@@ -43,8 +43,8 @@ public class LoginController {
 	}
 
 	public void ActionRegistrati() {
-		LoginView.setVisible(false);
-		GF.MostraRegistrazione();
+		loginView.setVisible(false);
+		gestioneFinestre.MostraRegistrazione();
 	}
 
 }

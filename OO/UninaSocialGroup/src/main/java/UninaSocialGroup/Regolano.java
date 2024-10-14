@@ -2,29 +2,29 @@ package UninaSocialGroup;
 
 public class Regolano {
 	
-	String Nome_Amministratore; // FK_NOME_UTENTE
-	String Nome_Gruppo; // FK_NOME_GRUPPO
+	String nomeAmministratore; // FK_NOME_UTENTE
+	String nomeGruppo; // FK_NOME_GRUPPO
 	
-	public Regolano(String nome_Amministratore, String nome_Gruppo) {
+	public Regolano(String nomeAmministratore, String nomeGruppo) {
 		super();
-		Nome_Amministratore = nome_Amministratore;
-		Nome_Gruppo = nome_Gruppo;
+		this.nomeAmministratore = nomeAmministratore;
+		this.nomeGruppo = nomeGruppo;
 	}
 
 	public String getNome_Amministratore() {
-		return Nome_Amministratore;
+		return nomeAmministratore;
 	}
 
-	public void setNome_Amministratore(String nome_Amministratore) {
-		Nome_Amministratore = nome_Amministratore;
+	public void setNome_Amministratore(String nomeAmministratore) {
+		this.nomeAmministratore = nomeAmministratore;
 	}
 
 	public String getNome_Gruppo() {
-		return Nome_Gruppo;
+		return nomeGruppo;
 	}
 
-	public void setNome_Gruppo(String nome_Gruppo) {
-		Nome_Gruppo = nome_Gruppo;
+	public void setNome_Gruppo(String nomeGruppo) {
+		this.nomeGruppo = nomeGruppo;
 	}
 
 	

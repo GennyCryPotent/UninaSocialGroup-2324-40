@@ -2,28 +2,28 @@ package UninaSocialGroup;
 
 public class Likes {
 
-	private String FK_Nome_Utente;
-	private int FK_Id_Contenuto;
+	private String fKNomeUtente;
+	private int fKIdContenuto;
 	
-	public Likes(String fK_Nome_Utente, int fK_Id_Contenuto) {
+	public Likes(String fKNomeUtente, int fKIdContenuto) {
 		super();
-		FK_Nome_Utente = fK_Nome_Utente;
-		FK_Id_Contenuto = fK_Id_Contenuto;
+		this.fKNomeUtente = fKNomeUtente;
+		this.fKIdContenuto = fKIdContenuto;
 	}
 
-	public String getFK_Nome_Utente() {
-		return FK_Nome_Utente;
+	public String getFKNomeUtente() {
+		return fKNomeUtente;
 	}
 
-	public void setFK_Nome_Utente(String fK_Nome_Utente) {
-		FK_Nome_Utente = fK_Nome_Utente;
+	public void setFKNomeUtente(String fKNomeUtente) {
+		this.fKNomeUtente = fKNomeUtente;
 	}
 
-	public int getFK_Id_Contenuto() {
-		return FK_Id_Contenuto;
+	public int getFKIdContenuto() {
+		return fKIdContenuto;
 	}
 
-	public void setFK_Id_Contenuto(int fK_Id_Contenuto) {
-		FK_Id_Contenuto = fK_Id_Contenuto;
+	public void setFKIdContenuto(int fKIdContenuto) {
+		this.fKIdContenuto = fKIdContenuto;
 	}
 }
