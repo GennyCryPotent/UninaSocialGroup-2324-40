@@ -9,12 +9,12 @@ import javax.swing.table.DefaultTableModel;
 
 public class ReportStatisticoController {
 
-	private Gestione_Finestre GF = new Gestione_Finestre();
-	private Report_Statistico_GUI ReportStatisticoView;
+	private GestioneFinestre GF = new GestioneFinestre();
+	private ReportStatisticoGUI ReportStatisticoView;
 	private List<Gruppi> Res_Gruppi = new ArrayList<Gruppi>();
 	private List<Contenuti> Res_Contenuti = new ArrayList<Contenuti>();
 
-	public ReportStatisticoController(Report_Statistico_GUI reportStatisticoView) {
+	public ReportStatisticoController(ReportStatisticoGUI reportStatisticoView) {
 		ReportStatisticoView = reportStatisticoView;
 	}
 
@@ -38,10 +38,10 @@ public class ReportStatisticoController {
 		int indice_C_M = 0; // contenuto con più commenti
 		int indice_C_m = 0; // contenuto con meno commenti
 
-		Gruppi_DAO G = new Gruppi_DAO();
-		Likes_DAO L = new Likes_DAO();
-		Contenuti_DAO C = new Contenuti_DAO();
-		Commenti_DAO COM = new Commenti_DAO();
+		GruppiDAO G = new GruppiDAO();
+		LikesDAO L = new LikesDAO();
+		ContenutiDAO C = new ContenutiDAO();
+		CommentiDAO COM = new CommentiDAO();
 
 		Res_Gruppi = G.SelAllGruppoUtente(NU);
 

@@ -22,7 +22,7 @@ public class JPannelloContenuti extends JPanel {
 	private JButton likeButton = new JButton("❤️");
 	private JButton commentButton = new JButton("💬");
 
-	private Likes_DAO L = new Likes_DAO();
+	private LikesDAO L = new LikesDAO();
 	public int likeNumDinamico;
 	private JPannelloContenutiController JPC = new JPannelloContenutiController(JPannelloContenuti.this);
 

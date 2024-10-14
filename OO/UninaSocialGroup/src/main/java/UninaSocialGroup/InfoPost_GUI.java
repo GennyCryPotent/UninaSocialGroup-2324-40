@@ -25,8 +25,8 @@ public class InfoPost_GUI extends JFrame {
 
 	private List<Commenti> Res_Commenti = new ArrayList<Commenti>();
 
-	private Commenti_DAO CO = new Commenti_DAO();
-	private Contenuti_DAO C = new Contenuti_DAO();
+	private CommentiDAO CO = new CommentiDAO();
+	private ContenutiDAO C = new ContenutiDAO();
 	private Contenuti Res_Contenuto;
 	private InfoPostController IC = new InfoPostController(InfoPost_GUI.this);
 
