@@ -4,13 +4,13 @@ import javax.swing.JOptionPane;
 
 public class LoginController {
 
-	private Gestione_Finestre GF = new Gestione_Finestre();
-	private Login_GUI LoginView;
+	private GestioneFinestre GF = new GestioneFinestre();
+	private LoginGUI LoginView;
 	private String NU;
 	private String PSW;
-	private Profili_DAO ProfiliDao = new Profili_DAO();
+	private ProfiliDAO ProfiliDao = new ProfiliDAO();
 
-	public LoginController(Login_GUI loginView) {
+	public LoginController(LoginGUI loginView) {
 		this.LoginView = loginView;
 	}
 
@@ -44,7 +44,7 @@ public class LoginController {
 
 	public void ActionRegistrati() {
 		LoginView.setVisible(false);
-		GF.RegistrazioneGUI();
+		GF.MostraRegistrazione();
 	}
 
 }

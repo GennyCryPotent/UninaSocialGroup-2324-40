@@ -4,18 +4,18 @@ import javax.swing.JOptionPane;
 
 public class GruppiController {
 
-	private Gestione_Finestre GF = new Gestione_Finestre();
-	private Gruppi_GUI gruppiView;
-	private OperazioniPartecipante_GUI eliminaPartecipanteView;
-	private Contenuti_DAO C = new Contenuti_DAO();
-	private Partecipano_DAO partecipano_DAO = new Partecipano_DAO();
+	private GestioneFinestre GF = new GestioneFinestre();
+	private GruppiGUI gruppiView;
+	private OperazioniPartecipanteGUI eliminaPartecipanteView;
+	private ContenutiDAO C = new ContenutiDAO();
+	private PartecipanoDAO partecipano_DAO = new PartecipanoDAO();
 	private Regolano_DAO regolano_DAO = new Regolano_DAO();
 
-	public GruppiController(Gruppi_GUI gruppiView) {
+	public GruppiController(GruppiGUI gruppiView) {
 		this.gruppiView = gruppiView;
 	}
 
-	public GruppiController(OperazioniPartecipante_GUI eliminaPartecipanteView) {
+	public GruppiController(OperazioniPartecipanteGUI eliminaPartecipanteView) {
 		this.eliminaPartecipanteView = eliminaPartecipanteView;
 	}
 
@@ -30,14 +30,14 @@ public class GruppiController {
 			C.InsContenuto(null, NewPost, NG, NU);
 
 			gruppiView.setVisible(false);
-			GF.GruppiGUI(NU, NG);
+			GF.MostraGruppi(NU, NG);
 		}
 
 	}
 
 	public void ActionModifica(String NU, String NG) {
 
-		GF.Elimina_Contenuto(NU, NG, gruppiView);
+		GF.EliminaContenuto(NU, NG, gruppiView);
 
 	}
 

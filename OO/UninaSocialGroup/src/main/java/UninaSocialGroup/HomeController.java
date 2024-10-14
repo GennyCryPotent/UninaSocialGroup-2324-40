@@ -8,39 +8,39 @@ import javax.swing.JTextField;
 
 public class HomeController {
 
-	private Gestione_Finestre GF = new Gestione_Finestre();
-    private Home_GUI homeView;
-    private CreaGruppo_GUI creaGruppoView;
+	private GestioneFinestre GF = new GestioneFinestre();
+    private HomeGUI homeView;
+    private CreaGruppoGUI creaGruppoView;
     
-    public HomeController(CreaGruppo_GUI creaGruppoView) {
+    public HomeController(CreaGruppoGUI creaGruppoView) {
 		this.creaGruppoView = creaGruppoView;
 	}
 
-	public HomeController(Home_GUI homeView) {
+	public HomeController(HomeGUI homeView) {
         this.homeView = homeView;
     }
     
     public void ActionReport(String NU) {
     	homeView.setVisible(false);
-		GF.Report_S(NU);
+		GF.ReportS(NU);
     	
     }
    
     public void ActionNotifiche(String NU) {
     	homeView.setVisible(false);
-		GF.Notifiche(NU);
+		GF.MostraNotifiche(NU);
     	
     }
     
     public void ActionGruppi(String NU, String NG) {
     	homeView.setVisible(false);
-		GF.GruppiGUI(NU, NG);
+		GF.MostraGruppi(NU, NG);
     	
     }
     
     public void ActionRicerca(String NU) {
     	homeView.setVisible(true);
-    	GF.RicercaGUI(NU, homeView);
+    	GF.MostraRicerca(NU, homeView);
     }
   
     public void ActionCrea(String NU) {
@@ -51,14 +51,14 @@ public class HomeController {
     
     public void ActionLogout() {
     	homeView.setVisible(false);
-    	GF.LoginGUI();
+    	GF.MostraLogin();
     }
     
-    public void ActionCreaGruppo(JTextField NGruppo, JTextArea Descrizione, String NU, Home_GUI home, List<String> listOfTags) {
+    public void ActionCreaGruppo(JTextField NGruppo, JTextArea Descrizione, String NU, HomeGUI home, List<String> listOfTags) {
     	String NG;
 	    String DescrG;
-	    Gruppi_DAO CreaG = new Gruppi_DAO();
-		Possiedono_DAO possiedonoDAO = new Possiedono_DAO();
+	    GruppiDAO CreaG = new GruppiDAO();
+		PossiedonoDAO possiedonoDAO = new PossiedonoDAO();
 
 	   NG=NGruppo.getText();
 	   DescrG=Descrizione.getText();

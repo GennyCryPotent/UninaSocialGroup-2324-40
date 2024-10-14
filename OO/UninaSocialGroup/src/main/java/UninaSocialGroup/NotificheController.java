@@ -2,13 +2,13 @@ package UninaSocialGroup;
 
 public class NotificheController {
 
-	private Gestione_Finestre GF = new Gestione_Finestre();
-	private Notifiche_GUI notificheView;
+	private GestioneFinestre GF = new GestioneFinestre();
+	private NotificheGUI notificheView;
 	private JPannelloRichieste richiesteView;
-	private Notifiche_Richieste_DAO Esitato = new Notifiche_Richieste_DAO();
+	private NotificheRichiesteDAO Esitato = new NotificheRichiesteDAO();
 	
 	//Costruttore Notifiche
-	public NotificheController(Notifiche_GUI notificheView) {
+	public NotificheController(NotificheGUI notificheView) {
 		super();
 		this.notificheView = notificheView;
 	}

@@ -18,7 +18,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class JPannelloRichieste extends JPanel {
-    private Notifiche_Richieste_DAO Esitato = new Notifiche_Richieste_DAO();
+    private NotificheRichiesteDAO Esitato = new NotificheRichiesteDAO();
     private JPanel secondPanel = new JPanel();
     private JPanel thirdPanel = new JPanel();
     public JTextArea NotificationText = new JTextArea();

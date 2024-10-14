@@ -13,9 +13,9 @@ import org.jdatepicker.impl.JDatePickerImpl;
 
 public class RegistrazioneController {
 
-	private Gestione_Finestre GF = new Gestione_Finestre();
+	private GestioneFinestre GF = new GestioneFinestre();
 	private Registrazione_GUI registrazioneView;
-	private Profili_DAO P = new Profili_DAO();
+	private ProfiliDAO P = new ProfiliDAO();
 
 	public RegistrazioneController(Registrazione_GUI registrazioneView) {
 
@@ -39,7 +39,7 @@ public class RegistrazioneController {
 
 					JOptionPane.showMessageDialog(btnRegistrati, "Registrazione completata. Benvenuto!");
 					registrazioneView.setVisible(false);
-					GF.LoginGUI();
+					GF.MostraLogin();
 
 				} else {
 					JOptionPane.showMessageDialog(btnRegistrati, "La password deve essere lunga minimo 8 caratteri");
@@ -56,7 +56,7 @@ public class RegistrazioneController {
 	
 	public void ActionIndietro() {
 		registrazioneView.setVisible(false);
-		GF.LoginGUI();
+		GF.MostraLogin();
 	}
 
 }

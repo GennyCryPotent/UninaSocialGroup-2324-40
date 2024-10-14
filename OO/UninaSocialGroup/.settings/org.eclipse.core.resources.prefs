@@ -1,7 +1,7 @@
 eclipse.preferences.version=1
-encoding//src/main/java/UninaSocialGroup/CreaGruppo_GUI.java=UTF-8
-encoding//src/main/java/UninaSocialGroup/Gruppi_GUI.java=UTF-8
-encoding//src/main/java/UninaSocialGroup/Home_GUI.java=UTF-8
+encoding//src/main/java/UninaSocialGroup/CreaGruppoGUI.java=UTF-8
+encoding//src/main/java/UninaSocialGroup/GruppiGUI.java=UTF-8
+encoding//src/main/java/UninaSocialGroup/HomeGUI.java=UTF-8
 encoding//src/main/java/UninaSocialGroup/JPannelloContenuti.java=UTF-8
-encoding//src/main/java/UninaSocialGroup/Notifiche_GUI.java=UTF-8
-encoding//src/main/java/UninaSocialGroup/Ricerca_GUI.java=UTF-8
+encoding//src/main/java/UninaSocialGroup/NotificheGUI.java=UTF-8
+encoding//src/main/java/UninaSocialGroup/RicercaGUI.java=UTF-8

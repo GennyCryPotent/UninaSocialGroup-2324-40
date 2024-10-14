@@ -8,9 +8,9 @@ import javax.swing.SwingUtilities;
 
 public class JPannelloContenutiController {
 
-	private Gestione_Finestre GF = new Gestione_Finestre();
+	private GestioneFinestre GF = new GestioneFinestre();
 	private JPannelloContenuti JPannelloContenutiView;
-	private Likes_DAO L = new Likes_DAO();
+	private LikesDAO L = new LikesDAO();
 
 	public JPannelloContenutiController(JPannelloContenuti jPannelloContenutiView) {
 		JPannelloContenutiView = jPannelloContenutiView;
@@ -25,9 +25,9 @@ public class JPannelloContenutiController {
 		frame.setVisible(false);
 
 		if (frame.getTitle().equals("Home")) { // if per verificare da quale JFrame proviene la richiesta (0 Home_GUI ; 1 Gruppi_GUI)
-			GF.Info_Post(Id_Post, nomeUtente, nomeGruppo, 0);
+			GF.InfoPost(Id_Post, nomeUtente, nomeGruppo, 0);
 		} else {
-			GF.Info_Post(Id_Post, nomeUtente, nomeGruppo, 1);
+			GF.InfoPost(Id_Post, nomeUtente, nomeGruppo, 1);
 		}
 
 	}
