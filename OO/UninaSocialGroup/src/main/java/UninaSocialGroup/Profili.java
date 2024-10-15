@@ -26,7 +26,7 @@ public class Profili {
 	}
 
 	public void setNomeUtente(String nomeUtente) {
-		nomeUtente = nomeUtente;
+		this.nomeUtente = nomeUtente;
 	}
 
 	public String getPassword() {
