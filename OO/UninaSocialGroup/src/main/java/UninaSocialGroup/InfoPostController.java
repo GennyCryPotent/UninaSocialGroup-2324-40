@@ -6,10 +6,10 @@ import javax.swing.JTextArea;
 public class InfoPostController {
 
 	private GestioneFinestre gestioneFinestre = new GestioneFinestre();
-	private InfoPost_GUI infoView;
+	private InfoPostGUI infoView;
 	private CommentiDAO commentiDAO = new CommentiDAO();
 
-	public InfoPostController(InfoPost_GUI infoView) {
+	public InfoPostController(InfoPostGUI infoView) {
 		this.infoView = infoView;
 	}
 

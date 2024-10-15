@@ -32,7 +32,7 @@ public class GruppiGUI extends JFrame {
     private List<Contenuti> resContenutiGruppi = new ArrayList<Contenuti>();
     private ContenutiDAO contenutiDao = new ContenutiDAO();
     private ArrayList<JPannelloContenuti> contenutiPanel = new ArrayList<>();
-    private Regolano_DAO regolanoDAO = new Regolano_DAO();
+    private RegolanoDAO regolanoDAO = new RegolanoDAO();
     private GruppiDAO gruppiDAO = new GruppiDAO();
     private Gruppi gruppo;
     private boolean checkCreatore;

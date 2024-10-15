@@ -13,8 +13,8 @@ public class GestioneFinestre {
 	private NotificheGUI notifica;  
 	private OperazioniPostCommentoGUI elimina; 
 	private ReportStatisticoGUI report;
-	private InfoPost_GUI infoPost;
-	private Registrazione_GUI registrazione;
+	private InfoPostGUI infoPost;
+	private RegistrazioneGUI registrazione;
 	private LoginGUI login;
 	private RicercaGUI ricerca;
 	private OperazioniPartecipanteGUI eliminaPartecpiante;
@@ -82,7 +82,7 @@ public class GestioneFinestre {
 	  }
 	  
 	  public void InfoPost(int Id_Contenuto, String nomeUtente, String nomeGruppo, int check ) {
-		  infoPost = new InfoPost_GUI(Id_Contenuto,nomeUtente, nomeGruppo, check); 
+		  infoPost = new InfoPostGUI(Id_Contenuto,nomeUtente, nomeGruppo, check); 
 		  infoPost.setVisible(true);
 		
 	  }
@@ -100,7 +100,7 @@ public class GestioneFinestre {
 	  }
 	  
 	  public void MostraRegistrazione() {
-		  registrazione = new Registrazione_GUI();
+		  registrazione = new RegistrazioneGUI();
 		  registrazione.setVisible(true);
 	  }
 	  
