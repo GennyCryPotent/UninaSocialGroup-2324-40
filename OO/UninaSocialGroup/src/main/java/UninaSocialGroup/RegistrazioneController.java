@@ -14,10 +14,10 @@ import org.jdatepicker.impl.JDatePickerImpl;
 public class RegistrazioneController {
 
 	private GestioneFinestre gestioneFinestre = new GestioneFinestre();
-	private Registrazione_GUI registrazioneView;
+	private RegistrazioneGUI registrazioneView;
 	private ProfiliDAO profiliDAO = new ProfiliDAO();
 
-	public RegistrazioneController(Registrazione_GUI registrazioneView) {
+	public RegistrazioneController(RegistrazioneGUI registrazioneView) {
 
 		this.registrazioneView = registrazioneView;
 

@@ -9,7 +9,7 @@ public class GruppiController {
 	private OperazioniPartecipanteGUI eliminaPartecipanteView;
 	private ContenutiDAO contenutiDAO = new ContenutiDAO();
 	private PartecipanoDAO partecipanoDAO = new PartecipanoDAO();
-	private Regolano_DAO regolanoDAO = new Regolano_DAO();
+	private RegolanoDAO regolanoDAO = new RegolanoDAO();
 
 	public GruppiController(GruppiGUI gruppiView) {
 		this.gruppiView = gruppiView;
