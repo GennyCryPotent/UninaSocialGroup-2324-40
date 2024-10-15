@@ -108,7 +108,9 @@ public class GruppiGUI extends JFrame {
         JButton rimuoviPost = new JButton("\uD83D\uDCDD");
         rimuoviPost.setToolTipText("Modifica post");
         rimuoviPost.addActionListener(new ActionListener() {
+        	
             public void actionPerformed(ActionEvent e) {
+            	
                 // Chiama il controller per gestire la modifica del post
                 gruppiController.ActionModifica(nomeUtente, ng);
             }

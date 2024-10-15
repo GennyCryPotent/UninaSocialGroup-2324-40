@@ -1,5 +1,7 @@
 package UninaSocialGroup;
 
+import java.awt.Color;
+
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
@@ -9,6 +11,7 @@ public class OperazioniPostCommentoController {
 	private OperazioniPostCommentoGUI OperazioniPostCommentoView;
 	private ContenutiDAO contenutiDAO = new ContenutiDAO();
 	private CommentiDAO commentiDAO = new CommentiDAO();
+	
 
 	public OperazioniPostCommentoController(OperazioniPostCommentoGUI operazioniPostCommentoView) {
 		OperazioniPostCommentoView = operazioniPostCommentoView;
@@ -24,20 +27,33 @@ public class OperazioniPostCommentoController {
 
 	}
 
-	public void ActionModificaPost(JButton buttonModifica, String nomeUtente, String nomeGruppo, int idPost) {
-		
+	public void ActionModificaPost(JButton buttonModifica, String nomeUtente, String nomeGruppo, int idPost, GruppiGUI GruppiView) {
+		   buttonModifica.setForeground(new Color(0, 128, 255));
 			String NewPost = JOptionPane.showInputDialog(buttonModifica, "Cosa vuoi scrivere?", "Modifica un commento",
 					JOptionPane.QUESTION_MESSAGE);
-
-			contenutiDAO.UpContenuto(nomeUtente, NewPost, idPost);
-			OperazioniPostCommentoView.setVisible(false);
 			
-			gestioneFinestre.MostraGruppi(nomeUtente, nomeGruppo);
+			if (NewPost.isEmpty()) {
+				try {
+				JOptionPane.showMessageDialog(null, "Il campo di testo è vuoto", "Post non modificato",
+						JOptionPane.WARNING_MESSAGE);
+				GruppiView.setVisible(false);
+				OperazioniPostCommentoView.setVisible(false);
+				gestioneFinestre.MostraGruppi(nomeUtente, nomeGruppo);
+				}catch(NullPointerException E1) {
+					System.out.println("stringa vuota");
+				}
+			}else {
+				contenutiDAO.UpContenuto(nomeUtente, NewPost, idPost);
+				OperazioniPostCommentoView.setVisible(false);
+				
+				gestioneFinestre.MostraGruppi(nomeUtente, nomeGruppo);
+				
+			}
 
 	}
 	
 	public void ActionEliminaCommento(JButton buttonElimina, String nomeUtente, String nomeGruppo, int IdContenuto, int idCommento) {
-
+		    buttonElimina.setForeground(new Color(0, 128, 255));
 			commentiDAO.DelCommento(idCommento);
 			gestioneFinestre.InfoPost(IdContenuto, nomeUtente, nomeGruppo, 1);
 			OperazioniPostCommentoView.setVisible(false);

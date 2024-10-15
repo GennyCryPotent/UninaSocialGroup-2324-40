@@ -45,7 +45,7 @@ public class GestioneFinestre {
 			public void run() {
 				try {
 					DB.connect();
-					HomeGUI frame = new HomeGUI("EAV");
+					HomeGUI frame = new HomeGUI("Genny03cry");
 
 					//Login_GUI frame = new Login_GUI();
 					frame.setVisible(true);

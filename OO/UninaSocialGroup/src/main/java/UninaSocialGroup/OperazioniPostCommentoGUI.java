@@ -30,7 +30,7 @@ public class OperazioniPostCommentoGUI extends JFrame {
 	private JPanel contentPane;
 	private GruppiGUI gruppiView;
 	private OperazioniPostCommentoController operazioniPostCommentoController = new OperazioniPostCommentoController(
-			OperazioniPostCommentoGUI.this);
+			OperazioniPostCommentoGUI.this); 
 
 	// Schermata Post
 	/**
@@ -60,6 +60,7 @@ public class OperazioniPostCommentoGUI extends JFrame {
 		contentPane.add(scrollPane);
 
 		JButton buttonAnnulla = new JButton("Annulla");
+		buttonAnnulla.setForeground(new Color(0, 128, 255));
 		buttonAnnulla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				operazioniPostCommentoController.ActionAnnulla(nomeUtente, nomeGruppo, 0, 0, 0 );
@@ -149,7 +150,7 @@ public class OperazioniPostCommentoGUI extends JFrame {
 			JButton Modifica = new JButton("Modifica");
 			Modifica.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					operazioniPostCommentoController.ActionModificaPost(Modifica, nomeUtente, nomeGruppo, resContenutiGruppi.get(IdexPost).getIdContenuto());
+					operazioniPostCommentoController.ActionModificaPost(Modifica, nomeUtente, nomeGruppo, resContenutiGruppi.get(IdexPost).getIdContenuto(), gruppiView);
 					gruppiView.setVisible(false);
 				}
 			});
@@ -196,6 +197,7 @@ public class OperazioniPostCommentoGUI extends JFrame {
 			JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT)); // Allinea i bottoni a destra
 
 			JButton modificaButton = new JButton("Modifica");
+			
 			modificaButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					operazioniPostCommentoController.ActionModificaCommento(modificaButton, nomeUtente, nomeGruppo, idContenuto,
@@ -203,6 +205,7 @@ public class OperazioniPostCommentoGUI extends JFrame {
 				}
 			});
 			JButton eliminaButton = new JButton("Elimina");
+			
 
 			eliminaButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {

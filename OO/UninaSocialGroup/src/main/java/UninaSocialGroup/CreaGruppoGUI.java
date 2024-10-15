@@ -14,34 +14,39 @@ public class CreaGruppoGUI extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField nomeGruppo;
-	private JTextArea descrizione;
-	private HomeController homeController = new HomeController(CreaGruppoGUI.this);
+	private JTextField NGruppo;
+	private JTextArea Descrizione;
+	private HomeController HC = new HomeController(CreaGruppoGUI.this);
 
-	private JPanel selectedTagsArea;
+	private JPanel SelectedTagsArea;
 	
 	private JPanel centerPane;
 	private JPanel northPane;
 	private JPanel southPane;
 	
-	private JComboBox tagsBox;
-	private List<String> selectedTags;
+	private JComboBox TagsBox;
+	private List<String> SelectedTags;
 	
-	private String nomeUtente;
+	private String NU;
 	private HomeGUI home;
 
-	private PaletteColori paletteColori;
-	
+    private Color lightModeColorBG = new Color(255, 255, 255);
+    private Color lightModeColorButton = new Color(255, 255, 255);
+    private Color lightModeColorFont = new Color(0, 0, 0);
+    private Color lightModeColorInternalArea = new Color(244, 244, 244);
+    private Color blueColor = new Color(0, 128, 255);
+    private Color darkModeColorFont = new Color(255, 255, 255);
+    
     private JTextArea SearchText;
     
 	/**
 	 * Create the frame.
 	 */
-	public CreaGruppoGUI(String nomeUtente,  HomeGUI home) {
+	public CreaGruppoGUI(String NU,  HomeGUI home) {
 		
-		this.nomeUtente = nomeUtente;
+		this.NU = NU;
 		this.home = home;
-		selectedTags = new ArrayList<>();
+		SelectedTags = new ArrayList<>();
 		
 		// Impostazioni della finestra
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -59,6 +64,7 @@ public class CreaGruppoGUI extends JFrame {
 		southPane.setLayout(new BoxLayout(southPane ,BoxLayout.X_AXIS));
 		
 		northPane = new JPanel();
+		northPane.setBorder(null);
 		northPane.setLayout(new BoxLayout(northPane ,BoxLayout.Y_AXIS));
 		
 		// Aggiunta dei pannelli principali al contentPane
@@ -68,45 +74,41 @@ public class CreaGruppoGUI extends JFrame {
 		
 		// Titolo della finestra "Crea gruppo"
 		JLabel lblCreaGruppo = new JLabel("Crea gruppo");
-		lblCreaGruppo.setForeground(paletteColori.blueColor);
+		lblCreaGruppo.setForeground(new Color(0, 128, 255));
 		lblCreaGruppo.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblCreaGruppo.setBorder(new EmptyBorder(10, 10, 10, 10));
 		lblCreaGruppo.setBackground(Color.WHITE);
+		lblCreaGruppo.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
 		// Area per mostrare i tag selezionati
-		selectedTagsArea = new JPanel();
-        selectedTagsArea.setBackground(paletteColori.lightModeColorBG);
-        selectedTagsArea.setLayout(new BoxLayout(selectedTagsArea, BoxLayout.Y_AXIS));
+		SelectedTagsArea = new JPanel();
+        SelectedTagsArea.setBackground(lightModeColorBG);
+        SelectedTagsArea.setLayout(new BoxLayout(SelectedTagsArea, BoxLayout.Y_AXIS));
         
         // Campo di testo per il nome del gruppo
-		nomeGruppo = new JTextField();
-		nomeGruppo.setColumns(10);
+		NGruppo = new JTextField();
+		NGruppo.setColumns(10);
 		
 		// Area di testo per la descrizione del gruppo
-		descrizione = new JTextArea();
-		descrizione.setColumns(10);
-		
-		// Etichetta per il nome del gruppo
-		JLabel nomeGLabel = new JLabel("Nome:");
-		nomeGLabel.setForeground(paletteColori.blueColor);
-		nomeGLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
-		nomeGLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		Descrizione = new JTextArea();
+		Descrizione.setLineWrap(true);
+		Descrizione.setColumns(10);
 		
 		// Etichetta per la descrizione del gruppo
 		JLabel lblDescrizione = new JLabel("Descrizione:");
-		lblDescrizione.setForeground(paletteColori.blueColor);
+		lblDescrizione.setForeground(blueColor);
 		lblDescrizione.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblDescrizione.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
 		// Etichetta per i tag
 		JLabel lblTags  = new JLabel("Tags:");
-		lblTags.setForeground(paletteColori.blueColor);
+		lblTags.setForeground(blueColor);
 		lblTags.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblTags.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
 		// Etichetta per i tag selezionati
 		JLabel lblTagsSelected  = new JLabel("Tags Selezionati:");
-		lblTagsSelected.setForeground(paletteColori.blueColor);
+		lblTagsSelected.setForeground(blueColor);
 		lblTagsSelected.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblTagsSelected.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
@@ -114,10 +116,10 @@ public class CreaGruppoGUI extends JFrame {
 		JButton btnCrea = new JButton("Crea");
 		btnCrea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				homeController.ActionCreaGruppo(nomeGruppo, descrizione, nomeUtente, home, selectedTags);
+				HC.ActionCreaGruppo(NGruppo, Descrizione, NU, home, SelectedTags);
 			}
 		});
-		btnCrea.setForeground(paletteColori.blueColor);
+		btnCrea.setForeground(new Color(0, 128, 255));
 		
 		// Bottone per annullare la creazione del gruppo
 		JButton btnAnnulla = new JButton("Annulla");
@@ -132,16 +134,16 @@ public class CreaGruppoGUI extends JFrame {
 		TagsDAO tags_DAO = new TagsDAO();
 		tags.addAll(tags_DAO.SelAllTags_String());
 		
-		tagsBox = new JComboBox(tags.toArray(new String[0]));
-		tagsBox.setSelectedIndex(-1);
-		tagsBox.addActionListener(new ActionListener() {
+		TagsBox = new JComboBox(tags.toArray(new String[0]));
+		TagsBox.setSelectedIndex(-1);
+		TagsBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String selectedTag = (String) tagsBox.getSelectedItem();
+				String selectedTag = (String) TagsBox.getSelectedItem();
 				if (selectedTag != null) {
-					selectedTags.add(selectedTag);
-					selectedTagsArea.add(CreazioneJPanelTag(selectedTag));
-					tagsBox.removeItem(selectedTag);
-					tagsBox.setSelectedIndex(-1);
+					SelectedTags.add(selectedTag);
+					SelectedTagsArea.add(CreazioneJPanelTag(selectedTag));
+					TagsBox.removeItem(selectedTag);
+					TagsBox.setSelectedIndex(-1);
 					RefreshTagsArea();
 				}
 			}
@@ -149,14 +151,21 @@ public class CreaGruppoGUI extends JFrame {
 		
 		// Aggiunta dei componenti ai pannelli
 		northPane.add(lblCreaGruppo);
-		northPane.add(nomeGLabel);
-		northPane.add(nomeGruppo);
+		
+		
+		// Etichetta per il nome del gruppo
+		JLabel NomeGLabel = new JLabel("Nome:");
+		NomeGLabel.setForeground(blueColor);
+		NomeGLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
+		NomeGLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		northPane.add(NomeGLabel);
+		northPane.add(NGruppo);
 		northPane.add(lblDescrizione);
-		northPane.add(descrizione);
+		northPane.add(Descrizione);
 		northPane.add(lblTags);
-		northPane.add(tagsBox);
+		northPane.add(TagsBox);
 		northPane.add(lblTagsSelected);
-		centerPane.add(selectedTagsArea);
+		centerPane.add(SelectedTagsArea);
 		southPane.add(btnCrea);
 		southPane.add(btnAnnulla);
 	}
@@ -186,8 +195,8 @@ public class CreaGruppoGUI extends JFrame {
 	 * Aggiorna l'area dei tag selezionati.
 	 */
 	private void RefreshTagsArea() {
-		selectedTagsArea.revalidate();
-		selectedTagsArea.repaint();
+		SelectedTagsArea.revalidate();
+		SelectedTagsArea.repaint();
 	}
     
 	/**
@@ -195,11 +204,11 @@ public class CreaGruppoGUI extends JFrame {
 	 * @param nomeTag Nome del tag da rimuovere.
 	 */
 	private void RemoveAndReInsertOfTags(String nomeTag) {
-		selectedTags.remove(nomeTag);
-		selectedTagsArea.removeAll();
-		tagsBox.addItem(nomeTag);
-		for (String Tag : selectedTags) {
-			selectedTagsArea.add(CreazioneJPanelTag(Tag));
+		SelectedTags.remove(nomeTag);
+		SelectedTagsArea.removeAll();
+		TagsBox.addItem(nomeTag);
+		for (String Tag : SelectedTags) {
+			SelectedTagsArea.add(CreazioneJPanelTag(Tag));
 		}
 		RefreshTagsArea();
 	}

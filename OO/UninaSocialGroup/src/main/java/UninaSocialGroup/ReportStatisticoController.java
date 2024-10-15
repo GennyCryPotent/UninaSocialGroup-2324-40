@@ -26,7 +26,7 @@ public class ReportStatisticoController {
 	public void ActionSelMese(JTable tableStatContenuti, String NU, JComboBox Sel_Mese) {
 		tableStatContenuti.setModel(new DefaultTableModel(Rec_Stat_Contenuti(NU, Sel_Mese.getSelectedIndex() + 1),
 				new String[] { "Gruppo", "Contenuto con più Like", "Contenuto con meno Like",
-						"Contenuto con pi� Commenti", "Contenuto con meno Commenti" }));
+						"Contenuto con pi� Commenti", "Contenuto con meno Commenti" }));
 	}
 
 	// Recupera i post con più/meno commenti e like
