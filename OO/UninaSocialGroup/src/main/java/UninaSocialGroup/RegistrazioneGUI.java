@@ -22,7 +22,7 @@ import java.sql.Date;
 import java.awt.event.ActionEvent;
 import java.awt.GridLayout;
 
-public class Registrazione_GUI extends JFrame {
+public class RegistrazioneGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -30,10 +30,10 @@ public class Registrazione_GUI extends JFrame {
 	private JTextField textFieldPassword;
 	private JTextField textFieldNome;
 	private JTextField textFieldCognome;
-	private RegistrazioneController registrazioneController = new RegistrazioneController(Registrazione_GUI.this);
+	private RegistrazioneController registrazioneController = new RegistrazioneController(RegistrazioneGUI.this);
 	private Date DataNascita;
 	
-	public Registrazione_GUI() {
+	public RegistrazioneGUI() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 606, 338);

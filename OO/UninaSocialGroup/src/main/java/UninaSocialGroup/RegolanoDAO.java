@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Regolano_DAO {
+public class RegolanoDAO {
 
 	// Insert in Regolano
 	public void InsAmministratore(String nomeUtente, String nomeGruppo) {

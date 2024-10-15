@@ -14,7 +14,7 @@ import java.awt.Component;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
-public class InfoPost_GUI extends JFrame {
+public class InfoPostGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -28,10 +28,10 @@ public class InfoPost_GUI extends JFrame {
 	private CommentiDAO commentiDAO = new CommentiDAO();
 	private ContenutiDAO contenutoDAO = new ContenutiDAO();
 	private Contenuti resContenuto;
-	private InfoPostController infoPostController = new InfoPostController(InfoPost_GUI.this);
+	private InfoPostController infoPostController = new InfoPostController(InfoPostGUI.this);
 	
 	
-	public InfoPost_GUI(int id_Contenuto, String nomeUtente, String nomeGruppo, int check) {
+	public InfoPostGUI(int id_Contenuto, String nomeUtente, String nomeGruppo, int check) {
 
 		resContenuto = contenutoDAO.SelSigContenuto(id_Contenuto);
 		
