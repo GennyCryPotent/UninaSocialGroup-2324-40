@@ -29,7 +29,7 @@ public class CreaGruppoGUI extends JFrame {
     /**
      * Create the frame.
      */
-    public CreaGruppoGUI(String NU,  HomeGUI home) {
+    public CreaGruppoGUI(String nomeUtente,  HomeGUI home) {
         
         SelectedTags = new ArrayList<>();
         
@@ -154,7 +154,7 @@ public class CreaGruppoGUI extends JFrame {
         JButton btnCrea = new JButton("Crea");
         btnCrea.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                HC.ActionCreaGruppo(NGruppo, Descrizione, NU, home, SelectedTags);
+                HC.ActionCreaGruppo(NGruppo, Descrizione, nomeUtente, home, SelectedTags);
             }
         });
         btnCrea.setForeground(new Color(0, 128, 255));
