@@ -5,7 +5,9 @@ import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -30,13 +32,13 @@ public class InfoPostGUI extends JFrame {
 	private ContenutiDAO contenutoDAO = new ContenutiDAO();
 	private Contenuti resContenuto;
 	private InfoPostController infoPostController = new InfoPostController(InfoPostGUI.this);
-	
-	
+
 	public InfoPostGUI(int id_Contenuto, String nomeUtente, String nomeGruppo, int check) {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(InfoPostGUI.class.getResource("/UninaSocialGroup/image.png")));
+		setIconImage(
+				Toolkit.getDefaultToolkit().getImage(InfoPostGUI.class.getResource("/UninaSocialGroup/image.png")));
 
 		resContenuto = contenutoDAO.SelSigContenuto(id_Contenuto);
-		
+
 		setTitle("Info Post");
 		setForeground(PaletteColori.blueColor);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,7 +51,7 @@ public class InfoPostGUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		
+
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 		contentPaneNorthNorth = new JPanel();
@@ -109,11 +111,18 @@ public class InfoPostGUI extends JFrame {
 		contentPaneCenter.add(postsScrollPane, BorderLayout.CENTER);
 
 		JPanel panelCommento = new JPanel();
-		panelCommento.setBorder(new EmptyBorder(5, 0, 0, 0)); // aggiunge 10 pixel di spazio verticale sopra il pannello
+		panelCommento.setBorder(new EmptyBorder(5, 0, 0, 0)); // aggiunge 5 pixel di spazio verticale sopra il pannello
 																// dei commenti
-		contentPaneCenter.add(panelCommento, BorderLayout.SOUTH);
-		panelCommento.setLayout(new BoxLayout(panelCommento, BoxLayout.X_AXIS));
+		contentPaneCenter.add(panelCommento, BorderLayout.PAGE_END);
 
+		// Imposta il layout del panelCommento su BorderLayout
+		panelCommento.setLayout(new BorderLayout());
+
+		// Crea un pannello per i pulsanti
+		JPanel panelBottoni = new JPanel();
+		panelBottoni.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+		// Crea la JTextArea e aggiungila al centro del BorderLayout
 		JTextArea textAddCommento = new JTextArea("Aggiungi un commento...");
 		textAddCommento.setForeground(Color.GRAY);
 		textAddCommento.addFocusListener(new FocusAdapter() {
@@ -135,29 +144,39 @@ public class InfoPostGUI extends JFrame {
 		});
 		textAddCommento.setBackground(PaletteColori.lightModeColorBG);
 		textAddCommento.setLineWrap(true);
-		panelCommento.add(textAddCommento);
+		textAddCommento.setWrapStyleWord(true);
 
+		// Usa JScrollPane per rendere la JTextArea scorrevole
+		JScrollPane scrollPaneCommento = new JScrollPane(textAddCommento);
+		panelCommento.add(scrollPaneCommento, BorderLayout.CENTER); // Aggiungi lo JScrollPane al centro del
+																	// BorderLayout
+
+		// Aggiungi i pulsanti al pannello dei bottoni
 		JButton btnRimCommento = new JButton("Rimuovi/Modifica commento");
 		btnRimCommento.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		btnRimCommento.setHorizontalAlignment(SwingConstants.LEFT);
 		btnRimCommento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				infoPostController.ActionModCommento(id_Contenuto, nomeUtente, nomeGruppo, check, (JFrame) SwingUtilities.getWindowAncestor(btnRimCommento));
-				
+				infoPostController.ActionModCommento(id_Contenuto, nomeUtente, nomeGruppo, check,
+						(JFrame) SwingUtilities.getWindowAncestor(btnRimCommento));
 			}
 		});
 		
-				JButton btnAddCommento = new JButton("Commenta");
-				btnAddCommento.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-				btnAddCommento.setHorizontalAlignment(SwingConstants.LEFT);
-				btnAddCommento.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						infoPostController.ActionAddCommento(textAddCommento, panelCommenti, id_Contenuto, nomeUtente, nomeGruppo, check);
-					}
-				});
-				panelCommento.add(btnAddCommento);
 
-		panelCommento.add(btnRimCommento);
+		JButton btnAddCommento = new JButton("Commenta");
+		btnAddCommento.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+		btnAddCommento.setHorizontalAlignment(SwingConstants.LEFT);
+		btnAddCommento.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				infoPostController.ActionAddCommento(textAddCommento, panelCommenti, id_Contenuto, nomeUtente,
+						nomeGruppo, check);
+			}
+		});
+		panelBottoni.add(btnAddCommento);
+		panelBottoni.add(btnRimCommento);
+
+		// Aggiungi il pannello dei bottoni nella parte inferiore del BorderLayout
+		panelCommento.add(panelBottoni, BorderLayout.SOUTH);
 
 	}
 

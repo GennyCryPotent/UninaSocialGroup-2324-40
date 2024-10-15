@@ -1,10 +1,7 @@
 package UninaSocialGroup;
 
-import java.awt.EventQueue;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -27,25 +24,13 @@ public class CreaGruppoGUI extends JFrame {
 	private JComboBox TagsBox;
 	private List<String> SelectedTags;
 	
-	private String NU;
-	private HomeGUI home;
-
-    private Color lightModeColorBG = new Color(255, 255, 255);
-    private Color lightModeColorButton = new Color(255, 255, 255);
-    private Color lightModeColorFont = new Color(0, 0, 0);
-    private Color lightModeColorInternalArea = new Color(244, 244, 244);
+	private Color lightModeColorBG = new Color(255, 255, 255);
     private Color blueColor = new Color(0, 128, 255);
-    private Color darkModeColorFont = new Color(255, 255, 255);
-    
-    private JTextArea SearchText;
-    
-	/**
+    /**
 	 * Create the frame.
 	 */
 	public CreaGruppoGUI(String NU,  HomeGUI home) {
 		
-		this.NU = NU;
-		this.home = home;
 		SelectedTags = new ArrayList<>();
 		
 		// Impostazioni della finestra
