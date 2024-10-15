@@ -6,7 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import javafx.scene.image.Image;
 import javax.swing.SpringLayout;
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -15,7 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import java.awt.Color;
-import java.awt.MediaTracker;
+import java.awt.Toolkit;
 
 public class LoginGUI extends JFrame {
 
@@ -31,7 +30,11 @@ public class LoginGUI extends JFrame {
 
 	
 	public LoginGUI() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(LoginGUI.class.getResource("/UninaSocialGroup/image.png")));
+		setTitle("Login");
 
+		
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setBounds(100, 100, 600, 400);

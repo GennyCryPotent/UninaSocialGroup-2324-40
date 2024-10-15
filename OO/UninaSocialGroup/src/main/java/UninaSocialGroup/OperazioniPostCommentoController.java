@@ -3,6 +3,7 @@ package UninaSocialGroup;
 import java.awt.Color;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class OperazioniPostCommentoController {
@@ -16,6 +17,8 @@ public class OperazioniPostCommentoController {
 	public OperazioniPostCommentoController(OperazioniPostCommentoGUI operazioniPostCommentoView) {
 		OperazioniPostCommentoView = operazioniPostCommentoView;
 	}
+	
+	
 
 	public void ActionEliminaPost(JButton buttonElimina, String nomeUtente, String nomeGruppo, int idPost) {
 
@@ -52,20 +55,22 @@ public class OperazioniPostCommentoController {
 
 	}
 	
-	public void ActionEliminaCommento(JButton buttonElimina, String nomeUtente, String nomeGruppo, int IdContenuto, int idCommento) {
+	public void ActionEliminaCommento(JButton buttonElimina, String nomeUtente, String nomeGruppo, int IdContenuto, int idCommento, JFrame vecchiaSchermata) {
 		    buttonElimina.setForeground(new Color(0, 128, 255));
 			commentiDAO.DelCommento(idCommento);
+			vecchiaSchermata.setVisible(false);
 			gestioneFinestre.InfoPost(IdContenuto, nomeUtente, nomeGruppo, 1);
 			OperazioniPostCommentoView.setVisible(false);
 		
 	}
 	
-	public void ActionModificaCommento(JButton buttonModifica, String nomeUtente, String nomeGruppo, int IdContenuto, int idCommento) {
+	public void ActionModificaCommento(JButton buttonModifica, String nomeUtente, String nomeGruppo, int IdContenuto, int idCommento, JFrame vecchiaSchermata) {
 
 			String newCommento = JOptionPane.showInputDialog(buttonModifica, "Cosa vuoi scrivere?",
 					"Modifica un commento", JOptionPane.QUESTION_MESSAGE);
 
 			commentiDAO.UpCommento(nomeUtente, idCommento, newCommento);
+			vecchiaSchermata.setVisible(false);
 			gestioneFinestre.InfoPost(IdContenuto, nomeUtente, nomeGruppo, 1);
 			OperazioniPostCommentoView.setVisible(false);
 		
@@ -73,9 +78,9 @@ public class OperazioniPostCommentoController {
 
 	
 	
-	public void ActionAnnulla(String nomeUtente, String nomeGruppo, int checkSchermata, int IdContenuto, int checkInfoPost ) {
+	public void ActionAnnulla(String nomeUtente, String nomeGruppo, int checkSchermata, int IdContenuto, int checkInfoPost, JFrame vecchiaSchermata) {
 		OperazioniPostCommentoView.setVisible(false);
-		
+		vecchiaSchermata.setVisible(false);
 		if(checkSchermata==0) {	//0 GruppiGUI; 1 InfoPostGUI
 			gestioneFinestre.MostraGruppi(nomeUtente, nomeGruppo);
 		}else {

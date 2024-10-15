@@ -13,6 +13,7 @@ import java.util.List;
 import java.awt.Component;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.Toolkit;
 
 public class InfoPostGUI extends JFrame {
 
@@ -32,6 +33,7 @@ public class InfoPostGUI extends JFrame {
 	
 	
 	public InfoPostGUI(int id_Contenuto, String nomeUtente, String nomeGruppo, int check) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(InfoPostGUI.class.getResource("/UninaSocialGroup/image.png")));
 
 		resContenuto = contenutoDAO.SelSigContenuto(id_Contenuto);
 		
@@ -47,6 +49,8 @@ public class InfoPostGUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
+		
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 		contentPaneNorthNorth = new JPanel();
 		contentPaneCenter = new JPanel(new BorderLayout());
@@ -138,7 +142,8 @@ public class InfoPostGUI extends JFrame {
 		btnRimCommento.setHorizontalAlignment(SwingConstants.LEFT);
 		btnRimCommento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				infoPostController.ActionModCommento(id_Contenuto, nomeUtente, nomeGruppo, check);
+				infoPostController.ActionModCommento(id_Contenuto, nomeUtente, nomeGruppo, check, (JFrame) SwingUtilities.getWindowAncestor(btnRimCommento));
+				
 			}
 		});
 		

@@ -32,6 +32,7 @@ public class RicercaGUI extends JFrame {
     
 
     public RicercaGUI(String nomeUtente, HomeGUI homeView) {
+    	setIconImage(Toolkit.getDefaultToolkit().getImage(RicercaGUI.class.getResource("/UninaSocialGroup/image.png")));
     	
     	// Salva la vista home
     	this.homeView = homeView;

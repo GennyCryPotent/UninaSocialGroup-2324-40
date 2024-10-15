@@ -18,6 +18,7 @@ import java.awt.Component;
 import java.awt.Font;
 import java.util.List;
 import javax.swing.BoxLayout;
+import java.awt.Toolkit;
 
 public class OperazioniPartecipanteGUI extends JFrame {
 
@@ -27,6 +28,8 @@ public class OperazioniPartecipanteGUI extends JFrame {
 	String ruolo;
 	
 	public OperazioniPartecipanteGUI(String nomeUtente, String nomeGruppo, String Ruolo, int checkOperazione) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(OperazioniPartecipanteGUI.class.getResource("/UninaSocialGroup/image.png")));
+		setTitle("Operazioni partecipante");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 500, 300);

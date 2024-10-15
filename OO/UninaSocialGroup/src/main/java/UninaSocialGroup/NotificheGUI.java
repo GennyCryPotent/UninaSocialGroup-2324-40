@@ -5,9 +5,6 @@ import java.util.List;
 import java.util.Collections;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.EmptyBorder;
@@ -30,12 +27,16 @@ public class NotificheGUI extends JFrame {
     private NotificheController notificheController = new NotificheController(NotificheGUI.this);
     
     public NotificheGUI(String nomeUtente) {
+    	setTitle("Centro notifiche");
+    	setIconImage(Toolkit.getDefaultToolkit().getImage(NotificheGUI.class.getResource("/UninaSocialGroup/image.png")));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 720, 420);
         contentPane = new JPanel();
         contentPane.setBackground(Color.WHITE);
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
+        
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         JLabel lblNomeGruppo = new JLabel("Notifiche");
         lblNomeGruppo.setForeground(PaletteColori.blueColor);
@@ -78,9 +79,9 @@ public class NotificheGUI extends JFrame {
         		.addGroup(gl_contentPane.createSequentialGroup()
         			.addGap(22)
         			.addComponent(indietroButton, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-        			.addGap(18)
+        			.addGap(189)
         			.addComponent(lblNomeGruppo, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE)
-        			.addGap(449))
+        			.addGap(278))
         		.addGroup(gl_contentPane.createSequentialGroup()
         			.addGap(35)
         			.addComponent(sezioniNotifiche, GroupLayout.DEFAULT_SIZE, 661, GroupLayout.DEFAULT_SIZE))
@@ -89,7 +90,7 @@ public class NotificheGUI extends JFrame {
         	gl_contentPane.createParallelGroup(Alignment.LEADING)
         		.addGroup(gl_contentPane.createSequentialGroup()
         			.addGap(17)
-        			.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+        			.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
         				.addComponent(indietroButton, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
         				.addComponent(lblNomeGruppo, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
         			.addPreferredGap(ComponentPlacement.UNRELATED)

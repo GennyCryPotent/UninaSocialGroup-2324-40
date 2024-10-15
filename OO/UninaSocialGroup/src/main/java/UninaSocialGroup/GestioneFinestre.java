@@ -1,6 +1,8 @@
 package UninaSocialGroup;
 
 import java.awt.EventQueue;
+
+import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import com.formdev.flatlaf.FlatLightLaf;
@@ -75,8 +77,8 @@ public class GestioneFinestre {
 		
 	  }
 	  
-	  public void EliminaCommento(String nomeGruppo, String nomeUtente, int Id_Contenuto, int checkSchermata) {
-		  elimina = new OperazioniPostCommentoGUI(nomeGruppo, nomeUtente, Id_Contenuto, checkSchermata); 
+	  public void EliminaCommento(String nomeGruppo, String nomeUtente, int Id_Contenuto, int checkSchermata, JFrame schermataVecchia) {
+		  elimina = new OperazioniPostCommentoGUI(nomeGruppo, nomeUtente, Id_Contenuto, checkSchermata, schermataVecchia); 
 		  elimina.setVisible(true);
 		
 	  }

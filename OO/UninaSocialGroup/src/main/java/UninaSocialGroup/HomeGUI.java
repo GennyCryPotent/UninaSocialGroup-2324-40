@@ -28,11 +28,15 @@ public class HomeGUI extends JFrame {
 
 	
 	public HomeGUI(String nomeUtente) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(HomeGUI.class.getResource("/UninaSocialGroup/image.png")));
 		
 		setTitle("Home");
 		setForeground(PaletteColori.blueColor);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 737, 484);
+		
+		// Configura la finestra per essere massimizzata all'avvio
+	    setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 		contentPane = new JPanel(new BorderLayout());
 		contentPane.setBackground(PaletteColori.lightModeColorBG);

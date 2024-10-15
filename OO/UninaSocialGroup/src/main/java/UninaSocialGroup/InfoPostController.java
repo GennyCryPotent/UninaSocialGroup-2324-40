@@ -1,5 +1,8 @@
 package UninaSocialGroup;
 
+import java.awt.Window;
+
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -37,9 +40,8 @@ public class InfoPostController {
 
 	}
 
-	public void ActionModCommento(int id_Contenuto, String nomeUtente, String nomeGruppo, int check) {
-		infoView.setVisible(false);
-		gestioneFinestre.EliminaCommento(nomeUtente, nomeGruppo, id_Contenuto, check);
+	public void ActionModCommento(int id_Contenuto, String nomeUtente, String nomeGruppo, int check, JFrame schermataVecchia) {
+		gestioneFinestre.EliminaCommento(nomeUtente, nomeGruppo, id_Contenuto, check, schermataVecchia);
 	}
 
 }

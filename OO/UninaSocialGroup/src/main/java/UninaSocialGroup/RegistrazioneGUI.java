@@ -12,7 +12,6 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.SqlDateModel;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -21,6 +20,7 @@ import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.awt.event.ActionEvent;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 
 public class RegistrazioneGUI extends JFrame {
 
@@ -34,6 +34,8 @@ public class RegistrazioneGUI extends JFrame {
 	private Date DataNascita;
 	
 	public RegistrazioneGUI() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrazioneGUI.class.getResource("/UninaSocialGroup/image.png")));
+		setTitle("Registrazione");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 606, 338);

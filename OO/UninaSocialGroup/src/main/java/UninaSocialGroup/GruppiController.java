@@ -26,11 +26,15 @@ public class GruppiController {
 
 	public void ActionPost(String nomeUtente, String nomeGruppo, String NewPost) {
 
-		if (!NewPost.isEmpty()) {
-			contenutiDAO.InsContenuto(null, NewPost, nomeGruppo, nomeUtente);
+		try {
+			if (!NewPost.isEmpty()) {
+				contenutiDAO.InsContenuto(null, NewPost, nomeGruppo, nomeUtente);
 
-			gruppiView.setVisible(false);
-			gestioneFinestre.MostraGruppi(nomeUtente, nomeGruppo);
+				gruppiView.setVisible(false);
+				gestioneFinestre.MostraGruppi(nomeUtente, nomeGruppo);
+			}
+		}catch(NullPointerException e) {
+			System.out.println("Stringa vuota");
 		}
 
 	}

@@ -16,6 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Toolkit;
 
 public class ReportStatisticoGUI extends JFrame {
 
@@ -27,6 +28,8 @@ public class ReportStatisticoGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public ReportStatisticoGUI(String nomeUtente) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ReportStatisticoGUI.class.getResource("/UninaSocialGroup/image.png")));
+		setTitle("Report Statistico ");
 
 		String[] mesi = { "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre",
 				"Ottobre", "Novembre", "Dicembre" };
@@ -37,6 +40,7 @@ public class ReportStatisticoGUI extends JFrame {
 		contentPane.setBackground(PaletteColori.lightModeColorBG);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 		JLabel lblreport = new JLabel();
 		lblreport.setForeground(PaletteColori.blueColor);
@@ -84,7 +88,7 @@ public class ReportStatisticoGUI extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(indietroButton, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-							.addGap(30)
+							.addGap(188)
 							.addComponent(lblreport, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)
 							.addContainerGap())
 						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -97,7 +101,7 @@ public class ReportStatisticoGUI extends JFrame {
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(5)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(indietroButton, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblreport, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
 					.addGap(16)

@@ -20,6 +20,7 @@ import javax.swing.Box;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Toolkit;
 
 public class GruppiGUI extends JFrame {
 
@@ -43,6 +44,8 @@ public class GruppiGUI extends JFrame {
 
     // Costruttore della classe GruppiGUI
     public GruppiGUI(String nomeUtente, String ng) {
+    	setIconImage(Toolkit.getDefaultToolkit().getImage(GruppiGUI.class.getResource("/UninaSocialGroup/image.png")));
+    	setTitle("Gruppo");
     	
 
         // Recupera i dettagli del gruppo dal database
@@ -59,6 +62,8 @@ public class GruppiGUI extends JFrame {
         contentPane.setBackground(new Color(255, 255, 255));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
+        
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         // Etichetta per il nome del gruppo
         JLabel nomeGruppo = new JLabel();

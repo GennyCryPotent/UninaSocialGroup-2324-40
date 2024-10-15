@@ -10,7 +10,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextArea;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -37,6 +36,8 @@ public class OperazioniPostCommentoGUI extends JFrame {
 	 * @wbp.parser.constructor
 	 */
 	public OperazioniPostCommentoGUI(String nomeUtente, String nomeGruppo, GruppiGUI gruppiGUI) {
+		setTitle("Modifica/Elimina  post");
+		setResizable(false);
 
 		this.gruppiView = gruppiGUI;
 		// PANELLI
@@ -63,7 +64,7 @@ public class OperazioniPostCommentoGUI extends JFrame {
 		buttonAnnulla.setForeground(new Color(0, 128, 255));
 		buttonAnnulla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				operazioniPostCommentoController.ActionAnnulla(nomeUtente, nomeGruppo, 0, 0, 0 );
+				operazioniPostCommentoController.ActionAnnulla(nomeUtente, nomeGruppo, 0, 0, 0, null);
 				gruppiView.setVisible(false);
 			}
 		});
@@ -83,7 +84,7 @@ public class OperazioniPostCommentoGUI extends JFrame {
 
 	// -----------------------------------------
 	// Schermata commento
-	public OperazioniPostCommentoGUI(String nomeUtente, String nomeGruppo, int Id_Contenuto, int checkSchermata) {
+	public OperazioniPostCommentoGUI(String nomeUtente, String nomeGruppo, int idContenuto, int checkSchermata, JFrame vecchiaSchermata) {
 		setTitle("Modifica/Elimina commento");
 
 		// PANELLI
@@ -94,11 +95,13 @@ public class OperazioniPostCommentoGUI extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		 
 
 		JPanel panelCommenti = new JPanel();
 		panelCommenti.setLayout(new BoxLayout(panelCommenti, BoxLayout.Y_AXIS)); // Disposizione verticale
 
-		AggiungiCommenti(nomeGruppo, nomeUtente, panelCommenti, Id_Contenuto); // aggiunta commenti nel panel
+		AggiungiCommenti(nomeGruppo, nomeUtente, panelCommenti, idContenuto, vecchiaSchermata); // aggiunta commenti nel panel
 
 		// Metti il pannello principale in uno JScrollPane
 		JScrollPane scrollPane = new JScrollPane(panelCommenti, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -109,7 +112,7 @@ public class OperazioniPostCommentoGUI extends JFrame {
 		JButton Button_Annulla = new JButton("Annulla");
 		Button_Annulla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				operazioniPostCommentoController.ActionAnnulla(nomeUtente, nomeGruppo, 1, Id_Contenuto, checkSchermata); //con 1 passa alla schermata delle infoPost
+				operazioniPostCommentoController.ActionAnnulla(nomeUtente, nomeGruppo, 1, idContenuto, checkSchermata, vecchiaSchermata); //con 1 passa alla schermata delle infoPost
 			}
 		});
 		Button_Annulla.setActionCommand("Modifica");
@@ -176,7 +179,7 @@ public class OperazioniPostCommentoGUI extends JFrame {
 	}
 
 	// Aggiunge i post nel JPanel insieme ai bottoni
-	private void AggiungiCommenti(String nomeGruppo, String nomeUtente, JPanel panelCommenti, int idContenuto) {
+	private void AggiungiCommenti(String nomeGruppo, String nomeUtente, JPanel panelCommenti, int idContenuto, JFrame vecchiaSchermata) {
 
 		CommentiDAO commentiDAO = new CommentiDAO();
 		resCommenti = commentiDAO.SelCommentiUtentePost(nomeUtente, idContenuto);
@@ -201,7 +204,7 @@ public class OperazioniPostCommentoGUI extends JFrame {
 			modificaButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					operazioniPostCommentoController.ActionModificaCommento(modificaButton, nomeUtente, nomeGruppo, idContenuto,
-							resCommenti.get(indexCommenti).getId_Commento());
+							resCommenti.get(indexCommenti).getId_Commento(), vecchiaSchermata);
 				}
 			});
 			JButton eliminaButton = new JButton("Elimina");
@@ -210,7 +213,7 @@ public class OperazioniPostCommentoGUI extends JFrame {
 			eliminaButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					operazioniPostCommentoController.ActionEliminaCommento(eliminaButton, nomeUtente, nomeGruppo, idContenuto,
-							resCommenti.get(indexCommenti).getId_Commento());
+							resCommenti.get(indexCommenti).getId_Commento(), vecchiaSchermata);
 				}
 			});
 			buttonsPanel.add(modificaButton);
