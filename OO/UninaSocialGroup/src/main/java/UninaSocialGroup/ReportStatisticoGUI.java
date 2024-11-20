@@ -74,8 +74,8 @@ public class ReportStatisticoGUI extends JFrame {
 		tableStatContenuti = new JTable();
 		tableStatContenuti.setEnabled(false);
 		tableStatContenuti.setModel(new DefaultTableModel(reportStatisticoController.Rec_Stat_Contenuti(nomeUtente, selMese.getSelectedIndex()),
-				new String[] { "Gruppo", "Contenuto con più Like", "Contenuto con meno Like",
-						"Contenuto con più Commenti", "Contenuto con meno Commenti" }));
+				new String[] { "Gruppo", "Contenuto con piu' Like", "Contenuto con meno Like",
+						"Contenuto con piu' Commenti", "Contenuto con meno Commenti" }));
 		tableStatContenuti.setBounds(27, 119, 684, 315);
 		JScrollPane scrollPane = new JScrollPane(tableStatContenuti);
 

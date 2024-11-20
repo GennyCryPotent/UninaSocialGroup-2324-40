@@ -1,4 +1,4 @@
-package UninaSocialGroup;
+ package UninaSocialGroup;
 
 import java.awt.EventQueue;
 

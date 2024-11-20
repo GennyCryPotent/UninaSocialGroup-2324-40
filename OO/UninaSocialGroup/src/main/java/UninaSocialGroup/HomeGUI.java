@@ -159,7 +159,7 @@ public class HomeGUI extends JFrame {
 		// Creazione dei post dinamici
 		creaPost(nomeUtente, postsArea, postsScrollPane);
 
-		// Listener per il ridimensionamento
+		// metodo per il layout e il ridimensionamento
 		adjustPostLayout(postsArea, postsScrollPane);
 	}
 
@@ -218,6 +218,7 @@ public class HomeGUI extends JFrame {
 			postsArea.add(postPanel);
 		}
 
+		//metodo per il layout e il ridimensionamento dei post
 		adjustPostLayout(postsArea, testiLabel, postsScrollPane);
 	}
 
